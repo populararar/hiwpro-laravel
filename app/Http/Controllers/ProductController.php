@@ -147,7 +147,7 @@ class ProductController extends AppBaseController
     {
         $product = $this->productRepository->findWithoutFail($id);
         $shop_id = $request->input('shop_id');
-        if (empty($product) && !isset($product)) {
+        if (empty($product)) {
             Flash::error('Product not found');
 
             return redirect(route('products.index'));
