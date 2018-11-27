@@ -1,0 +1,37 @@
+[
+    {
+        "name": "location_id",
+        "dbType": "increments",
+        "htmlType": "",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false
+    },
+    {
+        "name": "location_name",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|max:100",
+        "searchable": true
+    },
+
+    {
+        "name": "branch",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required",
+        "searchable": true
+    },
+    {
+        "name": "province",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required",
+        "searchable": true
+    }
+   
+  
+]

@@ -1,0 +1,38 @@
+[
+    {
+        "name": "review_id",
+        "dbType": "increments",
+        "htmlType": "",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false
+    },
+    {
+        "name": "ratepoint",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|max:100",
+        "searchable": true
+    },
+
+    {
+        "name": "comment",
+        "dbType": "string",
+        "htmlType": "textarea",
+        "validations": "required|max:250",
+        "fillable": true,
+        "inForm": true,
+        "inIndex": false,
+        "searchable": true
+    },
+    {
+        "name": "img_path",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|max:50",
+        "searchable": true
+    }
+]

@@ -1,0 +1,72 @@
+[
+    {
+        "name": "event_id",
+        "dbType": "increments",
+        "htmlType": "",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false
+    },
+    {
+        "name": "eventName",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|max:100",
+        "searchable": true
+    },
+
+    {
+        "name": "startDate",
+        "dbType": "timestamp",
+        "htmlType": "date",
+        "validations": "required",
+        "searchable": true
+    },
+    {
+        "name": "lastDate",
+        "dbType": "timestamp",
+        "htmlType": "date",
+        "validations": "required",
+        "searchable": true
+    },
+    {
+        "name": "imgPath",
+        "dbType": "string",
+        "htmlType": "file",
+        "validations": "",
+        "searchable": true
+    },
+    {
+        "name": "event_type",
+        "dbType": "string",
+        "htmlType": "select,Sponser:SPONSER,Content Free:CONTENT",
+        "validations": "required",
+        "searchable": true
+    },
+    {
+        "name": "event_exp",
+        "dbType": "timestamp",
+        "htmlType": "date",
+        "validations": "required",
+        "searchable": false
+    },
+    {
+        "name": "detail",
+        "dbType": "text",
+        "htmlType": "textarea",
+        "validations": "required",
+        "searchable": false
+    },
+    {
+        "name": "income",
+        "dbType": "integer",
+        "htmlType": "number",
+        "validations": "",
+        "fillable": true,
+        "inForm": true
+        
+    }
+]
