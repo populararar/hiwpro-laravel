@@ -1,15 +1,14 @@
 <table class="table table-responsive" id="products-table">
     <thead>
         <tr>
-            <th>Name</th>
+        <th>Name</th>
+        <th>Shop</th>
         <th>Price</th>
         <th>Productdetail</th>
         <th>Fee</th>
-        <th>Product Expired</th>
         <th>Shipping Price</th>
         <th>Actual Price</th>
-        <th>Product Event Idproduct Event</th>
-        <th>Image Product Id</th>
+        <th>Image Product</th>
         <th>Category Id</th>
             <th colspan="3">Action</th>
         </tr>
@@ -17,14 +16,14 @@
     <tbody>
     @foreach($products as $product)
         <tr>
+            {{-- {{ dd( $product->shop) }} --}}
             <td>{!! $product->name !!}</td>
+            <td>{!! $product->shop->name !!}</td>
             <td>{!! $product->price !!}</td>
             <td>{!! $product->productdetail !!}</td>
             <td>{!! $product->fee !!}</td>
-            <td>{!! $product->product_expired !!}</td>
             <td>{!! $product->shipping_price !!}</td>
             <td>{!! $product->actual_price !!}</td>
-            <td>{!! $product->product_event_idproduct_event !!}</td>
             <td>{!! $product->image_product_id !!}</td>
             <td>{!! $product->category_id !!}</td>
             <td>

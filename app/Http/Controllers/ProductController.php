@@ -42,8 +42,10 @@ class ProductController extends AppBaseController
     {
 
         $this->productRepository->pushCriteria(new RequestCriteria($request));
-        $shop_id = $request->input('shop_id');
-        if (!empty($shop_id)) {
+        
+        $shop_id = $this->getShopId();
+
+        if ($shop_id > 0) {
             $products = $this->productRepository->findWhere(['shop_id' => $shop_id]);
         } else {
             $products = $this->productRepository->all();
@@ -62,6 +64,8 @@ class ProductController extends AppBaseController
      */
     public function build($shop_id, Request $request)
     {
+        session(['shop_id' => $shop_id]);
+
         $shop = $this->shopRepository->findWithoutFail($shop_id);
 
         if (empty($shop)) {
@@ -127,13 +131,17 @@ class ProductController extends AppBaseController
      */
     public function store(CreateProductRequest $request)
     {
+        $path = $request->file('image_product_id')->store('public/upload');
+
         $input = $request->all();
+
+        $input["image_product_id"] = str_replace("public", "", $path);
 
         $product = $this->productRepository->create($input);
 
         Flash::success('Product saved successfully.');
 
-        return redirect()->route('products.index', ['shop_id' => $input['shop_id']]);
+        return redirect()->route('products.index');
     }
 
     /**
@@ -146,8 +154,9 @@ class ProductController extends AppBaseController
     public function show($id, Request $request)
     {
         $product = $this->productRepository->findWithoutFail($id);
+
         $shop_id = $request->input('shop_id');
-        if (empty($product) && !isset($product)) {
+        if (empty($product)) {
             Flash::error('Product not found');
 
             return redirect(route('products.index'));
@@ -197,6 +206,14 @@ class ProductController extends AppBaseController
      */
     public function update($id, UpdateProductRequest $request)
     {
+        $newPath = '';
+
+        if ($request->hasFile('image_product_idUpdate')) {
+            $newPath = $request->file('image_product_idUpdate')->store('public/upload');
+        }
+
+
+        
         $product = $this->productRepository->findWithoutFail($id);
 
         if (empty($product)) {
@@ -204,12 +221,18 @@ class ProductController extends AppBaseController
 
             return redirect(route('products.index'));
         }
+      
+        $input = $request->all();
 
-        $product = $this->productRepository->update($request->all(), $id);
+        if ($newPath != '') {
+            $input['image_product_id'] = str_replace("public", "", $newPath);
+        }
+
+        $product = $this->productRepository->update($input, $id);
 
         Flash::success('Product updated successfully.');
 
-        return redirect(route('products.index', ['shop_id' => $request->input('shop_id')]));
+        return redirect(route('products.index'));
     }
 
     /**
@@ -234,5 +257,13 @@ class ProductController extends AppBaseController
         Flash::success('Product deleted successfully.');
 
         return redirect(route('products.index'));
+    }
+
+
+    private function getShopId(){
+        if (session()->has('shop_id')) {
+            return  session('shop_id');
+        }
+        return 0;
     }
 }

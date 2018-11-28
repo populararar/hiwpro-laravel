@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Product
+            Event Shop
         </h1>
    </section>
    <div class="content">
@@ -11,9 +11,9 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($product, ['route' => ['products.update', $product->product_id], 'method' => 'patch', 'enctype' => 'multipart/form-data']) !!}
+                   {!! Form::model($eventShop, ['route' => ['eventshops.update', $eventShop->id], 'method' => 'patch']) !!}
 
-                        @include('products.fields_update',['shop'=>$shop,'categories'=>$categories])
+                        @include('event_shops.fields')
 
                    {!! Form::close() !!}
                </div>

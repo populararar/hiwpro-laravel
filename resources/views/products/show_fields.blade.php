@@ -46,16 +46,10 @@
     <p>{!! $product->actual_price !!}</p>
 </div>
 
-<!-- Product Event Idproduct Event Field -->
+<!-- Imgpath Field -->
 <div class="form-group">
-    {!! Form::label('product_event_idproduct_event', 'Product Event Idproduct Event:') !!}
-    <p>{!! $product->product_event_idproduct_event !!}</p>
-</div>
-
-<!-- Image Product Id Field -->
-<div class="form-group">
-    {!! Form::label('image_product_id', 'Image Product Id:') !!}
-    <p>{!! $product->image_product_id !!}</p>
+    {!! Form::label('image_product_id', 'Imgpath:') !!}
+    <p><img src="{{ asset('/storage/'.$product->image_product_id) }}" alt="" width="250"></p>
 </div>
 
 <!-- Category Id Field -->

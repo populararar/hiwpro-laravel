@@ -102,7 +102,7 @@ class Product extends Model
      **/
     public function shop()
     {
-        return $this->belongsTo(\App\Models\Shop::class);
+        return $this->belongsTo('App\Models\Shop', 'shop_id');
     }
     // /**
     //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
