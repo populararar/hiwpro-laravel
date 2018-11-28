@@ -132,7 +132,7 @@ class EventController extends AppBaseController
 
             return redirect(route('events.index'));
         }
-        
+
         $input = $request->all();
         if ($newPath != '') {
             $input['imgPath'] = str_replace("public", "", $newPath);

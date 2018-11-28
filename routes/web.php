@@ -33,3 +33,11 @@ Route::get('/products/shop/{shop_id}', 'ProductController@build')->name('product
 Route::post('/products', 'ProductController@store')->name('products.store');
 
 Route::resource('categories', 'CategoryController');
+
+
+Route::resource('eventshops', 'EventShopController');
+Route::get('/eventshops/getshop/{event_shop_id}', 'EventShopController@getShop')->name('eventshops.getShop');
+//
+
+Route::resource('productevents', 'ProducteventController');
+Route::get('/productevents/eventshop/{id}', 'ProducteventController@index')->name('productevents.index.event');

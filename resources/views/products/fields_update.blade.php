@@ -40,10 +40,19 @@
         {!! Form::text('shop_name', $shop->name, ['class' => 'form-control','readonly' => true]) !!}
     </div>
 
+    <div class="clearfix"></div>
+<div class="form-group col-sm-6">
+    {!! Form::label('image_product_id', 'Ass Imgpath:') !!}
+    {!! Form::hidden('image_product_id', $product->image_product_id,[]) !!}
+    <img src="{{ asset('/storage/'.$product->image_product_id) }}" alt="" width="250">
+</div>
+
+<div class="clearfix"></div>
+
 <!-- Imgpath Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('image_product_id', 'Add image:') !!}
-    {!! Form::file('image_product_id') !!}
+    {!! Form::label('image_product_id', 'Img path:') !!}
+    {!! Form::file('image_product_idUpdate') !!}
 </div>
 <div class="clearfix"></div>
 
@@ -59,3 +68,20 @@
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('products.index', ['shop_id' => $shop->shop_id] ) !!}" class="btn btn-default">Cancel</a>
 </div>
+
+
+@section('scripts')
+    <script>
+    // In your Javascript (external .js resource or <script> tag)
+    // $(document).ready(function() {
+    //     $('#robots').select2();
+    // });
+
+    $(function () {
+        $('.date-picker').datetimepicker({
+           // format: 'YYYY-MM-DD HH:mm:ss'
+            format: 'YYYY-MM-DD'
+        });
+    });
+    </script>
+@endsection

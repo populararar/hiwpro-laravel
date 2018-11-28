@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Product
+            Event Shop
         </h1>
     </section>
     <div class="content">
@@ -12,9 +12,9 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'products.store','enctype' => 'multipart/form-data']) !!}
+                    {!! Form::open(['route' => 'eventshops.store']) !!}
 
-                        @include('products.fields',['shop'=>$shop,'categories'=>$categories])
+                        @include('event_shops.fields', ['events' => $events])
 
                     {!! Form::close() !!}
                 </div>

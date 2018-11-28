@@ -64,15 +64,15 @@ class Shop extends Model
      **/
     public function location()
     {
-        return $this->belongsTo(\App\Models\Location::class);
+        return $this->belongsTo(\App\Models\Location::class,  'location_location_id');
     }
 
-      /**
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
     public function products()
     {
-        return $this->hasMany(\App\Models\Product::class);
+        return $this->hasMany(\App\Models\Product::class, 'shop_id' ,'shop_id');
     }
 
     /**

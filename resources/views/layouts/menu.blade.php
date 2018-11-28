@@ -46,3 +46,11 @@
     <a href="{!! route('categories.index') !!}"><i class="fa fa-edit"></i><span>Categories</span></a>
 </li>
 
+<li class="{{ Request::is('eventShops*') ? 'active' : '' }}">
+    <a href="{!! route('eventShops.index') !!}"><i class="fa fa-edit"></i><span>Event Shops</span></a>
+</li>
+
+<li class="{{ Request::is('productevents*') ? 'active' : '' }}">
+    <a href="{!! route('productevents.index') !!}"><i class="fa fa-edit"></i><span>Productevents</span></a>
+</li>
+
