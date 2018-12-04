@@ -14,3 +14,13 @@ php artisan infyom:scaffold EventShop  --fromTable --tableName=event_shop --prim
 
 php artisan infyom:scaffold Productevent  --fromTable --tableName=product_event --primary=id --relations
 
+php artisan infyom:scaffold Users  --fromTable --tableName=users --primary=id --relations
+
+
+// menus
+
+php artisan infyom:scaffold Menu  --fromTable --tableName=menus --primary=id --relations
+
+// permission
+
+php artisan infyom:scaffold Permissions  --fromTable --tableName=permissions --primary=id --relations

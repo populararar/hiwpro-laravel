@@ -59,7 +59,8 @@ class Productevent extends Model
      * @var array
      */
     public static $rules = [
-        
+        'sale_price' => 'required',
+        'event_shop_id' => 'required',
     ];
 
     /**

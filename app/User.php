@@ -10,6 +10,16 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public $table = 'users';
+    
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+
+
+    protected $dates = ['deleted_at'];
+
+    protected $primaryKey = 'id';
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -27,4 +37,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+       /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function usersRoles()
+    {
+        return $this->hasMany(\App\Models\UserRoles::class , 'user_id', 'id');
+    }
 }

@@ -1,56 +1,14 @@
-<li class="{{ Request::is('events*') ? 'active' : '' }}">
+{{-- <li class="{{ Request::is('events*') ? 'active' : '' }}">
     <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
-</li>
+</li> --}}
 
-<li class="{{ Request::is('events*') ? 'active' : '' }}">
-    <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
-</li>
-
-<li class="{{ Request::is('events*') ? 'active' : '' }}">
-    <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
-</li>
-
-<li class="{{ Request::is('events*') ? 'active' : '' }}">
-    <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
-</li>
-
-<li class="{{ Request::is('events*') ? 'active' : '' }}">
-    <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
-</li>
-
-<li class="{{ Request::is('events*') ? 'active' : '' }}">
-    <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
-</li>
-
-<li class="{{ Request::is('events*') ? 'active' : '' }}">
-    <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
-</li>
-
-<li class="{{ Request::is('locations*') ? 'active' : '' }}">
-    <a href="{!! route('locations.index') !!}"><i class="fa fa-edit"></i><span>Locations</span></a>
-</li>
-
-<li class="{{ Request::is('shops*') ? 'active' : '' }}">
-    <a href="{!! route('shops.index') !!}"><i class="fa fa-edit"></i><span>Shops</span></a>
-</li>
-
-<li class="{{ Request::is('products*') ? 'active' : '' }}">
-    <a href="{!! route('products.index') !!}"><i class="fa fa-edit"></i><span>Products</span></a>
-</li>
-
-<li class="{{ Request::is('categories*') ? 'active' : '' }}">
-    <a href="{!! route('categories.index') !!}"><i class="fa fa-edit"></i><span>Categories</span></a>
-</li>
-
-<li class="{{ Request::is('categories*') ? 'active' : '' }}">
-    <a href="{!! route('categories.index') !!}"><i class="fa fa-edit"></i><span>Categories</span></a>
-</li>
-
-<li class="{{ Request::is('eventShops*') ? 'active' : '' }}">
-    <a href="{!! route('eventShops.index') !!}"><i class="fa fa-edit"></i><span>Event Shops</span></a>
-</li>
-
-<li class="{{ Request::is('productevents*') ? 'active' : '' }}">
-    <a href="{!! route('productevents.index') !!}"><i class="fa fa-edit"></i><span>Productevents</span></a>
-</li>
-
+@if(!empty(session('permissions')))
+<?php $permissions  = session('permissions') ?>
+    @foreach($permissions as $permission)
+    @if($permission->can_visible == 1)
+    <li class="{{ Request::is($permission->menu->route_name.'*') ? 'active' : '' }}">
+        <a href="{!! route( $permission->menu->route_name.'.index') !!}"><i class="{{ $permission->menu->icon }}"></i><span>{{ $permission->menu->name }}</span></a>
+    </li>
+    @endif
+    @endforeach 
+@endif

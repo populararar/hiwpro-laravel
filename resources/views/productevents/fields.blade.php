@@ -95,7 +95,7 @@
 
 <!-- Sale Price Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('sale_price', 'Sale Price:') !!}
+    {!! Form::label('sale_price', '% discount:') !!}
     {!! Form::text('sale_price', null, ['class' => 'form-control']) !!}
 </div>
 
@@ -106,10 +106,10 @@
 </div>
 
 <!-- Promotion Id Field -->
-<div class="form-group col-sm-6">
+{{-- <div class="form-group col-sm-6">
     {!! Form::label('promotion_id', 'Promotion Id:') !!}
     {!! Form::text('promotion_id', null, ['class' => 'form-control']) !!}
-</div>
+</div> --}}
 
 {{--
 <!-- Product Id Field -->
