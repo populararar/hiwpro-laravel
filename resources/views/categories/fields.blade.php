@@ -6,7 +6,7 @@
 
 <!-- Shop Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('shop_id', 'Shop Id:') !!}
+    {!! Form::label('Shop name', 'Shop Id:') !!}
     {!! Form::number('shop_id', null, ['class' => 'form-control']) !!}
 </div>
 

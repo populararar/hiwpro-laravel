@@ -4,10 +4,10 @@
             <th>Eventname</th>
         <th>Startdate</th>
         <th>Lastdate</th>
-        <th>Imgpath</th>
+        <th>Image</th>
         <th>Event Type</th>
         <th>Event Exp</th>
-        <th>Detail</th>
+        
         <th>Income</th>
             <th colspan="3">Action</th>
         </tr>
@@ -18,10 +18,11 @@
             <td>{!! $event->eventName !!}</td>
             <td>{!! $event->startDate !!}</td>
             <td>{!! $event->lastDate !!}</td>
-            <td>{!! $event->imgPath !!}</td>
+            <td><img src="{{ asset('/storage/'.$event->imgPath) }}" alt="" width="50"></td>
+            <!-- Imgpath Field -->
             <td>{!! $event->event_type !!}</td>
             <td>{!! $event->event_exp !!}</td>
-            <td>{!! $event->detail !!}</td>
+          
             <td>{!! $event->income !!}</td>
             <td>
                 {!! Form::open(['route' => ['events.destroy', $event->event_id], 'method' => 'delete']) !!}

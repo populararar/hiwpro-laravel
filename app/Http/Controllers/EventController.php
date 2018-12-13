@@ -31,6 +31,7 @@ class EventController extends AppBaseController
     {
         $this->eventRepository->pushCriteria(new RequestCriteria($request));
         $events = $this->eventRepository->all();
+        $events = $events->sortByDesc('event_id');
 
         return view('events.index')
             ->with('events', $events);

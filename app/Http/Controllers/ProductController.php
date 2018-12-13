@@ -50,7 +50,8 @@ class ProductController extends AppBaseController
         } else {
             $products = $this->productRepository->all();
         }
-
+        $products = $products->sortByDesc('id');
+        
         return view('products.index')
             ->with('products', $products)
             ->with('shop_id', $shop_id);

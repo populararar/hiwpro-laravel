@@ -56,6 +56,7 @@ class ProducteventController extends AppBaseController
 
         $this->producteventRepository->pushCriteria(new RequestCriteria($request));
         $productevents = $this->producteventRepository->findWhere(['event_shop_id' => $id]);
+        $productevents = $productevents->sortByDesc('id');
 
         return view('productevents.index')
             ->with('productevents', $productevents);

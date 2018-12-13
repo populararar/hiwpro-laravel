@@ -38,6 +38,7 @@ class ShopController extends AppBaseController
     {
         $this->shopRepository->pushCriteria(new RequestCriteria($request));
         $shops = $this->shopRepository->all();
+        $shops = $shops->sortByDesc('shop_id');
 
         return view('shops.index')
             ->with('shops', $shops);

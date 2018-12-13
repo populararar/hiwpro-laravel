@@ -31,7 +31,7 @@ class LocationController extends AppBaseController
     {
         $this->locationRepository->pushCriteria(new RequestCriteria($request));
         $locations = $this->locationRepository->all();
-
+        $locations = $locations->sortByDesc('location_id');
         return view('locations.index')
             ->with('locations', $locations);
     }

@@ -56,15 +56,15 @@ class Event extends Model
 
     /**
      * Validation rules
-     *
+     *gt:startDate
      * @var array
      */
     public static $rules = [
         'eventName' => 'required|max:100',
-        'startDate' => 'required',
-        'lastDate' => 'required',
+        'startDate' => 'required|date|date_format:Y-m-d',
+        'lastDate' => 'required|date|date_format:Y-m-d|after:startDate',
         'event_type' => 'required',
-        'event_exp' => 'required',
+        'event_exp' => 'required|date|date_format:Y-m-d|after:startDate',
         'detail' => 'required'
     ];
 

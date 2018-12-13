@@ -31,7 +31,8 @@ class PermissionsController extends AppBaseController
     {
         $this->permissionsRepository->pushCriteria(new RequestCriteria($request));
         $permissions = $this->permissionsRepository->all();
-
+        $permissions = $permissions->sortByDesc('id');
+        
         return view('permissions.index')
             ->with('permissions', $permissions);
     }

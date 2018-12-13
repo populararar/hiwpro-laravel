@@ -42,6 +42,7 @@ class EventShopController extends AppBaseController
     {
         $this->eventShopRepository->pushCriteria(new RequestCriteria($request));
         $eventShops = $this->eventShopRepository->all();
+        $eventShops = $eventShops->sortByDesc('id');
 
         // // TODO : query event_shop by event
         // $shops = $this->shopRepository->all();

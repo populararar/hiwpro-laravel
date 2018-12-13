@@ -18,7 +18,7 @@
 
 <!-- Imgpath Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('imgPath', 'Imgpath:') !!}
+    {!! Form::label('imgPath', 'Imgpath') !!}
     {!! Form::file('imgPath') !!}
 </div>
 <div class="clearfix"></div>

@@ -31,6 +31,7 @@ class RolesController extends AppBaseController
     {
         $this->rolesRepository->pushCriteria(new RequestCriteria($request));
         $roles = $this->rolesRepository->all();
+        $roles = $roles->sortByDesc('id');
 
         return view('roles.index')
             ->with('roles', $roles);

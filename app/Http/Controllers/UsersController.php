@@ -31,6 +31,7 @@ class UsersController extends AppBaseController
     {
         $this->usersRepository->pushCriteria(new RequestCriteria($request));
         $users = $this->usersRepository->all();
+        $users = $users->sortByDesc('id');
 
         return view('users.index')
             ->with('users', $users);
