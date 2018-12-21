@@ -1,0 +1,9 @@
+.nav-link{
+    transition: 0.5s;
+}
+.nav-link:hover{
+    color: #df3433 !important;
+}
+.nav-item.active a{
+    color: #df3433!important;
+}

@@ -24,3 +24,11 @@ php artisan infyom:scaffold Menu  --fromTable --tableName=menus --primary=id --r
 // permission
 
 php artisan infyom:scaffold Permissions  --fromTable --tableName=permissions --primary=id --relations
+
+php artisan infyom:scaffold EventJoined  --fromTable --tableName=event_joined --primary=id --relations
+
+
+ALTER TABLE `hiwpro`.`event_joined` 
+ADD COLUMN `created_at` TIMESTAMP NULL AFTER `score`,
+ADD COLUMN `updated_at` TIMESTAMP NULL AFTER `created_at`,
+ADD COLUMN `deleted_at` TIMESTAMP NULL AFTER `updated_at`;

@@ -5,9 +5,8 @@
         <th>Startdate</th>
         <th>Lastdate</th>
         <th>Image</th>
-        <th>Event Type</th>
-        <th>Event Exp</th>
-        
+        <th>Type</th>
+        <th>Exp</th>
         <th>Income</th>
             <th colspan="3">Action</th>
         </tr>

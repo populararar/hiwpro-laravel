@@ -49,7 +49,11 @@ class LoginMiddlware
                 'role_id' =>$role_id
             ])->first();
 
-            if ($permission->can_read==1){
+            if(empty( $permission )){
+                abort(404);
+            }
+
+            if ($permission->can_read == 1){
                 return $next($request);
             }
         }

@@ -1,0 +1,26 @@
+.p-head-login{
+	text-align: center;
+	font-weight: bold;
+	font-size: 25px;
+	margin-top: 0px
+}
+
+.div-login{
+	padding: 30px;
+	border: 1px solid #ccc;
+	border-radius: 15px;
+	background: white;
+}
+
+
+
+
+.div-head-form{
+	font-weight: bold;
+	font-size: 20px;
+	margin: 10px 0;
+}
+
+.div-input-form{
+	margin: 10px 0;
+}

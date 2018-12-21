@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\EventRepository;
 use App\Repositories\PermissionsRepository;
 use App\Repositories\UsersRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,16 +20,21 @@ class HomeController extends Controller
     /** @var  UsersRepository */
     private $permissionRepository;
 
+    /** @var  EventRepository */
+    private $eventRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(UsersRepository $usersRepo, PermissionsRepository $permissionRepo)
+    public function __construct(EventRepository $eventRepo, UsersRepository $usersRepo, PermissionsRepository $permissionRepo)
     {
         $this->usersRepository = $usersRepo;
         $this->permissionRepository = $permissionRepo;
+        $this->eventRepository = $eventRepo;
     }
+
 
     /**
      * Show the application dashboard.
@@ -36,8 +43,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $now = Carbon::now()->toDateTimeString();
+        $events = $this->eventRepository->findWhere([['event_exp', '>', $now]]);
+
+        foreach ($events as $event) {
+            $event->start_date = $this->formatEventDate($event->startDate);
+            $event->last_date = $this->formatEventDate($event->lastDate);
+        }
+
+        return view('home')->with('events', $events);
     }
+
+    private function formatEventDate($dateTime)
+    {
+        return Carbon::parse($dateTime)->format('d M Y');
+    }
+
+    
 
     /**
      * Show the application dashboard.
@@ -52,7 +74,7 @@ class HomeController extends Controller
             $permissions = $this->permissionRepository->with(['menu'])->findWhere([
                 'role_id' => $role_id,
             ]);
-            session(['permissions'=> $permissions]);
+            session(['permissions' => $permissions]);
         }
     }
 
