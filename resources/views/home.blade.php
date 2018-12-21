@@ -207,7 +207,7 @@
                                             <div class="col-sm-8 col-md-7 ">
                                             <h3 style="font-size:1.5em; border-bottom: 1px dotted #cccccc;">{{ $event->eventName }}</h3>
                                                 <i style="color: #df3433;" class="far fa-calendar"></i> 
-                                                {{-- 2018 เมืองทองธานี 7.00 น - 18.00 น --}}
+                                                {{ $event->start_date }} - {{ $event->last_date }}
                     
                                                 <p class="text-truncate" style="text-overflow: clip;">
                                                     {{ $event->detail }}
