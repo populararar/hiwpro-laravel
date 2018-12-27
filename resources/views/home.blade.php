@@ -214,8 +214,7 @@
                                                 </p>
                     
                                                 <div class="line-p"></div>
-                    
-                                                <a href="#" style="color: #df3433;">ดูเพิ่มเติม</a>
+                                            <a href="/eventdetail/{{ $event->event_id }}" style="color: #df3433;">ดูเพิ่มเติม</a>
                                             </div>
                                         </div>
                     
@@ -391,8 +390,8 @@
                 
                 
                     <div class="weapper" style="padding:0 5%;">
-                        <h4 style="margin-top: 2%; color: #df3433;">เทคนิคการหิ้วขั้นเทพ</h4>
-                        <h5>SHOPPER</h5>
+                        <h4 style="margin: 2% 0%; color: #df3433; border-bottom:dotted 2px #df3433;">เทคนิคการหิ้วขั้นเทพ</h4>
+                        
                         <dl class="row">
                 
                             <dt class="col-sm-3">
@@ -426,7 +425,7 @@
                                 <div class="col-sm-12 col-md-6">
                                     <img src="{{ asset('hiwpro/images/contect.png') }}" class="img-fluid">
                                 </div>
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-sm-12 col-md-6" style="padding-top:10%;">
                                     <h4 style="color: #df3433; text-align: center;">ติดต่อโฆษณา</h4>
                                     <blockquote class="text-center">
                                         <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
@@ -438,6 +437,7 @@
                 
                 
                     </div><!-- How to -->
+                </div>
                     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
                     

@@ -22,7 +22,10 @@ Route::post('/logout', 'HomeController@destroy')->name('login.destroy');
 Route::get('/logout', 'HomeController@destroy')->name('logout.index');
 
 Route::get('/home', 'HomeController@index'); 
+Route::get('/eventinfo', 'HomeController@eventinfo'); 
+Route::get('/eventdetail/{id}', 'HomeController@eventdetail'); 
 
+Route::get('/eventproduct/product/{id}', 'HomeController@eventdetail')->name('event.detail.product');
 
 
 Route::middleware(['login'])->group(function () {

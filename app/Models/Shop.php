@@ -82,4 +82,13 @@ class Shop extends Model
     {
         return $this->belongsToMany(\App\Models\Event::class, 'event_shop');
     }
+
+        /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     **/
+    public function categoties()
+    {
+        return $this->hasMany(\App\Models\Category::class);
+    }
+
 }

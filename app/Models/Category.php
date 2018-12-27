@@ -22,10 +22,9 @@ class Category extends Model
     use SoftDeletes;
 
     public $table = 'category';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
-
 
     protected $dates = ['deleted_at'];
 
@@ -33,7 +32,7 @@ class Category extends Model
 
     public $fillable = [
         'category_name',
-        'shop_id'
+        'shop_id',
     ];
 
     /**
@@ -44,7 +43,7 @@ class Category extends Model
     protected $casts = [
         'category_id' => 'integer',
         'category_name' => 'string',
-        'shop_id' => 'integer'
+        'shop_id' => 'integer',
     ];
 
     /**
@@ -54,7 +53,7 @@ class Category extends Model
      */
     public static $rules = [
         'category_name' => 'required',
-        'shop_id' => 'required'
+        'shop_id' => 'required',
     ];
 
     /**
@@ -62,7 +61,7 @@ class Category extends Model
      **/
     public function shop()
     {
-        return $this->belongsTo(\App\Models\Shop::class);
+        return $this->belongsTo(\App\Models\Shop::class, 'shop_id');
     }
 
     /**

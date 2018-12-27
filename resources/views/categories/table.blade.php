@@ -2,12 +2,13 @@
     <thead>
         <tr>
             <th>Category Name</th>
-        <th>Shop Id</th>
+        <th>Shop name</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($categories as $category)
+    {{-- {{dd($category)}} --}}
         <tr>
             <td>{!! $category->category_name !!}</td>
             <td>{!! $category->shop->name !!}</td>

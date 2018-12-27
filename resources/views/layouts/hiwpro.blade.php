@@ -61,22 +61,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding:0 0 0 2%;">
             <ul class="navbar-nav mr-auto my-2 my-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/Christmas/view/frontend/index.php?pageid=1">หน้าแรก <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url('/') }}">หน้าแรก <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Christmas/view/frontend/index.php?pageid=2">โปรโมชั่น</a>
+                <a class="nav-link" href="{{ url('/eventinfo') }}">โปรโมชั่น</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Christmas/view/frontend/index.php?pageid=3">นักหิ้วมือโปร</a>
+                    <a class="nav-link" href="#">นักหิ้วมือโปร</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Christmas/view/frontend/index.php?pageid=4">หิ้วกับเรา</a>
+                    <a class="nav-link" href="#">หิ้วกับเรา</a>
                 </li>
 
             </ul>
             <ul class="nav justify-content-end">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/Christmas/view/frontend/index.php?pageid=7"> <i class="fas fa-shopping-cart"></i></a>
+                    <a class="nav-link active" href="#"> <i class="fas fa-shopping-cart"></i></a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -90,8 +90,8 @@
                         {!! Auth::user()->name !!}
                         <span class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/Christmas/view/frontend/customer_info.php">ข้อมูลส่วนตัว</a>
-                        <a class="dropdown-item" href="History.php">ประวัติการสั่งซื้อ</a>
+                        <a class="dropdown-item" href="#">ข้อมูลส่วนตัว</a>
+                        <a class="dropdown-item" href="#">ประวัติการสั่งซื้อ</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout.index') }}">ออกจากระบบ</a>
                     </div>
@@ -154,8 +154,9 @@
     @yield('content')
 
 
+</div>
 
-    <div class="weapper" style="background-color: #F9F9F9; padding:5%; text-decoration: none;">
+    <div class="wrapper" style="background-color: #F9F9F9; padding:5%; text-decoration: none;">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12">
                 <ul class="list-unstyled clear-margins">

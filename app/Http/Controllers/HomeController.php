@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\EventRepository;
+use App\Repositories\EventShopRepository;
 use App\Repositories\PermissionsRepository;
+use App\Repositories\ProducteventRepository;
 use App\Repositories\UsersRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,18 +25,58 @@ class HomeController extends Controller
     /** @var  EventRepository */
     private $eventRepository;
 
+    /** @var  EventShopRepository */
+    private $eventShopRepository;
+
+    /** @var  ProducteventRepository */
+    private $producteventRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(EventRepository $eventRepo, UsersRepository $usersRepo, PermissionsRepository $permissionRepo)
+    public function __construct(ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo, UsersRepository $usersRepo, PermissionsRepository $permissionRepo)
     {
         $this->usersRepository = $usersRepo;
         $this->permissionRepository = $permissionRepo;
         $this->eventRepository = $eventRepo;
+        $this->eventShopRepository = $eventShopRepo;
+        $this->producteventRepository = $producteventRepo;
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function eventinfo()
+    {
+
+        return view('eventinfo');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function eventdetail($id)
+    {
+        $event = $this->eventRepository->findWithoutFail($id);
+
+        //SELECT id FROM hiwpro.event_shop where event_id = 21
+        $eventShops = $this->eventShopRepository->findWhere([['event_id', '=', $event->event_id]]);
+        $eventShopIds = [];
+        foreach ($eventShops as $eventshop) {
+            $id = $eventshop->id;
+            array_push($eventShopIds, $id);
+        }
+        //SELECT * FROM hiwpro.product_event where event_shop_id in ();
+        $productEvents = $this->producteventRepository->findWhereIn('event_shop_id', $eventShopIds);
+
+        return view('eventdetail')->with('event', $event)->with('productEvents', $productEvents);
+    }
 
     /**
      * Show the application dashboard.
@@ -59,8 +101,6 @@ class HomeController extends Controller
         return Carbon::parse($dateTime)->format('d M Y');
     }
 
-    
-
     /**
      * Show the application dashboard.
      *
@@ -74,6 +114,8 @@ class HomeController extends Controller
             $permissions = $this->permissionRepository->with(['menu'])->findWhere([
                 'role_id' => $role_id,
             ]);
+
+            $permissions = $permissions->sortBy('sort');
             session(['permissions' => $permissions]);
         }
     }
@@ -110,6 +152,10 @@ class HomeController extends Controller
             Auth::login($user);
             // get role permission
             $this->getPermissions();
+
+            if ($user->usersRoles->first()->role->name == 'ADMIN') {
+                return redirect()->route('events.index');
+            }
 
             return redirect()->route('home');
         }
