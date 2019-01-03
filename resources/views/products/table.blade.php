@@ -24,8 +24,9 @@
             <td>{!! $product->fee !!}</td>
             <td>{!! $product->shipping_price !!}</td>
             <td>{!! $product->actual_price !!}</td>
-            <td>{!! $product->image_product_id !!}</td>
-            <td>{!! $product->category_id !!}</td>
+            <td><img src="{{ asset('/storage/'.$product->image_product_id) }}" alt="" width="50"></td>
+    
+            <td>{!! $product->category_id->name !!}</td>
             <td>
                 {!! Form::open(['route' => ['products.destroy', $product->product_id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

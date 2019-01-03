@@ -76,7 +76,7 @@
             </ul>
             <ul class="nav justify-content-end">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#"> <i class="fas fa-shopping-cart"></i></a>
+                <a class="nav-link active" href="{{ route('cart.detail') }}"> <i class="fas fa-shopping-cart"></i> {{ \Cart::getContent()->count() }}</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -262,5 +262,5 @@
 
     <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/src/js/owl.carousel.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
+    @yield('scripts')
 </html>

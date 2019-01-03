@@ -23,12 +23,17 @@ Route::get('/logout', 'HomeController@destroy')->name('logout.index');
 
 Route::get('/home', 'HomeController@index'); 
 Route::get('/eventinfo', 'HomeController@eventinfo'); 
-Route::get('/eventdetail/{id}', 'HomeController@eventdetail'); 
+Route::get('/eventdetail/{id}', 'HomeController@eventdetail')->name('event.detail'); 
+Route::get('/eventshop/{event_shop_id}/product/{id}', 'HomeController@eventproduct')->name('event.detail.product');
 
-Route::get('/eventproduct/product/{id}', 'HomeController@eventdetail')->name('event.detail.product');
+Route::get('/order', 'HomeController@eventorder'); 
+Route::post('/cart','HomeController@cartAdd')->name('cart.add');
+Route::get('/cart','HomeController@cartDetail')->name('cart.detail');
+Route::get('/cart/flush','HomeController@cartFlush')->name('cart.flush');
 
 
 Route::middleware(['login'])->group(function () {
+    
 
     Route::resource('events', 'EventController');
 
