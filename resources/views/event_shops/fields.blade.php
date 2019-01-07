@@ -1,8 +1,15 @@
 <!-- Event Id Field -->
+@if(empty($eventShop->event->event_id))
 <div class="form-group col-sm-6">
     {!! Form::label('event_id', 'Event Id:') !!}
     {!!Form::select('event_id',$events, null, ['class' => 'form-control select2 event_id']) !!}
 </div>
+@else
+<div class="form-group col-sm-6">
+    {!! Form::label('event_id', 'Event Id:') !!}
+    {!!Form::select('event_id',$events, $eventShop->event->event_id, ['class' => 'form-control select2 event_id']) !!}
+</div>
+@endif
 
 <!-- Shop Id Field -->
 <div class="form-group col-sm-6">
@@ -17,19 +24,19 @@
 </div>
 
 @section('scripts')
-    <script>
+<script>
     // In your Javascript (external .js resource or <script> tag)
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.select2').select2();
     });
 
-    $( ".event_id" ).change(function() {
-        var val = $( ".event_id" ).val()
+    $(".event_id").change(function () {
+        var val = $(".event_id").val()
         $.ajax({
-            headers: {'_token': $('input[name="_token"]').val()},
+            headers: { '_token': $('input[name="_token"]').val() },
             method: 'GET',
-            url: '{{ route('eventshops.index')  }}/getshop/'+val,
-            success: function(d){
+            url: "{{ route('eventshops.index')  }}/getshop/"+val,
+            success: function (d) {
                 console.log(d)
                 $('.shop_id')
                     .find('option')
@@ -37,16 +44,17 @@
                     .end()
                     .append('<option></option>')
                     .val('')
-                
+
                 d.forEach(element => {
                     $('.shop_id')
                         .append($("<option></option>")
-                                    .attr("value",element.shop_id)
-                                    .text(element.name+' - '+element.location.branch));
+                            .attr("value", element.shop_id)
+                            .text(element.name + ' - ' + element.location.branch));
                 });
-            },error: function(e){ console.error(e) }
+            }, error: function (e) { console.error(e) }
         })
     });
+
 
     // $(function () {
     //     $('.date-picker').datetimepicker({
@@ -54,6 +62,30 @@
     //         format: 'YYYY-MM-DD'
     //     });
     // });
-    </script>
-@endsection
+    init()
+    function init() {
+        var val = $(".event_id").val()
+        $.ajax({
+            headers: { '_token': $('input[name="_token"]').val() },
+            method: 'GET',
+            url: '{{ route('eventshops.index')  }}/getshop/'+val,
+            success: function (d) {
+                console.log(d)
+                $('.shop_id')
+                    .find('option')
+                    .remove()
+                    .end()
+                    .append('<option></option>')
+                    .val('')
 
+                d.forEach(element => {
+                    $('.shop_id')
+                        .append($("<option></option>")
+                            .attr("value", element.shop_id)
+                            .text(element.name + ' - ' + element.location.branch));
+                });
+            }, error: function (e) { console.error(e) }
+        })
+    }
+</script>
+@endsection

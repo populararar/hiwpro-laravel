@@ -5,7 +5,7 @@
             <th>Event Shop Id</th>
             <th>Event Shop name</th>
             <th>Promotion Id</th>
-            <th>Product Id</th>
+            <th>Product Img</th>
             <th>Product Name</th>
             <th colspan="3">Action</th>
         </tr>
@@ -17,7 +17,7 @@
             <td>{!! $productevent->event_shop_id !!}</td>
             <td>{!! $productevent->eventshop->event->eventName !!}</td>
             <td>{!! $productevent->promotion_id !!}</td>
-            <td>{!! $productevent->product_id !!}</td>
+            <td><img src="{{ asset('/storage/'.$productevent->product->image_product_id) }}" alt="" width="50"></td>
             <td>{!! $productevent->product->name !!}</td>
             <td>
                 {!! Form::open(['route' => ['productevents.destroy', $productevent->id], 'method' => 'delete']) !!}

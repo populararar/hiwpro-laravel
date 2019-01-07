@@ -66,7 +66,7 @@ img:hover{
                 <h6>{{ $event->last_date }}</h6>
             </div>
         </div>
-        <div class="col-sm-3 col-md-4 ">
+        <div class="col-sm-3 col-md-4">
         <img style="border-radius: 10%" src="{{ asset('/storage/'.$event->imgPath) }}" class="img-fluid">
         </div>
         <div class="col-sm-8 col-md-7 ">

@@ -47,9 +47,8 @@
 </head>
 
 <body>
-    <div style="width:100%; height:5px; background:#df3433;">
-    </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 0 15%;">
+  
+    <nav class="sticky-top navbar navbar-expand-lg navbar-light bg-light" style="border-top: solid 5px #df3433; padding: 0 15%;">
 
         <a class="navbar-brand" href="index.php"><img class="img-fluid" style="box-sizing: border-box; margin: 0 10%;"
                 src="{{ asset('hiwpro/images/logo.png') }}" alt="">HIWPRO</a>

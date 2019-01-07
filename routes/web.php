@@ -21,6 +21,9 @@ Route::post('/login', 'HomeController@store')->name('login.store');
 Route::post('/logout', 'HomeController@destroy')->name('login.destroy');
 Route::get('/logout', 'HomeController@destroy')->name('logout.index');
 
+Route::get('/register', 'HomeController@register')->name('register');
+Route::post('/register', 'HomeController@registerStore')->name('register.store');
+
 Route::get('/home', 'HomeController@index'); 
 Route::get('/eventinfo', 'HomeController@eventinfo'); 
 Route::get('/eventdetail/{id}', 'HomeController@eventdetail')->name('event.detail'); 
@@ -31,6 +34,7 @@ Route::post('/cart','HomeController@cartAdd')->name('cart.add');
 Route::get('/cart','HomeController@cartDetail')->name('cart.detail');
 Route::get('/cart/flush','HomeController@cartFlush')->name('cart.flush');
 
+Route::get('/cart/seller','HomeController@cartSeller')->name('cart.seller');
 
 Route::middleware(['login'])->group(function () {
     
@@ -59,6 +63,7 @@ Route::middleware(['login'])->group(function () {
     Route::resource('menus', 'MenuController');
     
     Route::resource('permissions', 'PermissionsController');
-Route::resource('eventJoineds', 'EventJoinedController');
+    
+    Route::resource('eventJoineds', 'EventJoinedController');
 
 });

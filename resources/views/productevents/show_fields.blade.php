@@ -22,6 +22,13 @@
     <p>{!! $productevent->promotion_id !!}</p>
 </div>
 
+{{-- <!-- Imgpath Field -->
+<div class="form-group">
+    {!! Form::label('image_product_id', 'Imgpath:') !!}
+    <p><img src="{{ asset('/storage/'.$product->image_product_id) }}" alt="" width="250"></p>
+</div> --}}
+
+
 <!-- Created At Field -->
 <div class="form-group">
     {!! Form::label('created_at', 'Created At:') !!}

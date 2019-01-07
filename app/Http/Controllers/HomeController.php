@@ -7,6 +7,7 @@ use App\Repositories\EventShopRepository;
 use App\Repositories\PermissionsRepository;
 use App\Repositories\ProducteventRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\UserRolesRepository;
 use App\Repositories\UsersRepository;
 use Carbon\Carbon;
 use Flash;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Validator;
 
 class HomeController extends Controller
 {
@@ -36,12 +38,15 @@ class HomeController extends Controller
     /** @var  ProductRepository */
     private $productRepository;
 
+    /** @var  UserRolesRepository */
+    private $userRolesRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo, UsersRepository $usersRepo, PermissionsRepository $permissionRepo)
+    public function __construct(UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo, UsersRepository $usersRepo, PermissionsRepository $permissionRepo)
     {
         $this->usersRepository = $usersRepo;
         $this->permissionRepository = $permissionRepo;
@@ -49,6 +54,7 @@ class HomeController extends Controller
         $this->eventShopRepository = $eventShopRepo;
         $this->producteventRepository = $producteventRepo;
         $this->productRepository = $productRepo;
+        $this->userRolesRepository = $userRolesRepo;
     }
 
     /**
@@ -84,6 +90,8 @@ class HomeController extends Controller
         $eventShopIds = [];
         foreach ($eventShops as $eventshop) {
             $id = $eventshop->id;
+            $event->start_date = $this->formatEventDate($event->startDate);
+            $event->last_date = $this->formatEventDate($event->lastDate);
             array_push($eventShopIds, $id);
         }
         //SELECT * FROM hiwpro.product_event where event_shop_id in ();
@@ -121,33 +129,67 @@ class HomeController extends Controller
 
         $item = [
             'id' => $product->product_id,
+            // 'event' => $eventShop->event_id->event_name,
             'name' => $product->name,
             'price' => $product->price,
+
             'quantity' => $input['quantity'],
             'attributes' => [
+                "key" => trim($eventShop->event->eventName . ' ' . $eventShop->shop->name, " "),
                 "fee" => $input['fee'],
                 "event_shop_id" => $input['event_shop_id'],
                 "shippping" => $input['shippping'],
+                'image_product_id' => $product->image_product_id,
             ],
         ];
+
         \Cart::add($item);
 
         Flash::success('Add to cart successfully.');
+
         // dd($input, \Cart::getContent());
         return redirect()->route('event.detail', ['id' => $eventShop->event_id]);
     }
 
-    public function cartDetail()
+    public function cartDetail(Request $request)
     {
-        dd(\Cart::getContent());
+        // $id = $req->id ;
+        // $name = $req->name;
+        // $quantity = $req->quantity;
+        // $cost = $req->cost;
+        // $image = $req->image;
+
+        // Cart::add(array('id' => $id,
+        //                 'name' => $name,
+        //                 'qty' => $quantity,
+        //                 'price' => $cost,
+        //                 'image' => $image));
+
+        // $cart = Cart::content();
+
+        $cart = \Cart::getContent();
+
+        $shopGroup = $cart->groupBy('attributes.key');
+
+        return view('cart')->with('cart', $cart)->with('shopGroup', $shopGroup);
+
     }
 
     public function cartFlush()
     {
         \Cart::clear();
-        return redirect()->route('home');
+
+        // \Cart::remove($id);
+        // $cart =  \Cart::getContent();  ->with('cart',$cart)
+
+        return redirect()->route('cart.add');
     }
 
+    public function cartSeller()
+    {
+        $cart = \Cart::getContent();
+        return view('cart2')->with('cart', $cart);
+    }
     /**
      * Show the application dashboard.
      *
@@ -189,6 +231,7 @@ class HomeController extends Controller
     private function getPermissions()
     {
         $user = Auth::user();
+        // dd($user->usersRoles);
         $role_id = $user->usersRoles->first()->role_id;
         if (!empty($role_id)) {
             $permissions = $this->permissionRepository->with(['menu'])->findWhere([
@@ -210,6 +253,50 @@ class HomeController extends Controller
         return view('auth.login');
     }
 
+    public function register()
+    {
+        return view('auth.register');
+    }
+    public function registerStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'role' => 'required',
+            'email' => 'required|unique:users|max:255',
+            'password' => 'required|min:6|max:18',
+            'password_confirmation' => 'required|same:password|min:6|max:18',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('register')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        // dd($input);
+        $user = $this->usersRepository->create($input);
+
+        if (empty($user)) {
+            return redirect()->route('register')
+                ->withErrors(['error' => 'register fail'])
+                ->withInput();
+        }
+
+        $role = $input['role'];
+
+        $role = $this->userRolesRepository->create([
+            'user_id' => $user->id,
+            'role_id' => $role,
+            'status' => '1',
+        ]);
+
+        Flash::success('Register saved successfully.');
+
+        return redirect()->route('login.index');
+    }
     /**
      * Store a newly created Roles in storage.
      *

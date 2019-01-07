@@ -143,7 +143,17 @@ class EventShopController extends AppBaseController
             return redirect(route('eventshops.index'));
         }
 
-        return view('event_shops.edit')->with('eventShop', $eventShop);
+
+        // $dateNow = Carbon::now()->format('Y-m-d 23:59:59');
+        // $events = $this->eventRepository->findWhere([['event_exp', '>', $dateNow]]);
+
+        $events = $this->eventRepository->all();
+
+        $events = $events->mapWithKeys(function ($item) {
+            return [$item['event_id'] => $item['eventName']];
+        });
+
+        return view('event_shops.edit')->with('eventShop', $eventShop)->with('events', $events);;
     }
 
     /**

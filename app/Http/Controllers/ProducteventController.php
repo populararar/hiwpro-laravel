@@ -18,7 +18,7 @@ class ProducteventController extends AppBaseController
     /** @var  ProducteventRepository */
     private $producteventRepository;
 
-    /** @var  ProducteventRepository */
+    /** @var  ProductRepository */
     private $productRepository;
 
     /** @var  EventShopRepository */
@@ -113,8 +113,10 @@ class ProducteventController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
+       
+        $product = $this->productRepository->findWhere([['product_id', '=', $id]])->first();
         $productevent = $this->producteventRepository->findWithoutFail($id);
 
         if (empty($productevent)) {
@@ -123,7 +125,7 @@ class ProducteventController extends AppBaseController
             return redirect(route('productevents.index'));
         }
 
-        return view('productevents.show')->with('productevent', $productevent);
+        return view('productevents.show')->with('productevent', $productevent)->with('product', $product);
     }
 
     /**
@@ -135,6 +137,7 @@ class ProducteventController extends AppBaseController
      */
     public function edit($id)
     {
+        
         $productevent = $this->producteventRepository->findWithoutFail($id);
 
         if (empty($productevent)) {

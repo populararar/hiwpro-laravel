@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Repositories\CategoryRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
+use App\Repositories\ShopRepository;
 use Flash;
+use Illuminate\Http\Request;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -16,9 +17,13 @@ class CategoryController extends AppBaseController
     /** @var  CategoryRepository */
     private $categoryRepository;
 
-    public function __construct(CategoryRepository $categoryRepo)
+    /** @var  ShopRepository */
+    private $shopRepository;
+
+    public function __construct(CategoryRepository $categoryRepo, ShopRepository $shopRepo)
     {
         $this->categoryRepository = $categoryRepo;
+        $this->shopRepository = $shopRepo;
     }
 
     /**
@@ -42,9 +47,21 @@ class CategoryController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('categories.create');
+        $this->shopRepository->pushCriteria(new RequestCriteria($request));
+        $shops = $this->shopRepository->with('location')->all();
+
+        $shops = $shops->mapWithKeys(function ($item) {
+            $item->name = $item->name . ' - ' . $item->location->location_name;
+            //  dd($item->name);
+            return [$item['shop_id'] => $item['name']];
+        });
+        // dd($shops);
+
+        return view('categories.create')
+            ->with('shops', $shops);
+
     }
 
     /**
@@ -102,7 +119,15 @@ class CategoryController extends AppBaseController
             return redirect(route('categories.index'));
         }
 
-        return view('categories.edit')->with('category', $category);
+        $this->shopRepository->pushCriteria(new RequestCriteria($request));
+        $shops = $this->shopRepository->with('location')->all();
+
+        $shops = $shops->mapWithKeys(function ($item) {
+            $item->name = $item->name . ' - ' . $item->location->location_name;
+            return [$item['shop_id'] => $item['name']];
+        });
+
+        return view('categories.edit')->with('category', $category)->with('shops', $shops);
     }
 
     /**
