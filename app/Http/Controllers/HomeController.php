@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\EventJoinedRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\EventShopRepository;
 use App\Repositories\PermissionsRepository;
@@ -41,13 +42,17 @@ class HomeController extends Controller
     /** @var  UserRolesRepository */
     private $userRolesRepository;
 
+    /** @var  EventJoinedRepository */
+    private $eventJoinedRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo, UsersRepository $usersRepo, PermissionsRepository $permissionRepo)
+    public function __construct(EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo, UsersRepository $usersRepo, PermissionsRepository $permissionRepo)
     {
+        $this->eventJoinedRepository = $eventJoinedRepo;
         $this->usersRepository = $usersRepo;
         $this->permissionRepository = $permissionRepo;
         $this->eventRepository = $eventRepo;
@@ -55,6 +60,101 @@ class HomeController extends Controller
         $this->producteventRepository = $producteventRepo;
         $this->productRepository = $productRepo;
         $this->userRolesRepository = $userRolesRepo;
+    }
+
+    public function cartDetail(Request $request)
+    {
+        // $id = $req->id ;
+        // $name = $req->name;
+        // $quantity = $req->quantity;
+        // $cost = $req->cost;
+        // $image = $req->image;
+
+        // Cart::add(array('id' => $id,
+        //                 'name' => $name,
+        //                 'qty' => $quantity,
+        //                 'price' => $cost,
+        //                 'image' => $image));
+
+        // $cart = Cart::content();
+
+        $cart = \Cart::getContent();
+        $shopGroup = $cart->groupBy('attributes.key');
+
+        $shopGroup = $shopGroup->map(function ($item, $key) {
+            // Get saller in event shop
+            $eventShopId = $item->first()->attributes->event_shop_id;
+            $item->sellers = $this->getSallerInEventShop($eventShopId);
+            return $item;
+        });
+
+        // $request->session()->put('_cart', $cart);
+
+        return view('cart')->with('cart', $cart)->with('shopGroup', $shopGroup);
+    }
+
+    public function order(Request $request)
+    {
+        dd($request->all());
+    }
+
+    /**
+     * addSeller
+     *
+     * @param  mixed $eventShopId
+     * @param  mixed $sellerId
+     *
+     * @return void
+     */
+    public function addSeller($eventShopId, $sellerId, Request $request)
+    {
+        dd($request->session()->get('_cart'));
+        $cart = $request->session()->get('_cart');
+        $updatelog = [];
+        foreach ($cart as $item) {
+            if ($eventShopId == $item->attributes->event_shop_id) {
+                $free = $item->attributes->get('fee');
+                $event_shop_id = $item->attributes->get('event_shop_id');
+                $shippping = $item->attributes->get('shippping');
+                $image_product_id = $item->attributes->get('image_product_id');
+                $key = $item->attributes->get('key');
+                array_push($updatelog, $item->id);
+                $attributes = [
+                    'free' => $free,
+                    'key' => $key,
+                    'update' => true,
+                    'event_shop_id' => $event_shop_id,
+                    'shippping' => $shippping,
+                    'image_product_id' => $image_product_id,
+                    'seller_id' => $sellerId,
+                ];
+
+                $item->attributes = $attributes;
+            }
+        }
+
+        $request->session()->put('_cart', $cart);
+
+        dd($updatelog, $request->session()->get('_cart'));
+
+        return response()->json(['cart' => $cart]);
+    }
+
+    /**
+     *getSallerInEventShop Do query get saller by event shop id
+     *
+     * @param  mixed $eventShopId
+     *
+     * @return Array
+     */
+    private function getSallerInEventShop($eventShopId)
+    {
+        $eventJoineds = $this->eventJoinedRepository->with('seller')->findWhere(['event_shop_id' => $eventShopId]);
+        $sellers = $eventJoineds->map(function ($eventJoin) {
+            return $eventJoin->seller;
+        });
+
+        return $sellers;
     }
 
     /**
@@ -151,30 +251,6 @@ class HomeController extends Controller
         return redirect()->route('event.detail', ['id' => $eventShop->event_id]);
     }
 
-    public function cartDetail(Request $request)
-    {
-        // $id = $req->id ;
-        // $name = $req->name;
-        // $quantity = $req->quantity;
-        // $cost = $req->cost;
-        // $image = $req->image;
-
-        // Cart::add(array('id' => $id,
-        //                 'name' => $name,
-        //                 'qty' => $quantity,
-        //                 'price' => $cost,
-        //                 'image' => $image));
-
-        // $cart = Cart::content();
-
-        $cart = \Cart::getContent();
-
-        $shopGroup = $cart->groupBy('attributes.key');
-
-        return view('cart')->with('cart', $cart)->with('shopGroup', $shopGroup);
-
-    }
-
     public function cartFlush()
     {
         \Cart::clear();
@@ -190,6 +266,7 @@ class HomeController extends Controller
         $cart = \Cart::getContent();
         return view('cart2')->with('cart', $cart);
     }
+
     /**
      * Show the application dashboard.
      *
@@ -257,6 +334,7 @@ class HomeController extends Controller
     {
         return view('auth.register');
     }
+
     public function registerStore(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -322,6 +400,10 @@ class HomeController extends Controller
 
             if ($user->usersRoles->first()->role->name == 'ADMIN') {
                 return redirect()->route('events.index');
+            }
+
+            if ($user->usersRoles->first()->role->name == 'SELLER') {
+                return redirect()->route('eventJoineds.index');
             }
 
             return redirect()->route('home');

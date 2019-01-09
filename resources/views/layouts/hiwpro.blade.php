@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/navbar-header.css') }}">
 
 
+    
 
     <title>HIWPRO</title>
 
@@ -42,13 +43,30 @@
 	background-image: url('/Christmas/public/images/bg-howto.png');
 	padding-top: 5%; padding-bottom: 5%;
   }
+  .navbar-top{
+    position: relative;
+    background: #fff !important;
+    border-bottom: 1px solid #efefef;
+    box-shadow: 0 0 4px 0 #eee;
+    border-top: solid 5px #cf2132; 
+    padding: 0 15%;
+    }
+    .navbar-light .navbar-nav .nav-link {
+        color: rgb(0, 0, 0);
+    }
 </style>
+   <script type="text/javascript" src="{{ asset('hiwpro/js/jquery-3.3.1.min.js') }}"></script>
+   <script type="text/javascript" src="{{ asset('hiwpro/js/popper.min.js') }}"></script>
+   <script type="text/javascript" src="{{ asset('hiwpro/bootstrap-4.1/js/bootstrap.min.js') }}"></script>
+   <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
 
+   <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/src/js/owl.carousel.js') }}"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 
 <body>
   
-    <nav class="sticky-top navbar navbar-expand-lg navbar-light bg-light" style="border-top: solid 5px #df3433; padding: 0 15%;">
+    <nav class="navbar-top sticky-top navbar navbar-expand-lg navbar-light bg-light" >
 
         <a class="navbar-brand" href="index.php"><img class="img-fluid" style="box-sizing: border-box; margin: 0 10%;"
                 src="{{ asset('hiwpro/images/logo.png') }}" alt="">HIWPRO</a>
@@ -69,13 +87,14 @@
                     <a class="nav-link" href="#">นักหิ้วมือโปร</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">หิ้วกับเรา</a>
+                    <a class="nav-link" href="{{ route('register') }}">หิ้วกับเรา</a>
                 </li>
 
             </ul>
             <ul class="nav justify-content-end">
                 <li class="nav-item">
-                <a class="nav-link active" href="{{ route('cart.detail') }}"> <i class="fas fa-shopping-cart"></i> {{ \Cart::getContent()->count() }}</a>
+                <a class="nav-link active" href="{{ route('cart.detail') }}"> <i class="fas fa-shopping-cart"></i>
+                     {{ \Cart::getContent()->count() }}</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -130,7 +149,7 @@
                                     </form>
                                 </div>
                                 <div style="width:300px;padding:5%;" class="bottom text-center">
-                                    <p class="text-black">เป็นส่วนหนึ่งกับเรา <a href="reg-customer.php"><b>สมัครสมาชิก</b></a>
+                                    <p class="text-black">เป็นส่วนหนึ่งกับเรา <a href="{{ route('register') }}"><b>สมัครสมาชิก</b></a>
                                         <p>
                                 </div>
                             </div>
@@ -138,7 +157,7 @@
                     </ul>
                 </li>
                 <li class="dropdown" style="margin-left:20px;">
-                    <a href="{{ route('login.index') }}"  >สมัครสมาชิก</a>
+                    <a href="{{ route('register') }}"  >สมัครสมาชิก</a>
                 </li>
                 <!-- end login -->
 
@@ -183,8 +202,8 @@
 
                         <!--    <h1 class="title-widget">Useful links</h1> -->
                         <ul>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> เริ่มต้นขายของที่นี่</a></li>
-                            <li><a href="Resister.php"><i class="fa fa-angle-double-right"></i> สมัครสมาชิก</a></li>
+                            <li><a href="{{ route('register') }}"><i class="fa fa-angle-double-right"></i> เริ่มต้นขายของที่นี่</a></li>
+                            <li><a href="{{ route('register') }}"><i class="fa fa-angle-double-right"></i> สมัครสมาชิก</a></li>
                             <!-- <li><a  href="#"><i class="fa fa-angle-double-right"></i>  เข้าสู่ระบบ</a></li> -->
                         </ul>
                     </li>
@@ -254,12 +273,6 @@
 
     </div>
 
-    <script type="text/javascript" src="{{ asset('hiwpro/js/jquery-3.3.1.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('hiwpro/js/popper.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('hiwpro/bootstrap-4.1/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
-
-    <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/src/js/owl.carousel.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ 
     @yield('scripts')
 </html>

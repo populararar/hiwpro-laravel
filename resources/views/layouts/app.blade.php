@@ -28,8 +28,15 @@
     
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap.min.css">
 
+    <link href="https://fonts.googleapis.com/css?family=Kanit|Open+Sans" rel="stylesheet">
+
     @yield('css')
 </head>
+<style>
+body{
+    font-family: kanit;
+}
+</style>
 
 <body class="skin-red sidebar-mini">
 @if (!Auth::guest())

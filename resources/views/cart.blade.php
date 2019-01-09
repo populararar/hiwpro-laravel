@@ -2,7 +2,7 @@
 
 @section('content')
 <style>
-        .qty .count {
+    .qty .count {
             color: #000;
             display: inline-block;
             vertical-align: top;
@@ -71,128 +71,215 @@
             max-width: 100%;
             padding: 0%;
         }
-        </style>
+        /* ---------------------- */
+        *{box-sizing:border-box} 
+.tabs { 
+ 
+  padding: 0px; 
+  margin: 0 auto; 
+  position: relative; 
+  border: 1px solid #DEE8F2; 
+} 
+section { 
+  display: none;  
+  padding: 15px; 
+  background: white; 
+  position: absolute; 
+  top: 0; 
+  left: 180px; 
+} 
+p { 
+  margin: 0; 
+} 
+input { 
+  display: none; 
+} 
+label { 
+  display: block; 
+  width: 180px; 
+  padding: 15px; 
+  color: #4F5966; 
+  background: #DEE8F2; 
+  cursor: pointer; 
+} 
+input:checked + label { 
+  color: #555; 
+  background: white; 
+} 
+#tab1:checked ~ #content1, #tab2:checked ~ #content2, #tab3:checked ~ #content3, #tab4:checked ~ #content4 { 
+  display: block; 
+} 
+section { 
+  animation: scale 0.7s ease-in-out; 
+} 
+@keyframes scale { 
+  0% { 
+  transform: scale(0.9); 
+  opacity: 0; 
+  } 
+  50% { 
+  transform: scale(1.005); 
+  opacity: 0.5; 
+  } 
+  100% { 
+  transform: scale(1); 
+  opacity: 1; 
+  } 
+}
+/* 
+********************
+ */
+ 
+.tabset > label {
+  position: relative;
+  display: inline-block;
+  padding: 15px 15px 25px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tabset > label::after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+  width: 22px;
+  height: 4px;
+  background: #8d8d8d;
+}
+
+.tabset > label:hover,
+.tabset > input:focus + label {
+  color: #06c;
+}
+
+.tabset > label:hover::after,
+.tabset > input:focus + label::after,
+.tabset > input:checked + label::after {
+  background: #06c;
+}
+
+.tabset > input:checked + label {
+  border-color: #ccc;
+  border-bottom: 1px solid #fff;
+  margin-bottom: -1px;
+}
+
+.tab-panel {
+  padding: 30px 0;
+  border-top: 1px solid #ccc;
+}
+
+/*
+ Demo purposes only
+*/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.tabset {
+  max-width: 65em;
+}
+
+.tabset > label:hover::after, .tabset > input:focus + label::after, .tabset > input:checked + label::after {
+    background: #bd2130;
+}
+.tabset > label:hover::after, .tabset > input:focus + label::after, .tabset > input:checked + label::after {
+    background: #bd2130;
+}
+.tabset > label:hover, .tabset > input:focus + label {
+    color: #bd2130;
+}
+</style>
+
+@php
+$sum=0;$count=0;$count2=0;
+@endphp
 
 <div class="container" style="padding: 0 5%;">
-        <div class="col">
-          <h4 style="margin-top: 2%; color: #df3433;">รายการสั่งซื้อ </h4>
-          <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>
-        </div>
+    <div class="col">
+        <h4 style="margin-top: 2%; color: #df3433;">รายการสั่งซื้อ </h4>
+        <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>
+    </div>
 
-    <div class="row"  style="background-color:#fff;">
+    <div class="row" style="background-color:#fff;">
         <div class="col-12">
-        <div class="form-group">
-            <div class="btn-group d-flex justify-content-center ">
-                <button style="text-align:center; width: 50%;"  type="button" class="btn btn-danger">รายการสั่งซื้อ</button>
-                <button style="text-align:center; width: 50%;"  type="button" class="btn btn-outline-danger">สรุปรายการสั่งซื้อ</button>
-                <button style="text-align:center;width:50% "type="button" class="btn btn-outline-danger align-self-center ">ที่อยู่การจัดส่ง</button>
-                <button style="text-align:center;width:50% "type="button" class="btn btn-outline-danger align-self-center ">ยืนยันการสั่งซื้อ</button>
-            </div>
-        </div>
-        </div>
-    </div>
-    <div class="weapper" style="background-color: #F9F9F9; padding:3%; ">
-    
-{{--  <a href="#" class="btn btn pull-right btn-primary btn-danger btn-sm " >Update</a> --}}
-    
-    {{--   <div class="row" style="background-color:#fff;padding:5%;">
-    </div>row --}}
-    @php
-    $sum=0;$count=0;$count2=0; 
-    @endphp
-   
-    @if (!empty($cart))
-   
-    <div class="row">
-        
-         @foreach ($cart as $product)
-        <div class="col-8" style="padding:2% 5%; background-color:white;margin-top:2%;">
-            <h5 style="color:#df3433;">{{ $product->name }}</h5> 
-            <div class="row" style="border-top: solid 2px #e7eaec;">
-                <div class="col-2" style="font-weight:bold;">รูป</div>
-                <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
-                <div class="col-2" style="font-weight:bold;">ราคา</div>
-                <div class="col-2" style="font-weight:bold;">จำนวน</div>
-                <div class="col-1" style="font-weight:bold;">รวม</div>
-                <div class="col-1" style="font-weight:bold;">แก้ไข</div>
-            </div> 
-            
-            <div class="row" style="border-top: solid 1px #e7eaec;padding:5% 0%;">
-                   
-                <div class="col-2">
-                <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}" class="img-fluid">
+            <div class="form-group">
+                <div class="btn-group d-flex justify-content-center ">
+                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-danger">รายการสั่งซื้อ</button>
+                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-outline-danger">สรุปรายการสั่งซื้อ</button>
+                    <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ที่อยู่การจัดส่ง</button>
+                    <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ยืนยันการสั่งซื้อ</button>
                 </div>
-                <div class="col-4">{{ $product->name }}<br> ค่าหิ้ว<br>ค่าจัดส่ง<br> </div>
-                <div class="col-2">{{ $product->price }}<br>{{ $product->attributes->fee }}<br>{{ $product->attributes->shippping }}</div>
-                <div class="col-2">{{ 
-                
-                $qty = $product->quantity, 
-                $p = $product->price, 
-                $f = $product->attributes->fee,
-                $s = $product->attributes->shippping
-                }}</div>
-                <div class="col-1">{{ $sum = $qty*$p  }}</div>
-                <div class="col-1"><a href="{{ route('cart.flush', ['id' => $product->id]) }}" style="color:#df3433;"><i class="far fa-trash-alt"></i></a></div>
-                
-                @php
-                $count+=$sum;
-                @endphp
-               
             </div>
-            <div class="row" style="border-top: solid 2px #e7eaec;">
-                <div class="col-8 float-right ">  1 Items Total: {{ $Total = ($sum+$f+$s) }} THB</div>
-                <div class="col-4 float-left"> {{ $count2+=$Total }}THB</div>
-                   
-            </div>
-        </div>
-    @endforeach 
-    {{-- fixed-bottom --}}
-        <div class="col-4  " style="padding:2% 5%; background-color:white; width:80%;  margin:2%;">
-            <div class="row">
-                    <table class="table table-hover">
-                            <thead>
-                              <tr>
-                                <th scope="col">Order</th>
-                                <th scope="col">Summary </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">Subtotal</th>
-                                <td> {{$count}} THB </td>
-                                
-                              </tr>
-                              <tr>
-                                <th scope="row">All Total</th>
-                                <td> {{$count2}} THB</td>
-                               
-                              </tr>
-                             
-                            </tbody>
-                          </table>
-                
-            </div>
-            <a  href="{{  route('cart.seller') }}" style='color: #df3433;'> 
-            <button type="button" class="btn btn-success">Begin Checkout</button></a>
         </div>
     </div>
 
-   
-    @else
-    <div class="row" style="border-top: solid 2px #e7eaec;">
-            <div class=" float-right ">
-               1 Items Total: {{ $Total }} THB<h5> </h5>
+    <div class="weapper" style="background-color: #F9F9F9; padding:3%; ">
+        @foreach ($shopGroup as $key => $group)
+        {{-- {{dd($group->saller)}} --}}
+        <div class="row" style="margin-bottom:20px;">
+            <h3>{{ $key }}</h3>
+            @foreach ($group as $product)
+            <div class="col-12" style="padding:2% 5%; background-color:white;margin-top:2%;">
+                <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5>
+                <div class="row" style="border-top: solid 2px #e7eaec;">
+                    <div class="col-2" style="font-weight:bold;">รูป</div>
+                    <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
+                    <div class="col-2" style="font-weight:bold;">ราคา</div>
+                    <div class="col-2" style="font-weight:bold;">จำนวน</div>
+                    <div class="col-1" style="font-weight:bold;">รวม</div>
+                    <div class="col-1" style="font-weight:bold;">แก้ไข</div>
+                </div>
+
+                <div class="row" style="border-top: solid 1px #e7eaec;padding:5% 0%;">
+
+                    <div class="col-2">
+                        <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
+                            class="img-fluid">
+                    </div>
+                    <div class="col-4">{{ $product->name }}<br> ค่าหิ้ว<br>ค่าจัดส่ง<br> </div>
+                    <div class="col-2">{{ $product->price }}<br>{{ $product->attributes->fee }}<br>{{
+                        $product->attributes->shippping }}
+                    </div>
+                    <div class="col-2">{{
+
+                        $qty = $product->quantity,
+                        $p = $product->price,
+                        $f = $product->attributes->fee,
+                        $s = $product->attributes->shippping
+                        }}
+                    </div>
+                    <div class="col-1">{{ $sum = $qty*$p }}</div>
+                    <div class="col-1"><a href="{{ route('cart.flush', ['id' => $product->id]) }}" style="color:#df3433;"><i
+                                class="far fa-trash-alt"></i></a>
+                    </div>
+
+                    @php
+                    $count+=$sum;
+                    @endphp
+
+                </div>
+                <div class="row" style="border-top: solid 2px #e7eaec;">
+                    <div class="col-8 float-right "> 1 Items Total: {{ $Total = ($sum+$f+$s) }} THB</div>
+                    <div class="col-4 float-left"> {{ $count2+=$Total }}THB</div>
+                </div>
+              
             </div>
-                {{ $sum+= $Total}} THB
+            @endforeach
+            @include('saler')
         </div>
-    การสั่งสินค้าเป็น 0
-    @endif
-    
+        @endforeach
     </div>
-    {{-- wrapper --}}
-  
+    <form id="cart-form" method="POST" name="cart-form" action="{{route('cart.order')}}">
+            {!! csrf_field() !!}
+        <button type="button" class="btn btn-success btn-block" onclick="saveData()">Submit</button>
+    </form>
 </div>
-<!-- container -->
 
 @endsection
 
@@ -213,7 +300,35 @@
             }
         });
     });
+    var form = $('#cart-form')
+    function addSeller(eventShopId, sellerId){
+        var data = eventShopId+'|'+sellerId
+        var filter = [];
+        $("input[name*='seller']" ).filter(function( index ) {
+            var a = $( this ).val()
+            if(a.split("|")[0] == eventShopId){
+                console.log( $( this ).val().split("|")[0] , eventShopId)
+               
+                $( this ).remove();
+                return true
+            }
+            return false
+        });
 
+        if (filter.length <1)  form.append('<input type="text" name="seller[]" value="'+data+'">');
+    }
 
+    function saveData(){
+        var i = 0
+        $("input[name*='seller']" ).each(function(index){
+            i++;
+        })
+
+        if (i < {{ count($shopGroup) }}) {
+            alert("Please select seller!")
+            return
+        }
+        form.submit()
+    }
 </script>
 @endsection

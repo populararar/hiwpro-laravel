@@ -1,7 +1,7 @@
 <table class="table table-responsive" id="events-table">
     <thead>
         <tr>
-            <th>Eventname</th>
+        <th style="width:30%;">Eventname</th>
         <th>Startdate</th>
         <th>Lastdate</th>
         <th>Image</th>
@@ -26,8 +26,8 @@
             <td>
                 {!! Form::open(['route' => ['events.destroy', $event->event_id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('events.show', [$event->event_id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a href="{!! route('events.edit', [$event->event_id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
+                    <a href="{!! route('events.show', [$event->event_id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-folder-open"></i></a>
+                    <a href="{!! route('events.edit', [$event->event_id]) !!}" class='btn btn-warning btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
                     {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
                 </div>
                 {!! Form::close() !!}

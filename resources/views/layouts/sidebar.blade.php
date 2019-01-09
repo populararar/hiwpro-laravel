@@ -5,8 +5,8 @@
 
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
-            <div class="pull-left image">
-                <img src="https://sv1.picz.in.th/images/2018/12/14/9YJeFP.png" class="img-circle"
+            <div class="pull-left image" style="padding-left:5%;">
+                <img src="https://sv1.picz.in.th/images/2018/12/14/9YJeFP.png" class=" "
                      alt="User Image"/>
             </div>
             <div class="pull-left info">

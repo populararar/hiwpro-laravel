@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateProducteventRequest;
 use App\Http\Requests\UpdateProducteventRequest;
+use App\Repositories\EventRepository;
 use App\Repositories\EventShopRepository;
 use App\Repositories\ProducteventRepository;
 use App\Repositories\ProductRepository;
@@ -24,11 +25,15 @@ class ProducteventController extends AppBaseController
     /** @var  EventShopRepository */
     private $eventShopRepository;
 
-    public function __construct(ProducteventRepository $producteventRepo, ProductRepository $productRepo, EventShopRepository $eventShopRepo)
+    /** @var  EventRepository */
+    private $eventRepository;
+
+    public function __construct(EventRepository $EventRepo,ProducteventRepository $producteventRepo, ProductRepository $productRepo, EventShopRepository $eventShopRepo)
     {
         $this->producteventRepository = $producteventRepo;
         $this->productRepository = $productRepo;
         $this->eventShopRepository = $eventShopRepo;
+        $this->eventRepository = $EventRepo;
     }
 
     private function getEventShopId()
@@ -74,12 +79,12 @@ class ProducteventController extends AppBaseController
         $eventShop = $this->eventShopRepository->findWithoutFail($id);
 
         if (empty($eventShop)) {
-            return redirect()->route('eventshops.inex');
+            return redirect()->route('eventshops.index');
         }
 
         $products = $this->productRepository->findWhere(['shop_id' => $eventShop->shop_id]);
 
-        return view('productevents.create')->with('products', $products);
+        return view('productevents.create')->with('products', $products)->with('event_shop_id', $id);
     }
 
     /**
@@ -113,9 +118,9 @@ class ProducteventController extends AppBaseController
      *
      * @return Response
      */
-    public function show(Request $request,$id)
+    public function show(Request $request, $id)
     {
-       
+        // $event = $this->eventRepository->findWhere([['event_id', '=', $id]])->first();
         $product = $this->productRepository->findWhere([['product_id', '=', $id]])->first();
         $productevent = $this->producteventRepository->findWithoutFail($id);
 
@@ -137,7 +142,7 @@ class ProducteventController extends AppBaseController
      */
     public function edit($id)
     {
-        
+
         $productevent = $this->producteventRepository->findWithoutFail($id);
 
         if (empty($productevent)) {
@@ -146,7 +151,12 @@ class ProducteventController extends AppBaseController
             return redirect(route('productevents.index'));
         }
 
-        return view('productevents.edit')->with('productevent', $productevent);
+        $event_shop_id = $this->getEventShopId();
+        if ($id < 1) {
+            return redirect(route('eventshops.index'));
+        }
+
+        return view('productevents.edit')->with('productevent', $productevent)->with('event_shop_id', $event_shop_id);
     }
 
     /**

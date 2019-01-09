@@ -23,6 +23,7 @@
 
     <!-- iCheck -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/_all.css">
+    <link href="https://fonts.googleapis.com/css?family=Kanit|Open+Sans" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,6 +33,15 @@
     <![endif]-->
 
 </head>
+<style>
+    body{
+        font-family: 'Kanit';
+        background: red;
+    }
+    .login-page, .register-page {
+        background: #f6f6f6;
+    }
+</style>
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">

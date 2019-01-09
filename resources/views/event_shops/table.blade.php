@@ -2,10 +2,10 @@
     <thead>
         <tr>
             <th>Event Id</th>
-            <th>Event name</th>
+            <th style="width:40%;">Event name</th>
             <th>Shop Id</th>
             <th>Shop name</th>
-            <th colspan="3">Action</th>
+            <th colspan="4">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -19,10 +19,10 @@
                 {!! Form::open(['route' => ['eventshops.destroy', $eventShop->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{!! route('eventshops.show', [$eventShop->id]) !!}" class='btn btn-default btn-xs'><i
-                            class="glyphicon glyphicon-eye-open"></i></a>
-                    <a href="{!! route('productevents.index.event', ['event_shop_id' => $eventShop->id]) !!}" class='btn btn-default btn-xs'><i
-                            class="glyphicon glyphicon-eye-open"></i></a>
-                    <a href="{!! route('eventshops.edit', [$eventShop->id]) !!}" class='btn btn-default btn-xs'><i
+                            class="glyphicon glyphicon-folder-open"></i></a>
+                    <a href="{!! route('productevents.index.event', ['event_shop_id' => $eventShop->id]) !!}" class='btn btn-primary btn-defalt btn-xs'><i
+                            class="glyphicon glyphicon-shopping-cart"></i></a>
+                    <a href="{!! route('eventshops.edit', [$eventShop->id]) !!}" class='btn btn-warning btn-xs'><i
                             class="glyphicon glyphicon-edit"></i></a>
                     {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn
                     btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}

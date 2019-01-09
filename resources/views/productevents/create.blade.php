@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="content-header">
-        <h1>
-            Productevent
-        </h1>
+<link href="https://fonts.googleapis.com/css?family=Kanit|Open+Sans" rel="stylesheet">
+
+
+<section class="content-header">
+    <h1 class="pull-left" style="font-family: Kanit;">Product events</h1>
+
     </section>
     <div class="content">
         @include('adminlte-templates::common.errors')

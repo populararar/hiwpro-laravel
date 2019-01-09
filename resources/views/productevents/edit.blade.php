@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="content-header">
-        <h1>
-            Productevent
+<link href="https://fonts.googleapis.com/css?family=Kanit|Open+Sans" rel="stylesheet">
+
+
+<section class="content-header">
+    <h1 class="pull-left" style="font-family: Kanit;">EDIT Product events</h1>
         </h1>
    </section>
    <div class="content">

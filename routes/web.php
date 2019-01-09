@@ -35,6 +35,8 @@ Route::get('/cart','HomeController@cartDetail')->name('cart.detail');
 Route::get('/cart/flush','HomeController@cartFlush')->name('cart.flush');
 
 Route::get('/cart/seller','HomeController@cartSeller')->name('cart.seller');
+Route::post('/cart/order','HomeController@order')->name('cart.order');
+Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}','HomeController@addSeller')->name('cart.seller.add');
 
 Route::middleware(['login'])->group(function () {
     

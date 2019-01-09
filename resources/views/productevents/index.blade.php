@@ -1,26 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="content-header">
-        <h1 class="pull-left">Productevents</h1>
-        <h1 class="pull-right">
-           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('productevents.create') !!}">Add New</a>
-        </h1>
-    </section>
-    <div class="content">
-        <div class="clearfix"></div>
+<link href="https://fonts.googleapis.com/css?family=Kanit|Open+Sans" rel="stylesheet">
 
-        @include('flash::message')
 
-        <div class="clearfix"></div>
-        <div class="box box-primary">
-            <div class="box-body">
-                    @include('productevents.table')
-            </div>
-        </div>
-        <div class="text-center">
-        
+<section class="content-header">
+    <h1 class="pull-left" style="font-family: Kanit;">Product events</h1>
+    <h1 class="pull-right">
+        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('productevents.create') !!}">Add New</a>
+    </h1>
+</section>
+<div class="content">
+    <div class="clearfix"></div>
+
+    @include('flash::message')
+
+    <div class="clearfix"></div>
+    <div class="box box-primary">
+        <div class="box-body">
+                @include('productevents.table')
         </div>
     </div>
+    <div class="text-center">
+    
+    </div>
+</div>    
+
 @endsection
 

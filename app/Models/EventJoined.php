@@ -26,10 +26,9 @@ class EventJoined extends Model
     use SoftDeletes;
 
     public $table = 'event_joined';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
-
 
     protected $dates = ['deleted_at'];
 
@@ -38,7 +37,7 @@ class EventJoined extends Model
     public $fillable = [
         'seller_seller_id',
         'event_shop_id',
-        'score'
+        'score',
     ];
 
     /**
@@ -50,7 +49,7 @@ class EventJoined extends Model
         'id' => 'integer',
         'seller_seller_id' => 'integer',
         'event_shop_id' => 'integer',
-        'score' => 'integer'
+        'score' => 'integer',
     ];
 
     /**
@@ -59,7 +58,7 @@ class EventJoined extends Model
      * @var array
      */
     public static $rules = [
-        
+
     ];
 
     /**
@@ -75,6 +74,8 @@ class EventJoined extends Model
      **/
     public function seller()
     {
-        return $this->belongsTo(\App\Models\Seller::class);
+        return $this->belongsTo(\App\Models\Users::class, 'seller_seller_id');
     }
+
+   
 }

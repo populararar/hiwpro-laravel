@@ -72,6 +72,16 @@ body{
                 <div class="row">
                     
                     @foreach ($productEvents as $pe) 
+                   
+
+                         {{--
+                    <form action="{{ route('cart.add') }}" method="POST">  </form> 
+                    <input type="hidden" name="event_shop_id" value="{{ $pe->$eventShop->id }}">
+                    <input type="hidden" name="product_id" value="{{  $pe->product_id }}">
+                    <input type="hidden" name="price" value="{{  $pe->price }}">
+                    <input type="hidden" name="fee" value="{{  $pe->fee }}">
+                    <input type="hidden" name="shippping" value="{{ $pe->shipping_price }}"> --}}
+
                     <a  href="{{  route('event.detail.product', ['id' => $pe->product_id, 'event_shop_id' => $pe->event_shop_id]) }}" style='color: #df3433;'> 
                     <div class="col-3 cardp">
                             <img class='card-img-top' src="{{ asset('/storage/'.$pe->product->image_product_id) }}">
@@ -85,23 +95,13 @@ body{
                                     <div class="col-8"><button type="submit" class="btn btn-outline-danger"><i class="fas fa-heart"></i></button></div>
                                     <div class="col-4"><button type="button" class="btn btn-danger"><i class="fas fa-cart-arrow-down"></i></button></div>
                                     
-                                </div>
+                            </div>
                    
                         </div> 
                      </a>
                     </div>
-                    
-        {{-- <div class='card01 col-xs-12  col-sm-12 col-md-3' style='margin:0%; float:left;'>
-            <img class='card-img-top' style='border-radius: 10%' src='{{ asset('/storage/'.$pe->product->img) }}'>
-            <div class='card-body'>
-                {{ $event->name}}<br>
-                <p class='text-truncate' style='text-overflow: clip; font-size:0.8em;'>{{ $event->detail }}</p>
-                <p style='text-decoration: line-through;'>
-                    {{ $event->actual_price }} </p>
-                <p style='color:red; font-size:1.4em;'> {{ $event->sale_price }} </p>
-                <a href='{{  route('event.detail.product', ['id' => $event->product_id]) }}' style='color: #df3433;'>ดูเพิ่มเติม</a>
-            </div>
-        </div> --}}
+                 
+   
                     @endforeach
 
                 </div>
