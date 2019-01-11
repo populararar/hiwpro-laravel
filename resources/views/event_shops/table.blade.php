@@ -2,7 +2,8 @@
     <thead>
         <tr>
             <th>Event Id</th>
-            <th style="width:40%;">Event name</th>
+            <th>Event Img</th>
+            <th style="width:25%;">Event name</th>
             <th>Shop Id</th>
             <th>Shop name</th>
             <th colspan="4">Action</th>
@@ -12,6 +13,7 @@
         @foreach($eventShops as $eventShop)
         <tr>
             <td>{!! $eventShop->event_id !!}</td>
+            <td><img src="{{ asset('/storage/'.$eventShop->event->imgPath) }}" alt="" width="100"></td>
             <td>{!! $eventShop->event->eventName !!}</td>
             <td>{!! $eventShop->shop_id !!}</td>
             <td>{!! $eventShop->shop->name .' - '.$eventShop->shop->location->branch !!}</td>

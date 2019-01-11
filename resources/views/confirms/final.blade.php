@@ -13,7 +13,6 @@
             ;min-width: 35px;
             text-align: center;
         }
-
         .qty .plus {
             cursor: pointer;
             display: inline-block;
@@ -72,8 +71,7 @@
             max-width: 100%;
             padding: 0%;
         }
-        /* ---------------------- */
-        *{box-sizing:border-box} 
+
 .tabs { 
  
   padding: 0px; 
@@ -211,8 +209,8 @@ $sum=0;$count=0;$count2=0;
         <div class="col-12">
             <div class="form-group">
                 <div class="btn-group d-flex justify-content-center ">
-                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-danger">รายการสั่งซื้อ</button>
-                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-outline-danger">สรุปรายการสั่งซื้อ</button>
+                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-outline-danger">รายการสั่งซื้อ</button>
+                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-danger">สรุปรายการสั่งซื้อ</button>
                     <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ที่อยู่การจัดส่ง</button>
                     <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ยืนยันการสั่งซื้อ</button>
                 </div>
@@ -222,9 +220,12 @@ $sum=0;$count=0;$count2=0;
 
     <div class="weapper" style="background-color: #F9F9F9; padding:3%; ">
         @foreach ($shopGroup as $key => $group)
-        {{-- {{dd($group->saller)}} --}}
+        @php
+        $eventShopId = $group->first()->attributes->event_shop_id;
+        // dd($mapSeller[$eventShopId]->name);
+        @endphp
         <div class="row" style="margin-bottom:20px;">
-            <h4>SHOP : {{ $key }}</h4>
+            <h4>SHOP : {{ $key }} ->> SELLER : #{{$mapSeller[$eventShopId]->id}} {{ $mapSeller[$eventShopId]->name }}</h4>
             @foreach ($group as $product)
             <div class="col-8" style="padding:2% 5%; background-color:white;margin-top:2%;">
                 <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5>
@@ -269,22 +270,19 @@ $sum=0;$count=0;$count2=0;
                     <div class="col-8 float-right "> 1 Items Total: {{ $Total = ($sum+$f+$s) }} THB</div>
                     <div class="col-4 float-left"> {{ $count2+=$Total }}THB</div>
                 </div>
-              
+
             </div>
             @endforeach
-            @include('saler')
         </div>
         @endforeach
-    </div>
-    <form id="cart-form" method="POST" name="cart-form" action="{{route('confirms.store')}}">
-            {!! csrf_field() !!}
 
-            @if(!empty($mapSeller))
-                @foreach ($mapSeller as $key => $seller)
-                    <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}" >
-                @endforeach
-            @endif
-        <button type="button" class="btn btn-success btn-block" onclick="saveData()">Submit</button>
+        {{ $address['address'] }}
+
+    </div>
+
+    <form action="{{route('orders.store') }}" method="POST">
+        @csrf
+    <button class="btn btn-success btn-block" type="submit">Submit</button>
     </form>
 </div>
 
@@ -308,44 +306,23 @@ $sum=0;$count=0;$count2=0;
         });
     });
     var form = $('#cart-form')
-    function addSeller(eventShopId, sellerId){
-        var data = eventShopId+'-'+sellerId
+    function addSeller(eventShopId, sellerId) {
+        var data = eventShopId + '|' + sellerId
         var filter = [];
-        $("input[name*='seller']" ).filter(function( index ) {
-            var a = $( this ).val()
-            if(a.split("-")[0] == eventShopId){
-                console.log( $( this ).val().split("-")[0] , eventShopId)
-               
-                $( this ).remove();
+        $("input[name*='seller']").filter(function (index) {
+            var a = $(this).val()
+            if (a.split("|")[0] == eventShopId) {
+                console.log($(this).val().split("|")[0], eventShopId)
+
+                $(this).remove();
                 return true
             }
             return false
         });
 
-        if (filter.length <1)  form.append('<input type="text" name="seller[]" value="'+data+'">');
+        if (filter.length < 1) form.append('<input type="text" name="seller[]" value="' + data + '">');
     }
 
-    function activate() {
-        $("input[name*='seller']" ).each(function(index){
-            var a = $(this).val()
-            console.log('#row-seller-'+a)
-            $('#row-seller-'+a).addClass("activate")
-        })
-    }
 
-    activate();
-
-    function saveData(){
-        var i = 0
-        $("input[name*='seller']" ).each(function(index){
-            i++;
-        })
-
-        if (i < {{ count($shopGroup) }}) {
-            alert("Please select seller!")
-            return
-        }
-        form.submit()
-    }
 </script>
 @endsection

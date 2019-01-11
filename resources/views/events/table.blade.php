@@ -1,7 +1,7 @@
 <table class="table table-responsive" id="events-table">
     <thead>
         <tr>
-        <th style="width:30%;">Eventname</th>
+        <th style="width:25%;">Eventname</th>
         <th>Startdate</th>
         <th>Lastdate</th>
         <th>Image</th>

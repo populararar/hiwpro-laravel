@@ -50,8 +50,8 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo, UsersRepository $usersRepo, PermissionsRepository $permissionRepo)
-    {
+    public function __construct(EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo
+        , UsersRepository $usersRepo, PermissionsRepository $permissionRepo) {
         $this->eventJoinedRepository = $eventJoinedRepo;
         $this->usersRepository = $usersRepo;
         $this->permissionRepository = $permissionRepo;
@@ -88,6 +88,22 @@ class HomeController extends Controller
             return $item;
         });
 
+        if ($request->session()->has('sellers')) {
+            $sellers = $request->session()->get('sellers');
+            $mapSeller = [];
+            foreach ($sellers as $s) {
+                $arr = explode('-', $s);
+                $eventShopId = $arr[0];
+                $sellerId = $arr[1];
+                // Query seller data
+                $mapSeller[$eventShopId] = $this->usersRepository->findWithoutFail($sellerId);
+            }
+
+            return view('cart')
+                ->with('cart', $cart)
+                ->with('mapSeller', $mapSeller)
+                ->with('shopGroup', $shopGroup);
+        }
         // $request->session()->put('_cart', $cart);
 
         return view('cart')->with('cart', $cart)->with('shopGroup', $shopGroup);
@@ -108,7 +124,7 @@ class HomeController extends Controller
      */
     public function addSeller($eventShopId, $sellerId, Request $request)
     {
-        dd($request->session()->get('_cart'));
+        // dd($request->session()->get('_cart'));
         $cart = $request->session()->get('_cart');
         $updatelog = [];
         foreach ($cart as $item) {
@@ -343,7 +359,8 @@ class HomeController extends Controller
             'email' => 'required|unique:users|max:255',
             'password' => 'required|min:6|max:18',
             'password_confirmation' => 'required|same:password|min:6|max:18',
-
+            'national_id' => 'required|same:password|min:6|max:18',
+            'national_img' => 'required',
         ]);
 
         if ($validator->fails()) {

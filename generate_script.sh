@@ -27,6 +27,11 @@ php artisan infyom:scaffold Permissions  --fromTable --tableName=permissions --p
 
 php artisan infyom:scaffold EventJoined  --fromTable --tableName=event_joined --primary=id --relations
 
+php artisan infyom:scaffold OrderHeader  --fromTable --tableName=order_header --primary=id --relations
+
+
+php artisan infyom:scaffold OrderDetail  --fromTable --tableName=order_detail --primary=id --relations
+
 
 ALTER TABLE `hiwpro`.`event_joined` 
 ADD COLUMN `created_at` TIMESTAMP NULL AFTER `score`,

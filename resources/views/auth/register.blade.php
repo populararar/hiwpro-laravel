@@ -508,6 +508,23 @@ body {
                                     </span>
                                 @endif
                             </div>
+                            กรุณากรอกเลขบัตรประชาชนพร้อมแนบหลักฐาน
+                            <div class="form-group has-feedback{{ $errors->has('national_id') ? ' has-error' : '' }}">
+                                <input type="text" name="national_id" class="form-control" placeholder="เลขบัตรประชาชน 13 หลัก">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        
+                                @if ($errors->has('national_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('national_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <form>
+                                <div class="form-group">
+                                  {{-- <label for="img">หลักฐานรูปหน้าบัตร</label> --}}
+                                  <input type="file" class="form-control-file" id="img">
+                                </div>
+                            </form>
         
                             <div class="row">
                                 <div class="col-xs-8 col-md-8">

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateShopRequest;
 use App\Http\Requests\UpdateShopRequest;
-
-use App\Repositories\ShopRepository;
 use App\Repositories\LocationRepository;
-
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
+use App\Repositories\ProductRepository;
+use App\Repositories\ShopRepository;
 use Flash;
+use Illuminate\Http\Request;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -22,10 +21,14 @@ class ShopController extends AppBaseController
     /** @var  ShopRepository */
     private $locationRepository;
 
-    public function __construct(ShopRepository $shopRepo, LocationRepository $locationRepo)
+    /** @var  ProductRepository */
+    private $productRepository;
+
+    public function __construct(ProductRepository $productRepo,ShopRepository $shopRepo, LocationRepository $locationRepo)
     {
         $this->shopRepository = $shopRepo;
         $this->locationRepository = $locationRepo;
+        $this->productRepository = $productRepo;
     }
 
     /**
@@ -54,12 +57,12 @@ class ShopController extends AppBaseController
         $this->locationRepository->pushCriteria(new RequestCriteria($request));
         $locations = $this->locationRepository->all();
 
-        $locations = $locations->mapWithKeys(function($item){
+        $locations = $locations->mapWithKeys(function ($item) {
             return [$item['location_id'] => $item['location_name']];
         });
-        
+
         return view('shops.create')
-            ->with('locations', $locations);;
+            ->with('locations', $locations);
     }
 
     /**
@@ -90,6 +93,7 @@ class ShopController extends AppBaseController
     public function show($id)
     {
         $shop = $this->shopRepository->findWithoutFail($id);
+        $products = $this->productRepository->findWhere([['shop_id', '=', $shop->shop_id]]);
 
         if (empty($shop)) {
             Flash::error('Shop not found');
@@ -97,7 +101,9 @@ class ShopController extends AppBaseController
             return redirect(route('shops.index'));
         }
 
-        return view('shops.show')->with('shop', $shop);
+        $products = $products->sortByDesc('id');
+
+        return view('shops.show')->with('shop', $shop)->with('products', $products);
     }
 
     /**
@@ -107,7 +113,7 @@ class ShopController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id,Request $request)
+    public function edit($id, Request $request)
     {
         $shop = $this->shopRepository->findWithoutFail($id);
 
@@ -120,7 +126,7 @@ class ShopController extends AppBaseController
         $this->locationRepository->pushCriteria(new RequestCriteria($request));
         $locations = $this->locationRepository->all();
 
-        $locations = $locations->mapWithKeys(function($item){
+        $locations = $locations->mapWithKeys(function ($item) {
             return [$item['location_id'] => $item['location_name']];
         });
 
