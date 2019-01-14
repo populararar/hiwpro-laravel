@@ -29,6 +29,7 @@ body{
     max-width: 22%;
 }
 .part{
+    padding: 2.5%;
     margin:5% 0%;
     background-color: #ffffff;
     /* border-radius: 2%; */

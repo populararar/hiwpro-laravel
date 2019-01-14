@@ -201,20 +201,15 @@ $sum=0;$count=0;$count2=0;
 
 <div class="container" style="padding: 0 5%;">
     <div class="col">
-        <h4 style="margin-top: 2%; color: #df3433;">รายการสั่งซื้อ </h4>
+        <h4 style="margin-top: 2%; color: #df3433;">สรุปรายการสั่งซื้อ </h4>
         <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>
     </div>
-
-    <div class="row" style="background-color:#fff;">
-        <div class="col-12">
-            <div class="form-group">
-                <div class="btn-group d-flex justify-content-center ">
-                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-outline-danger">รายการสั่งซื้อ</button>
-                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-danger">สรุปรายการสั่งซื้อ</button>
-                    <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ที่อยู่การจัดส่ง</button>
-                    <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ยืนยันการสั่งซื้อ</button>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-2">
+            <h5 style="margin-top: 2%; ">ข้อมูลการจัดส่ง : </h5>
+        </div>
+        <div class=" col-6">
+            <h6 style="margin-top: 2%; color: gray;">{{ $address['address'] }} </h6>
         </div>
     </div>
 
@@ -225,9 +220,9 @@ $sum=0;$count=0;$count2=0;
         // dd($mapSeller[$eventShopId]->name);
         @endphp
         <div class="row" style="margin-bottom:20px;">
-            <h4>SHOP : {{ $key }} ->> SELLER : #{{$mapSeller[$eventShopId]->id}} {{ $mapSeller[$eventShopId]->name }}</h4>
+            <h5 style="border-left: 5px solid #df3433;padding-left:5px;">SHOP : {{ $key }} </h5>
             @foreach ($group as $product)
-            <div class="col-8" style="padding:2% 5%; background-color:white;margin-top:2%;">
+            <div class="col-12" style="padding:2% 5%; background-color:white;margin-top:2%;">
                 <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5>
                 <div class="row" style="border-top: solid 2px #e7eaec;">
                     <div class="col-2" style="font-weight:bold;">รูป</div>
@@ -235,7 +230,7 @@ $sum=0;$count=0;$count2=0;
                     <div class="col-2" style="font-weight:bold;">ราคา</div>
                     <div class="col-2" style="font-weight:bold;">จำนวน</div>
                     <div class="col-1" style="font-weight:bold;">รวม</div>
-                    <div class="col-1" style="font-weight:bold;">แก้ไข</div>
+                    <div class="col-1" style="font-weight:bold;">หิ้วโดย</div>
                 </div>
 
                 <div class="row" style="border-top: solid 1px #e7eaec;padding:5% 0%;">
@@ -257,10 +252,8 @@ $sum=0;$count=0;$count2=0;
                         }}
                     </div>
                     <div class="col-1">{{ $sum = $qty*$p }}</div>
-                    <div class="col-1"><a href="{{ route('cart.flush', ['id' => $product->id]) }}" style="color:#df3433;"><i
-                                class="far fa-trash-alt"></i></a>
-                    </div>
-
+                    <div class="col-1">#{{$mapSeller[$eventShopId]->id}}{{ $mapSeller[$eventShopId]->name }}</div>
+                    
                     @php
                     $count+=$sum;
                     @endphp
@@ -268,7 +261,9 @@ $sum=0;$count=0;$count2=0;
                 </div>
                 <div class="row" style="border-top: solid 2px #e7eaec;">
                     <div class="col-8 float-right "> 1 Items Total: {{ $Total = ($sum+$f+$s) }} THB</div>
-                    <div class="col-4 float-left"> {{ $count2+=$Total }}THB</div>
+                    <div class="col-4 float-left"> @php
+                        $count2+=$Total
+                    @endphp </div>
                 </div>
 
             </div>
@@ -276,7 +271,7 @@ $sum=0;$count=0;$count2=0;
         </div>
         @endforeach
 
-        {{ $address['address'] }}
+        
 
     </div>
 

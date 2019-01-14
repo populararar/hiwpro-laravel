@@ -220,13 +220,13 @@ $sum=0;$count=0;$count2=0;
         </div>
     </div>
 
-    <div class="weapper" style="background-color: #F9F9F9; padding:3%; ">
+          
         @foreach ($shopGroup as $key => $group)
         {{-- {{dd($group->saller)}} --}}
         <div class="row" style="margin-bottom:20px;">
-            <h4>SHOP : {{ $key }}</h4>
+            <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{  $key }}</h5>
             @foreach ($group as $product)
-            <div class="col-8" style="padding:2% 5%; background-color:white;margin-top:2%;">
+            <div class="col-12" style="padding:2% 5%; background-color:white;margin-top:2%;">
                 <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5>
                 <div class="row" style="border-top: solid 2px #e7eaec;">
                     <div class="col-2" style="font-weight:bold;">รูป</div>
@@ -267,27 +267,44 @@ $sum=0;$count=0;$count2=0;
                 </div>
                 <div class="row" style="border-top: solid 2px #e7eaec;">
                     <div class="col-8 float-right "> 1 Items Total: {{ $Total = ($sum+$f+$s) }} THB</div>
-                    <div class="col-4 float-left"> {{ $count2+=$Total }}THB</div>
+                    <div class="col-4 float-left"> </div>
                 </div>
+                @php
+                    $count2+=$Total
+                @endphp
               
             </div>
             @endforeach
             @include('saler')
         </div>
         @endforeach
+            
+    
     </div>
-    <form id="cart-form" method="POST" name="cart-form" action="{{route('confirms.store')}}">
-            {!! csrf_field() !!}
+    {{-- pp --}}
+        <div class="pp col-md-4 col-sm-12">
+                <div class="card border-danger mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Order Summary</div>
+                    <div class="card-body text-danger">
+                        <h5 style="text-align:center;">TOTAL  {{ $count2}} TH</h5>
+                        <form id="cart-form" method="POST" name="cart-form" action="{{route('confirms.store')}}">
+                                {!! csrf_field() !!}
 
-            @if(!empty($mapSeller))
-                @foreach ($mapSeller as $key => $seller)
-                    <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}" >
-                @endforeach
-            @endif
-        <button type="button" class="btn btn-success btn-block" onclick="saveData()">Submit</button>
-    </form>
+                                @if(!empty($mapSeller))
+                                    @foreach ($mapSeller as $key => $seller)
+                                        <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}" >
+                                    @endforeach
+                                @endif
+                            <button type="button" class="btn btn-success btn-block" onclick="saveData()">Submit</button>
+                        </form>
+                        {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> --}}
+                    </div>
+                </div>
+        </div>
+    </div>
+{{-- rr d-flex flex-row --}}
 </div>
-
+</div>
 @endsection
 
 @section('scripts')

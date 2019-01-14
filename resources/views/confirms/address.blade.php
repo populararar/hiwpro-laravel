@@ -71,128 +71,7 @@
             max-width: 100%;
             padding: 0%;
         }
-       
-.tabs { 
- 
-  padding: 0px; 
-  margin: 0 auto; 
-  position: relative; 
-  border: 1px solid #DEE8F2; 
-} 
-section { 
-  display: none;  
-  padding: 15px; 
-  background: white; 
-  position: absolute; 
-  top: 0; 
-  left: 180px; 
-} 
-p { 
-  margin: 0; 
-} 
-input { 
-  display: none; 
-} 
-label { 
-  display: block; 
-  width: 180px; 
-  padding: 15px; 
-  color: #4F5966; 
-  background: #DEE8F2; 
-  cursor: pointer; 
-} 
-input:checked + label { 
-  color: #555; 
-  background: white; 
-} 
-#tab1:checked ~ #content1, #tab2:checked ~ #content2, #tab3:checked ~ #content3, #tab4:checked ~ #content4 { 
-  display: block; 
-} 
-section { 
-  animation: scale 0.7s ease-in-out; 
-} 
-@keyframes scale { 
-  0% { 
-  transform: scale(0.9); 
-  opacity: 0; 
-  } 
-  50% { 
-  transform: scale(1.005); 
-  opacity: 0.5; 
-  } 
-  100% { 
-  transform: scale(1); 
-  opacity: 1; 
-  } 
-}
-/* 
-********************
- */
- 
-.tabset > label {
-  position: relative;
-  display: inline-block;
-  padding: 15px 15px 25px;
-  border: 1px solid transparent;
-  border-bottom: 0;
-  cursor: pointer;
-  font-weight: 600;
-}
 
-.tabset > label::after {
-  content: "";
-  position: absolute;
-  left: 15px;
-  bottom: 10px;
-  width: 22px;
-  height: 4px;
-  background: #8d8d8d;
-}
-
-.tabset > label:hover,
-.tabset > input:focus + label {
-  color: #06c;
-}
-
-.tabset > label:hover::after,
-.tabset > input:focus + label::after,
-.tabset > input:checked + label::after {
-  background: #06c;
-}
-
-.tabset > input:checked + label {
-  border-color: #ccc;
-  border-bottom: 1px solid #fff;
-  margin-bottom: -1px;
-}
-
-.tab-panel {
-  padding: 30px 0;
-  border-top: 1px solid #ccc;
-}
-
-/*
- Demo purposes only
-*/
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
-.tabset {
-  max-width: 65em;
-}
-
-.tabset > label:hover::after, .tabset > input:focus + label::after, .tabset > input:checked + label::after {
-    background: #bd2130;
-}
-.tabset > label:hover::after, .tabset > input:focus + label::after, .tabset > input:checked + label::after {
-    background: #bd2130;
-}
-.tabset > label:hover, .tabset > input:focus + label {
-    color: #bd2130;
-}
 </style>
 
 @php
@@ -201,7 +80,7 @@ $sum=0;$count=0;$count2=0;
 
 <div class="container" style="padding: 0 5%;">
   <div class="col">
-    <h4 style="margin-top: 2%; color: #df3433;">รายการสั่งซื้อ </h4>
+    <h4 style="margin-top: 2%; color: #df3433;">ที่อยู่การจัดส่ง </h4>
     <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>
   </div>
 

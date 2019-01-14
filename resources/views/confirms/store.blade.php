@@ -206,37 +206,26 @@ $sum=0;$count=0;$count2=0;
         <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>
     </div>
 
-    <div class="row" style="background-color:#fff;">
-        <div class="col-12">
-            <div class="form-group">
-                <div class="btn-group d-flex justify-content-center ">
-                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-outline-danger">รายการสั่งซื้อ</button>
-                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-danger">สรุปรายการสั่งซื้อ</button>
-                    <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ที่อยู่การจัดส่ง</button>
-                    <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ยืนยันการสั่งซื้อ</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="weapper" style="background-color: #F9F9F9; padding:3%; ">
+    <div class="weapper d-flex flex-column" style="background-color:white; padding:3%; ">
+            <div class="rr d-flex flex-row">
+                <div class="pp col-md-12 col-sm-12">
         @foreach ($shopGroup as $key => $group)
         @php 
             $eventShopId = $group->first()->attributes->event_shop_id;
             // dd($mapSeller[$eventShopId]->name);
         @endphp
         <div class="row" style="margin-bottom:20px;">
-            <h4>SHOP : {{ $key }} ->> SELLER : #{{$mapSeller[$eventShopId]->id}} {{ $mapSeller[$eventShopId]->name }}</h4>
+            <h5 style="border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
             @foreach ($group as $product)
-            <div class="col-8" style="padding:2% 5%; background-color:white;margin-top:2%;">
+            <div class="col-md-8 col-sm-12" style="padding:2% 5%; background-color:white;margin-top:2%;">
                 <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5>
                 <div class="row" style="border-top: solid 2px #e7eaec;">
                     <div class="col-2" style="font-weight:bold;">รูป</div>
                     <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
                     <div class="col-2" style="font-weight:bold;">ราคา</div>
                     <div class="col-2" style="font-weight:bold;">จำนวน</div>
-                    <div class="col-1" style="font-weight:bold;">รวม</div>
-                    <div class="col-1" style="font-weight:bold;">แก้ไข</div>
+                    <div class="col-2" style="font-weight:bold;">รวม</div>
                 </div>
 
                 <div class="row" style="border-top: solid 1px #e7eaec;padding:5% 0%;">
@@ -257,10 +246,8 @@ $sum=0;$count=0;$count2=0;
                         $s = $product->attributes->shippping
                         }}
                     </div>
-                    <div class="col-1">{{ $sum = $qty*$p }}</div>
-                    <div class="col-1"><a href="{{ route('cart.flush', ['id' => $product->id]) }}" style="color:#df3433;"><i
-                                class="far fa-trash-alt"></i></a>
-                    </div>
+                    <div class="col-2">{{ $sum = $qty*$p }}</div>
+                   
 
                     @php
                     $count+=$sum;
@@ -274,8 +261,26 @@ $sum=0;$count=0;$count2=0;
               
             </div>
             @endforeach
+            <div class="col-md-4 col-sm-12">
+                <h5> SELLER</h5>
+                <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                        <div class="card-header">{{$mapSeller[$eventShopId]->id}} </div>
+                        <div class="card-body text-secondary">
+                          <h5 class="card-title">{{ $mapSeller[$eventShopId]->name }}</h5>
+                          {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> --}}
+                        </div>
+                      </div>
+                   
+            </div>
         </div>
         @endforeach
+    </div>
+    {{-- pp --}}
+        <div class="pp col-md-4 col-sm-12">
+              
+        </div>
+    </div>
+{{-- rr d-flex flex-row --}}
     </div>
     <a class="btn btn-success btn-block" href="{{ route('confirms.edit' ,['confirm' => 'address' ]) }}">Submit</a>
 </div>

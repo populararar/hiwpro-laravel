@@ -41,6 +41,7 @@ Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}', 'HomeController@a
 Route::middleware(['login'])->group(function () {
     Route::resource('confirms', 'ConfirmController');
     Route::post('/confirms/final', 'ConfirmController@final')->name('confirms.final');
+    Route::post('/confirms/payment', 'ConfirmController@payment')->name('confirms.payment');
 
     Route::resource('events', 'EventController');
 

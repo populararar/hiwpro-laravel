@@ -65,8 +65,8 @@
 </head>
 
 <body>
-  
-    <nav class="navbar-top sticky-top navbar navbar-expand-lg navbar-light bg-light" >
+    <div class="sticky-top">
+    <nav class="sticky-top navbar-top  navbar navbar-expand-lg navbar-light bg-light" >
 
         <a class="navbar-brand" href="index.php"><img class="img-fluid" style="box-sizing: border-box; margin: 0 10%;"
                 src="{{ asset('hiwpro/images/logo.png') }}" alt="">HIWPRO</a>
@@ -167,7 +167,7 @@
             </ul>
         </div>
     </nav>
-
+    </div>
 
     @yield('content')
 
