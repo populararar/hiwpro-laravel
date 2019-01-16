@@ -11,7 +11,8 @@
     <tbody>
     @foreach($payments as $payment)
         <tr>
-            <td>{!! $payment->img_path !!}</td>
+            <td><img src="{{ asset('/storage/'.$payment->img_path) }}" alt="" width="50"></td>
+           
             <td>{!! $payment->total !!}</td>
             <td>{!! $payment->bank_from !!}</td>
             <td>{!! $payment->bank_to !!}</td>

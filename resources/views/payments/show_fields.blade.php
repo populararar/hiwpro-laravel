@@ -3,11 +3,10 @@
     {!! Form::label('id', 'Id:') !!}
     <p>{!! $payment->id !!}</p>
 </div>
-
-<!-- Img Path Field -->
+<!-- Imgpath Field -->
 <div class="form-group">
-    {!! Form::label('img_path', 'Img Path:') !!}
-    <p>{!! $payment->img_path !!}</p>
+    {!! Form::label('imgPath', 'Imgpath:') !!}
+    <p><img src="{{ asset('/storage/'.$payment->img_path) }}" alt="" width="250"></p>
 </div>
 
 <!-- Total Field -->

@@ -8,13 +8,12 @@ use App\Http\Requests\UpdateEventJoinedRequest;
 use App\Repositories\EventJoinedRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\EventShopRepository;
-
 use App\Repositories\ShopRepository;
-use Flash;
 use Carbon\Carbon;
+use Flash;
 use Illuminate\Http\Request;
-use Prettus\Repository\Criteria\RequestCriteria;
 use Illuminate\Support\Facades\Auth;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
 class EventJoinedController extends AppBaseController
@@ -28,7 +27,7 @@ class EventJoinedController extends AppBaseController
     /** @var  EventRepository */
     private $eventRepository;
 
-    public function __construct(EventJoinedRepository $eventJoinedRepo, EventRepository $eventRepo,EventShopRepository $eventShopRepo, ShopRepository $shopRepository)
+    public function __construct(EventJoinedRepository $eventJoinedRepo, EventRepository $eventRepo, EventShopRepository $eventShopRepo, ShopRepository $shopRepository)
     {
         $this->eventJoinedRepository = $eventJoinedRepo;
         $this->eventRepository = $eventRepo;
@@ -112,7 +111,7 @@ class EventJoinedController extends AppBaseController
      *
      * @return Response
      */
-    //   /eventJoined/1/edit => /eventJoined/index 
+    //   /eventJoined/1/edit => /eventJoined/index
 
     public function edit($id)
     {
@@ -124,9 +123,33 @@ class EventJoinedController extends AppBaseController
             return redirect(route('eventJoineds.index'));
         }
 
+        $user = Auth::user();
+
         $eventShops = $this->eventShopRepository->findWhere(['event_id' => $id]);
 
-        return view('event_joineds.edit')->with('event', $event)->with('eventShops', $eventShops);
+        $eventJoined = $this->eventJoinedRepository->findWhere(['seller_seller_id' => $user->id]);
+
+        foreach ($eventShops as $es) {
+            $has = $eventJoined->where('event_shop_id', $es->id)->first();
+            if (!empty($has)) {
+                $es->joined = true;
+                $es->joined_id = $has->id;
+            } else {
+                $es->joined = false;
+            }
+        }
+
+       $count = $eventShops->where('joined', false)->count();
+       $countUnjoin = $eventShops->where('joined', true)->count();
+
+        // dd($eventShops);
+
+        return view('event_joineds.edit')
+            ->with('event', $event)
+            ->with('count', $count)
+            ->with('countUnjoin', $countUnjoin)
+            ->with('eventJoined', $eventJoined)
+            ->with('eventShops', $eventShops);
     }
 
     /**
@@ -151,7 +174,7 @@ class EventJoinedController extends AppBaseController
         $user = Auth::user();
 
         $eventShop_ids = $request->input("shop_id");
-        foreach($eventShop_ids as $eventShop_id){
+        foreach ($eventShop_ids as $eventShop_id) {
             $this->eventJoinedRepository->create([
                 'seller_seller_id' => $user->id,
                 'event_shop_id' => $eventShop_id,
@@ -172,6 +195,7 @@ class EventJoinedController extends AppBaseController
      */
     public function destroy($id)
     {
+        // dd($id);
         $eventJoined = $this->eventJoinedRepository->findWithoutFail($id);
 
         if (empty($eventJoined)) {

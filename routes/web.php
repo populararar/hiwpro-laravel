@@ -84,7 +84,6 @@ Route::middleware(['login'])->group(function () {
     Route::get('/orders/status/detail/{id}', 'OrderController@statusdetail')->name('orders.statusdetail');
     
 
+Route::resource('payments', 'PaymentController');
 });
 
-
-Route::resource('payments', 'PaymentController');

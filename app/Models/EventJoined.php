@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class EventJoined extends Model
 {
-    use SoftDeletes;
+   // use SoftDeletes;
 
     public $table = 'event_joined';
 

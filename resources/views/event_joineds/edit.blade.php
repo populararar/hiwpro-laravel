@@ -11,12 +11,9 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                    <form action="{{ route('eventJoineds.update', [ 'eventJoined' =>  $event->event_id]) }}" method="post">
-                            <input name="_method" type="hidden" value="PATCH">
-                            @csrf
+                   
                     @include('event_joineds.fields')
 
-                    </form>
                </div>
            </div>
        </div>
