@@ -109,7 +109,7 @@
                         <span class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">ข้อมูลส่วนตัว</a>
-                        <a class="dropdown-item" href="#">ประวัติการสั่งซื้อ</a>
+                        <a class="dropdown-item" href="{{route('orders.store') }}">ประวัติการสั่งซื้อ</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout.index') }}">ออกจากระบบ</a>
                     </div>
@@ -217,7 +217,7 @@
                         <h3>ข้อมูลติดต่อ </h3>
                         <div>
                             <h5> City Campus เมืองทองธานี.</h5>
-                            <p>ต. ปากเกร็ด อ. ปากเกร็ด นนทบุรี 11120 </p>
+                            <p>ต.บางพูด อ. ปากเกร็ด นนทบุรี 11120 </p>
                             <p><b>Email :</b> <a href="#"> hiwpro@info.com</a></p>
 
                         </div>

@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\EventRepository;
+use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
+use App\Repositories\PaymentRepository;
 use App\Repositories\UsersRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use Response;
 
 class ConfirmController extends Controller
 {
+    /** @var  PaymentRepository */
+    private $paymentRepository;
+
     //
+    /** @var  EventRepository */
+    private $eventRepository;
 
     /** @var  UsersRepository */
     private $usersRepository;
@@ -17,10 +27,16 @@ class ConfirmController extends Controller
     /** @var  OrderHeaderRepository */
     private $orderHeaderRepository;
 
-    public function __construct(OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo)
+    /** @var  OrderDetailRepository */
+    private $orderDetailRepository;
+
+    public function __construct(PaymentRepository $paymentRepo, OrderDetailRepository $orderDetailRepo, EventRepository $eventRepo, OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->usersRepository = $usersRepo;
+        $this->eventRepository = $eventRepo;
+        $this->orderDetailRepository = $orderDetailRepo;
+        $this->paymentRepository = $paymentRepo;
     }
 
     public function index(Request $request)
@@ -98,8 +114,7 @@ class ConfirmController extends Controller
         return view('confirms.address'); //->with('memberAddress', []);
     }
 
-    public function final(Request $request)
-    {
+    function final (Request $request) {
         if (!$this->validCart()) {
             return redirect()->route('home');
         }
@@ -128,12 +143,64 @@ class ConfirmController extends Controller
             ->with('address', $address);
 
         // return view('confirm.final')
+    }/**
+
+     * Display the specified Event.
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function show($id)
+    {
+        // dd($id);
+
+        return view('confirms.payment');
     }
 
     private function validCart()
     {
         $cart = \Cart::getContent();
         return count($cart) > 0 ? true : false;
+    }
+
+    public function payment($id, Request $request)
+    {
+        $user = Auth::user();
+        $orderHeaders = $this->orderHeaderRepository
+            ->findWhere(['customer_id' => $user->id, 'order_number' => $id])->first();
+        if (empty($orderHeaders)) {
+            return redirect()->route('home');
+        }
+
+        return view('confirms.payment')->with('orderHeaders', $orderHeaders)->with('user', $user);
+
+    }
+    public function paymentStore($id, Request $request)
+    {
+        $user = Auth::user();
+        $orderHeaders = $this->orderHeaderRepository
+            ->findWhere(['customer_id' => $user->id, 'order_number' => $id])->first();
+        if (empty($orderHeaders)) {
+            return redirect()->route('home');
+        }
+
+        $path = $request->file('img_path')->store('public/upload');
+
+        $input = $request->all();
+
+        $input["img_path"] = str_replace("public", "", $path);
+
+        $payment = $this->paymentRepository->create($input);
+       
+        $orderHeader = $this->orderHeaderRepository->update([
+            'payment_id'=> $payment->id,
+            'slip_status'=>"UPLOADED",
+            // 'shipping_date'=> Carbon::now()->toDateTimeString()
+        ], $orderHeaders->id);
+
+
+        return redirect()->route('orders.statusdetail',[$orderHeaders->order_number]);
     }
 
 }

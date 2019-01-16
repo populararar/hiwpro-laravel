@@ -43,12 +43,19 @@ class OrderController extends AppBaseController
     public function index(Request $request)
     {
         $this->orderHeaderRepository->pushCriteria(new RequestCriteria($request));
-       
-        $user = Auth::user(); 
+
+        $user = Auth::user();
         $orderHeaders = $this->orderHeaderRepository->findWhere(['customer_id' => $user->id]);
+        // $oh=$orderHeaders->first();
+
+        // foreach($oh->orderDetails as $item){
+        //     dd($item, $item->product->productdetail);
+
+        // }
 
         return view('orders.index')
-            ->with('orderHeaders', $orderHeaders);
+            ->with('orderHeaders', $orderHeaders)
+            ->with('user', $user);
     }
 
     /**
@@ -59,6 +66,13 @@ class OrderController extends AppBaseController
     public function create()
     {
         return view('order_headers.create');
+    }
+
+    public function statusdetail($id, Request $request)
+    {
+        $user = Auth::user();
+        $orderHeaders = $this->orderHeaderRepository->with('orderDetails')->findWhere(['customer_id' => $user->id, 'order_number' => $id])->first();
+        return view('orders.statusdetail')->with('orderHeaders', $orderHeaders);
     }
 
     private function validCart()
@@ -110,7 +124,7 @@ class OrderController extends AppBaseController
             'order_date' => $now,
             'order_number' => $orderNumber,
             // 'exp_date',
-            'slip_status' => 'CREATE',
+            'slip_status' => 'WAITING',
             'total_price' => \Cart::getTotal(),
             // 'tracking_number' ,
             // 'seller_id',
@@ -129,6 +143,7 @@ class OrderController extends AppBaseController
                 $seller = $mapSeller[$event_shop_id];
 
                 $detailData = [
+                    'product_id' => $item->id,
                     'qrt' => $item->quantity,
                     'price' => $item->price,
                     'option' => '', //$item->attributes->option

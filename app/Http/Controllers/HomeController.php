@@ -200,6 +200,8 @@ class HomeController extends Controller
     public function eventdetail($id)
     {
         $event = $this->eventRepository->findWithoutFail($id);
+        $eventShop = $this->eventShopRepository->findWithoutFail([['event_id', '=', $id]]);
+        $product = $this->productRepository->findWhere([['product_id', '=', $id]])->first();
 
         //SELECT id FROM hiwpro.event_shop where event_id = 21
         $eventShops = $this->eventShopRepository->findWhere([['event_id', '=', $event->event_id]]);
@@ -307,6 +309,7 @@ class HomeController extends Controller
             $event->start_date = $this->formatEventDate($event->startDate);
             $event->last_date = $this->formatEventDate($event->lastDate);
         }
+        $events = $events->sortByDesc('last_date');
 
         return view('home')->with('events', $events);
     }

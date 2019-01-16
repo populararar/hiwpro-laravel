@@ -33,6 +33,9 @@ php artisan infyom:scaffold OrderHeader  --fromTable --tableName=order_header --
 php artisan infyom:scaffold OrderDetail  --fromTable --tableName=order_detail --primary=id --relations
 
 
+php artisan infyom:scaffold Payment  --fromTable --tableName=payment --primary=id --relations
+
+
 ALTER TABLE `hiwpro`.`event_joined` 
 ADD COLUMN `created_at` TIMESTAMP NULL AFTER `score`,
 ADD COLUMN `updated_at` TIMESTAMP NULL AFTER `created_at`,

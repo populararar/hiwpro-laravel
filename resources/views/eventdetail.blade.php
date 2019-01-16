@@ -9,16 +9,29 @@ img:hover{
 .cardp{
     width:-10% !important;
     background: #fff;
-    box-sizing: border-box;
+  
     margin: 1% 1%;
     padding:0%;
-    cursor: pointer;    
+    cursor: pointer;  
+    overflow: hidden;
 }
-.card-in{
-    padding: 0% 5% 5% 5%;
-}
+
 .cardp:hover{
-    border: solid 1px #ccc;
+  border: solid 1px #ccc;
+} 
+
+.box-white{
+    background: #fff;
+    top: 100%;
+    position: relative;
+    transition: all .3s ease-out;
+}
+.cardp:hover> .box-white{
+    top: 0;
+} 
+.card-in{
+    padding: 5%;
+    text-align: center;
 }
 body{
     background: #f3f3f4;
@@ -30,10 +43,21 @@ body{
 }
 .part{
     padding: 2.5%;
-    margin:5% 0%;
+    margin:0% 0% 3% 0%;
     background-color: #ffffff;
     /* border-radius: 2%; */
 }
+.box-r{
+    float: right !important;
+    margin-right: 2%;
+    margin-bottom: 2%;
+}
+.box-l{
+    float: left !important;
+    margin-left: 2%;
+    margin-bottom: 2%;
+}
+
 </style>
 
 <div class="container" >
@@ -85,21 +109,34 @@ body{
 
                     <a  href="{{  route('event.detail.product', ['id' => $pe->product_id, 'event_shop_id' => $pe->event_shop_id]) }}" style='color: #df3433;'> 
                     <div class="col-3 cardp">
-                            <img class='card-img-top' src="{{ asset('/storage/'.$pe->product->image_product_id) }}">
+                        <img class='card-img-top' src="{{ asset('/storage/'.$pe->product->image_product_id) }}">
                        
                         <div class="card-in">
-                            <p style='color:#df3433; font-size:1em;line-height : 2;margin:0%;'> {{  $pe->product->name }} </p>
-                            <p style='color:red; font-size:1em; margin:0%;'> {{  $pe->product->price }} 
-                            <p style='color:gray; font-size:0.8em; text-decoration: line-through; margin:0%;'> {{  $pe->product->actual_price }} </p>
-                            
-                            <div class="row">
-                                    <div class="col-8"><button type="submit" class="btn btn-outline-danger"><i class="fas fa-heart"></i></button></div>
-                                    <div class="col-4"><button type="button" class="btn btn-danger"><i class="fas fa-cart-arrow-down"></i></button></div>
-                                    
-                            </div>
-                   
+                            <p style='color:#df3433; font-size:1em;line-height :1.2;margin:2%;'> {{  $pe->product->name }} </p>
+                            <span>
+                                <font color="red">{{  $pe->product->price }} บาท</font>
+                                <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{$pe->product->actual_price}} บาท</font>
+                            </span>
                         </div> 
-                     </a>
+                        </a> 
+                        <div class="box-white">
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                    {!! csrf_field() !!}
+                                <input type="hidden" name="event_shop_id" value="{{ $pe->eventShop->id }}">
+                                <input type="hidden" name="product_id" value="{{ $pe->product->product_id }}">
+                               
+                                <input type="hidden" name="price" value="{{  $pe->product->price  }}">
+                                <input type="hidden" name="fee" value="{{  $pe->product->fee  }}">
+                                <input type="hidden" name="shippping" value="{{  $pe->product->shipping_price  }}">                                  
+                                <button type="button" class="box-l btn btn-outline-danger"><i class="fas fa-heart"></i></button>
+                                <span style="margin-left:10%;">
+                                    จำนวน
+                                </span>
+                                
+                                <input type="number" class="count" name="quantity" value="1" style="width:15%; border:1px solid white;text-align:center;">
+                                <button type="submit" class="box-r btn btn-danger"><i class="fas fa-cart-arrow-down"></i></button>
+                            </form>          
+                        </div>
                     </div>
                  
    

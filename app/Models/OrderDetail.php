@@ -46,7 +46,8 @@ class OrderDetail extends Model
         'fee',
         'shipping_rate',
         'order_header_id',
-        'seller_id'
+        'seller_id',
+        'product_id'
     ];
 
     /**
@@ -79,4 +80,21 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(\App\Models\OrderHeader::class);
     }
+
+      /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function product()
+    {
+        return $this->belongsTo(\App\Models\Product::class,'product_id');
+    }
+    
+      /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function seller()
+    {
+        return $this->belongsTo(\App\Models\Users::class,'seller_id');
+    }
+
 }

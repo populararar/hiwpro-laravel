@@ -6,7 +6,7 @@
     color: #000;
     display: inline-block;
     vertical-align: top;
-    font-size: 25px;
+    font-size: 0.8em;
     font-weight: 700;
     line-height: 30px;
     /* padding: 0 2px */
@@ -18,9 +18,9 @@
     display: inline-block;
     vertical-align: top;
     color: white;
-    width: 30px;
-    height: 30px;
-    font: 30px/1 Arial,sans-serif;
+    width: 25px;
+    height: 25px;
+    font: 0.8em;
     text-align: center;
     border-radius: 50%;
     }
@@ -29,18 +29,18 @@
     display: inline-block;
     vertical-align: top;
     color: white;
-    width: 30px;
-    height: 30px;
-    font: 30px/1 Arial,sans-serif;
+    width: 25px;
+    height: 25px;
+    font: 0.8em;
     text-align: center;
     border-radius: 50%;
     background-clip: padding-box;
 }
 .minus:hover{
-    background-color: #717fe0 !important;
+    background-color: crimson !important;
 }
 .plus:hover{
-    background-color: #717fe0 !important;
+    background-color: crimson !important;
 }
 /*Prevent text selection*/
 span{
@@ -167,34 +167,40 @@ input:disabled{
         <div class="col-8" style="padding:5%;">
             <form action="{{ route('cart.add') }}" method="POST">
                     {!! csrf_field() !!}
-                <input type="hidden" name="event_shop_id" value="{{ $eventShop->id }}">
-                <input type="hidden" name="product_id" value="{{ $product->product_id }}">
-                <h4 style='color:#df3433; font-size:1.8em;line-height : 0;margin:0%;'>{{ $product->name }}</h4><br>
-                <br>
-                   จำนวน 
+                
+
+                <h4 style='border-bottom:2px solid #df3433; font-size:1.8em;margin:0%;'>{{ $product->name }}</h4>
+            <h6>
+                <span>
+                    <font color="black">ราคา</font>
+                    <font color="red" ,font-size="0.8em">{{  $product->price  }} บาท</font>
+                    <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>฿{{$product->actual_price}}</font>
+                </span>
+                
+                <div class='row'>
+                    <div class='col-3'>
+                        ค่าหิ้ว {{ $product->fee }} บาท/ชิ้น
+                    </div>
+                    <div class='col-6'>
+                        ค่าจัดส่ง {{ $product->shipping_price }} บาท
+                    </div>
+                </div>
                 <div class="qty mt-5" style="padding:0%;margin:0%;">
+                    จำนวน 
                     <span class="minus bg-dark">-</span>
                     <input type="number" class="count" name="quantity" value="1">
                     <span class="plus bg-dark">+</span>
                 </div>
-                <small style='color:#555;font-size:0.8em;line-height : 1;padding:0%;margin:0%;'>ราคา </small>
-                <input type="hidden" name="price" value="{{  $product->price  }}">
-                <h4 style="color: #e62e6b;font-weight: bold;">{{ $product->price }} บาท</h4>
-                <del class>฿{{ $product->actual_price }} </del>
-                <div class='row'>
-                    <div class='col-4'>
-                        <input type="hidden" name="fee" value="{{  $product->fee  }}">
-                        ค่าหิ้ว {{ $product->fee }} บาท/ชิ้น
-                    </div>
-                    <div class='col-6'>
-                        <input type="hidden" name="shippping" value="{{  $product->shipping_price  }}">
-                        ค่าจัดส่ง {{ $product->shipping_price }} บาท
-                    </div>
-                </div>
+            </h6>
+                <br>
+                <input type="hidden" name="event_shop_id" value="{{ $eventShop->id }}">
+                <input type="hidden" name="product_id" value="{{ $product->product_id }}">
+                <input type="hidden" name="price" value="">
+                <input type="hidden" name="fee" value="{{  $product->fee  }}">
+                <input type="hidden" name="shippping" value="{{  $product->shipping_price  }}">
+                
                 <div class="row">
-                    <div class="col-10"><button type="submit" class="btn btn-outline-danger"><i class="fas fa-cart-plus"></i> หยิบใส่ตะกร้า</button></div>
-                    <div class="col-2"><button type="button" class="btn btn-danger"><i class="fas fa-cart-arrow-down"></i></button></div>
-                    
+                    <div class="col-10"><button type="submit" class="btn btn-outline-danger"><i class="fas fa-cart-plus"></i> หยิบใส่ตะกร้า</button></div>                    
                 </div>
             </form>
         </div>

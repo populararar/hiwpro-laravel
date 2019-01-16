@@ -34,7 +34,8 @@
 </head>
 <style>
 body{
-    font-family: kanit;
+   
+    font-family: 'Kanit', sans-serif;
 }
 </style>
 

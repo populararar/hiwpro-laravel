@@ -42,19 +42,24 @@ class ProductController extends AppBaseController
     {
 
         $this->productRepository->pushCriteria(new RequestCriteria($request));
-        
+      
         $shop_id = $this->getShopId();
 
         if ($shop_id > 0) {
             $products = $this->productRepository->findWhere(['shop_id' => $shop_id]);
+            $categories = $this->categoryRepository->findWhere(['shop_id' => $shop_id]);
+           
         } else {
             $products = $this->productRepository->all();
+            $categories = $this->categoryRepository->all();
         }
+        
         $products = $products->sortByDesc('id');
         
         return view('products.index')
             ->with('products', $products)
-            ->with('shop_id', $shop_id);
+            ->with('shop_id', $shop_id)
+            ->with('categories', $categories);
     }
 
     /**
