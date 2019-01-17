@@ -191,6 +191,8 @@ class ConfirmController extends Controller
 
         $input["img_path"] = str_replace("public", "", $path);
 
+        $input['order_id'] = $orderHeaders->id;
+        
         $payment = $this->paymentRepository->create($input);
        
         $orderHeader = $this->orderHeaderRepository->update([

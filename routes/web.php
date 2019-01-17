@@ -14,8 +14,8 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/province','DropdownController@index');
-Route::post('/province/fetch','DropdownController@fetch')->name('dropdown.fetch');
+Route::get('/province', 'DropdownController@index');
+Route::post('/province/fetch', 'DropdownController@fetch')->name('dropdown.fetch');
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/login', 'HomeController@login')->name('login.index');
@@ -42,7 +42,6 @@ Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}', 'HomeController@a
 
 Route::middleware(['login'])->group(function () {
 
-   
     Route::resource('confirms', 'ConfirmController');
     Route::post('/confirms/final', 'ConfirmController@final')->name('confirms.final');
     Route::get('/confirms/{id}/payment', 'ConfirmController@payment')->name('confirms.payment');
@@ -77,13 +76,13 @@ Route::middleware(['login'])->group(function () {
 
     Route::resource('orderHeaders', 'OrderHeaderController');
 
+    Route::resource('orderSellers', 'OrderSellerController');
+
     Route::resource('orderDetails', 'OrderDetailController');
 
     Route::post('/orders', 'OrderController@store')->name('orders.store');
     Route::get('/orders', 'OrderController@index')->name('orders.index');
     Route::get('/orders/status/detail/{id}', 'OrderController@statusdetail')->name('orders.statusdetail');
-    
 
-Route::resource('payments', 'PaymentController');
+    Route::resource('payments', 'PaymentController');
 });
-

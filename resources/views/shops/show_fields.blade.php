@@ -35,6 +35,9 @@
       <h4><strong style="font-family:kanit; border-bottom: 2px solid #cf2132;"> Product in shop</strong></h4> 
     </div>
     <div class="col-md-6">
+        <div style="float:right;margin:0 10% 0 0;"> Add Category in shop <a  href="{!! route('categories.create', ['shop_id'=>$shop->shop_id]) !!}" class='btn btn-success btn-xs'><i class="glyphicon glyphicon-plus"></i></a>
+    </div>
+    <div class="col-md-6">
         <div style="float:right;margin:0 10% 0 0;"> Add Product in shop <a  href="{!! route('products.build', ['shop_id'=>$shop->shop_id]) !!}" class='btn btn-success btn-xs'><i class="glyphicon glyphicon-plus"></i></a>
     </div>
 </div>

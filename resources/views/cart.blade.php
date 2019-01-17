@@ -195,6 +195,12 @@ section {
 .tabset > label:hover, .tabset > input:focus + label {
     color: #bd2130;
 }
+.col-4-2 {
+    /* -ms-flex: 0 0 33.333333%; */
+    
+    flex: 0 0 35.333333%;
+    /* max-width: 26.333333%; */
+}
 </style>
 
 @php
@@ -237,11 +243,10 @@ $sum=0;$count=0;$count2=0;
                     <div class="col-1" style="font-weight:bold;">แก้ไข</div>
                 </div>
 
-                <div class="row" style="border-top: solid 1px #e7eaec;padding:5% 0%;">
+                <div class="row" style="border-top: solid 1px #e7eaec;padding:3% 0%;">
 
                     <div class="col-2">
-                        <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
-                            class="img-fluid">
+                        <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}" class="img-fluid">
                     </div>
                     <div class="col-4">{{ $product->name }}<br> ค่าหิ้ว<br>ค่าจัดส่ง<br> </div>
                     <div class="col-2">{{ $product->price }}<br>{{ $product->attributes->fee }}<br>{{
@@ -279,14 +284,12 @@ $sum=0;$count=0;$count2=0;
         </div>
         @endforeach
             
-    
-    </div>
-    {{-- pp --}}
-        <div class="pp col-md-4 col-sm-12">
-                <div class="card border-danger mb-3" style="max-width: 18rem;">
+        <div class="pp col-md-12 col-sm-12">
+                <div class="card border-danger mb-3" style="max-width: 100%;">
                     <div class="card-header">Order Summary</div>
-                    <div class="card-body text-danger">
-                        <h5 style="text-align:center;">TOTAL  {{ $count2}} TH</h5>
+                    <div class="card-body">
+                    {{-- <h5>{{$Total}}</h5> --}}
+                        <h5 style="text-align:center;"><span> TOTAL <font color="red">  {{ $count2}} </font>TH</span></h5>
                         <form id="cart-form" method="POST" name="cart-form" action="{{route('confirms.store')}}">
                                 {!! csrf_field() !!}
 

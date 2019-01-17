@@ -43,7 +43,9 @@ class Payment extends Model
         'total',
         'bank_from',
         'bank_to',
-        'send_time'
+        'send_time',
+        'order_id',
+        'status'
     ];
 
     /**
@@ -68,11 +70,11 @@ class Payment extends Model
         
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function orderHeaders()
+    public function order()
     {
-        return $this->hasMany(\App\Models\OrderHeader::class);
+        return $this->belongsTo(\App\Models\OrderHeader::class, 'order_id');
     }
 }

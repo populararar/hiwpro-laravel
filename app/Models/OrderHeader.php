@@ -65,7 +65,8 @@ class OrderHeader extends Model
         'accepted_date',
         'status',
         'order_number',
-        'payment_id'
+        'payment_id',
+        'seller_id'
     ];
 
     /**

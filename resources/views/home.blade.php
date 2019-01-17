@@ -196,7 +196,7 @@
     }
 }
                 </style>
-                <div class="container" style="padding: 0 5%;">
+                <div class="container" >
                 
                     <div id="carouselExampleControls" class="carousel slide" style="border-bottom: 5px solid #cf2132" data-ride="carousel">
                         <div class="carousel-inner">
@@ -333,7 +333,8 @@
                 
                         <div class="row">
                             <div class="col-sm-12 col-md-4 col-xl-4" style="padding:0 2% 0 0;">
-                                <img class="img-fluid" src="{{ asset('hiwpro/images/calender.png')}}">
+                                @include('calender')
+                                {{-- <img class="img-fluid" src="{{ asset('hiwpro/images/calender.png')}}"> --}}
                             </div>
                             <div class="col-sm-12 col-md-8 col-xl-8">
                                 <div class="weapper" style="background-color: #fff; padding: 5%; border-radius: 2%; overflow-y: auto;

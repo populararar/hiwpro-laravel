@@ -111,37 +111,39 @@ class OrderController extends AppBaseController
         }
 
         $cart = \Cart::getContent();
+        $shopGroup = $cart->groupBy('attributes.key');
+
         $address = $request->session()->get('address');
         if (empty($address)) {
             return redirect()->route('home');
         }
 
         $now = Carbon::now()->toDateTimeString();
-        $orderNumber = Carbon::now()->format('YmdHis') . '' . Carbon::now()->micro;
-        $user = Auth::user();
-        $orderHeaderData = [
-            'address' => $address['address'],
-            'order_date' => $now,
-            'order_number' => $orderNumber,
-            // 'exp_date',
-            'slip_status' => 'WAITING',
-            'total_price' => \Cart::getTotal(),
-            // 'tracking_number' ,
-            // 'seller_id',
-            'customer_id' => $user->id,
-            // 'shipping_id',
-            // 'shipping_date',
-            // 'payment_date',
-            // 'accepted_date',
-            'status' => 'CREATE',
-        ];
-        $orderHeader = $this->orderHeaderRepository->create($orderHeaderData);
-        $orderDetails = collect([]);
-        if (!empty($orderHeader)) {
-            foreach ($cart as $item) {
-                $event_shop_id = $item->attributes->event_shop_id;
-                $seller = $mapSeller[$event_shop_id];
 
+        $user = Auth::user();
+        $i = 0;
+        foreach ($shopGroup as $key => $group) {
+            $orderNumber = Carbon::now()->format('Ymd') . $i++ . '' . Carbon::now()->micro;
+            $totalPrice = 0;
+            foreach ($group as $item) {
+                $totalPrice = $totalPrice + ($item->price + $item->attributes->fee + $item->attributes->shippping);
+            }
+            $eventShopId = $group->first()->attributes->event_shop_id;
+            $seller = $mapSeller[$eventShopId];
+            $expDate = Carbon::tomorrow('Asia/Bangkok')->toDateTimeString();
+            $orderHeaderData = [
+                'address' => $address['address'],
+                'order_date' => $now,
+                'order_number' => $orderNumber,
+                'exp_date' => $expDate,
+                'slip_status' => 'WAITING',
+                'total_price' => $totalPrice,
+                'seller_id' => $seller->id,
+                'customer_id' => $user->id,
+                'status' => 'CREATE',
+            ];
+            $orderHeader = $this->orderHeaderRepository->create($orderHeaderData);
+            foreach ($group as $item) {
                 $detailData = [
                     'product_id' => $item->id,
                     'qrt' => $item->quantity,
@@ -152,9 +154,7 @@ class OrderController extends AppBaseController
                     'order_header_id' => $orderHeader->id,
                     'seller_id' => $seller->id,
                 ];
-
-                $orderDetail = $this->orderDetailRepository->create($detailData);
-                $orderDetails->put($orderDetail->id, $orderDetail);
+                $this->orderDetailRepository->create($detailData);
             }
         }
 

@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
+use App\Repositories\OrderHeaderRepository;
 use App\Repositories\PaymentRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Http\Request;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
 class PaymentController extends AppBaseController
 {
+
+    /** @var  OrderHeaderRepository */
+    private $orderHeaderRepository;
+
     /** @var  PaymentRepository */
     private $paymentRepository;
 
-    public function __construct(PaymentRepository $paymentRepo)
+    public function __construct(PaymentRepository $paymentRepo, OrderHeaderRepository $orderHeaderRepo)
     {
         $this->paymentRepository = $paymentRepo;
+        $this->orderHeaderRepository = $orderHeaderRepo;
     }
 
     /**
@@ -117,13 +123,23 @@ class PaymentController extends AppBaseController
         $payment = $this->paymentRepository->findWithoutFail($id);
 
         if (empty($payment)) {
+
+            dd($id);
             Flash::error('Payment not found');
 
             return redirect(route('payments.index'));
         }
 
-        $payment = $this->paymentRepository->update($request->all(), $id);
+       
 
+        $input = $request->all();
+
+        $input['status'] = 'CONFIRMED';
+
+        $payment = $this->paymentRepository->update($input, $id);
+        // dd('aa',$id , $payment->order_id);
+        $this->orderHeaderRepository->update(['status' => 'CONFIRMED'], $payment->order_id);
+       
         Flash::success('Payment updated successfully.');
 
         return redirect(route('payments.index'));

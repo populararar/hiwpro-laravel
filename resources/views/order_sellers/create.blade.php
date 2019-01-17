@@ -3,18 +3,20 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Payment
+            Order Header
         </h1>
     </section>
     <div class="content">
+        @include('adminlte-templates::common.errors')
         <div class="box box-primary">
+
             <div class="box-body">
-                <div class="row" style="padding-left: 20px">
-                    @include('payments.show_fields')
+                <div class="row">
+                    {!! Form::open(['route' => 'orderSellers.store']) !!}
 
-                    
+                        @include('order_sellers.fields')
 
-                    <a href="{!! route('payments.index') !!}" class="btn btn-default">Back</a>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
