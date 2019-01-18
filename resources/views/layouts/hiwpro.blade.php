@@ -62,6 +62,7 @@
 
    <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/src/js/owl.carousel.js') }}"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="{{ asset('lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 </head>
 
 <body>

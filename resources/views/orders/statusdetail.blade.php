@@ -69,6 +69,11 @@
 
 
 </style>
+@php
+  $num = $orderHeaders->total_price;
+  $formattedNum = number_format($num);  
+@endphp
+
 {{-- {{ dd($orderHeaders)}} --}}
 <div class="container" style="padding: 0 5%;">
   <div class="page-header">
@@ -80,19 +85,19 @@
       <div class=" col-md-4">
         <h6 style="margin-top: 2%;">เลขคำสั่งซื้อ : </h6>
         <p>
-          <h6 class="font-gray">#556565622 </h6>
+          <h6 class="font-gray">{{ $orderHeaders->order_number}}</h6>
         </p>
       </div>
       <div class="col-md-4">
         <h6 style="margin-top: 2%;">ชื่อผู้จัดส่ง : </h6>
         <p>
-          <h6 class="font-gray">123/456 หมู่6 </h6>
+          <h6 class="font-gray">{{ $orderHeaders->address}} </h6>
         </p>
       </div>
       <div class=" col-lg-4">
         <h6 style="margin-top: 2%;">สถานะการชำระเงิน : </h6>
         <p>
-          <h6 class="font-gray">ชำระเงินแล้ว </h6>
+          <h6 class="font-gray">{{ $orderHeaders->slip_status}} </h6>
         </p>
       </div>
     </div>
@@ -126,7 +131,7 @@
     <div class="row">
       <div class=" col-lg-6">
         <h6 style="margin-top: 2%;">หมายเลขติดตามพัสดุ : </h6>
-        <h6 style="margin-top: 2%; "> ER81664225TH </h6>
+        <h6 style="margin-top: 2%; ">   </h6>
         <p>
           <h6 style="margin-top: 2%;">ตรวจสอบสถานะพัสดุ : </h6>
           <h6 style="margin-top: 2%;"><a href="http://track.thailandpost.com/">http://track.thailandpost.com/</a>
@@ -138,20 +143,38 @@
     <!-- row -->
 </div>
 <div class="wrapper">
- {{-- @if ()
-      disabled="disabled"
-  @endif  --}}
 
   <div class="row">
-    <div class="col-md-6"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-light w-100">ชำระเงิน</a> </div>
-    <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
+
+
+    @php
+       $status = $orderHeaders->slip_status;
+    @endphp
+
+    {{-- @if ($status ='UPLOADED')
+        <div class="col-md-6"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-light w-100">ชำระเงิน</a> </div>
+        <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
+    @endif --}}
+
+    @if ($status =='WAITING') 
+        <div class="col-md-6"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-light w-100">ชำระเงิน</a> </div> 
+        <div class="col-md-6"><button disabled="disabled" type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>   
+    @endif
+
+    @if ($status =='UPLOADED') 
+        <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div>
+        <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
+    @endif
+   
+    
+    
   </div>
  
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+          <h5 class="modal-title" id="exampleModalLabel">ได้รับสินค้าเรียบร้อย</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -190,20 +213,23 @@
   <div class="page-header">
     <h3> ข้อมูลสินค้า</h3>
   </div>
+ 
 @foreach( $orderHeaders->orderDetails as $item)
+@php
+  $num = $orderHeaders->total_price;
+  $formattedNum = number_format($num);  
+@endphp
   <div class="shadow-sm  mb-5 bg-white rounded">
     <div class="row">
       <div class="col-md-5">
           <img class='card-img-top w-50' src="{{ asset('/storage/'.$item->product->image_product_id) }}">
-
       </div>
       <div class="col-md-7 " style="padding-top:2%;">
-
-        <h3  style="border-left:5px solid #df3433; padding-left: 5px;">ชื่อสินค้า : {{$item->product->name}}</h3>
-        <h5> ประเภทสินค้า : เครื่องสำอางค์</h5>
-      <h5>ชื่อผู้หิ้ว : {{$item->seller->name }}</h5> <br>
-        <h5> จำนวน {{$item->qrt }} ชิ้น</h5>
-
+        <h3 style="border-left:5px solid #df3433; padding-left: 5px;">ชื่อสินค้า : {{$item->product->name}}</h3>
+        <p>ประเภทสินค้า : เครื่องสำอางค์</p>
+        <p>ชื่อผู้หิ้ว : {{$item->seller->name }}</p>
+        <p>จำนวน {{$item->qrt }} ชิ้น</p>
+        <p>ราคา {{$item->price }} ชิ้น</p>
       </div>
     </div>
   </div>

@@ -14,8 +14,8 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/province', 'DropdownController@index');
-Route::post('/province/fetch', 'DropdownController@fetch')->name('dropdown.fetch');
+Route::get('/address', 'DropdownController@index')->name('confirms.address');
+Route::post('/address/fetch', 'DropdownController@fetch')->name('dropdown.fetch');
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/login', 'HomeController@login')->name('login.index');
@@ -46,6 +46,7 @@ Route::middleware(['login'])->group(function () {
     Route::post('/confirms/final', 'ConfirmController@final')->name('confirms.final');
     Route::get('/confirms/{id}/payment', 'ConfirmController@payment')->name('confirms.payment');
     Route::post('/confirms/{id}/payment', 'ConfirmController@paymentStore')->name('confirms.payment.store');
+    Route::get('/confirms/{id}/slip', 'ConfirmController@slip')->name('confirms.slip');
 
     Route::resource('events', 'EventController');
 

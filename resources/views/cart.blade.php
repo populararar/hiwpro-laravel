@@ -201,6 +201,22 @@ section {
     flex: 0 0 35.333333%;
     /* max-width: 26.333333%; */
 }
+table {
+    border-collapse: collapse;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: 1px solid #e6e6e6;
+    border-bottom: 0;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+caption {
+    display: table-caption;
+    text-align: -webkit-center;
+}
 </style>
 
 @php
@@ -208,12 +224,12 @@ $sum=0;$count=0;$count2=0;
 @endphp
 
 <div class="container" style="padding: 0 5%;">
-    <div class="col">
+    {{-- <div class="col">
         <h4 style="margin-top: 2%; color: #df3433;">รายการสั่งซื้อ </h4>
         <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>
-    </div>
+    </div> --}}
 
-    <div class="row" style="background-color:#fff;">
+    <div class="row" style="background-color:#fff; margin-top:5%;">
         <div class="col-12">
             <div class="form-group">
                 <div class="btn-group d-flex justify-content-center ">
@@ -226,15 +242,16 @@ $sum=0;$count=0;$count2=0;
         </div>
     </div>
 
-          
+          {{-- style="margin-bottom:20px;" --}}
         @foreach ($shopGroup as $key => $group)
-        {{-- {{dd($group->saller)}} --}}
-        <div class="row" style="margin-bottom:20px;">
+
+        <div class="row carts" >
+           
             <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{  $key }}</h5>
             @foreach ($group as $product)
-            <div class="col-12" style="padding:2% 5%; background-color:white;margin-top:2%;">
-                <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5>
-                <div class="row" style="border-top: solid 2px #e7eaec;">
+            <div class="col-12" style="padding:0% 5%; background-color:white;margin-top:2%;">
+                {{-- <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5> style="border-top: solid 2px #e7eaec;"--}}
+                <div class="row" >
                     <div class="col-2" style="font-weight:bold;">รูป</div>
                     <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
                     <div class="col-2" style="font-weight:bold;">ราคา</div>
@@ -243,7 +260,7 @@ $sum=0;$count=0;$count2=0;
                     <div class="col-1" style="font-weight:bold;">แก้ไข</div>
                 </div>
 
-                <div class="row" style="border-top: solid 1px #e7eaec;padding:3% 0%;">
+                <div class="row" style="border-top: solid 1px #e7eaec;padding:2% 0%;">
 
                     <div class="col-2">
                         <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}" class="img-fluid">
@@ -282,6 +299,7 @@ $sum=0;$count=0;$count2=0;
             @endforeach
             @include('saler')
         </div>
+        <div style="width:150px; height:5px; margin:auto; background-color:black;"></div>
         @endforeach
             
         <div class="pp col-md-12 col-sm-12">
@@ -296,6 +314,12 @@ $sum=0;$count=0;$count2=0;
                                 @if(!empty($mapSeller))
                                     @foreach ($mapSeller as $key => $seller)
                                         <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}" >
+                                        @php
+                                             $seller_id = $seller->id;
+                                             $seller_name = $seller->name;
+                                        @endphp
+                                        {{$seller_id}}
+                                        {{$seller_name}}
                                     @endforeach
                                 @endif
                             <button type="button" class="btn btn-success btn-block" onclick="saveData()">Submit</button>

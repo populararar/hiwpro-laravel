@@ -117,14 +117,45 @@ $sum=0;$count=0;$count2=0;
         <label for="inputAddress">ที่อยู่</label>
         <textarea class="form-control" name="address" placeholder="1234 Main St" rows="5"></textarea>
       </div>
+{{--       
+      <div class="form-group">
+         
+          <label for="inputState">ข้อมูลจังหวัดในประเทศไทย</label>
+          <select id="provinces" name="city"  class="form-control provinces" >
+            <option value="">เลือกข้อมูลจังหวัดของท่าน</option>
+            @foreach ($list as $row)
+              <option value="{{ $row->id}}">{{ $row->name_th}}</option>
+            @endforeach
+           
+          </select>
+      </div>
+      <div class="form-group">
+          <label for="inputState">ข้อมูลจังหวัดในประเทศไทย</label>
+          <select id="amphures" name="state" class="form-control amphures">
+              <option value="">เลือกข้อมูลอำเภอของท่าน</option>
+            
+          </select>
+      </div> --}}
+
+
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="inputCity">เขตอำเภอ</label>
-          <input id="city" name="city" type="text" class="form-control" placeholder="ตัวอักษรไทยหรือภาษาอัง..">
+          <label for="inputCity">จังหวัด</label>
+          {{-- <input id="city" name="city" type="text" class="form-control" placeholder="ตัวอักษรไทยหรือภาษาอัง.."> --}}
+          <select id="provinces" name="city"  class="form-control provinces" >
+              <option value="">เลือกข้อมูลจังหวัดของท่าน</option>
+              @foreach ($list as $row)
+                <option value="{{ $row->id}}">{{ $row->name_th}}</option>
+              @endforeach
+             
+            </select>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputState">จังหวัด</label>
-          <input id="state" name="state" type="text" class="form-control" placeholder="ตัวอักษรไทยหรือภาษาอัง..">
+          <label for="inputState">เขตอำเภอ</label>
+          {{-- <input id="state" name="state" type="text" class="form-control" placeholder="ตัวอักษรไทยหรือภาษาอัง.."> --}}
+          <select id="amphures" name="state" class="form-control amphures">
+              <option value="">เลือกข้อมูลอำเภอของท่าน</option>
+          </select>
         </div>
       </div>
 
@@ -159,7 +190,8 @@ $sum=0;$count=0;$count2=0;
 
 @section('scripts')
 
-<script>
+<script type="text/javascript">
+
   $(document).ready(function () {
 
     $(document).on('click', '.plus', function () {
@@ -174,6 +206,7 @@ $sum=0;$count=0;$count2=0;
       }
     });
   });
+
   var form = $('#cart-form')
   function addSeller(eventShopId, sellerId) {
     var data = eventShopId + '|' + sellerId
@@ -191,6 +224,40 @@ $sum=0;$count=0;$count2=0;
 
     if (filter.length < 1) form.append('<input type="text" name="seller[]" value="' + data + '">');
   }
+
+
+  $('.provinces').change(function(){
+        if($(this).val()!=''){
+            var select=$(this).val();
+            var _token=$('input[name="_token"]').val();
+          
+            $.ajax({
+                url:"{{route('dropdown.fetch')}}",
+                method:"POST",
+                data:{select:select,_token:_token},
+                success: function(result){
+                    $('.amphures').html(result);
+                }
+            });
+         
+        }
+        
+    });
+
+ 
+
+$(function() {
+    $('.tabs li').on('click', function() {
+        var tabId = $(this).attr('data-tab');
+
+        $('.tabs li').removeClass('current');
+        $('.tab-pane').removeClass('current'); 
+
+        $(this).addClass('current');
+        $('#' + tabId).addClass('current');
+    });
+});
+ 
 
 
 </script>

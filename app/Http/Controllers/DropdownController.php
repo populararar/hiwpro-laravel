@@ -27,6 +27,9 @@ class DropdownController extends Controller
         foreach ($query as $row) {
             $output.='<option value="'.$row->name_th.'">'.$row->name_th.'</option>';
         }
+
+      
         echo $output;
     }
+  
 }

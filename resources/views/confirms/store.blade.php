@@ -126,6 +126,11 @@ section {
   opacity: 1; 
   } 
 }
+
+.d-block {
+    display: block!important;
+    margin: auto;
+}
 /* 
 ********************
  */
@@ -194,6 +199,9 @@ section {
 .tabset > label:hover, .tabset > input:focus + label {
     color: #bd2130;
 }
+h5{
+    text-align: center;
+}
 </style>
 
 @php
@@ -219,7 +227,7 @@ $sum=0;$count=0;$count2=0;
             <h5 style="border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
             @foreach ($group as $product)
             <div class="col-md-8 col-sm-12" style="padding:2% 5%; background-color:white;margin-top:2%;">
-                <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5>
+                {{-- <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5> --}}
                 <div class="row" style="border-top: solid 2px #e7eaec;">
                     <div class="col-2" style="font-weight:bold;">รูป</div>
                     <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
@@ -256,23 +264,33 @@ $sum=0;$count=0;$count2=0;
                 </div>
                 <div class="row" style="border-top: solid 2px #e7eaec;">
                     <div class="col-8 float-right "> 1 Items Total: {{ $Total = ($sum+$f+$s) }} THB</div>
-                    <div class="col-4 float-left"> {{ $count2+=$Total }}THB</div>
+                    <div class="col-4 float-left"> </div>
                 </div>
+                @php
+                     $count2+=$Total;
+                @endphp
               
             </div>
             @endforeach
             <div class="col-md-4 col-sm-12">
                 <h5> SELLER</h5>
-                <div class="card border-secondary mb-3" style="max-width: 18rem;">
-                        <div class="card-header">{{$mapSeller[$eventShopId]->id}} </div>
-                        <div class="card-body text-secondary">
-                          <h5 class="card-title">{{ $mapSeller[$eventShopId]->name }}</h5>
-                          {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> --}}
+                <div class="row"  style="max-width: 18rem;  margin:auto; border:1px solid #eee;padding:5px; text-align:center;">
+                        <div class="col-md-12 ">
+                            <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}">
                         </div>
-                      </div>
+                        <div class="col-md-12">
+                            {{$mapSeller[$eventShopId]->id}} - {{ $mapSeller[$eventShopId]->name }}
+                            <p>คะแนนนักหิ้ว</p>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                </div>
                    
             </div>
         </div>
+        <div style="width:150px; height:5px; margin:auto; background-color:black;"></div>
         @endforeach
     </div>
     {{-- pp --}}

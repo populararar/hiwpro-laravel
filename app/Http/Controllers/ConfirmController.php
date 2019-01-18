@@ -7,9 +7,9 @@ use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\UsersRepository;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use Response;
 
 class ConfirmController extends Controller
@@ -109,9 +109,12 @@ class ConfirmController extends Controller
             return redirect()->route('home');
         }
 
+        $list = DB::table('provinces')
+            ->orderBy('name_th')->get();
+
         // member address get display
 
-        return view('confirms.address'); //->with('memberAddress', []);
+        return view('confirms.address')->with('list', $list); //->with('memberAddress', []);
     }
 
     function final (Request $request) {
@@ -163,6 +166,18 @@ class ConfirmController extends Controller
         $cart = \Cart::getContent();
         return count($cart) > 0 ? true : false;
     }
+    public function slip($id, Request $request)
+    {
+        $user = Auth::user();
+        $orderHeaders = $this->orderHeaderRepository
+            ->findWhere(['customer_id' => $user->id, 'order_number' => $id])->first();
+        if (empty($orderHeaders)) {
+            return redirect()->route('home');
+        }
+
+        return view('confirms.slip')->with('orderHeaders', $orderHeaders)->with('user', $user);
+
+    }
 
     public function payment($id, Request $request)
     {
@@ -192,17 +207,16 @@ class ConfirmController extends Controller
         $input["img_path"] = str_replace("public", "", $path);
 
         $input['order_id'] = $orderHeaders->id;
-        
+
         $payment = $this->paymentRepository->create($input);
-       
+
         $orderHeader = $this->orderHeaderRepository->update([
-            'payment_id'=> $payment->id,
-            'slip_status'=>"UPLOADED",
+            'payment_id' => $payment->id,
+            'slip_status' => "UPLOADED",
             // 'shipping_date'=> Carbon::now()->toDateTimeString()
         ], $orderHeaders->id);
 
-
-        return redirect()->route('orders.statusdetail',[$orderHeaders->order_number]);
+        return redirect()->route('orders.statusdetail', [$orderHeaders->order_number]);
     }
 
 }
