@@ -56,7 +56,7 @@
 	color: #FF6B6B;
 }
 .bgColorRed {
-	background-color: #FF6B6B;
+	background-color: #343a40;
 }
 .bgColorDarkRed {
 	background-color: #bc6969;	
@@ -80,7 +80,7 @@
 
 #calender-wrapper {
 	position: relative;
-	border: 6px solid #FF6B6B;
+	border: 6px solid #343a40;
 	border-radius: 10px;
 	overflow: hidden;
     background-color: white;
@@ -91,8 +91,8 @@
 #calender-panel {
 	z-index: 5;
     position: relative;
-	background: #FF6B6B;
-	border-top: 6px solid #FF6B6B;
+	background: #343a40;
+	border-top: 6px solid #343a40;
 	color: white;
 	font-size: 0.4em;
 	height: 60px;
@@ -107,7 +107,7 @@
 }
 
 #calender-title {
-	background: #FF6B6B;
+	background: #343a40;
 	color: white;
 	font-size: 30pt;
 	height: 60px;

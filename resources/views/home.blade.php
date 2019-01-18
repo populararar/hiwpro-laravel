@@ -6,6 +6,10 @@
      --}}
 <div class="container">
         <style>
+.h4, h4 {
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
                 .carousel-wrap {
                   margin: 2% auto;
                   padding: 0 5%;
@@ -268,7 +272,7 @@
                 
                 
                 
-                    <div class="weapper" style="background-color: #F1D7CD; padding:3% 5%; ">
+                    <div class="weapper" style="background-color: #fff; padding:3% 5%; ">
                         <h4 style="margin-top: 2%; color: #df3433;">สินค้าแนะนำ </h4>
                         <h5>PRODUCT & SEGGESTION </h5>
                         <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
@@ -326,7 +330,7 @@
                 
                     </div><!-- weapper pink 4-->
                 
-                    <div class="weapper" style="background-color: #df3433; padding:3% 5%; ">
+                    <div class="weapper" style="background-color: #c21e1e; padding:3% 5%; ">
                 
                         <h4 style="color: #fff;">ตารางโปรโมชั่น </h4>
                         <h5>EVENT & PROMOTION </h5>
@@ -474,7 +478,7 @@
                 
                     </div><!-- weapper gruy 5-->
                 
-                     <div class="weapper" style="background-color: #F1D7CD; padding:3% 5%; ">
+                     <div class="weapper" style="background-color: #fff; padding:3% 5%; ">
                         <h4 style="margin-top: 2%; color: #df3433;">นักหิ้วหน้าใหม่ </h4>
                         <h5>PRODUCT & SEGGESTION </h5>
                         <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->

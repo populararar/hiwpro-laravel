@@ -135,9 +135,6 @@
         <p>
           <span>ตรวจสอบสถานะพัสดุ :<font color="red"> <a href="http://track.thailandpost.com/">http://track.thailandpost.com/</a></font></span>
           
-           
-          
-          
             <p>
           </h6>
         </p>

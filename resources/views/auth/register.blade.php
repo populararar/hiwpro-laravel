@@ -392,7 +392,7 @@ body {
                     <form method="post" action="{{ url('/register') }}">
     
                         {!! csrf_field() !!}
-                        <input type="hidden"name="role" value="2" >
+                        <input type="hidden"name="role" value="3" >
                         <div class="form-group has-feedback{{ $errors->has('name') ? ' has-error' : '' }}">
                             <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Full Name">
                             <span class="glyphicon glyphicon-user form-control-feedback"></span>

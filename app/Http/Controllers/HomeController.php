@@ -367,8 +367,8 @@ class HomeController extends Controller
             'email' => 'required|unique:users|max:255',
             'password' => 'required|min:6|max:18',
             'password_confirmation' => 'required|same:password|min:6|max:18',
-            'national_id' => 'required|same:password|min:6|max:18',
-            'national_img' => 'required',
+            // 'national_id' => 'required|same:password|min:6|max:13',
+            // 'national_img' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -429,6 +429,10 @@ class HomeController extends Controller
 
             if ($user->usersRoles->first()->role->name == 'SELLER') {
                 return redirect()->route('eventJoineds.index');
+            }
+
+            if ($user->usersRoles->first()->role->name == 'USER') {
+                return redirect()->route('home');
             }
 
             return redirect()->route('home');
