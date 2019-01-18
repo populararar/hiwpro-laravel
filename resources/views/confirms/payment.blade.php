@@ -382,7 +382,7 @@ h4,h5{
                 <div class="row" style="text-align:right;margin:2% 0%;">
                     <div class="col-md-4"><label  class=" w-5" for="inputname_card">เวลาที่โอน :  </label></div>
                     <div class="col-md-6">
-                        <input name="img_path"  type="datetime-local" class="form-control date-picker">
+                        <input name="send_time"  type="datetime-local" class="form-control date-picker">
                     </div>
                 </div>
                 <div class="btnS"><button class="btn btn-danger" style="width:100%;" type="submit"> ยืนยัน </button></div>
@@ -415,8 +415,8 @@ h4,h5{
     
     $(function () {
         $('.date-picker').datetimepicker({
-           // format: 'YYYY-MM-DD HH:mm:ss'
-            format: 'YYYY-MM-DD'
+           // format: 'YYYY-MM-DD'
+            format: 'YYYY-MM-DD HH:mm:ss'
         });
     });
 

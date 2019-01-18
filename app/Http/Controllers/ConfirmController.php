@@ -213,7 +213,7 @@ class ConfirmController extends Controller
         $orderHeader = $this->orderHeaderRepository->update([
             'payment_id' => $payment->id,
             'slip_status' => "UPLOADED",
-            // 'shipping_date'=> Carbon::now()->toDateTimeString()
+            // 'shipping_date'=> Carbon::now()->toDateTimeString(),
         ], $orderHeaders->id);
 
         return redirect()->route('orders.statusdetail', [$orderHeaders->order_number]);
