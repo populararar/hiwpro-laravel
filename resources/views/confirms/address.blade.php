@@ -178,7 +178,7 @@ $sum=0;$count=0;$count2=0;
       <div class="form-group">
         <div class="btn-group d-flex justify-content-center">
           <button style="text-align:center; width: 50%;" type="button" class="btn btn-outline-secondary">ย้อนกลับ</button>
-          <button style="text-align:center; width: 50%;" class="btn btn-success" type="submit">ยืนยันการชำระเงิน</button>
+          <button style="text-align:center; width: 50%;" class="btn btn-success" type="submit">ถัดไป</button>
         </div>
       </div>
     </form>

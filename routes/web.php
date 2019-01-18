@@ -87,3 +87,6 @@ Route::middleware(['login'])->group(function () {
 
     Route::resource('payments', 'PaymentController');
 });
+
+
+Route::resource('profiles', 'ProfileController');

@@ -10,6 +10,7 @@ use App\Repositories\ProducteventRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\UserRolesRepository;
 use App\Repositories\UsersRepository;
+use App\Repositories\ProfileRepository;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
@@ -20,6 +21,9 @@ use Validator;
 
 class HomeController extends Controller
 {
+
+    /** @var  ProfileRepository */
+    private $profileRepository;
 
     /** @var  UsersRepository */
     private $usersRepository;
@@ -50,7 +54,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo
+    public function __construct(ProfileRepository $profileRepo,EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo
         , UsersRepository $usersRepo, PermissionsRepository $permissionRepo) {
         $this->eventJoinedRepository = $eventJoinedRepo;
         $this->usersRepository = $usersRepo;
@@ -60,6 +64,7 @@ class HomeController extends Controller
         $this->producteventRepository = $producteventRepo;
         $this->productRepository = $productRepo;
         $this->userRolesRepository = $userRolesRepo;
+        $this->profileRepository = $profileRepo;
     }
 
     public function cartDetail(Request $request)
@@ -370,8 +375,8 @@ class HomeController extends Controller
             return redirect()->route('register')
                 ->withErrors($validator)
                 ->withInput();
-        }
-
+        } 
+        
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         // dd($input);
@@ -390,7 +395,7 @@ class HomeController extends Controller
             'role_id' => $role,
             'status' => '1',
         ]);
-
+        
         Flash::success('Register saved successfully.');
 
         return redirect()->route('login.index');

@@ -363,6 +363,7 @@ body {
 .tabset > label:hover, .tabset > input:focus + label {
     color: black;
 }
+
   </style>
   <body>
     
@@ -461,6 +462,7 @@ body {
         <section id="seller" class="tab-panel">
              <p><strong> SELLER: </strong>Register a customer new membership</p>
                 <div class="col-xs-12 card ">
+                    <img src="https://sv1.picz.in.th/images/2019/01/19/9yeiX8.jpg" class="img-fluid" alt="">
                         <form method="post" action="{{ url('/register') }}">
         
                             {!! csrf_field() !!}
@@ -519,12 +521,18 @@ body {
                                     </span>
                                 @endif
                             </div>
-                            <form>
+                            <div class="form-group has-feedback{{ $errors->has('img_id1') ? ' has-error' : '' }}">
                                 <div class="form-group">
-                                  {{-- <label for="img">หลักฐานรูปหน้าบัตร</label> --}}
-                                  <input type="file" class="form-control-file" id="img">
+                                  <label for="img">หลักฐานรูปหน้าบัตร</label>
+                                  <input type="file" class="form-control-file" name="img_id1"  id="img_id1">
                                 </div>
-                            </form>
+                            </div>
+                            <div class="form-group has-feedback{{ $errors->has('img_id2') ? ' has-error' : '' }}" >
+                                <div class="form-group">
+                                    <label for="img">หลักฐานรูปตนเองพร้อมบัตร</label>
+                                    <input type="file" class="form-control-file" name="img_id2" id="img_id2">
+                                </div>
+                            </div>
         
                             <div class="row">
                                 <div class="col-xs-8 col-md-8">

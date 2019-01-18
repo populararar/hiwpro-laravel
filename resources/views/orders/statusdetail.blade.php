@@ -133,8 +133,11 @@
         <h6 style="margin-top: 2%;">หมายเลขติดตามพัสดุ : </h6>
         <h6 style="margin-top: 2%; ">   </h6>
         <p>
-          <h6 style="margin-top: 2%;">ตรวจสอบสถานะพัสดุ : </h6>
-          <h6 style="margin-top: 2%;"><a href="http://track.thailandpost.com/">http://track.thailandpost.com/</a>
+          <span>ตรวจสอบสถานะพัสดุ :<font color="red"> <a href="http://track.thailandpost.com/">http://track.thailandpost.com/</a></font></span>
+          
+           
+          
+          
             <p>
           </h6>
         </p>

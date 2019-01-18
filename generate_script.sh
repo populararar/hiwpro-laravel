@@ -29,11 +29,11 @@ php artisan infyom:scaffold EventJoined  --fromTable --tableName=event_joined --
 
 php artisan infyom:scaffold OrderHeader  --fromTable --tableName=order_header --primary=id --relations
 
-
 php artisan infyom:scaffold OrderDetail  --fromTable --tableName=order_detail --primary=id --relations
 
-
 php artisan infyom:scaffold Payment  --fromTable --tableName=payment --primary=id --relations
+
+php artisan infyom:scaffold Profile  --fromTable --tableName=profile --primary=id --relations
 
 
 ALTER TABLE `hiwpro`.`event_joined` 

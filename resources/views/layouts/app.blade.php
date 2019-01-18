@@ -73,7 +73,7 @@ body{
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <img src="https://sv1.picz.in.th/images/2018/12/14/9YJeFP.png"
+                                    <img src="https://sv1.picz.in.th/images/2019/01/19/9yGI3l.jpg"
                                          class="img-circle" alt="User Image"/>
                                     <p>
                                         {!! Auth::user()->name !!}
