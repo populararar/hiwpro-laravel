@@ -1,3 +1,16 @@
+@foreach ($orderHeader->orderDetails as $orderdetail)
+{{$orderdetail->product->name}}
+
+{{$orderdetail->product->name}}
+{{$orderdetail->product->price}}
+{{$orderdetail->product->productdetail}}
+{{$orderdetail->product->fee}}
+{{$orderdetail->product->shipping_price}}
+{{$orderdetail->product->shop->name}}
+
+    
+@endforeach
+    
 <!-- Id Field -->
 <div class="form-group">
     {!! Form::label('id', 'Id:') !!}

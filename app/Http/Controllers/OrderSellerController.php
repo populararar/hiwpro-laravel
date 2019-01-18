@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use DB;
 
 class OrderSellerController extends AppBaseController
 {
@@ -94,17 +95,19 @@ class OrderSellerController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
+        $user = Auth::user();
+
+        // $orderHeaders = $this->orderHeaderRepository->with('orderDetails')->findWhere(['customer_id' => $user->id, 'order_number' => $id])->first();
         $orderHeader = $this->orderHeaderRepository->findWithoutFail($id);
 
         if (empty($orderHeader)) {
             Flash::error('Order Header not found');
-
             return redirect(route('orderHeaders.index'));
         }
 
-        return view('order_sellers.edit')->with('orderHeader', $orderHeader);
+        return view('order_sellers.edit')->with('orderHeader', $orderHeader)->with('user', $user);
     }
 
     /**
