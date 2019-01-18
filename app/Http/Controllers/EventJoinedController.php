@@ -94,6 +94,16 @@ class EventJoinedController extends AppBaseController
     public function show($id)
     {
         $event = $this->eventRepository->findWithoutFail($id);
+        $eventShops = $this->eventShopRepository->findWhere(['event_id' => $id]);
+
+        $now = Carbon::now()->toDateTimeString();
+        
+        $events = $this->eventRepository->findWhere([['event_exp', '>', $now]]);
+
+        foreach ($events as $event) {
+            $event->start_date = $this->formatEventDate($event->startDate);
+            $event->last_date = $this->formatEventDate($event->lastDate);
+        }
 
         if (empty($event)) {
             Flash::error('Event not found');
@@ -101,7 +111,7 @@ class EventJoinedController extends AppBaseController
             return redirect(route('eventJoineds.index'));
         }
 
-        return view('event_joineds.show')->with('event', $event);
+        return view('event_joineds.show')->with('events', $events)->with('event', $event)->with('eventShops', $eventShops);
     }
 
     /**
