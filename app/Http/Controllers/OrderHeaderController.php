@@ -5,20 +5,32 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateOrderHeaderRequest;
 use App\Http\Requests\UpdateOrderHeaderRequest;
 use App\Repositories\OrderHeaderRepository;
+use App\Repositories\OrderDetailRepository;
+use App\Repositories\UsersRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Carbon\Carbon;
 
 class OrderHeaderController extends AppBaseController
 {
+    
+    /** @var  OrderDetailRepository */
+    private $orderDetailRepository;
+
+    /** @var  UsersRepository */
+    private $usersRepository;
+
     /** @var  OrderHeaderRepository */
     private $orderHeaderRepository;
 
-    public function __construct(OrderHeaderRepository $orderHeaderRepo)
+    public function __construct(UsersRepository $usersRepo,OrderDetailRepository $orderDetailRepo,OrderHeaderRepository $orderHeaderRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
+        $this->orderDetailRepository = $orderDetailRepo;
+        $this->usersRepository = $usersRepo;
     }
 
     /**

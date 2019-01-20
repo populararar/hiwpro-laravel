@@ -131,7 +131,7 @@
     <div class="row">
       <div class=" col-lg-6">
         <h6 style="margin-top: 2%;">หมายเลขติดตามพัสดุ : </h6>
-        <h6 style="margin-top: 2%; ">   </h6>
+        <h6 style="margin-top: 2%; ">{{ $orderHeaders->tracking_number }}   </h6>
         <p>
           <span>ตรวจสอบสถานะพัสดุ :<font color="red"> <a href="http://track.thailandpost.com/">http://track.thailandpost.com/</a></font></span>
           

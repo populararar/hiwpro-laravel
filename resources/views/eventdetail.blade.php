@@ -128,7 +128,7 @@ body{
                                 <input type="hidden" name="price" value="{{  $pe->product->price  }}">
                                 <input type="hidden" name="fee" value="{{  $pe->product->fee  }}">
                                 <input type="hidden" name="shippping" value="{{  $pe->product->shipping_price  }}">                                  
-                                <button type="button" class="box-l btn btn-outline-danger"><i class="fas fa-heart"></i></button>
+                                {{-- <button type="button" class="box-l btn btn-outline-danger"><i class="fas fa-heart"></i></button> --}}
                                 <span style="margin-left:10%;">
                                     จำนวน
                                 </span>
@@ -163,32 +163,26 @@ body{
                 <div class="carousel-item active">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_08.png')}}"
-                               >
+                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_08.png')}}">
                         </div>
                         <div class="col-lg-4 col-md-6  d-none d-sm-none d-md-block">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_09.png')}}"
-                               >
+                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_09.png')}}">
                         </div>
                         <div class="col-lg-4 d-none d-md-none d-lg-block">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_11.png')}}"
-                               >
+                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_11.png')}}">
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}"
-                               >
+                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}">
                         </div>
                         <div class="col-lg-4 col-md-6  d-none d-sm-none d-md-block">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_06.png')}}"
-                               >
+                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_06.png')}}">
                         </div>
                         <div class="col-lg-4 d-none d-md-none d-lg-block">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_05.png')}}"
-                               >
+                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_05.png')}}">
                         </div>
                     </div>
                 </div>
