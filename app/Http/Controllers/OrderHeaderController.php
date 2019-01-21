@@ -8,11 +8,14 @@ use App\Repositories\OrderHeaderRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\UsersRepository;
 use App\Http\Controllers\AppBaseController;
+
 use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Illuminate\Support\Facades\Auth;
 use Response;
 use Carbon\Carbon;
+use DB;
 
 class OrderHeaderController extends AppBaseController
 {
@@ -41,8 +44,14 @@ class OrderHeaderController extends AppBaseController
      */
     public function index(Request $request)
     {
+       
         $this->orderHeaderRepository->pushCriteria(new RequestCriteria($request));
         $orderHeaders = $this->orderHeaderRepository->all();
+ 
+      
+         
+        // $customer = $this->usersRepository->findWhere(['id'=>$orderHeaders->attributes->customer_id]);
+      
 
         return view('order_headers.index')
             ->with('orderHeaders', $orderHeaders);
