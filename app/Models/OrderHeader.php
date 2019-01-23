@@ -109,6 +109,15 @@ class OrderHeader extends Model
     {
         return $this->belongsTo(\App\Models\Users::class);
     }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function customer()
+    {
+        return $this->belongsTo(\App\Models\Users::class, 'customer_id');
+    }
+
 
       
     /**
