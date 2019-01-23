@@ -44,7 +44,7 @@ class Permissions extends Model
         'can_create',
         'can_update',
         'can_delete',
-        'can_show',
+        'can_read',
     ];
 
     /**
@@ -60,7 +60,7 @@ class Permissions extends Model
         'can_create' => 'integer',
         'can_update' => 'integer',
         'can_delete' => 'integer',
-        'can_show' => 'integer',
+        'can_read' => 'integer',
     ];
 
     /**

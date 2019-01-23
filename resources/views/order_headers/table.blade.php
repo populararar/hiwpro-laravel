@@ -24,13 +24,13 @@
     @foreach($orderHeaders as $orderHeader)
         <tr>
             <td>{!! $orderHeader->order_number !!}</td> 
-            <td>{!! $orderHeader->customer_id !!}</td>
+            <td>{!! $orderHeader->customer->name !!}</td>
             <td>{!! $orderHeader->order_date !!}</td>
             <td>{!! $orderHeader->address !!}</td>
             
             <td>{!! $orderHeader->exp_date !!}</td>
             <td>{!! $orderHeader->slip_status !!}</td>
-            <td>{!! $orderHeader->total_price !!}</td>
+            <td style="text-align:center;">{!!number_format($orderHeader->total_price) !!} บาท</td>
             <td>{!! $orderHeader->tracking_number !!}</td>
           
            

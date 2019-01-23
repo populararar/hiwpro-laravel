@@ -44,10 +44,14 @@ class LoginMiddlware
                 'route_name' => $arrayPath[0],
             ])->first();
 
+            // dd($menu , $user->id);
+
             $permission = $this->permissionsRepository->findWhere([
                 'menu_id' =>$menu->id, 
                 'role_id' =>$role_id
             ])->first();
+
+            // dd($menu , $user->id ,  $permission );
 
             if(empty( $permission )){
                 abort(404);

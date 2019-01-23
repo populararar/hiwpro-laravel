@@ -80,7 +80,9 @@ h4,h5{
 
 ้
 <div class="weapper" style="background-color: #fff; padding:3%; ">
-        <h4 style="margin-top: 2%; color: #df3433;">ชำระเงิน </h4>
+    <h1 style="margin-top: 2%; color: #df3433;"> <i class="fas fa-money-check-alt"></i></h1>
+        <h4 style="margin-top: 2%; color: #df3433; font-weight:bolder;">ชำระเงิน </h4>
+        <div style="width:50px;height:5px; background-color:#cf2132;margin:auto;"></div>
 
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
             <div class="row">
@@ -363,11 +365,13 @@ h4,h5{
                         </select>   
                     </div>
                 </div>    
+                @php $price = $orderHeaders->total_price; @endphp
 
                 <div class="row" style="text-align:right;margin:2% 0%;">
-                    <div class="col-md-4"><label  class=" w-5" for="inputname_card">จำนวนเงิน :  </label></div>
+                    <div class="col-md-4"><label  class=" w-5" for="inputname_card">จำนวนเงิน : </label></div>
                     <div class="col-md-6">
-                        <input name="total"  type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <input name="total_show" type="text" class="form-control" value="{{ $formattedNum}} บาท" readonly="readonly">
+                    <input name="total" type="hidden" class="form-control" value="{{$price}}" readonly="readonly">
                     </div>
                 </div>
 

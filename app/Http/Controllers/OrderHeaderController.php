@@ -50,7 +50,7 @@ class OrderHeaderController extends AppBaseController
  
       
          
-        // $customer = $this->usersRepository->findWhere(['id'=>$orderHeaders->attributes->customer_id]);
+        // $customer = $this->usersRepository->findWhere(['id'=>$orderHeaders->customer->customer_id]);
       
 
         return view('order_headers.index')

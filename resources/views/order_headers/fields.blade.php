@@ -7,13 +7,13 @@
 <!-- Order Date Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('order_date', 'Order Date:') !!}
-    {!! Form::date('order_date', null, ['class' => 'form-control']) !!}
+    {!! Form::date('order_date', null, ['class' => 'form-control','readonly'=>true]) !!}
 </div>
 
 <!-- Exp Date Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('exp_date', 'Exp Date:') !!}
-    {!! Form::date('exp_date', null, ['class' => 'form-control']) !!}
+    {!! Form::date('exp_date', null, ['class' => 'form-control','readonly'=>true]) !!}
 </div>
 
 <!-- Slip Status Field -->
@@ -25,7 +25,7 @@
 <!-- Total Price Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('total_price', 'Total Price:') !!}
-    {!! Form::number('total_price', null, ['class' => 'form-control']) !!}
+    {!! Form::number('total_price', null, ['class' => 'form-control','readonly'=>true]) !!}
 </div>
 
 <!-- Tracking Number Field -->
@@ -37,8 +37,8 @@
 
 <!-- Customer Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('customer_id', 'Customer Id:') !!}
-    {!! Form::number('customer_id', null, ['class' => 'form-control']) !!}
+    {!! Form::label('customer_id', 'Customer:') !!}
+    {!! Form::number('customer_id', null, ['class' => 'form-control','readonly'=>true]) !!}
 </div>
 
 <!-- Shipping Id Field -->

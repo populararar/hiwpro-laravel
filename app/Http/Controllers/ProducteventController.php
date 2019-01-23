@@ -110,6 +110,27 @@ class ProducteventController extends AppBaseController
 
         return redirect(route('productevents.index.event', ['event_shop_id' => $event_shop_id]));
     }
+     /**
+     * Display the specified Productevent.
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function main(Request $request, $id)
+    {
+        // $event = $this->eventRepository->findWhere([['event_id', '=', $id]])->first();
+        $product = $this->productRepository->findWhere([['product_id', '=', $id]])->first();
+        $productevent = $this->producteventRepository->findWithoutFail($id);
+
+        if (empty($productevent)) {
+            Flash::error('Productevent not found');
+
+            return redirect(route('productevents.index'));
+        }
+
+        return view('productevents.show')->with('productevent', $productevent)->with('product', $product);
+    }
 
     /**
      * Display the specified Productevent.

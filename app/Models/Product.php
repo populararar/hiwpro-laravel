@@ -50,7 +50,8 @@ class Product extends Model
         'actual_price',
         'shop_id',
         'image_product_id',
-        'category_id'
+        'category_id',
+        'img_product'
     ];
 
     /**
@@ -69,7 +70,8 @@ class Product extends Model
         'actual_price' => 'string',
         'shop_id' => 'integer',
         'image_product_id' => 'string',
-        'category_id' => 'string'
+        'category_id' => 'string',
+        'img_product' => 'string'
     ];
 
     /**

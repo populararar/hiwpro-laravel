@@ -16,6 +16,12 @@
     {!! Form::number('can_visible', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Can Show Field -->
+<div class="form-group col-sm-6">
+        {!! Form::label('can_read', 'Can read:') !!}
+        {!! Form::number('can_read', null, ['class' => 'form-control']) !!}
+    </div>
+
 <!-- Can Create Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('can_create', 'Can Create:') !!}
@@ -34,11 +40,7 @@
     {!! Form::number('can_delete', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Can Show Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('can_show', 'Can Show:') !!}
-    {!! Form::number('can_show', null, ['class' => 'form-control']) !!}
-</div>
+
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

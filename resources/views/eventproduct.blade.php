@@ -152,6 +152,9 @@ input:disabled{
 .tabset > label:hover, .tabset > input:focus + label {
     color: #bd2130;
 }
+.line{
+    margin:10px;
+}
 </style>
 <div class="container">
 
@@ -171,21 +174,25 @@ input:disabled{
 
                 <h4 style='border-bottom:2px solid #df3433; font-size:1.8em;margin:0%;'>{{ $product->name }}</h4>
             <h6>
-                <span>
-                    <font color="black">ราคา</font>
-                    <font color="red" ,font-size="0.8em">{{  $product->price  }} บาท</font>
-                    <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>฿{{$product->actual_price}}</font>
-                </span>
+                <div class="line">
+                     <span>
+                        <font color="black">ราคา</font>
+                        <font color="red" ,font-size="0.8em">{{  $product->price  }} บาท</font>
+                        <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>฿{{$product->actual_price}}</font>
+                    </span>
+                </div>
+               
                 
-                <div class='row'>
-                    <div class='col-3'>
+                <div class="row line">
+                    <div class="col-3">
                         ค่าหิ้ว {{ $product->fee }} บาท/ชิ้น
                     </div>
-                    <div class='col-6'>
+                    <div class="col-6">
                         ค่าจัดส่ง {{ $product->shipping_price }} บาท
                     </div>
                 </div>
-                <div class="qty mt-5" style="padding:0%;margin:0%;">
+
+                <div class="line qty mt-5 ">
                     จำนวน 
                     <span class="minus bg-dark">-</span>
                     <input type="number" class="count" name="quantity" value="1">

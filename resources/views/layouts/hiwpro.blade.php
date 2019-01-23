@@ -109,7 +109,11 @@
                         {!! Auth::user()->name !!}
                         <span class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">ข้อมูลส่วนตัว</a>
+                        @php
+                            $id = Auth::user()->id;
+                        @endphp
+                       {{-- {{ dd(Auth::user()->id)}} --}}
+                        <a class="dropdown-item" href="{{ route('profiles.main') }}">ข้อมูลส่วนตัว</a>
                         <a class="dropdown-item" href="{{route('orders.store') }}">ประวัติการสั่งซื้อ</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout.index') }}">ออกจากระบบ</a>

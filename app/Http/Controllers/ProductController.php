@@ -138,10 +138,12 @@ class ProductController extends AppBaseController
     public function store(CreateProductRequest $request)
     {
         $path = $request->file('image_product_id')->store('public/upload');
+        $path2 = $request->file('img_product')->store('public/upload');
 
         $input = $request->all();
 
         $input["image_product_id"] = str_replace("public", "", $path);
+        $input["img_product"] = str_replace("public", "", $path2);
 
         $product = $this->productRepository->create($input);
 

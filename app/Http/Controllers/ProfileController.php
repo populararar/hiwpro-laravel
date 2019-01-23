@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Repositories\ProfileRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
+use App\Repositories\UsersRepository;
 use Flash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
 class ProfileController extends AppBaseController
 {
+    /** @var  UsersRepository */
+    private $usersRepository;
+
     /** @var  ProfileRepository */
     private $profileRepository;
 
-    public function __construct(ProfileRepository $profileRepo)
+    public function __construct(UsersRepository $usersRepo, ProfileRepository $profileRepo)
     {
         $this->profileRepository = $profileRepo;
+        $this->usersRepository = $usersRepo;
     }
 
     /**
@@ -29,11 +35,12 @@ class ProfileController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->profileRepository->pushCriteria(new RequestCriteria($request));
-        $profiles = $this->profileRepository->all();
+        $user = Auth::user();
+        // $this->profileRepository->pushCriteria(new RequestCriteria($request));
+        $profile = $this->profileRepository->findWhere(['user_id' => $user->id])->first();
 
-        return view('profiles.index')
-            ->with('profiles', $profiles);
+        return view('profiles.main')
+            ->with('profile', $profile);
     }
 
     /**
@@ -62,6 +69,26 @@ class ProfileController extends AppBaseController
         Flash::success('Profile saved successfully.');
 
         return redirect(route('profiles.index'));
+    }
+    /**
+     * Display the specified Profile.
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function main()
+    {
+        $user = Auth::user();
+
+        $profile = $this->profileRepository->findWithoutFail($user->id);
+
+        if (empty($profile)) {
+            Flash::error('Profile not found');
+            return redirect(route('home'));
+        }
+
+        return view('profiles.main')->with('profile', $profile);
     }
 
     /**

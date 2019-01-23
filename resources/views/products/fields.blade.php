@@ -45,6 +45,14 @@
     {!! Form::label('image_product_id', 'Add image:') !!}
     {!! Form::file('image_product_id') !!}
 </div>
+
+<div class="clearfix"></div>
+
+<!-- Imgpath Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('img_product', 'Add image 2:') !!}
+    {!! Form::file('img_product') !!}
+</div>
 <div class="clearfix"></div>
 
 <!-- Category Id Field -->

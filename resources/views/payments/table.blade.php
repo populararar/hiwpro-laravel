@@ -1,7 +1,7 @@
 <table class="table table-responsive" id="payments-table">
     <thead>
         <tr>
-            <th>Img Path</th>
+        <th>Img Path</th>
         <th>Total</th>
         <th>Bank From</th>
         <th>Bank To</th>

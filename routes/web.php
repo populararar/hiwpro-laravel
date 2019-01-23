@@ -42,6 +42,12 @@ Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}', 'HomeController@a
 
 Route::middleware(['login'])->group(function () {
 
+    // Route::resource('main', 'MainController');
+    // Route::get('/main/admin', 'MainController@admin')->name('main.sum_admin');
+
+    Route::resource('profiles', 'ProfileController');
+    Route::get('/profiles/main', 'ProfileController@main')->name('profiles.main');
+
     Route::resource('confirms', 'ConfirmController');
     Route::post('/confirms/final', 'ConfirmController@final')->name('confirms.final');
     Route::get('/confirms/{id}/payment', 'ConfirmController@payment')->name('confirms.payment');
@@ -89,4 +95,3 @@ Route::middleware(['login'])->group(function () {
 });
 
 
-Route::resource('profiles', 'ProfileController');

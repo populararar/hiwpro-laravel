@@ -1,3 +1,4 @@
+
 <!-- Product Id Field -->
 <div class="form-group">
     {!! Form::label('product_id', 'Product Id:') !!}
@@ -24,7 +25,7 @@
 
 <!-- Fee Field -->
 <div class="form-group">
-    {!! Form::label('fee', 'Fee:') !!}
+    {!! Form::label('fee', 'ค่าหิ้ว :') !!}
     <p>{!! $product->fee !!}</p>
 </div>
 
@@ -36,20 +37,27 @@
 
 <!-- Shipping Price Field -->
 <div class="form-group">
-    {!! Form::label('shipping_price', 'Shipping Price:') !!}
+    {!! Form::label('shipping_price', 'ค่าส่ง :') !!}
     <p>{!! $product->shipping_price !!}</p>
 </div>
 
 <!-- Actual Price Field -->
 <div class="form-group">
-    {!! Form::label('actual_price', 'Actual Price:') !!}
+    {!! Form::label('actual_price', 'ราคาเต็ม:') !!}
     <p>{!! $product->actual_price !!}</p>
 </div>
 
 <!-- Imgpath Field -->
-<div class="form-group">
-    {!! Form::label('image_product_id', 'Imgpath:') !!}
+<div class="form-group col-sm-6">
+    {!! Form::label('image_product_id', 'รูปที่ 1 :') !!}
     <p><img src="{{ asset('/storage/'.$product->image_product_id) }}" alt="" width="250"></p>
+</div>
+
+
+<!-- Imgpath Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('img_product', 'รูปที่ 2 :') !!}
+    <p><img src="{{ asset('/storage/'.$product->img_product) }}" alt="" width="250"></p>
 </div>
 
 <!-- Category Id Field -->
@@ -63,7 +71,7 @@
     {!! Form::label('created_at', 'Created At:') !!}
     <p>{!! $product->created_at !!}</p>
 </div>
-
+<span>updated_at</span>
 <!-- Updated At Field -->
 <div class="form-group">
     {!! Form::label('updated_at', 'Updated At:') !!}
