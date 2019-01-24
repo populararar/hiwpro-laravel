@@ -424,7 +424,7 @@ class HomeController extends Controller
             $this->getPermissions();
 
             if ($user->usersRoles->first()->role->name == 'ADMIN') {
-                return redirect()->route('events.index');
+                return redirect()->route('dashboards.index');
             }
 
             if ($user->usersRoles->first()->role->name == 'SELLER') {

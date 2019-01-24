@@ -91,6 +91,27 @@ class ProfileController extends AppBaseController
         return view('profiles.main')->with('profile', $profile);
     }
 
+     /**
+     * Display the specified Profile.
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function admin()
+    {
+        $user = Auth::user();
+
+        $profile = $this->profileRepository->findWithoutFail($user->id);
+
+        if (empty($profile)) {
+            Flash::error('Profile not found');
+            return redirect(route('home'));
+        }
+
+        return view('profiles.admin')->with('profile', $profile);
+    }
+
     /**
      * Display the specified Profile.
      *

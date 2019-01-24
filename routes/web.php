@@ -42,11 +42,11 @@ Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}', 'HomeController@a
 
 Route::middleware(['login'])->group(function () {
 
-    // Route::resource('main', 'MainController');
-    // Route::get('/main/admin', 'MainController@admin')->name('main.sum_admin');
-
     Route::resource('profiles', 'ProfileController');
     Route::get('/profiles/main', 'ProfileController@main')->name('profiles.main');
+    Route::get('/main', 'ProfileController@admin')->name('profiles.admin');
+    
+
 
     Route::resource('confirms', 'ConfirmController');
     Route::post('/confirms/final', 'ConfirmController@final')->name('confirms.final');
@@ -55,6 +55,8 @@ Route::middleware(['login'])->group(function () {
     Route::get('/confirms/{id}/slip', 'ConfirmController@slip')->name('confirms.slip');
 
     Route::resource('events', 'EventController');
+    // Route::get('/events/show/dashboard', 'EventController@dashboard')->name('events.dashboard');
+    Route::get('/events/show/dashboard', 'EventController@dashboard')->name('dashboards.index');
 
     Route::resource('locations', 'LocationController');
 
