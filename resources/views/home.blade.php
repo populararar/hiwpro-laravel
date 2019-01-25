@@ -4,250 +4,58 @@
 {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
      --}}
-<div >
-        <style>
-.h1, h1 {
-    font-size: 1.5rem;
-}
-.h4, h4 {
-    font-size: 1.5rem;
-    font-weight: bolder;
-}
-.carousel-wrap {
-margin: 2% auto;
-padding: 0 5%;
-width: 100%;
-position: relative;
-}
+<div>
+        <style></style>
 
-/* fix blank or flashing items on carousel */
-.owl-carousel .item {
-position: relative;
-z-index: 100; 
--webkit-backface-visibility: hidden; 
-}
-
-/* end fix */
-.owl-nav > div {
-margin-top: -26px;
-position: absolute;
-top: 50%;
-color: #cdcbcd;
-}
-
-.owl-nav i {
-font-size: 52px;
-}
-
-.owl-nav .owl-prev {
-left: -30px;
-}
-
-.owl-nav .owl-next {
-right: -30px;
-}
-.how{
-border-radius: 50% ; 
-background-color: #df3433; 
-width: 100%; 
-height: 18%;
-padding:2%; 
-text-align: center;
-}
-.design-process-section .text-align-center {
-    line-height: 25px;
-    margin-bottom: 12px;
-}
-.design-process-content {
-    border: 1px solid #e9e9e9;
-    position: relative;
-    padding: 16px 34% 30px 30px;
-}
-.design-process-content img {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 0;
-    max-height: 100%;
-}
-.design-process-content h3 {
-    margin-bottom: 16px;
-}
-.design-process-content p {
-    line-height: 26px;
-    margin-bottom: 12px;
-}
-.process-model {
-    list-style: none;
-    padding: 0;
-    position: relative;
-    max-width: 600px;
-    margin: 20px auto 26px;
-    border: none;
-    z-index: 0;
-}
-.process-model li::after {
-    background: #e5e5e5 none repeat scroll 0 0;
-    bottom: 0;
-    content: "";
-    display: block;
-    height: 4px;
-    margin: 0 auto;
-    position: absolute;
-    right: -30px;
-    top: 33px;
-    width: 85%;
-    z-index: -1;
-}
-.process-model li.visited::after {
-    background: #57b87b;
-}
-.process-model li:last-child::after {
-    width: 0;
-}
-.process-model li {
-    display: inline-block;
-    width: 18%;
-    text-align: center;
-    float: none;
-}
-.nav-tabs.process-model > li.active > a, .nav-tabs.process-model > li.active > a:hover, .nav-tabs.process-model > li.active > a:focus, .process-model li a:hover, .process-model li a:focus {
-    border: none;
-    background: transparent;
-
-}
-.process-model li a {
-    padding: 0;
-    border: none;
-    color: #606060;
-}
-.process-model li.active,
-.process-model li.visited {
-    color: #57b87b;
-}
-.process-model li.active a,
-.process-model li.active a:hover,
-.process-model li.active a:focus,
-.process-model li.visited a,
-.process-model li.visited a:hover,
-.process-model li.visited a:focus {
-    color: #57b87b;
-}
-.process-model li.active p,
-.process-model li.visited p {
-    font-weight: 600;
-}
-.process-model li i {
-    display: block;
-    height: 68px;
-    width: 68px;
-    text-align: center;
-    margin: 0 auto;
-    background: #f5f6f7;
-    border: 2px solid #e5e5e5;
-    line-height: 65px;
-    font-size: 30px;
-    border-radius: 50%;
-}
-.process-model li.active i, .process-model li.visited i  {
-    background: #fff;
-    border-color: #57b87b;
-}
-.process-model li p {
-    font-size: 14px;
-    margin-top: 11px;
-}
-.process-model.contact-us-tab li.visited a, .process-model.contact-us-tab li.visited p {
-    color: #606060!important;
-    font-weight: normal
-}
-.process-model.contact-us-tab li::after  {
-    display: none; 
-}
-.process-model.contact-us-tab li.visited i {
-    border-color: #e5e5e5; 
-}
-
-/* @media (max-width: 578px) {
-
-} */
-
-@media screen and (max-width: 578px) {
-.p{
-    font-size: 14px;
-}
-  .more-icon-preocess.process-model li span {
-        font-size: 23px;
-        height: 50px;
-        line-height: 46px;
-        width: 50px;
-    }
-    .more-icon-preocess.process-model li::after {
-        top: 24px;
-    }
-}
-@media screen and (max-width: 420px) { 
-    .process-model.more-icon-preocess li {
-        width: 16%;
-    }
-    .more-icon-preocess.process-model li span {
-        font-size: 16px;
-        height: 35px;
-        line-height: 32px;
-        width: 35px;
-    }
-    .more-icon-preocess.process-model li p {
-        font-size: 8px;
-    }
-    .more-icon-preocess.process-model li::after {
-        top: 18px;
-    }
-    .process-model.more-icon-preocess {
-        text-align: center;
-    }
-}
-                </style>
-                <div class="container" >
+               
                 
-                    <div id="carouselExampleControls" class="carousel slide" style="border-bottom: 5px solid #cf2132" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <!-- <div class="carousel-item active">
-                            <img class="d-block w-100" src="/Christmas/public/images/branner1.png"alt="First slide">
-                        </div> -->
-                            <div class="carousel-item active">
-                                <img class="d-block w-100" src="{{ asset('hiwpro/images/branner1.png')}}">
-                
+
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                <img src="{{ asset('hiwpro/images/branner03.jpg')}}" class="d-block w-100" alt="...">
+                              </div>
+                              <div class="carousel-item">
+                                <img src="{{ asset('hiwpro/images/branner1.png')}}" class="d-block w-100" alt="...">
+                              </div>
+                              <div class="carousel-item">
+                                <img src="{{ asset('hiwpro/images/branner2.jpg')}}" class="d-block w-100" alt="...">
+                              </div>
                             </div>
-                            <div class="carousel-item">
-                                <img class="d-block w-100" src="{{ asset('hiwpro/images/branner2.jpg')}}">
-                            </div>
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
                     </div>
                     <!-- end Slide header -->
-                
+               <div class="container" >  
                     <div class="wrapper">
-                        <div class="row"style="color: black; padding: 2% 5%;">
-                            <div class="col-6" >
+                        <div class="row" style="color: black; padding: 2% 5%;">
+                            <div class="float-left col-sm-12 col-md-8" style="margin-bottom:2%;">
                                <h1>ค้นหาสินค้า</h1>
                                สินค้าลดราคา แบรนด์ สถานที่
                             </div>
-                           
+                            <div class="float-right col-sm-12 col-md-4">
+                                <form >
+                                    <input type="search" placeholder="Search">
+                                </form>
+                            </div>
                         </div>
                     </div><!-- wrapper -->
                     <div class="weapper" style="background-color: #fff; padding:0 5%; ">
                 
-                        <h4 style="margin-top: 2%; color: #cf2132; font-weight:bold;">งานวันนี้ <span class="badge badge-secondary">New</span></h4>
+                        <h4 style="margin-top: 2%; color: #cf2132; ">งานวันนี้ <span class="badge badge-danger">New</span></h4>
                         <h5>EVENT & PROMOTION </h5>
-                
+                        <div class="line-g">
+                            <div class="line-r">
+
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <img class="img-fluid" style="border-radius: 2%;" src="{{ asset('hiwpro/images/p_02.png')}}">
@@ -258,6 +66,7 @@ text-align: center;
                                         <li class="clock"><span id="minutes"></span>Minutes</li>
                 
                                     </ul>
+                                    <p id="demo"></p>
                                 </div>
                             </div>
                             <div class=".d-xs-none  col-sm-6 col-md-6" style="text-align: center;">
@@ -279,7 +88,11 @@ text-align: center;
                         <h4 style="margin-top: 2%; color: #df3433;">สินค้าแนะนำ </h4>
                         <h5>PRODUCT & SEGGESTION </h5>
                         <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-                
+                        <div class="line-g">
+                            <div class="line-r">
+                                
+                            </div>
+                        </div>
                 
                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
@@ -290,33 +103,33 @@ text-align: center;
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
-                                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_05.png')}}"
-                                               >
+                                        <div class="col-lg-3 col-md-4 col-sm-12">
+                                            <img class="card-img-top  card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_05.png')}}">
                                         </div>
-                                        <div class="col-lg-4 col-md-6  d-none d-sm-none d-md-block">
-                                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_06.png')}}"
-                                               >
+                                        <div class="col-lg-3 col-md-4  d-none d-sm-none d-md-block">
+                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_06.jpg')}}">
                                         </div>
-                                        <div class="col-lg-4 d-none d-md-none d-lg-block">
-                                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}"
-                                               >
+                                        <div class="col-lg-3 col-md-4 d-none d-sm-none d-md-block">
+                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}">
+                                        </div>
+                                        <div class="col-lg-3 d-none d-md-none d-lg-block">
+                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="carousel-item">
                                     <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
-                                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_08.png')}}"
-                                               >
+                                        <div class="col-lg-3 col-md-4 col-sm-12">
+                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_08.png')}}">
                                         </div>
-                                        <div class="col-lg-4 col-md-6  d-none d-sm-none d-md-block">
-                                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_09.png')}}"
-                                               >
+                                        <div class="col-lg-3 col-md-4  d-none d-sm-none d-md-block">
+                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_09.jpg')}}">
                                         </div>
-                                        <div class="col-lg-4 d-none d-md-none d-lg-block">
-                                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_11.png')}}"
-                                               >
+                                        <div class="col-lg-3 col-md-4 d-none d-sm-none d-md-block">
+                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_11.png')}}">
+                                        </div>
+                                        <div class="col-lg-3 d-none d-md-none d-lg-block">
+                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_11.png')}}">
                                         </div>
                                     </div>
                                 </div>
@@ -337,9 +150,14 @@ text-align: center;
                 
                         <h4 style="color: #fff;">ตารางโปรโมชั่น </h4>
                         <h5>EVENT & PROMOTION </h5>
+
+                        <div class="line-g">
+                            <div class="line-r">
+                            </div>
+                        </div>
                 
                         <div class="row">
-                            <div class="col-sm-12 col-md-4 col-xl-4" style="padding:0 2% 0 0;">
+                            <div class="d-none d-md-block col-md-4 col-xl-4" style="padding:0 2% 0 0; margin-bottom:5%;">
                                 @include('calender')
                                 {{-- <img class="img-fluid" src="{{ asset('hiwpro/images/calender.png')}}"> --}}
                             </div>
@@ -351,7 +169,7 @@ text-align: center;
                                     @if(!empty($events))
                                     @foreach ($events as $event)
                                     <div class="row" style="border-bottom: 1px solid #cccccc; margin:0 0 5% 0; padding:0 0 3% 0 ;">
-                                            {{-- <div class="d-none d-md-block d-lg-block d-xl-none    col-lg-1 ">
+                                            {{--<div class="d-none d-md-block d-lg-block d-xl-none    col-lg-1 ">
                                                 <div class="row">
                                                     <h6 style="border-bottom: 2px solid #df3433;">{{ $event->start_date }}</h6>
                                                 </div>
@@ -359,7 +177,7 @@ text-align: center;
                                                 <div class="row">
                                                     <h6>{{ $event->last_date }}</h6>
                                                 </div>
-                                            </div> --}}
+                                                </div> --}}
                                             <div class="col-sm-3 col-md-4 " style="margin-bottom: 5%;">
                                             <img style="border-radius: 10%" src="{{ asset('/storage/'.$event->imgPath) }}" class="img-fluid">
                                             </div>
@@ -385,128 +203,13 @@ text-align: center;
                 
                         </div>
                     </div> <!-- weapper red 3-->
-                
-                    <div class="weapper" style="background-color: #F9F9F9; padding:3% 5%; ">
-                        <h4 style="margin-top: 2%; color: #df3433;">นักหิ้วมือโปร</h4>
-                        <h5>POPULAR THIS MONTH </h5>
-                        <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-                        <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-12 ">
-                                <div class="card mb-3">
-                                    <img class="card-img-top" src="{{ asset('hiwpro/images/jisoo.jpg')}}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">JISOO</h5>
-                                        หิ้วสำเร็จ 50 ครั้ง <br>
-                                             
-                                        <i style="color: #df3433" class="fas fa-star"></i>
-                                        <i style="color: #df3433" class="fas fa-star"></i>
-                                        <i style="color: #df3433" class="fas fa-star"></i>
-                                        <i style="color: #df3433" class="fas fa-star"></i>
-                                        <i style="color: #df3433" class="fas fa-star"></i>
-                
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                            <div class="col-lg-9 col-md-9 d-none d-sm-none d-md-block ">
-                                <div class="card">
-                
-                                    <ul style="padding:5% 8% 0% 8%;" class="list-unstyled">
-                                        <li class="media">
-                                            <img class="mr-3 rounded-circle" src="{{ asset('hiwpro/images/jisoo2.png')}}">
-                                            <div class="media-body" style="border-bottom: 2px dotted #ccc;
-                                                                margin-top: 0%;
-                                                                margin-bottom: 2%;
-                                                                padding-bottom: 2%;">
-                                                <h5 class="mt-0 mb-1">JISOO</h5>
-                                                หิ้วสำเร็จ 50 ครั้ง <br>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                            </div>
-                                            <div class=" float-right" style="border: 1px solid #cccccc; border-radius: 50%; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
-                                                <h3 style="color: #df3433"> 1</h3>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <img class="mr-3 rounded-circle" src="{{ asset('hiwpro/images/bobby1.png')}}">
-                                            <div class="media-body" style="border-bottom: 2px dotted #ccc;
-                                                                margin-top: 0%;
-                                                                margin-bottom: 2%;
-                                                                padding-bottom: 2%;">
-                                                <h5 class="mt-0 mb-1">BOBBYINDAEYO</h5>
-                
-                                                หิ้วสำเร็จ 42 ครั้ง <br>
-                
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star-half-alt"></i>
-                                            </div>
-                                            <div class=" float-right" style="border: 1px solid #cccccc; border-radius: 50% ; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
-                                                <h3 style="color: #df3433">2</h3>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <img class="mr-3 rounded-circle" src="{{ asset('hiwpro/images/lisa.png')}}">
-                                            <div class="media-body" style="
-                                                                margin-top: 0%;
-                                                                margin-bottom: 2%;
-                                                                padding-bottom: 2%;">
-                                                <h5 class="mt-0 mb-1">Lisa BP</h5>
-                
-                                                หิ้วสำเร็จ 36 ครั้ง <br>
-                
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star-half-alt"></i>
-                                            </div>
-                                            <div class=" float-right" style="border: 1px solid #cccccc; border-radius: 50%; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
-                                                <h3 style="color: #df3433"> 3</h3>
-                                            </div>
-                                        </li>
-                                       
-                
-                                    </ul>
-                                </div>
-                
-                            </div>
-                        </div>
-                
-                
-                    </div><!-- weapper gruy 5-->
-                
-                     <div class="weapper" style="background-color: #fff; padding:3% 5%; ">
-                        <h4 style="margin-top: 2%; color: #df3433;">นักหิ้วหน้าใหม่ </h4>
-                        <h5>PRODUCT & SEGGESTION </h5>
-                        <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-                        <div class="carousel-wrap">
-                            <div class="owl-carousel">
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-02.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-03.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-04.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-05.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-06.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-07.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-08.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-09.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-10.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-11.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-12.png') }}"></div>
-                                <div class="item"><img src="{{ asset('hiwpro/images/thumbnail-13.png') }}"></div>
-                            </div>
-                       </div>
-                                    
-                
-                    </div><!-- weapper pink 4-->
 
+                {{-- </div> --}}
+                
+                @include('home.h-seller')
+                
 
-                    <div class="weapper howto" style="">
+                    {{-- <div class="weapper howto" style="">
                     <div id="carouselExampleFade" style="box-sizing:border-box; hight:20%;" class="carousel slide carousel-fade" data-ride="carousel">
                         <div class="carousel-inner">
                 
@@ -546,12 +249,15 @@ text-align: center;
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
-                    </div><!-- How to -->
+                    </div><!-- How to --> --}}
                 
                 
                     <div class="weapper" style="padding:0 5%;">
-                        <h4 style="margin: 2% 0%; color: #df3433; border-bottom:dotted 2px #df3433;">เทคนิคการหิ้วขั้นเทพ</h4>
-                        
+                        <h4 style="margin: 2% 0%; color: #df3433;">เทคนิคการหิ้วขั้นเทพ</h4>
+                        <div class="line-g">
+                            <div class="line-r">
+                            </div>
+                        </div>
                         <dl class="row">
                 
                             <dt class="col-sm-3">
@@ -588,9 +294,8 @@ text-align: center;
                                 <div class="col-sm-12 col-md-6" style="padding-top:10%;">
                                     <h4 style="color: #df3433; text-align: center;">ติดต่อโฆษณา</h4>
                                     <blockquote class="text-center">
-                                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
-                                            ante.</p>
-                                        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                                        <p class="mb-0"> คุณปุ้ย 068-458-9652 </p>
+                                        <footer class="blockquote-footer">ฝ่ายบริหารและจัดการตลาด </footer>
                                     </blockquote>
                                 </div>
                             </div>
@@ -642,7 +347,40 @@ text-align: center;
                             $curr.prevAll().addClass("visited");
                         });
                         // end  script for tab steps
-                                            </script>
+
+                               // Set the date we're counting down to
+            var countDownDate = new Date("Jan 27, 2019 15:37:25").getTime();
+
+            // Update the count down every 1 second
+            var x = setInterval(function() {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+                
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+                
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+             
+ 
+
+            // Output the result in an element with id="demo"
+            document.getElementById("demo").innerHTML = days + " DAYS " + hours + " HOURS "
+            + minutes + " MINUTES " + seconds + " s ";
+                
+            // If the count down is over, write some text 
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+            }, 1000);            
+        
+        
+        </script>
                 
 </div>
 

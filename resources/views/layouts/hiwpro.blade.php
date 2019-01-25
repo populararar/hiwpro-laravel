@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/login.css') }}">
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/navbar-header.css') }}">
+    <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/home.css') }}">
 
 
     

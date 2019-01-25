@@ -33,9 +33,7 @@ img:hover{
     padding: 5%;
     text-align: center;
 }
-body{
-    background: #f3f3f4;
-}
+
 .col-3 {
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
@@ -124,11 +122,10 @@ body{
                                     {!! csrf_field() !!}
                                 <input type="hidden" name="event_shop_id" value="{{ $pe->eventShop->id }}">
                                 <input type="hidden" name="product_id" value="{{ $pe->product->product_id }}">
-                               
                                 <input type="hidden" name="price" value="{{  $pe->product->price  }}">
                                 <input type="hidden" name="fee" value="{{  $pe->product->fee  }}">
                                 <input type="hidden" name="shippping" value="{{  $pe->product->shipping_price  }}">                                  
-                                {{-- <button type="button" class="box-l btn btn-outline-danger"><i class="fas fa-heart"></i></button> --}}
+                                <button type="button" class="box-l btn btn-outline-danger"><i class="fas fa-heart"></i></button>
                                 <span style="margin-left:10%;">
                                     จำนวน
                                 </span>
@@ -148,56 +145,68 @@ body{
     </div>
     {{-- wrapper --}}
 
-    <div class="weapper" style="background-color: #F1D7CD; padding:3% 5%; border-top: solid 2px #df3433;">
-        <h4 style=" color: #df3433;">สินค้าแนะนำ </h4>
-        <h5>PRODUCT & SEGGESTION </h5>
-        <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_08.png')}}">
-                        </div>
-                        <div class="col-lg-4 col-md-6  d-none d-sm-none d-md-block">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_09.png')}}">
-                        </div>
-                        <div class="col-lg-4 d-none d-md-none d-lg-block">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_11.png')}}">
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}">
-                        </div>
-                        <div class="col-lg-4 col-md-6  d-none d-sm-none d-md-block">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_06.png')}}">
-                        </div>
-                        <div class="col-lg-4 d-none d-md-none d-lg-block">
-                            <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_05.png')}}">
-                        </div>
-                    </div>
+    <div class="weapper" style="background-color: #fff; padding:3% 5%; ">
+            <h4 style="margin-top: 2%; color: #df3433;">สินค้าแนะนำ </h4>
+            <h5>PRODUCT & SEGGESTION </h5>
+            <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+            <div class="line-g">
+                <div class="line-r">
+                    
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-
-    </div><!-- weapper pink 4-->
+    
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <img class="card-img-top  card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_05.png')}}">
+                            </div>
+                            <div class="col-lg-3 col-md-4  d-none d-sm-none d-md-block">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_06.jpg')}}">
+                            </div>
+                            <div class="col-lg-3 col-md-4 d-none d-sm-none d-md-block">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}">
+                            </div>
+                            <div class="col-lg-3 d-none d-md-none d-lg-block">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_08.png')}}">
+                            </div>
+                            <div class="col-lg-3 col-md-4  d-none d-sm-none d-md-block">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_09.jpg')}}">
+                            </div>
+                            <div class="col-lg-3 col-md-4 d-none d-sm-none d-md-block">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_11.png')}}">
+                            </div>
+                            <div class="col-lg-3 d-none d-md-none d-lg-block">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_11.png')}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+    
+        </div><!-- weapper pink 4-->
+    
 </div>
 {{-- container --}}
 

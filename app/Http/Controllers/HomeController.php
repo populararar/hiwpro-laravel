@@ -193,6 +193,8 @@ class HomeController extends Controller
             $event->last_date = $this->formatEventDate($event->lastDate);
         }
 
+        // $users = App\User::paginate(15);
+
         return view('eventinfo')->with('events', $events);
 
     }
