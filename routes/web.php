@@ -44,10 +44,8 @@ Route::middleware(['login'])->group(function () {
 
     Route::resource('profiles', 'ProfileController');
     Route::get('/profiles/main', 'ProfileController@main')->name('profiles.main');
-    Route::get('/main', 'ProfileController@admin')->name('profiles.admin');
+    // Route::get('/main', 'ProfileController@admin')->name('profiles.admin');
     
-
-
     Route::resource('confirms', 'ConfirmController');
     Route::post('/confirms/final', 'ConfirmController@final')->name('confirms.final');
     Route::get('/confirms/{id}/payment', 'ConfirmController@payment')->name('confirms.payment');

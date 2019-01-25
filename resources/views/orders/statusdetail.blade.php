@@ -72,6 +72,13 @@
 @php
   $num = $orderHeaders->total_price;
   $formattedNum = number_format($num);  
+
+  $status = $orderHeaders->slip_status;
+    // dd($status);
+    if ($status == "WAITING") {
+        # code...
+        $status ='รอการชำระเงิน';
+    }
 @endphp
 
 {{-- {{ dd($orderHeaders)}} --}}
@@ -80,7 +87,7 @@
     <h3>สถานะการจัดส่งสินค้า</h3>
   </div>
   <div class="weapper" style="margin-top: 2%; padding:3% 5%; ">
-    <h6>ข้อมูลคำสั่งซื้อ </h6>
+    <h5>ข้อมูลคำสั่งซื้อ </h5>
     <div class="row">
       <div class=" col-md-4">
         <h6 style="margin-top: 2%;">เลขคำสั่งซื้อ : </h6>
@@ -91,13 +98,13 @@
       <div class="col-md-4">
         <h6 style="margin-top: 2%;">ชื่อผู้จัดส่ง : </h6>
         <p>
-          <h6 class="font-gray">{{ $orderHeaders->address}} </h6>
+          <h6 class="font-gray">{{ $orderHeaders->customer_id}} </h6>
         </p>
       </div>
       <div class=" col-lg-4">
         <h6 style="margin-top: 2%;">สถานะการชำระเงิน : </h6>
         <p>
-          <h6 class="font-gray">{{ $orderHeaders->slip_status}} </h6>
+          <h6 class="font-gray">{{ $status}} </h6>
         </p>
       </div>
     </div>
@@ -125,7 +132,7 @@
       </div>
     </div>
     <div class="col-lg-6">
-      <h6>ข้อมูลการจัดส่ง </h6>
+      <h5>ข้อมูลการจัดส่ง </h5>
     </div>
 
     <div class="row">
@@ -143,31 +150,20 @@
     <!-- row -->
 </div>
 <div class="wrapper">
-
   <div class="row">
-
-
     @php
        $status = $orderHeaders->slip_status;
     @endphp
-
-    {{-- @if ($status ='UPLOADED')
-        <div class="col-md-6"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-light w-100">ชำระเงิน</a> </div>
-        <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
-    @endif --}}
-
     @if ($status =='WAITING') 
-        <div class="col-md-6"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-light w-100">ชำระเงิน</a> </div> 
-        <div class="col-md-6"><button disabled="disabled" type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>   
+        <div class="col-md-6"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-warning w-100">ชำระเงิน</a> </div> 
+        {{-- <div class="col-md-6"><button disabled="disabled" type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>    --}}
     @endif
 
     @if ($status =='UPLOADED') 
-        <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div>
+        {{-- <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div> --}}
         <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
     @endif
    
-    
-    
   </div>
  
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

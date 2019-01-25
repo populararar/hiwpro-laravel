@@ -291,7 +291,7 @@ body {
   text-align: center
 }
 .card{
-    width: 80%;
+    width: 100%;
     padding: 5% 5% 2% 5%;
     margin: auto;
 }
@@ -365,7 +365,7 @@ body {
 }
 
   </style>
-  <body>
+  <body style="padding:10px;">
     
     <div class="container">
 

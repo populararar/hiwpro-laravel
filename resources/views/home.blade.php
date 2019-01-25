@@ -4,54 +4,57 @@
 {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
      --}}
-<div class="container">
+<div >
         <style>
+.h1, h1 {
+    font-size: 1.5rem;
+}
 .h4, h4 {
     font-size: 1.5rem;
     font-weight: bolder;
 }
-                .carousel-wrap {
-                  margin: 2% auto;
-                  padding: 0 5%;
-                  width: 100%;
-                  position: relative;
-                }
-                
-                /* fix blank or flashing items on carousel */
-                .owl-carousel .item {
-                  position: relative;
-                  z-index: 100; 
-                  -webkit-backface-visibility: hidden; 
-                }
-                
-                /* end fix */
-                .owl-nav > div {
-                  margin-top: -26px;
-                  position: absolute;
-                  top: 50%;
-                  color: #cdcbcd;
-                }
-                
-                .owl-nav i {
-                  font-size: 52px;
-                }
-                
-                .owl-nav .owl-prev {
-                  left: -30px;
-                }
-                
-                .owl-nav .owl-next {
-                  right: -30px;
-                }
-                .how{
-                    border-radius: 50% ; 
-                    background-color: #df3433; 
-                    width: 100%; 
-                    height: 18%;
-                    padding:2%; 
-                    text-align: center;
-                }
-                .design-process-section .text-align-center {
+.carousel-wrap {
+margin: 2% auto;
+padding: 0 5%;
+width: 100%;
+position: relative;
+}
+
+/* fix blank or flashing items on carousel */
+.owl-carousel .item {
+position: relative;
+z-index: 100; 
+-webkit-backface-visibility: hidden; 
+}
+
+/* end fix */
+.owl-nav > div {
+margin-top: -26px;
+position: absolute;
+top: 50%;
+color: #cdcbcd;
+}
+
+.owl-nav i {
+font-size: 52px;
+}
+
+.owl-nav .owl-prev {
+left: -30px;
+}
+
+.owl-nav .owl-next {
+right: -30px;
+}
+.how{
+border-radius: 50% ; 
+background-color: #df3433; 
+width: 100%; 
+height: 18%;
+padding:2%; 
+text-align: center;
+}
+.design-process-section .text-align-center {
     line-height: 25px;
     margin-bottom: 12px;
 }
@@ -166,9 +169,14 @@
     border-color: #e5e5e5; 
 }
 
+/* @media (max-width: 578px) {
 
+} */
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 578px) {
+.p{
+    font-size: 14px;
+}
   .more-icon-preocess.process-model li span {
         font-size: 23px;
         height: 50px;
@@ -179,7 +187,7 @@
         top: 24px;
     }
 }
-@media screen and (max-width: 380px) { 
+@media screen and (max-width: 420px) { 
     .process-model.more-icon-preocess li {
         width: 16%;
     }
@@ -232,12 +240,7 @@
                                <h1>ค้นหาสินค้า</h1>
                                สินค้าลดราคา แบรนด์ สถานที่
                             </div>
-                            <div class="col-6">
-                                <form class="form-inline my-2 my-lg-0">
-                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                                    <button type="submit" style="text-align: center; border-radius: 30px;" class="btn btn-outline-danger align-self-center">ค้นหา</button>
-                                </form>
-                            </div>
+                           
                         </div>
                     </div><!-- wrapper -->
                     <div class="weapper" style="background-color: #fff; padding:0 5%; ">
@@ -348,16 +351,16 @@
                                     @if(!empty($events))
                                     @foreach ($events as $event)
                                     <div class="row" style="border-bottom: 1px solid #cccccc; margin:0 0 5% 0; padding:0 0 3% 0 ;">
-                                            <div class=".d-md-none col-md-1 ">
+                                            {{-- <div class="d-none d-md-block d-lg-block d-xl-none    col-lg-1 ">
                                                 <div class="row">
-                                                <h6 style="border-bottom: 2px solid #df3433;">{{ $event->start_date }}</h6>
+                                                    <h6 style="border-bottom: 2px solid #df3433;">{{ $event->start_date }}</h6>
                                                 </div>
                     
                                                 <div class="row">
                                                     <h6>{{ $event->last_date }}</h6>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-3 col-md-4 ">
+                                            </div> --}}
+                                            <div class="col-sm-3 col-md-4 " style="margin-bottom: 5%;">
                                             <img style="border-radius: 10%" src="{{ asset('/storage/'.$event->imgPath) }}" class="img-fluid">
                                             </div>
                                             <div class="col-sm-8 col-md-7 ">
@@ -501,69 +504,7 @@
                                     
                 
                     </div><!-- weapper pink 4-->
-{{--                 
-                    <div class="howto2">
-                        <section class="design-process-section" id="process-tab">
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-xs-12"> 
-                                  <!-- design process steps--> 
-                                  <!-- Nav tabs -->
-                                  <ul class="nav nav-tabs process-model more-icon-preocess" role="tablist">
-                                    <li role="presentation" class="active"><a href="#discover" aria-controls="discover" role="tab" data-toggle="tab"><i class="fa fa-search" aria-hidden="true"></i>
-                                      <p>Discover</p>
-                                      </a></li>
-                                    <li role="presentation"><a href="#strategy" aria-controls="strategy" role="tab" data-toggle="tab"><i class="fa fa-send-o" aria-hidden="true"></i>
-                                      <p>Strategy</p>
-                                      </a></li>
-                                    <li role="presentation"><a href="#optimization" aria-controls="optimization" role="tab" data-toggle="tab"><i class="fa fa-qrcode" aria-hidden="true"></i>
-                                      <p>Optimization</p>
-                                      </a></li>
-                                    <li role="presentation"><a href="#content" aria-controls="content" role="tab" data-toggle="tab"><i class="fa fa-newspaper-o" aria-hidden="true"></i>
-                                      <p>Content</p>
-                                      </a></li>
-                                    <li role="presentation"><a href="#reporting" aria-controls="reporting" role="tab" data-toggle="tab"><i class="fa fa-clipboard" aria-hidden="true"></i>
-                                      <p>Reporting</p>
-                                      </a></li>
-                                  </ul>
-                                  <!-- end design process steps--> 
-                                  <!-- Tab panes -->
-                                  <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="discover">
-                                      <div class="design-process-content">
-                                        <h3 class="semi-bold">Discovery</h3>
-                                       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut laoreet dolore magna aliquam erat volutpat</p>
-                                       </div>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="strategy">
-                                      <div class="design-process-content">
-                                        <h3 class="semi-bold">Strategy</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut laoreet dolore magna aliquam erat volutpat</p>
-                                        </div>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="optimization">
-                                      <div class="design-process-content">
-                                        <h3 class="semi-bold">Optimization</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut laoreet dolore magna aliquam erat volutpat</p>
-                                         </div>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="content">
-                                      <div class="design-process-content">
-                                        <h3 class="semi-bold">Content</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut laoreet dolore magna aliquam erat volutpat</p>              
-                                        </div>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="reporting">
-                                      <div class="design-process-content">
-                                        <h3>Reporting</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut laoreet dolore magna aliquam erat volutpat. </p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </section>
-                    </div>howto2 --}}
+
 
                     <div class="weapper howto" style="">
                     <div id="carouselExampleFade" style="box-sizing:border-box; hight:20%;" class="carousel slide carousel-fade" data-ride="carousel">

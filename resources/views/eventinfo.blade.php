@@ -15,16 +15,16 @@ img:hover{
     <div class="wrapper">
       {{-- <h1>Event Infomation</h1> --}}
       <div class="row" style="margin:1% 0% 5% 0%;">
-        <div class="col-3">
+        <div class="col-md-3">
           <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/in01.jpg')}}">
         </div>
-        <div class="col-3">
+        <div class="col-md-3">
           <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/in02.jpg')}}">
         </div>
-        <div class="col-3">
+        <div class="col-md-3">
           <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/in03.jpg')}}">
         </div>
-        <div class="col-3">
+        <div class="col-md-3">
           <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/in04.jpg')}}">
         </div>
       </div>
@@ -48,7 +48,7 @@ img:hover{
 
   
 <div class="row">
-  <div class="col-2">
+  <div class="d-none d-md-block d-lg-block col-md-2">
      <h4>ค้นหาโดย</h4>
       แบรนด์ <br> หมวดหมู่ <br> ราคา  <br>โปรโมชั่น 
   </div> {{-- col-2 --}}
@@ -57,7 +57,7 @@ img:hover{
     @if(!empty($events))
 @foreach ($events as $event)
 <div class="row" style="border-bottom: 1px solid #cccccc; margin:0 0 5% 0; padding:0 0 3% 0 ;">
-        <div class=".d-md-none col-md-1 ">
+        <div class="d-none d-md-block d-lg-block col-md-1 ">
             <div class="row">
             <h6 style="border-bottom: 2px solid #df3433;">{{ $event->start_date }}</h6>
             </div>
@@ -66,10 +66,10 @@ img:hover{
                 <h6>{{ $event->last_date }}</h6>
             </div>
         </div>
-        <div class="col-sm-3 col-md-4">
+        <div class="col-sm-12 col-md-4">
         <img style="border-radius: 10%" src="{{ asset('/storage/'.$event->imgPath) }}" class="img-fluid">
         </div>
-        <div class="col-sm-8 col-md-7 ">
+        <div class="col-sm-12 col-md-7 ">
         <h3 style="font-size:1.5em; border-bottom: 1px dotted #cccccc;">{{ $event->eventName }}</h3>
             <i style="color: #df3433;" class="far fa-calendar"></i> 
             {{ $event->start_date }} - {{ $event->last_date }}

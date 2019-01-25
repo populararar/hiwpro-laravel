@@ -36,10 +36,10 @@
 <style>
     body{
         font-family: 'Kanit';
-        background: red;
+        background-color: red;
     }
     .login-page, .register-page {
-        background: #f6f6f6;
+        background: transparent;
     }
 </style>
 <body class="hold-transition login-page">

@@ -10,6 +10,7 @@ use App\Repositories\UsersRepository;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -40,7 +41,7 @@ class ProfileController extends AppBaseController
         $profile = $this->profileRepository->findWhere(['user_id' => $user->id])->first();
 
         return view('profiles.main')
-            ->with('profile', $profile);
+            ->with('profile', $profile)->with('$user',$user);
     }
 
     /**
@@ -88,7 +89,7 @@ class ProfileController extends AppBaseController
             return redirect(route('home'));
         }
 
-        return view('profiles.main')->with('profile', $profile);
+        return view('profiles.main')->with('profile', $profile)->with('$user',$user);
     }
 
      /**
@@ -109,7 +110,7 @@ class ProfileController extends AppBaseController
             return redirect(route('home'));
         }
 
-        return view('profiles.admin')->with('profile', $profile);
+        return view('profiles.admin')->with('profile', $profile)->with('$user',$user);
     }
 
     /**

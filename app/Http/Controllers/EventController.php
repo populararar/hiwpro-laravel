@@ -54,10 +54,15 @@ class EventController extends AppBaseController
         $this->setPopulationChart($this->lava);
 
         $countSeller = \DB::table('users_roles')->where('role_id', '2')->count('id');
+        $countUser = \DB::table('users_roles')->where('role_id', '3')->count('id');
+        $countOrder = \DB::table('order_header')->where('status', 'COMPLETED')->count('id');
+        $countProduct = \DB::table('product')->count('product_id');
 
         $stats = [
-            'countA' => $countSeller,
-            'countB' => 10,
+            'countS' => $countSeller,
+            'countU' => $countUser,
+            'countC' => $countOrder,
+            'countP' => $countProduct,
         ];
 
         return view('events.dashboard')
