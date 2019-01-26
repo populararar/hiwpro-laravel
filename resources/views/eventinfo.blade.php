@@ -34,7 +34,7 @@ img:hover{
 <div class="container">
 <div class="wrapper">
   <div class="row" style="border-bottom: 2px solid #ccc;color:#df3433; margin: 5% 0%; font-weight: bold;">
-      <div class="col-8"> 
+      <div class="col-12"> 
           <h3>อีเว้นต์ที่กำลังจะมาถึง</h3>
         </div>
         {{-- <div class="col-4">

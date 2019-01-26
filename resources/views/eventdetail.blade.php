@@ -34,10 +34,16 @@ img:hover{
     text-align: center;
 }
 
-.col-3 {
+.col-md-3 {
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
     max-width: 22%;
+}
+.col-sm-fix{
+    /* -ms-flex: 0 0 25%;
+    flex: 0 0 25%; */
+    max-width: 100%;
+    margin:3.5%;
 }
 .part{
     padding: 2.5%;
@@ -65,10 +71,10 @@ img:hover{
     <div class="wrapper">
            
          <div class="row part" >
-             <div class="col-7">
+             <div class="col-sm-12 col-lg-7">
                 <img class='card-img-top'  src='{{ asset('/storage/'.$event->imgPath) }}'>
              </div>
-             <div class="col-5" style="padding:5%;">
+             <div class=" col-sm-12 col-lg-5" style="padding:5%;">
                 <h4 style="color:#df3433; text-align:center; font-weight:bold;"> {{ $event->eventName }}</h4>  
                 <p style="color:#df3433; text-align:center;"><i class="fas fa-calendar"></i> เริ่มวันที่ {{ $event->start_date }} - {{ $event->last_date}} </p>
                 <br>
@@ -82,8 +88,8 @@ img:hover{
 
     <div class="wrapper">
         <div class="row" style="border-buttom:1px solid  #ccc;">
-            <div class="col-2"></div>
-            <div class="col-10">
+            <div class="col-md-2"></div>
+            <div class="col-sm-12 col-md-10">
                 <h4 style="color:#df3433; line-height : -1;">{{ $event->eventName }}</h4><br>
                 Event / {{ $event->eventName }}
             </div>
@@ -91,24 +97,12 @@ img:hover{
         </div>
         <div class="row">
             <div class="col-2"></div>
-            <div class="col-10">
-                <div class="row">
-                    
+            <div class="col-sm-12 col-md-10">
+                <div class="row" style="margin:auto;">
                     @foreach ($productEvents as $pe) 
-                   
-
-                         {{--
-                    <form action="{{ route('cart.add') }}" method="POST">  </form> 
-                    <input type="hidden" name="event_shop_id" value="{{ $pe->$eventShop->id }}">
-                    <input type="hidden" name="product_id" value="{{  $pe->product_id }}">
-                    <input type="hidden" name="price" value="{{  $pe->price }}">
-                    <input type="hidden" name="fee" value="{{  $pe->fee }}">
-                    <input type="hidden" name="shippping" value="{{ $pe->shipping_price }}"> --}}
-
                     <a  href="{{  route('event.detail.product', ['id' => $pe->product_id, 'event_shop_id' => $pe->event_shop_id]) }}" style='color: #df3433;'> 
-                    <div class="col-3 cardp">
+                    <div class="col-sm-fix col-md-3 cardp">
                         <img class='card-img-top' src="{{ asset('/storage/'.$pe->product->image_product_id) }}">
-                       
                         <div class="card-in">
                             <p style='color:#df3433; font-size:1em;line-height :1.2;margin:2%;'> {{  $pe->product->name }} </p>
                             <span>
@@ -117,7 +111,7 @@ img:hover{
                             </span>
                         </div> 
                         </a> 
-                        <div class="box-white">
+                        <div class="box-white d-none d-sm-none d-md-block">
                             <form action="{{ route('cart.add') }}" method="POST">
                                     {!! csrf_field() !!}
                                 <input type="hidden" name="event_shop_id" value="{{ $pe->eventShop->id }}">
@@ -134,16 +128,16 @@ img:hover{
                                 <button type="submit" class="box-r btn btn-danger"><i class="fas fa-cart-arrow-down"></i></button>
                             </form>          
                         </div>
-                    </div>
-                 
-   
+                    </div> 
                     @endforeach
-
                 </div>
             </div>
+                  
         </div>
-    </div>
-    {{-- wrapper --}}
+    </div>{{-- wrapper --}}
+       
+ </div>{{-- container --}}
+    
 
     <div class="weapper" style="background-color: #fff; padding:3% 5%; ">
             <h4 style="margin-top: 2%; color: #df3433;">สินค้าแนะนำ </h4>

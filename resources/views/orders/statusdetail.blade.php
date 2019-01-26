@@ -68,6 +68,57 @@
 
 
 
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:350%;
+    line-height:1;
+    color:#ddd;
+    text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rating > input:checked ~ label {
+    color: #f70;
+    text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: gold;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
+}
 </style>
 @php
   $num = $orderHeaders->total_price;
@@ -176,32 +227,39 @@
           </button>
         </div>
         <div class="modal-body">
-          <form>
+
+          <form >
+              {!! csrf_field() !!}
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label">คะแนน:</label>
-              <input type="text" class="form-control" id="recipient-name">
+                <label for="recipient-name" class="col-form-label">คะแนน:</label>
+                {{-- <input name="score" type="text" class="form-control" id="recipient-name"> --}}
+                <fieldset class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+                </fieldset>
             </div>
             <div class="form-group">
               <label for="message-text" class="col-form-label">Comment:</label>
-              <textarea class="form-control" id="message-text"></textarea>
+              <textarea name="comment" class="form-control" id="message-text"></textarea>
             </div>
-          </form>
-          <div class="row">
-              <div class="col-sm-5 imgUp">
-                <div class="imagePreview"></div>
-                  <label class="btn btn-primary">Upload
-                    <input type="file" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
-                  </label>
-              </div><!-- col-2 -->
-              <i class="fa fa-plus imgAdd"></i>
-          </div><!-- row -->
-
-          
+            <div class="row">
+                <div class="col-sm-5 imgUp">
+                  <div class="imagePreview"></div>
+                    <label class="btn btn-primary">Upload
+                      <input name="score" type="file" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
+                    </label>
+                </div><!-- col-2 -->
+                <i class="fa fa-plus imgAdd"></i>
+            </div><!-- row -->
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-danger">Send message</button>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-outline-danger">Send message</button>
+          </div>
+         </form>
       </div>
     </div>
   </div>
@@ -268,29 +326,33 @@
   $(".imgAdd").click(function(){
         $(this).closest(".row").find('.imgAdd').before(
           '<div class="col-sm-5 imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Upload<input type="file" class="uploadFile img" value="Upload Photo" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>');
-});
+          $(".imgAdd").hide();
+        });
         $(document).on("click", "i.del" , function() {
-	          $(this).parent().remove(); });
+            $(this).parent().remove(); 
+            $(".imgAdd").show();
+        });
 
-  $(function() {
-      $(document).on("change",".uploadFile", function()
-      {
-          var uploadFile = $(this);
-          var files = !!this.files ? this.files : [];
-          if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
-  
-          if (/^image/.test( files[0].type)){ // only image file
-              var reader = new FileReader(); // instance of the FileReader
-              reader.readAsDataURL(files[0]); // read the local file
-  
-              reader.onloadend = function(){ // set image data as background of div
-                  //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
-  uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url("+this.result+")");
-              }
-          }
-        
-      });
-  });
+$(function() {
+    $(document).on("change",".uploadFile", function()
+    {
+        var uploadFile = $(this);
+        var files = !!this.files ? this.files : [];
+        if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+        if (/^image/.test( files[0].type)){ // only image file
+            var reader = new FileReader(); // instance of the FileReader
+            reader.readAsDataURL(files[0]); // read the local file
+
+            reader.onloadend = function(){ // set image data as background of div
+                //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url("+this.result+")");
+            }
+        }
+      
+    });
+});
     
+
 </script>
 @endsection

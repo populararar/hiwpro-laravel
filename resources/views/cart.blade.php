@@ -223,7 +223,7 @@ caption {
 $sum=0;$count=0;$count2=0;
 @endphp
 
-<div class="container" style="padding: 0 5%;">
+<div class="container" >
     {{-- <div class="col">
         <h4 style="margin-top: 2%; color: #df3433;">รายการสั่งซื้อ </h4>
         <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>

@@ -153,52 +153,59 @@ input:disabled{
     color: #bd2130;
 }
 .line{
-    margin:10px;
+    margin-top:2%;
+}
+img.card-img-top {
+    margin: auto;
+    /* width: 300px; */
+    border-radius: 10%;
 }
 </style>
 <div class="container">
-
+{{-- @php
+    
+    $num = $product->price;
+  $formattedNum = number_format($product->price);
+@endphp --}}
 
     <h1>Product detail</h1>
     <div class="row">
-        <div class="col-4">
+        <div class=" col-md-4 card-top">
                 <input type="hidden" name="image_product_id" value="{{ $product->image_product_id }}">
-            <img class="card-img-top" style="margin:5% 0 5% 20%; width:300px; border-radius: 10%" src="{{ asset('/storage/'.$product->image_product_id) }}">
+            <img class="card-img-top"src="{{ asset('/storage/'.$product->image_product_id) }}">
         </div>
 
     
-        <div class="col-8" style="padding:5%;">
+        <div class="col-sm-12 col-md-8" style="padding:5%;">
             <form action="{{ route('cart.add') }}" method="POST">
                     {!! csrf_field() !!}
                 
 
                 <h4 style='border-bottom:2px solid #df3433; font-size:1.8em;margin:0%;'>{{ $product->name }}</h4>
-            <h6>
                 <div class="line">
-                     <span>
+                   <span>
                         <font color="black">ราคา</font>
-                        <font color="red" ,font-size="0.8em">{{  $product->price  }} บาท</font>
-                        <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>฿{{$product->actual_price}}</font>
-                    </span>
+                        <font color="red" ,font-size="1.2em">{{ number_format($product->price)  }} บาท</font>
+                        <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>฿{{number_format($product->actual_price)}}</font>
+                    </span>  
                 </div>
                
-                
-                <div class="row line">
-                    <div class="col-3">
+                <div class="row ">
+                    <div class="line col-sm-12 col-md-6">
                         ค่าหิ้ว {{ $product->fee }} บาท/ชิ้น
                     </div>
-                    <div class="col-6">
+                    <div class="line col-sm-12 col-md-6">
                         ค่าจัดส่ง {{ $product->shipping_price }} บาท
                     </div>
                 </div>
 
-                <div class="line qty mt-5 ">
+                <div class="line qty">
                     จำนวน 
                     <span class="minus bg-dark">-</span>
                     <input type="number" class="count" name="quantity" value="1">
                     <span class="plus bg-dark">+</span>
                 </div>
-            </h6>
+
                 <br>
                 <input type="hidden" name="event_shop_id" value="{{ $eventShop->id }}">
                 <input type="hidden" name="product_id" value="{{ $product->product_id }}">
@@ -213,7 +220,7 @@ input:disabled{
         </div>
     </div>
 
-    <div class="tabset">
+    <div class="tabset" style="margin-top:5%;">
         <!-- Tab 1 -->
         <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
         <label for="tab1">รายละเอียดสินค้า</label>
@@ -224,18 +231,14 @@ input:disabled{
         
         <div class="tab-panels">
           <section id="marzen" class="tab-panel">
-            <p><strong>Overall Impression:</strong> 
-                {{ $product->name }}
-                <h4 style="color: #e62e6b;font-weight: bold;">{{ $product->price }} บาท</h4>
-                <del class>฿{{ $product->actual_price }} </del>
-                <p style='color:333;'style="line-height : 0; padding:0%;margin:0%;">{{ $product->productdetail }}</p>
-                
-                 {{-- <p><strong>History:</strong> As the name suggests, brewed as a stronger “March beer” in March and lagered in cold caves over the summer. Modern versions trace back to the lager developed by Spaten in 1841, contemporaneous to the development of Vienna lager. However, the Märzen name is much older than 1841; the early ones were dark brown, and in Austria the name implied a strength band (14 °P) rather than a style. The German amber lager version (in the Viennese style of the time) was first served at Oktoberfest in 1872, a tradition that lasted until 1990 when the golden Festbier was adopted as the standard festival beer.</p> --}}
-        </section>
-          <section id="rauchbier" class="tab-panel">
-            <p><strong>Overall Impression:</strong>  An elegant, malty German amber lager with a balanced, complementary beechwood smoke character. Toasty-rich malt in aroma and flavor, restrained bitterness, low to high smoke flavor, clean fermentation profile, and an attenuated finish are characteristic.</p>
-            <p><strong>History:</strong> A historical specialty of the city of Bamberg, in the Franconian region of Bavaria in Germany. Beechwood-smoked malt is used to make a Märzen-style amber lager. The smoke character of the malt varies by maltster; some breweries produce their own smoked malt (rauchmalz).</p>
-          </section>
+            <p>{{ $product->name }}
+                <br>
+                <span><font color="red">{{ $product->price }}</font> จาก <del class>฿{{ $product->actual_price }}</del> บาท</span>
+                <br>
+               {{ $product->productdetail }}</p>
+            </section>
+            <section id="rauchbier" class="tab-panel">
+            </section>
 
         </div>
         
