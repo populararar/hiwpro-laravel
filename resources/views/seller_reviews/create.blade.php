@@ -1,19 +1,20 @@
-@extends('layouts.hiwpro')
+@extends('layouts.app')
 
 @section('content')
-
-
-
-    
+    <section class="content-header">
+        <h1>
+            Seller Review
+        </h1>
+    </section>
     <div class="content">
         @include('adminlte-templates::common.errors')
         <div class="box box-primary">
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'profiles.store']) !!}
+                    {!! Form::open(['route' => 'sellerReviews.store']) !!}
 
-                        @include('profiles.fields')
+                        @include('seller_reviews.fields')
 
                     {!! Form::close() !!}
                 </div>

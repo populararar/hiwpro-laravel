@@ -74,4 +74,12 @@ class Users extends Authenticatable
     {
         return $this->hasMany(\App\Models\UserRoles::class , 'user_id', 'id');
     }
+
+      /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function profile()
+    {
+        return $this->hasOne(\App\Models\Profile::class);
+    }
 }

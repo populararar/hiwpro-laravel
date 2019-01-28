@@ -217,26 +217,22 @@ caption {
     display: table-caption;
     text-align: -webkit-center;
 }
+
 </style>
 
 @php
-$sum=0;$count=0;$count2=0;
+    $sum=0;$count=0;$count2=0;
 @endphp
 
-<div class="container" >
-    {{-- <div class="col">
-        <h4 style="margin-top: 2%; color: #df3433;">รายการสั่งซื้อ </h4>
-        <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>
-    </div> --}}
-
+<div class="container">
     <div class="row" style="background-color:#fff; margin-top:5%;">
         <div class="col-12">
             <div class="form-group">
                 <div class="btn-group d-flex justify-content-center ">
-                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-danger">รายการสั่งซื้อ</button>
-                    <button style="text-align:center; width: 50%;" type="button" class="btn btn-outline-danger">สรุปรายการสั่งซื้อ</button>
-                    <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ที่อยู่การจัดส่ง</button>
-                    <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ยืนยันการสั่งซื้อ</button>
+                    <button style="text-align:center;max-width:22.5%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" type="button" class="btn btn-danger">รายการสั่งซื้อ</button>
+                    <button style="text-align:center;max-width:22.5%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" type="button" class="btn btn-outline-danger">สรุปรายการสั่งซื้อ</button>
+                    <button style="text-align:center;max-width:22.5%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" type="button" class="btn btn-outline-danger align-self-center ">ที่อยู่การจัดส่ง</button>
+                    <button style="text-align:center;max-width:22.5%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" type="button" class="btn btn-outline-danger align-self-center ">ยืนยันการสั่งซื้อ</button>
                 </div>
             </div>
         </div>
@@ -248,8 +244,8 @@ $sum=0;$count=0;$count2=0;
         <div class="row carts" >
            
             <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{  $key }}</h5>
-            @foreach ($group as $product)
-            <div class="col-12" style="padding:0% 5%; background-color:white;margin-top:2%;">
+           @foreach ($group as $product)
+            <div class="col-md-12">
                 {{-- <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5> style="border-top: solid 2px #e7eaec;"--}}
                 <div class="row" >
                     <div class="col-2" style="font-weight:bold;">รูป</div>
@@ -259,7 +255,7 @@ $sum=0;$count=0;$count2=0;
                     <div class="col-1" style="font-weight:bold;">รวม</div>
                     <div class="col-1" style="font-weight:bold;">แก้ไข</div>
                 </div>
-
+                
                 <div class="row" style="border-top: solid 1px #e7eaec;padding:2% 0%;">
 
                     <div class="col-2">
@@ -307,7 +303,7 @@ $sum=0;$count=0;$count2=0;
                     <div class="card-header">Order Summary</div>
                     <div class="card-body">
                     {{-- <h5>{{$Total}}</h5> --}}
-                        <h5 style="text-align:center;"><span> TOTAL <font color="red">  {{ $count2}} </font>TH</span></h5>
+                        <h5 style="text-align:center;"><span> TOTAL <font color="red">  {{ number_format($count2)}} </font>TH</span></h5>
                         <form id="cart-form" method="POST" name="cart-form" action="{{route('confirms.store')}}">
                                 {!! csrf_field() !!}
 

@@ -84,74 +84,7 @@ input:disabled{
   display: block;
 }
 
-/*
- Styling
-*/
 
-.tabset > label {
-  position: relative;
-  display: inline-block;
-  padding: 15px 15px 25px;
-  border: 1px solid transparent;
-  border-bottom: 0;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.tabset > label::after {
-  content: "";
-  position: absolute;
-  left: 15px;
-  bottom: 10px;
-  width: 22px;
-  height: 4px;
-  background: #8d8d8d;
-}
-
-.tabset > label:hover,
-.tabset > input:focus + label {
-  color: #06c;
-}
-
-.tabset > label:hover::after,
-.tabset > input:focus + label::after,
-.tabset > input:checked + label::after {
-  background: #06c;
-}
-
-.tabset > input:checked + label {
-  border-color: #ccc;
-  border-bottom: 1px solid #fff;
-  margin-bottom: -1px;
-}
-
-.tab-panel {
-  padding: 30px 0;
-  border-top: 1px solid #ccc;
-}
-
-/*
- Demo purposes only
-*/
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
-.tabset {
-  max-width: 65em;
-}
-
-.tabset > label:hover::after, .tabset > input:focus + label::after, .tabset > input:checked + label::after {
-    background: #bd2130;
-}
-.tabset > label:hover::after, .tabset > input:focus + label::after, .tabset > input:checked + label::after {
-    background: #bd2130;
-}
-.tabset > label:hover, .tabset > input:focus + label {
-    color: #bd2130;
-}
 .line{
     margin-top:2%;
 }
@@ -168,8 +101,7 @@ img.card-img-top {
   $formattedNum = number_format($product->price);
 @endphp --}}
 
-    <h1>Product detail</h1>
-    <div class="row">
+    <div class="row my-3">
         <div class=" col-md-4 card-top">
                 <input type="hidden" name="image_product_id" value="{{ $product->image_product_id }}">
             <img class="card-img-top"src="{{ asset('/storage/'.$product->image_product_id) }}">
@@ -220,40 +152,32 @@ img.card-img-top {
         </div>
     </div>
 
-    <div class="tabset" style="margin-top:5%;">
-        <!-- Tab 1 -->
-        <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
-        <label for="tab1">รายละเอียดสินค้า</label>
-        <!-- Tab 2 -->
-        <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier">
-        <label for="tab2">รายละเอียดอีเว้นต์</label>
-      
-        
-        <div class="tab-panels">
-          <section id="marzen" class="tab-panel">
-            <p>{{ $product->name }}
-                <br>
-                <span><font color="red">{{ $product->price }}</font> จาก <del class>฿{{ $product->actual_price }}</del> บาท</span>
-                <br>
-               {{ $product->productdetail }}</p>
-            </section>
-            <section id="rauchbier" class="tab-panel">
-            </section>
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:5%;">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">รายละเอียดสินค้า</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> 
+                <div class="container my-3">
 
-        </div>
-        
-      </div>
-      {{-- tabset --}}
-      
-      {{-- <p><small>Source: <cite><a href="https://www.bjcp.org/stylecenter.php">BJCP Style Guidelines</a></cite></small></p> --}}
-
-
-
-
-
-
-
-
+                    {{ $product->name }}
+                    <br>
+                    <span><font color="red">{{ $product->price }}</font> จาก <del class>฿{{ $product->actual_price }}</del> บาท</span>
+                    <br>
+                    {{ $product->productdetail }}
+                </div>
+               
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+          </div>
 </div>
 {{-- container --}}
 @endsection

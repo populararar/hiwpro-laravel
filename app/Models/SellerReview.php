@@ -6,12 +6,10 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Profile
+ * Class SellerReview
  * @package App\Models
- * @version January 18, 2019, 2:48 pm UTC
+ * @version January 26, 2019, 5:37 pm UTC
  *
- * @property \App\Models\User user
- * @property \App\Models\Address address
  * @property \Illuminate\Database\Eloquent\Collection category
  * @property \Illuminate\Database\Eloquent\Collection eventJoined
  * @property \Illuminate\Database\Eloquent\Collection eventShop
@@ -20,20 +18,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection product
  * @property \Illuminate\Database\Eloquent\Collection productEvent
  * @property \Illuminate\Database\Eloquent\Collection usersRoles
- * @property string tel
- * @property string img
- * @property integer address_id
- * @property string bank_num
- * @property string bank_name
- * @property string national_id
- * @property string national_img
  * @property integer user_id
+ * @property integer score
+ * @property integer customer_id
+ * @property integer order_id
+ * @property string comment
+ * @property string img
+ * @property string img2
  */
-class Profile extends Model
+class SellerReview extends Model
 {
     use SoftDeletes;
 
-    public $table = 'profile';
+    public $table = 'seller_review';
     
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -44,15 +41,13 @@ class Profile extends Model
     protected $primaryKey = 'id';
 
     public $fillable = [
-        'tel',
-        'img',
-        'address_id',
-        'bank_num',
-        'bank_name',
-        'national_id',
-        'national_img',
         'user_id',
-        'status'
+        'score',
+        'customer_id',
+        'order_id',
+        'comment',
+        'img',
+        'img2'
     ];
 
     /**
@@ -62,14 +57,13 @@ class Profile extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'tel' => 'string',
+        'user_id' => 'integer',
+        'score' => 'integer',
+        'customer_id' => 'integer',
+        'order_id' => 'integer',
+        'comment' => 'string',
         'img' => 'string',
-        'address_id' => 'integer',
-        'bank_num' => 'string',
-        'bank_name' => 'string',
-        'national_id' => 'string',
-        'national_img' => 'string',
-        'user_id' => 'integer'
+        'img2' => 'string'
     ];
 
     /**
@@ -81,19 +75,5 @@ class Profile extends Model
         
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     **/
-    public function user()
-    {
-        return $this->belongsTo(\App\Models\User::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     **/
-    public function address()
-    {
-        return $this->hasOne(\App\Models\Address::class);
-    }
+    
 }

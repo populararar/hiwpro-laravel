@@ -8,15 +8,19 @@ use App\Http\Requests\UpdateOrderHeaderRequest;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
 use App\Repositories\UsersRepository;
+use App\Repositories\SellerReviewRepository;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Validator;
 
 class OrderController extends AppBaseController
 {
+     /** @var  SellerReviewRepository */
+     private $sellerReviewRepository;
 
     /** @var  OrderDetailRepository */
     private $orderDetailRepository;
@@ -27,11 +31,12 @@ class OrderController extends AppBaseController
     /** @var  OrderHeaderRepository */
     private $orderHeaderRepository;
 
-    public function __construct(OrderDetailRepository $orderDetailRepo, OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo)
+    public function __construct(SellerReviewRepository $sellerReviewRepo,OrderDetailRepository $orderDetailRepo, OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->usersRepository = $usersRepo;
         $this->orderDetailRepository = $orderDetailRepo;
+        $this->sellerReviewRepository = $sellerReviewRepo;
     }
 
     /**
@@ -72,7 +77,52 @@ class OrderController extends AppBaseController
     {
         $user = Auth::user();
         $orderHeaders = $this->orderHeaderRepository->with('orderDetails')->findWhere(['customer_id' => $user->id, 'order_number' => $id])->first();
-        return view('orders.statusdetail')->with('orderHeaders', $orderHeaders);
+        $reviewCount = $this->sellerReviewRepository->findWhere(['order_id'=>$orderHeaders->id])->count('id');
+
+        return view('orders.statusdetail')->with('orderHeaders', $orderHeaders)->with('reviewCount',$reviewCount);
+    }
+
+    public function sellerReview(Request $request)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'order_id' => 'required',
+            'order_number' => 'required',
+            'rating' => 'required',
+            'comment' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('register')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $input = $request->all();
+        $order = $this->orderHeaderRepository->findWhere(['order_number' => $input['order_number']])->first();
+        if (empty($order)) {
+            Flash::error('Order Not found.');
+            return redirect()->route('home');
+        }
+
+        $input["order_id"] = $order->id;
+
+        $input["user_id"] = $order->seller_id;
+        $input["customer_id"] =  $user = Auth::user()->id;
+        //Upload file
+        $path = $request->file('img1')->store('public/upload');
+        $path2 = $request->file('img2')->store('public/upload');
+
+        $input["img1"] = str_replace("public", "", $path);
+        $input["img2"] = str_replace("public", "", $path2);
+
+        $review = $this->sellerReviewRepository->create($input);
+
+        $this->orderHeaderRepository->update($order->id,['status'=>'COMPLETED']);
+
+        Flash::success('Review Seller successfully.');
+
+        return redirect()->route('orders.statusdetail',[$order->order_number]);
     }
 
     private function validCart()

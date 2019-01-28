@@ -10,7 +10,13 @@
 @section('content')
 
 <h1>hi</h1>
-    <a href="{!! route('profiles.show', [$profile->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
+
+@if (!empty($profile->id))
+     <a href="{!! route('profiles.show', [$profile->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
     <a href="{!! route('profiles.edit', [$profile->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
 
+@endif
+
+<h1>Hi Profile</h1>
+   
 @endsection

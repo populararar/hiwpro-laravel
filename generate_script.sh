@@ -35,6 +35,8 @@ php artisan infyom:scaffold Payment  --fromTable --tableName=payment --primary=i
 
 php artisan infyom:scaffold Profile  --fromTable --tableName=profile --primary=id --relations
 
+php artisan infyom:scaffold SellerReview  --fromTable --tableName=seller_review --primary=id --relations
+
 
 ALTER TABLE `hiwpro`.`event_joined` 
 ADD COLUMN `created_at` TIMESTAMP NULL AFTER `score`,

@@ -70,65 +70,10 @@
 }
 
 
-
-/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
-   follow these rules. Every browser that supports :checked also supports :not(), so
-   it doesn’t make the test unnecessarily selective */
-/* .rating:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
-    clip:rect(0,0,0,0);
-}
-
-.rating:not(:checked) > label {
-    float:right;
-    width:1em;
-    padding:0 .1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:350%;
-    line-height:1;
-    color:#ddd;
-    text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5); 
-
-.rating:not(:checked) > label:before {
-    content: '★ ';
-}
-*/
-}
- /*.rating > input:checked ~ label {
-    color: #f70;
-    text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5); 
-}
-*/
- /*.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
-    color: gold;
-    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
-}
- */
- /*.rating > input:checked + label:hover,
-.rating > input:checked + label:hover ~ label,
-.rating > input:checked ~ label:hover,
-.rating > input:checked ~ label:hover ~ label,
-.rating > label:hover ~ input:checked ~ label {
-    color: #ea0;
-    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
-} */
-
-/* .rating > label:active {
-    position:relative;
-    top:2px;
-    left:2px;
-} */
-
-
-
 /* ********************* */
 .rating { 
   border: none;
-  float: left;
+  float: right;
 }
 
 .rating > input { display: none; } 
@@ -147,7 +92,7 @@
 
 .rating > label { 
   color: #ddd; 
- float: right; 
+  float: right;
 }
 
 /***** CSS Magic to Highlight Stars on Hover *****/
@@ -171,6 +116,14 @@
         # code...
         $status ='รอการชำระเงิน';
     }
+    if ($status == "UPLOADED") {
+        # code...
+        $status ='รอการตรวจสอบ';
+    }
+    if ($status == "COMPLETED") {
+        # code...
+        $status ='รอการจัดส่ง';
+    }
 @endphp
 
 {{-- {{ dd($orderHeaders)}} --}}
@@ -178,6 +131,9 @@
   <div class="page-header">
     <h3>สถานะการจัดส่งสินค้า</h3>
   </div>
+
+  @include('flash::message')
+
   <div class="weapper" style="margin-top: 2%; padding:3% 5%; ">
     <h5>ข้อมูลคำสั่งซื้อ </h5>
     <div class="row">
@@ -252,12 +208,16 @@
     @endif
 
     @if ($status =='UPLOADED') 
+      @if ($reviewCount< 1)
+            <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
+      @endif
+ 
         {{-- <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div> --}}
-        <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
     @endif
+
    
   </div>
- 
+  @if ($reviewCount< 1)
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -269,45 +229,46 @@
         </div>
         <div class="modal-body">
 
-          <form >
-              {!! csrf_field() !!}
+          <form method="POST" action="{{ route('orders.sellerreview') }}" enctype="multipart/form-data">
+              {!! csrf_field() !!} 
+              <input type="hidden" name="order_id" value="{{ $orderHeaders->id }}">
+              <input type="hidden" name="order_number" value="{{ $orderHeaders->order_number }}">
             <div class="form-group">
                 <label for="recipient-name" class="col-form-label">คะแนน:</label>
                 {{-- <input name="score" type="text" class="form-control" id="recipient-name"> --}}
                 <fieldset class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
-                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
-                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
-                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
-                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+                    <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                    <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                    <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                    <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                    <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
                 </fieldset>
             </div>
-
-
-            <fieldset class="rating">
-                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-            </fieldset>
-
-
-            <div class="form-group">
+            <div class="form-group has-feedback{{ $errors->has('comment') ? ' has-error' : '' }}">
               <label for="message-text" class="col-form-label">Comment:</label>
               <textarea name="comment" class="form-control" id="message-text"></textarea>
+              @if ($errors->has('comment'))
+                  <span class="help-block">
+                      <strong>{{ $errors->first('comment') }}</strong>
+                  </span>
+              @endif
             </div>
             <div class="row">
-                <div class="col-sm-5 imgUp">
-                  <div class="imagePreview"></div>
+                <div class="col-sm-6 imgUp">
+                  <div class="imagePreview  has-feedback{{ $errors->has('img1') ? ' has-error' : '' }}"></div>
                     <label class="btn btn-primary">Upload
-                      <input name="score" type="file" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
+                      <input name="img1" type="file" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
                     </label>
+                    @if ($errors->has('img1'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('img1') }}</strong>
+                        </span>
+                    @endif
                 </div><!-- col-2 -->
                 <i class="fa fa-plus imgAdd"></i>
             </div><!-- row -->
@@ -320,6 +281,7 @@
       </div>
     </div>
   </div>
+  @endif
   <!-- weapper -->
   <div class="page-header">
     <h3> ข้อมูลสินค้า</h3>
@@ -330,6 +292,7 @@
   $num = $orderHeaders->total_price;
   $formattedNum = number_format($num);  
 @endphp
+
   <div class="shadow-sm  mb-5 bg-white rounded">
     <div class="row">
       <div class="col-md-5">
@@ -359,30 +322,9 @@
 @section('scripts')
 <script>
 
-  $star_rating = $('.star-rating .fa');
-  var SetRatingStar = function () {
-    return $star_rating.each(function () {
-      if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
-        return $(this).removeClass('fa-star-o').addClass('fa-star');
-      } else {
-        return $(this).removeClass('fa-star').addClass('fa-star-o');
-      }
-    });
-  };
-
-  $star_rating.on('click', function () {
-    $star_rating.siblings('input.rating-value').val($(this).data('rating'));
-    return SetRatingStar();
-  });
-
-  SetRatingStar();
-  $(document).ready(function () {
-
-  });
-
   $(".imgAdd").click(function(){
         $(this).closest(".row").find('.imgAdd').before(
-          '<div class="col-sm-5 imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Upload<input type="file" class="uploadFile img" value="Upload Photo" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>');
+          '<div class="col-sm-6 imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Upload<input name="img2" type="file" class="uploadFile img" value="Upload Photo" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>');
           $(".imgAdd").hide();
         });
         $(document).on("click", "i.del" , function() {
@@ -409,7 +351,6 @@ uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url(
       
     });
 });
-    
 
 </script>
 @endsection

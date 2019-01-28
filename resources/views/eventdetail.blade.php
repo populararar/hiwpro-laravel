@@ -9,7 +9,6 @@ img:hover{
 .cardp{
     width:-10% !important;
     background: #fff;
-  
     margin: 1% 1%;
     padding:0%;
     cursor: pointer;  
@@ -17,7 +16,7 @@ img:hover{
 }
 
 .cardp:hover{
-  border: solid 1px #ccc;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 } 
 
 .box-white{
@@ -62,6 +61,7 @@ img:hover{
     margin-bottom: 2%;
 }
 
+
 </style>
 
 <div class="container" >
@@ -101,7 +101,7 @@ img:hover{
                 <div class="row" style="margin:auto;">
                     @foreach ($productEvents as $pe) 
                     <a  href="{{  route('event.detail.product', ['id' => $pe->product_id, 'event_shop_id' => $pe->event_shop_id]) }}" style='color: #df3433;'> 
-                    <div class="col-sm-fix col-md-3 cardp">
+                    <div class="col-md-3 cardp">
                         <img class='card-img-top' src="{{ asset('/storage/'.$pe->product->image_product_id) }}">
                         <div class="card-in">
                             <p style='color:#df3433; font-size:1em;line-height :1.2;margin:2%;'> {{  $pe->product->name }} </p>
@@ -128,6 +128,40 @@ img:hover{
                                 <button type="submit" class="box-r btn btn-danger"><i class="fas fa-cart-arrow-down"></i></button>
                             </form>          
                         </div>
+                    </div> 
+                    @endforeach
+                </div>
+
+                <div class="row" style="margin:auto;">
+                    @foreach ($productEvents as $pe) 
+                    <a  href="{{  route('event.detail.product', ['id' => $pe->product_id, 'event_shop_id' => $pe->event_shop_id]) }}" style='color: #df3433;'> 
+                    <div class="cardp">
+                            <img class='card-img-top' src="{{ asset('/storage/'.$pe->product->image_product_id) }}">
+                            <div class="card-in">
+                                <p style='color:#df3433; font-size:1em; line-height :1.2; margin:2%;'> {{  $pe->product->name }} </p>
+                                <span>
+                                    <font color="red">{{  $pe->product->price }} บาท</font>
+                                    <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{$pe->product->actual_price}} บาท</font>
+                                </span>
+                            </div> 
+                            </a> 
+                            <div class="box-white d-none d-sm-none d-md-block">
+                                <form action="{{ route('cart.add') }}" method="POST">
+                                        {!! csrf_field() !!}
+                                    <input type="hidden" name="event_shop_id" value="{{ $pe->eventShop->id }}">
+                                    <input type="hidden" name="product_id" value="{{ $pe->product->product_id }}">
+                                    <input type="hidden" name="price" value="{{  $pe->product->price  }}">
+                                    <input type="hidden" name="fee" value="{{  $pe->product->fee  }}">
+                                    <input type="hidden" name="shippping" value="{{  $pe->product->shipping_price  }}">                                  
+                                    <button type="button" class="box-l btn btn-outline-danger"><i class="fas fa-heart"></i></button>
+                                    <span style="margin-left:10%;">
+                                        จำนวน
+                                    </span>
+                                    
+                                    <input type="number" class="count" name="quantity" value="1" style="width:15%; border:1px solid white;text-align:center;">
+                                    <button type="submit" class="box-r btn btn-danger"><i class="fas fa-cart-arrow-down"></i></button>
+                                </form>          
+                            </div>
                     </div> 
                     @endforeach
                 </div>

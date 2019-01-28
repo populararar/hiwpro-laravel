@@ -279,6 +279,7 @@ $sum=0;$count=0;$count2=0;
                             <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}">
                         </div>
                         <div class="col-md-12">
+                            
                             {{$mapSeller[$eventShopId]->id}} - {{ $mapSeller[$eventShopId]->name }}
                             <p>คะแนนนักหิ้ว</p>
                             <i class="fas fa-star"></i>

@@ -58,13 +58,13 @@
 
   <div class="box box-danger col-sm-6">
     <div class="box-body">
-      ข้อมูลยอดขาย 
+      ข้อมูลรายได้ 
             <div id="pop_div"></div>
             {!! $lava->render('AreaChart', 'Population', 'pop_div')  !!}
     </div>
   </div>
 
-  <div class="clearfix"></div>
+  
 
   <div class="box box-primary col-sm-6">
     <div class="box-body">
@@ -73,11 +73,39 @@
         {!! $lava->render('ColumnChart', 'Orders', 'order_div')  !!}
     </div>
   </div>
+  
+  <div class="clearfix"></div>
   <div class="box box-primary col-sm-6">
     <div class="box-body">
-     ข้อมูลรายได้ นักหิ้วมือโปร สินค้าขายดี ประเภทสินค้าขายดี
+     ข้อมูลรายได้ 
         <div id="order_div"></div>
-        {!! $lava->render('ColumnChart', 'Orders', 'order_div')  !!}
+        {{-- {!! $lava->render('ColumnChart', 'Orders', 'order_div')  !!} --}}
+      {{-- @include('events.table') --}}
+    </div>
+  </div>
+
+  <div class="box box-primary col-sm-6">
+    <div class="box-body">
+    นักหิ้วมือโปร 
+        <div id="order_div"></div>
+        {{-- {!! $lava->render('ColumnChart', 'Orders', 'order_div')  !!} --}}
+      {{-- @include('events.table') --}}
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="box box-primary col-sm-6">
+    <div class="box-body">
+    สินค้าขายดี 
+        <div id="order_div"></div>
+        {{-- {!! $lava->render('ColumnChart', 'Orders', 'order_div')  !!} --}}
+      {{-- @include('events.table') --}}
+    </div>
+  </div>
+  <div class="box box-primary col-sm-6">
+    <div class="box-body">
+    ประเภทสินค้าขายดี
+        <div id="order_div"></div>
+        {{-- {!! $lava->render('ColumnChart', 'Orders', 'order_div')  !!} --}}
       {{-- @include('events.table') --}}
     </div>
   </div>

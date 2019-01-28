@@ -43,7 +43,8 @@ Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}', 'HomeController@a
 Route::middleware(['login'])->group(function () {
 
     Route::resource('profiles', 'ProfileController');
-    Route::get('/profiles/main', 'ProfileController@main')->name('profiles.main');
+    // Route::get('/profiles', 'ProfileController@main')->name('profiles.main');
+    Route::get('/profiles/create', 'ProfileController@create')->name('profiles.create');
     // Route::get('/main', 'ProfileController@admin')->name('profiles.admin');
     
     Route::resource('confirms', 'ConfirmController');
@@ -91,7 +92,12 @@ Route::middleware(['login'])->group(function () {
     Route::get('/orders', 'OrderController@index')->name('orders.index');
     Route::get('/orders/status/detail/{id}', 'OrderController@statusdetail')->name('orders.statusdetail');
 
+    Route::post('/orders/seller/review/{id}', 'OrderController@sellerReview')->name('orders.sellerreview');
+
     Route::resource('payments', 'PaymentController');
+    Route::resource('sellerReviews', 'SellerReviewController');
 });
+
+
 
 

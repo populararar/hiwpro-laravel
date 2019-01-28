@@ -113,8 +113,9 @@
                         @php
                             $id = Auth::user()->id;
                         @endphp
-                       {{-- {{ dd(Auth::user()->id)}} --}}
-                        <a class="dropdown-item" href="{{ route('profiles.main') }}">ข้อมูลส่วนตัว</a>
+                       {{-- {{ dd($User->id)}} --}}
+                       
+                        <a class="dropdown-item" href="{{ route('profiles.index') }}">ข้อมูลส่วนตัว</a>
                         <a class="dropdown-item" href="{{route('orders.store') }}">ประวัติการสั่งซื้อ</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout.index') }}">ออกจากระบบ</a>

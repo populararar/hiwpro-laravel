@@ -24,6 +24,11 @@
     {!! Form::number('address_id', null, ['class' => 'form-control']) !!}
 </div>
 
+
+
+
+@if($roleName=="SELLER")
+
 <!-- Bank Num Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('bank_num', 'Bank Num:') !!}
@@ -47,6 +52,7 @@
     {!! Form::label('national_img', 'National Img:') !!}
     {!! Form::textarea('national_img', null, ['class' => 'form-control']) !!}
 </div>
+@endif
 
 <!-- User Id Field -->
 <div class="form-group col-sm-6">

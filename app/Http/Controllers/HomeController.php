@@ -451,10 +451,12 @@ class HomeController extends Controller
      *
      * @return Response
      */
-    public function destroy(Request $requst)
+    public function destroy(Request $request)
     {
         if (Auth::check()) {
             session()->forget('permissions');
+            $request->session()->flush();
+            $request->session()->regenerate();
             Auth::logout();
         }
         return redirect()->route('home');

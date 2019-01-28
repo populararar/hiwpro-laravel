@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateOrderHeaderRequest;
 use App\Http\Requests\UpdateOrderHeaderRequest;
-use App\Repositories\OrderHeaderRepository;
+use App\Models\OrderHeader;
 use App\Repositories\OrderDetailRepository;
+use App\Repositories\OrderHeaderRepository;
 use App\Repositories\UsersRepository;
-use App\Http\Controllers\AppBaseController;
-
-use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Http\Request;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Illuminate\Support\Facades\Auth;
 use Response;
-use Carbon\Carbon;
-use DB;
 
 class OrderHeaderController extends AppBaseController
 {
-    
+
     /** @var  OrderDetailRepository */
     private $orderDetailRepository;
 
@@ -29,11 +26,14 @@ class OrderHeaderController extends AppBaseController
     /** @var  OrderHeaderRepository */
     private $orderHeaderRepository;
 
-    public function __construct(UsersRepository $usersRepo,OrderDetailRepository $orderDetailRepo,OrderHeaderRepository $orderHeaderRepo)
+    private $orderHeader;
+
+    public function __construct(OrderHeader $orderHeader, UsersRepository $usersRepo, OrderDetailRepository $orderDetailRepo, OrderHeaderRepository $orderHeaderRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->usersRepository = $usersRepo;
+        $this->orderHeader = $orderHeader;
     }
 
     /**
@@ -44,14 +44,15 @@ class OrderHeaderController extends AppBaseController
      */
     public function index(Request $request)
     {
-       
+
         $this->orderHeaderRepository->pushCriteria(new RequestCriteria($request));
-        $orderHeaders = $this->orderHeaderRepository->all();
- 
-      
-         
+        // $orderHeaders = $this->orderHeaderRepository->findwhere([''=>]);
+
+        $orderHeaders = $this->orderHeader
+        ->whereRaw('id NOT IN (SELECT id FROM hiwpro.order_header WHERE status = \'CREATE\' AND TIMESTAMPDIFF(HOUR, created_at, NOW()) > 24)')
+        ->orderBy('updated_at', 'desc')
+        ->get();
         // $customer = $this->usersRepository->findWhere(['id'=>$orderHeaders->customer->customer_id]);
-      
 
         return view('order_headers.index')
             ->with('orderHeaders', $orderHeaders);

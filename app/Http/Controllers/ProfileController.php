@@ -34,15 +34,15 @@ class ProfileController extends AppBaseController
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request)
-    {
-        $user = Auth::user();
-        // $this->profileRepository->pushCriteria(new RequestCriteria($request));
-        $profile = $this->profileRepository->findWhere(['user_id' => $user->id])->first();
+    // public function index(Request $request)
+    // {
+    //     $user = Auth::user();
+    //     // $this->profileRepository->pushCriteria(new RequestCriteria($request));
+    //     $profile = $this->profileRepository->findWhere(['user_id' => $user->id])->first();
 
-        return view('profiles.main')
-            ->with('profile', $profile)->with('$user',$user);
-    }
+    //     return view('profiles.main')
+    //         ->with('profile', $profile)->with('$user',$user);
+    // }
 
     /**
      * Show the form for creating a new Profile.
@@ -51,7 +51,10 @@ class ProfileController extends AppBaseController
      */
     public function create()
     {
-        return view('profiles.create');
+        $user = Auth::user();
+        $roleName = $user->usersRoles->first()->role->name;
+
+        return view('profiles.create')->with('roleName',$roleName);
     }
 
     /**
@@ -78,15 +81,21 @@ class ProfileController extends AppBaseController
      *
      * @return Response
      */
-    public function main()
+    public function index()
     {
         $user = Auth::user();
 
         $profile = $this->profileRepository->findWithoutFail($user->id);
+        $roleName = $user->usersRoles->first()->role->name;
+        if (!empty($profile)) {
 
-        if (empty($profile)) {
+
             Flash::error('Profile not found');
-            return redirect(route('home'));
+            return redirect(route('profiles.update'));
+        }else {
+
+
+            return redirect(route('profiles.create'));
         }
 
         return view('profiles.main')->with('profile', $profile)->with('$user',$user);
@@ -164,18 +173,20 @@ class ProfileController extends AppBaseController
     public function update($id, UpdateProfileRequest $request)
     {
         $profile = $this->profileRepository->findWithoutFail($id);
+        $user = Auth::user();
+        $roleName = $user->usersRoles->first()->role->name;
 
         if (empty($profile)) {
             Flash::error('Profile not found');
 
-            return redirect(route('profiles.index'));
+            return redirect(route('home'));
         }
 
         $profile = $this->profileRepository->update($request->all(), $id);
 
         Flash::success('Profile updated successfully.');
 
-        return redirect(route('profiles.index'));
+        return redirect(route('home'));
     }
 
     /**
