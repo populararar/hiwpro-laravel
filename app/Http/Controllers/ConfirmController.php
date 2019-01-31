@@ -122,7 +122,7 @@ class ConfirmController extends Controller
             return redirect()->route('home');
         }
 
-        $address = $request->all();
+        $customer_info = $request->all();
         // dd($address);
         $sellers = $request->session()->get('sellers');
         $mapSeller = [];
@@ -137,13 +137,13 @@ class ConfirmController extends Controller
         $cart = \Cart::getContent();
         $shopGroup = $cart->groupBy('attributes.key');
 
-        $request->session()->put('address', $address);
-
+        $request->session()->put('customer_info', $customer_info);
+        // dd($customer_info);
         return view('confirms.final')
             ->with('mapSeller', $mapSeller)
             ->with('shopGroup', $shopGroup)
             ->with('cart', $cart)
-            ->with('address', $address);
+            ->with('address', $customer_info);
 
         // return view('confirm.final')
     }/**
@@ -157,7 +157,6 @@ class ConfirmController extends Controller
     public function show($id)
     {
         // dd($id);
-
         return view('confirms.payment');
     }
 

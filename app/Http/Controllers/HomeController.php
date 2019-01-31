@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderShipped;
 use App\Repositories\EventJoinedRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\EventShopRepository;
 use App\Repositories\PermissionsRepository;
 use App\Repositories\ProducteventRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\ProfileRepository;
 use App\Repositories\UserRolesRepository;
 use App\Repositories\UsersRepository;
-use App\Repositories\ProfileRepository;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Validator;
 
@@ -54,7 +56,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(ProfileRepository $profileRepo,EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo
+    public function __construct(ProfileRepository $profileRepo, EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo
         , UsersRepository $usersRepo, PermissionsRepository $permissionRepo) {
         $this->eventJoinedRepository = $eventJoinedRepo;
         $this->usersRepository = $usersRepo;
@@ -65,6 +67,44 @@ class HomeController extends Controller
         $this->productRepository = $productRepo;
         $this->userRolesRepository = $userRolesRepo;
         $this->profileRepository = $profileRepo;
+    }
+
+    public function mail()
+    {
+        Mail::to('ker13530018@gmail.com')->send(new OrderShipped());
+    }
+
+    public function increase($id, Request $request)
+    {
+        // dd( );
+        $quantity = \Cart::get($id)->quantity;
+
+        \Cart::update($id, array(
+            'quantity' => 1, // so if the current product has a quantity of 4, another 2 will be added so this will result to 6
+        ));
+
+        $cart = \Cart::getContent();
+        return response()->json(['cart' => $cart]);
+    }
+
+    public function decrease($id, Request $request)
+    {
+        $item = \Cart::get($id);
+        if (empty($item)) {
+            $cart = \Cart::getContent();
+            return response()->json(['cart' => $cart]);
+        }
+        $quantity = $item->quantity;
+        if ($quantity == 1) {
+            \Cart::remove($id);
+        } else {
+            \Cart::update($id, array(
+                'quantity' => -1, // so if the current product has a quantity of 4, another 2 will be added so this will result to 6
+            ));
+        }
+
+        $cart = \Cart::getContent();
+        return response()->json(['cart' => $cart]);
     }
 
     public function cartDetail(Request $request)
@@ -84,7 +124,7 @@ class HomeController extends Controller
         // $cart = Cart::content();
 
         $cart = \Cart::getContent();
-        $shopGroup = $cart->groupBy('attributes.key');
+        $shopGroup = $cart->groupBy('attributes.key')->sort();
 
         $shopGroup = $shopGroup->map(function ($item, $key) {
             // Get saller in event shop
@@ -377,8 +417,8 @@ class HomeController extends Controller
             return redirect()->route('register')
                 ->withErrors($validator)
                 ->withInput();
-        } 
-        
+        }
+
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         // dd($input);
@@ -397,7 +437,7 @@ class HomeController extends Controller
             'role_id' => $role,
             'status' => '1',
         ]);
-        
+
         Flash::success('Register saved successfully.');
 
         return redirect()->route('login.index');

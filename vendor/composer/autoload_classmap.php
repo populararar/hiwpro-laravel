@@ -83,6 +83,7 @@ return array(
     'App\\Http\\Requests\\UpdateShopRequest' => $baseDir . '/app/Http/Requests/UpdateShopRequest.php',
     'App\\Http\\Requests\\UpdateUserRolesRequest' => $baseDir . '/app/Http/Requests/UpdateUserRolesRequest.php',
     'App\\Http\\Requests\\UpdateUsersRequest' => $baseDir . '/app/Http/Requests/UpdateUsersRequest.php',
+    'App\\Mail\\OrderShipped' => $baseDir . '/app/Mail/OrderShipped.php',
     'App\\Models\\Category' => $baseDir . '/app/Models/Category.php',
     'App\\Models\\Event' => $baseDir . '/app/Models/Event.php',
     'App\\Models\\EventJoined' => $baseDir . '/app/Models/EventJoined.php',

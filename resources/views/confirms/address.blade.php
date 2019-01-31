@@ -106,7 +106,7 @@ $sum=0;$count=0;$count2=0;
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputName">ชื่อจริง</label>
-          <input type="text" name="firstname" class="form-control" placeholder="First name">
+          <input type="text" name="name" class="form-control" placeholder="First name">
         </div>
         <div class="form-group col-md-6">
           <label for="inputLastname">นามสกุล</label>
@@ -117,27 +117,6 @@ $sum=0;$count=0;$count2=0;
         <label for="inputAddress">ที่อยู่</label>
         <textarea class="form-control" name="address" placeholder="1234 Main St" rows="5"></textarea>
       </div>
-{{--       
-      <div class="form-group">
-         
-          <label for="inputState">ข้อมูลจังหวัดในประเทศไทย</label>
-          <select id="provinces" name="city"  class="form-control provinces" >
-            <option value="">เลือกข้อมูลจังหวัดของท่าน</option>
-            @foreach ($list as $row)
-              <option value="{{ $row->id}}">{{ $row->name_th}}</option>
-            @endforeach
-           
-          </select>
-      </div>
-      <div class="form-group">
-          <label for="inputState">ข้อมูลจังหวัดในประเทศไทย</label>
-          <select id="amphures" name="state" class="form-control amphures">
-              <option value="">เลือกข้อมูลอำเภอของท่าน</option>
-            
-          </select>
-      </div> --}}
-
-
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputCity">จังหวัด</label>

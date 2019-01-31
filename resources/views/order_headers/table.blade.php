@@ -63,6 +63,6 @@
     // });
     $(document).ready( function () {
     $('#orderHeaders-table').DataTable();
-} );
+    } );
     </script>
 @endsection

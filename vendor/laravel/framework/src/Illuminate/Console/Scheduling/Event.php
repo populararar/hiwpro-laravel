@@ -295,7 +295,7 @@ class Event
      */
     protected function expressionPasses()
     {
-        $date = Carbon::now();
+        $date = Carbon::now()->setTimezone('Asia/Bangkok');
 
         if ($this->timezone) {
             $date->setTimezone($this->timezone);

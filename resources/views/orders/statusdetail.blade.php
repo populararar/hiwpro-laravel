@@ -109,7 +109,7 @@
 @php
   $num = $orderHeaders->total_price;
   $formattedNum = number_format($num);  
-
+  $status_send=$orderHeaders->status;
   $status = $orderHeaders->slip_status;
     // dd($status);
     if ($status == "WAITING") {
@@ -120,11 +120,19 @@
         # code...
         $status ='รอการตรวจสอบ';
     }
-    if ($status == "COMPLETED") {
+    if ($status_send == "") {
         # code...
-        $status ='รอการจัดส่ง';
+        $status ='รอรับสินค้า';
     }
+    if ($status_send == "CONFIRMED") {
+        # code...
+        $status ='ได้รับสินค้าแล้ว';
+    }
+
+    
+    
 @endphp
+
 
 {{-- {{ dd($orderHeaders)}} --}}
 <div class="container" style="padding: 0 5%;">
@@ -146,7 +154,7 @@
       <div class="col-md-4">
         <h6 style="margin-top: 2%;">ชื่อผู้จัดส่ง : </h6>
         <p>
-          <h6 class="font-gray">{{ $orderHeaders->customer_id}} </h6>
+          <h6 class="font-gray">{{ $orderHeaders->name.' '.$orderHeaders->lastname}} </h6>
         </p>
       </div>
       <div class=" col-lg-4">
@@ -211,7 +219,7 @@
       @if ($reviewCount< 1)
             <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
       @endif
- 
+      
         {{-- <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div> --}}
     @endif
 
@@ -229,7 +237,7 @@
         </div>
         <div class="modal-body">
 
-          <form method="POST" action="{{ route('orders.sellerreview') }}" enctype="multipart/form-data">
+          <form method="POST" action="{{ route('orders.sellerreview', [$orderHeaders->order_number]) }}" enctype="multipart/form-data">
               {!! csrf_field() !!} 
               <input type="hidden" name="order_id" value="{{ $orderHeaders->id }}">
               <input type="hidden" name="order_number" value="{{ $orderHeaders->order_number }}">

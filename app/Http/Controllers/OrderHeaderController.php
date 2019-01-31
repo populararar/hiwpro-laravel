@@ -49,7 +49,8 @@ class OrderHeaderController extends AppBaseController
         // $orderHeaders = $this->orderHeaderRepository->findwhere([''=>]);
 
         $orderHeaders = $this->orderHeader
-        ->whereRaw('id NOT IN (SELECT id FROM hiwpro.order_header WHERE status = \'CREATE\' AND TIMESTAMPDIFF(HOUR, created_at, NOW()) > 24)')
+        ->whereRaw('id NOT IN (SELECT id FROM hiwpro.order_header WHERE status = \'CREATE\' 
+        AND TIMESTAMPDIFF(HOUR, created_at, NOW()) > 24) AND  slip_status = \'WAITING\' ')
         ->orderBy('updated_at', 'desc')
         ->get();
         // $customer = $this->usersRepository->findWhere(['id'=>$orderHeaders->customer->customer_id]);

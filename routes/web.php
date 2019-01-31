@@ -37,6 +37,10 @@ Route::get('/cart', 'HomeController@cartDetail')->name('cart.detail');
 Route::get('/cart/flush', 'HomeController@cartFlush')->name('cart.flush');
 
 Route::get('/cart/seller', 'HomeController@cartSeller')->name('cart.seller');
+
+Route::get('/cart/product/{id}/increase', 'HomeController@increase')->name('cart.increase');
+Route::get('/cart/product/{id}/decrease', 'HomeController@decrease')->name('cart.decrease');
+
 Route::post('/cart/order', 'HomeController@order')->name('cart.order');
 Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}', 'HomeController@addSeller')->name('cart.seller.add');
 
@@ -46,7 +50,7 @@ Route::middleware(['login'])->group(function () {
     // Route::get('/profiles', 'ProfileController@main')->name('profiles.main');
     Route::get('/profiles/create', 'ProfileController@create')->name('profiles.create');
     // Route::get('/main', 'ProfileController@admin')->name('profiles.admin');
-    
+
     Route::resource('confirms', 'ConfirmController');
     Route::post('/confirms/final', 'ConfirmController@final')->name('confirms.final');
     Route::get('/confirms/{id}/payment', 'ConfirmController@payment')->name('confirms.payment');
@@ -96,8 +100,7 @@ Route::middleware(['login'])->group(function () {
 
     Route::resource('payments', 'PaymentController');
     Route::resource('sellerReviews', 'SellerReviewController');
+
+  
 });
-
-
-
-
+Route::get('/mail', 'HomeController@mail');

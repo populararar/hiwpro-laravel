@@ -209,7 +209,11 @@ $sum=0;$count=0;$count2=0;
             <h5 style="margin-top: 2%; ">ข้อมูลการจัดส่ง : </h5>
         </div>
         <div class=" col-6">
-            <h6 style="margin-top: 2%; color: gray;">{{ $address['address'] }} </h6>
+            <h6>{{ $address['name'].' '.$address['lastname'] }}</h6>
+            <h6>{{ $address['email'] }}</h6>
+            <h6 style="margin-top: 2%; color: gray;">
+                {{ $address['address'].' '.$address['city'].' '.$address['state'].' '.$address['country'].' '.$address['zip'] }} </h6>
+            
         </div>
     </div>
 

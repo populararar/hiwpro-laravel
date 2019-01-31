@@ -45,7 +45,8 @@ class Payment extends Model
         'bank_to',
         'send_time',
         'order_id',
-        'status'
+        'status',
+        'name'
     ];
 
     /**

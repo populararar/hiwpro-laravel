@@ -9,14 +9,15 @@
         "darryldecode/cart": "~4.0",
         "doctrine/dbal": "~2.3",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.3",
         "infyomlabs/adminlte-templates": "5.7.x-dev",
         "infyomlabs/laravel-generator": "5.7.x-dev",
         "infyomlabs/swagger-generator": "dev-master",
         "jlapp/swaggervel": "dev-master",
+        "khill/lavacharts": "3.0.*",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
-        "laravelcollective/html": "^5.7.0",
-        "khill/lavacharts" : "3.0.*"
+        "laravelcollective/html": "^5.7.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

@@ -66,7 +66,10 @@ class OrderHeader extends Model
         'status',
         'order_number',
         'payment_id',
-        'seller_id'
+        'seller_id',
+        'name',
+        'lastname',
+        'email'
     ];
 
     /**
@@ -83,6 +86,7 @@ class OrderHeader extends Model
         'customer_id' => 'integer',
         'shipping_id' => 'string',
         'status' => 'string'
+        
     ];
 
     /**

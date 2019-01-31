@@ -36,3 +36,11 @@
     @endforeach
     </tbody>
 </table>
+
+@section('scripts')
+    <script>
+    $(document).ready( function () {
+    $('#events-table').DataTable();
+} );
+    </script>
+@endsection

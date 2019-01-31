@@ -82,7 +82,7 @@ $sum=0;$count=0;$count2=0;
                                       <tr>
                                         <th scope="col">รหัสออร์เดอร์</th>
                                         <th scope="col">ชื่อผู้ส่ง</th>
-                                        <th scope="col">วันที่ส่ง</th>
+                                        <th scope="col">วันที่สั่ง</th>
                                         <th scope="col">ราคาทั้งหมด</th>
                                         <th scope="col">สถานะการจ่ายเงิน</th>
                                       </tr>

@@ -7,9 +7,10 @@ use App\Http\Requests\CreateOrderHeaderRequest;
 use App\Http\Requests\UpdateOrderHeaderRequest;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
-use App\Repositories\UsersRepository;
 use App\Repositories\SellerReviewRepository;
+use App\Repositories\UsersRepository;
 use Carbon\Carbon;
+use Carbon\DateTimeZone;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +20,8 @@ use Validator;
 
 class OrderController extends AppBaseController
 {
-     /** @var  SellerReviewRepository */
-     private $sellerReviewRepository;
+    /** @var  SellerReviewRepository */
+    private $sellerReviewRepository;
 
     /** @var  OrderDetailRepository */
     private $orderDetailRepository;
@@ -31,12 +32,13 @@ class OrderController extends AppBaseController
     /** @var  OrderHeaderRepository */
     private $orderHeaderRepository;
 
-    public function __construct(SellerReviewRepository $sellerReviewRepo,OrderDetailRepository $orderDetailRepo, OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo)
+    public function __construct(SellerReviewRepository $sellerReviewRepo, OrderDetailRepository $orderDetailRepo, OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->usersRepository = $usersRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->sellerReviewRepository = $sellerReviewRepo;
+
     }
 
     /**
@@ -50,13 +52,15 @@ class OrderController extends AppBaseController
         $this->orderHeaderRepository->pushCriteria(new RequestCriteria($request));
 
         $user = Auth::user();
+        $now = Carbon::now()->setTimezone('Asia/Bangkok');
         $orderHeaders = $this->orderHeaderRepository->findWhere(['customer_id' => $user->id]);
-        // $oh=$orderHeaders->first();
-
-        // foreach($oh->orderDetails as $item){
-        //     dd($item, $item->product->productdetail);
-
-        // }
+        foreach ($orderHeaders as $order) {
+            $create = Carbon::parse($order->created_at);
+            if ($order->slip_status == 'WAITING' && $order->status == 'CREATE' && $now->diffInHours($create) >= 24) {
+                $this->orderHeaderRepository->update(['status' => 'CLOSE'], $order->id);
+                $order->status = "CLOSE";
+            }
+        }
 
         return view('orders.index')
             ->with('orderHeaders', $orderHeaders)
@@ -77,9 +81,9 @@ class OrderController extends AppBaseController
     {
         $user = Auth::user();
         $orderHeaders = $this->orderHeaderRepository->with('orderDetails')->findWhere(['customer_id' => $user->id, 'order_number' => $id])->first();
-        $reviewCount = $this->sellerReviewRepository->findWhere(['order_id'=>$orderHeaders->id])->count('id');
+        $reviewCount = $this->sellerReviewRepository->findWhere(['order_id' => $orderHeaders->id])->count('id');
 
-        return view('orders.statusdetail')->with('orderHeaders', $orderHeaders)->with('reviewCount',$reviewCount);
+        return view('orders.statusdetail')->with('orderHeaders', $orderHeaders)->with('reviewCount', $reviewCount);
     }
 
     public function sellerReview(Request $request)
@@ -106,9 +110,8 @@ class OrderController extends AppBaseController
         }
 
         $input["order_id"] = $order->id;
-
         $input["user_id"] = $order->seller_id;
-        $input["customer_id"] =  $user = Auth::user()->id;
+        $input["customer_id"] = $user = Auth::user()->id;
         //Upload file
         $path = $request->file('img1')->store('public/upload');
         $path2 = $request->file('img2')->store('public/upload');
@@ -118,11 +121,11 @@ class OrderController extends AppBaseController
 
         $review = $this->sellerReviewRepository->create($input);
 
-        $this->orderHeaderRepository->update($order->id,['status'=>'COMPLETED']);
+        $this->orderHeaderRepository->update(['status' => 'COMPLETED'],$order->id);
 
         Flash::success('Review Seller successfully.');
 
-        return redirect()->route('orders.statusdetail',[$order->order_number]);
+        return redirect()->route('orders.statusdetail', [$order->order_number]);
     }
 
     private function validCart()
@@ -163,8 +166,8 @@ class OrderController extends AppBaseController
         $cart = \Cart::getContent();
         $shopGroup = $cart->groupBy('attributes.key');
 
-        $address = $request->session()->get('address');
-        if (empty($address)) {
+        $info = $request->session()->get('customer_info');
+        if (empty($info)) {
             return redirect()->route('home');
         }
 
@@ -182,7 +185,7 @@ class OrderController extends AppBaseController
             $seller = $mapSeller[$eventShopId];
             $expDate = Carbon::tomorrow('Asia/Bangkok')->toDateTimeString();
             $orderHeaderData = [
-                'address' => $address['address'],
+                'address' => $info['address'].' '.$info['city'].' '.$info['state'].' '.$info['country'].' '.$info['zip'],
                 'order_date' => $now,
                 'order_number' => $orderNumber,
                 'exp_date' => $expDate,
@@ -191,6 +194,9 @@ class OrderController extends AppBaseController
                 'seller_id' => $seller->id,
                 'customer_id' => $user->id,
                 'status' => 'CREATE',
+                'name'=> $info['name'],
+                'lastname'=> $info['lastname'],
+                'email'=> $info['email'],
             ];
             $orderHeader = $this->orderHeaderRepository->create($orderHeaderData);
             foreach ($group as $item) {
