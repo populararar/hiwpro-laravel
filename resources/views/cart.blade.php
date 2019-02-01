@@ -283,7 +283,7 @@ $sum=0;$count=0;$count2=0;
 
                 </div>
                 <div class="col-1"><p id="product-total-{{$product->id}}">{{ $sum = $qty*$p }}</p></div>
-                <div class="col-1"><a href="{{ route('cart.flush', ['id' => $product->id]) }}" style="color:#df3433;"><i
+                <div class="col-1"><a href="{{ route('cart.remove', ['id' => $product->id]) }}" style="color:#df3433;"><i
                             class="far fa-trash-alt"></i></a>
                 </div>
 
