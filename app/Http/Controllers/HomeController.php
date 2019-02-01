@@ -74,6 +74,11 @@ class HomeController extends Controller
         Mail::to('ker13530018@gmail.com')->send(new OrderShipped());
     }
 
+    public function cartRemove($id, Request $request){
+        \Cart::remove($id);
+        return redirect()->route('cart.detail');
+    }
+    
     public function increase($id, Request $request)
     {
         // dd( );

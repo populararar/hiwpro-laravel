@@ -278,23 +278,27 @@ $sum=0;$count=0;$count2=0;
                 $f = $product->attributes->fee;
                 $s = $product->attributes->shippping;
                 @endphp
-                <div class="col-2"><button type="button" onclick="increase({{$product->id}})" class="btn-sm btn btn-default">+</button>
-                    <p id="product-{{$product->id}}">{{ $qty }}<p>
+                <div class="col-2">
+                    <span>
+                        <button style="float:left;"  type="button" onclick="decrease({{$product->id}})" class="btn-sm btn btn-default">-</button>
+                        <p style="float:left;" id="product-{{$product->id}}">&nbsp {{ $qty }} &nbsp <p>
+                        <button style="float:left;"  type="button" onclick="increase({{$product->id}})" class="btn-sm btn btn-default">+</button>
 
+                    </span>
                 </div>
-                <div class="col-1"><p id="product-total-{{$product->id}}">{{ $sum = $qty*$p }}</p></div>
-                <div class="col-1"><a href="{{ route('cart.flush', ['id' => $product->id]) }}" style="color:#df3433;"><i
+                <div class="col-1"><p id="product-total-{{$product->id}}">{{ number_format($sum = $qty*$p) }}</p></div>
+                <div class="col-1"><a href="{{ route('cart.remove', ['id' => $product->id]) }}" style="color:#df3433;"><i
                             class="far fa-trash-alt"></i></a>
                 </div>
 
                 @php
-                $count+=$sum;
+                $count+=$sum;$Total = ($sum+$f+$s);
                 @endphp
 
             </div>
             <div class="row" style="border-top: solid 2px #e7eaec;">
-                <div class="col-8 float-right "> 1 Items Total: {{ $Total = ($sum+$f+$s) }} THB</div>
-                <div class="col-4 float-left"> </div>
+                <div class="col-8 float-right "> </div>
+                <div class="col-4 float-left">1 Items Total: {{number_format($Total)  }} THB </div>
             </div>
             @php
             $count2+=$Total
@@ -359,30 +363,54 @@ function increase(id) {
                 }
             })
         }
+        function decrease(id) {
+            $.ajax({
+                 url: '/cart/product/' + id + '/decrease',
+                success: function (e) {
+                    location.reload();
+                    var product = e.cart[id]
+                    var quantity = product.quantity
+                    var price =  product.price
+                    var fee = product.attributes.fee
+                    var shippping   = product.attributes.shippping
+
+                    var total = (Number(price)+Number(fee)) *Number(quantity)
+
+                    $('#product-' + id).text(quantity)
+                    $('#product-total-' + id).text(total)
+
+                   
+                }
+            })
+        }
+
+        function clear(id) {
+            $.ajax({
+                 url: '/cart/product/' + id + '/clear',
+                success: function (e) {
+                    location.reload();
+                    var product = e.cart[id]
+                    var quantity = product.quantity
+                    var price =  product.price
+                    var fee = product.attributes.fee
+                    var shippping   = product.attributes.shippping
+
+                    var total = (Number(price)+Number(fee)) *Number(quantity)
+
+                    $('#product-' + id).text(quantity)
+                    $('#product-total-' + id).text(total)
+
+                   
+                }
+            })
+        }
 </script>
 @endsection
 
 @section('scripts')
 
 <script>
-    $(document).ready(function () {
-
-        $(document).on('click', '.plus', function () {
-            $('.count').val(parseInt($('.count').val()) + 1);
-        });
-
-
-        $(document).on('click', '.minus', function () {
-            $('.count').val(parseInt($('.count').val()) - 1);
-            if ($('.count').val() == 0) {
-                $('.count').val(1);
-            }
-        });
-
-        
-    });
-
-
+   
 
     var form = $('#cart-form')
     function addSeller(eventShopId, sellerId) {

@@ -40,6 +40,7 @@ Route::get('/cart/seller', 'HomeController@cartSeller')->name('cart.seller');
 
 Route::get('/cart/product/{id}/increase', 'HomeController@increase')->name('cart.increase');
 Route::get('/cart/product/{id}/decrease', 'HomeController@decrease')->name('cart.decrease');
+Route::get('/cart/product/{id}/remove', 'HomeController@cartRemove')->name('cart.remove');
 
 Route::post('/cart/order', 'HomeController@order')->name('cart.order');
 Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}', 'HomeController@addSeller')->name('cart.seller.add');
