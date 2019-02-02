@@ -7,12 +7,12 @@ img:hover{
     transition:ease-in 0.2s;
 }
 .cardp{
-    width:-10% !important;
-    background: #fff;
+    width: -10% !important;
+    /* background: #fff; */
     margin: 1% 1%;
     padding:0%;
     cursor: pointer;  
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 .cardp:hover{
@@ -26,17 +26,24 @@ img:hover{
     transition: all .3s ease-out;
 }
 .cardp:hover> .box-white{
-    top: 0;
+    top: 0%;
 } 
 .card-in{
     padding: 5%;
     text-align: center;
 }
-
+/* 
 .col-md-3 {
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
     max-width: 22%;
+} */
+.col-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 22%;
+    float: left;
+    height: 330px;
 }
 .col-sm-fix{
     /* -ms-flex: 0 0 25%;
@@ -59,6 +66,16 @@ img:hover{
     float: left !important;
     margin-left: 2%;
     margin-bottom: 2%;
+}
+
+@media screen and (max-width: 420px) { 
+    .p{
+        font-size: 14px;
+    }
+    .pro-sm{
+        display: visible;
+    }
+   
 }
 
 
@@ -97,20 +114,21 @@ img:hover{
         </div>
         <div class="row">
             <div class="col-2"></div>
-            <div class="col-sm-12 col-md-10">
-                <div class="row" style="margin:auto;">
+            <div class="col-md-10">
+                <div class="row d-none d-sm-none d-md-block d-lg-block" style="margin:auto;">
                     @foreach ($productEvents as $pe) 
-                    <a  href="{{  route('event.detail.product', ['id' => $pe->product_id, 'event_shop_id' => $pe->event_shop_id]) }}" style='color: #df3433;'> 
-                    <div class="col-md-3 cardp">
+                    <a href="{{  route('event.detail.product', ['id' => $pe->product_id, 'event_shop_id' => $pe->event_shop_id]) }}" style='color: #df3433;'> 
+                    <div class="col-3 cardp">
                         <img class='card-img-top' src="{{ asset('/storage/'.$pe->product->image_product_id) }}">
-                        <div class="card-in">
+                        {{-- text-truncate --}}
+                        <div class="card-in" >
                             <p style='color:#df3433; font-size:1em;line-height :1.2;margin:2%;'> {{  $pe->product->name }} </p>
                             <span>
                                 <font color="red">{{  $pe->product->price }} บาท</font>
                                 <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{$pe->product->actual_price}} บาท</font>
                             </span>
                         </div> 
-                        </a> 
+                    </a> 
                         <div class="box-white d-none d-sm-none d-md-block">
                             <form action="{{ route('cart.add') }}" method="POST">
                                     {!! csrf_field() !!}
@@ -133,6 +151,26 @@ img:hover{
                 </div>
 
             </div>
+            <div class="container">
+                <div class="row pro-sm d-md-none d-lg-none d-xl-none">
+                    @foreach ($productEvents as $pe)
+                <a  href="{{  route('event.detail.product', ['id' => $pe->product_id, 'event_shop_id' => $pe->event_shop_id]) }}" style='color: #df3433;'> 
+                <div class="col-6">
+                    <img class='card-img-top' src="{{ asset('/storage/'.$pe->product->image_product_id) }}"></a>
+                    <div class="card-in">
+                        <p style='color:#df3433; font-size:1em;line-height :1.2;margin:2%;'> {{  $pe->product->name }} </p>
+                        <span>
+                            <font color="red">{{  $pe->product->price }} บาท</font>
+                            <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{$pe->product->actual_price}} บาท</font>
+                        </span>
+                    </div> 
+
+                </div>
+                
+                @endforeach
+            </div>
+            </div>
+            
                   
         </div>
     </div>{{-- wrapper --}}

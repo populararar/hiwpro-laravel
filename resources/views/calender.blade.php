@@ -245,8 +245,8 @@
 }
 
 .month {
-	width: 32px;
-	height: 32px;
+	width: 14.2%;
+	height: 14.2%;
 	transition: .4s;
 }
 

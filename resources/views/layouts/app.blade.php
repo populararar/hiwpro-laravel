@@ -49,12 +49,21 @@
 </head>
 <style>
 body{
-   
     font-family: 'Kanit', sans-serif;
 }
 </style>
 
-<body class="skin-red sidebar-mini">
+@foreach (Auth::user()->usersRoles as $item)
+    
+    @if($item->role_id==1)
+        <body class="skin-white sidebar-mini">
+    @endif
+    @if($item->role_id==2)
+        <body class="skin-red sidebar-mini">
+    @endif
+    
+@endforeach
+
 @if (!Auth::guest())
     <div class="wrapper">
         <!-- Main Header -->

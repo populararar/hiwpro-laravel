@@ -225,6 +225,14 @@ $sum=0;$count=0;$count2=0;
 @endphp
 
 <div class="container">
+    <div class="row" style="text-align:center;">
+        <div class="col-sm-12 col-md-3" style="border-bottom:2px solid #df3433;">
+            <i class="fas fa-book-open"></i>
+            <br>รายการสั่งซื้อ</div>
+        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3">สรุปรายการสั่งซื้อ</div>
+        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3">ที่อยู่การจัดส่ง</div>
+        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3">ยืนยันการสั่งซื้อ</div>
+    </div>
     <div class="row" style="background-color:#fff; margin-top:5%;">
         <div class="col-12">
             <div class="form-group">
@@ -240,27 +248,31 @@ $sum=0;$count=0;$count2=0;
                 </div>
             </div>
         </div>
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Warning!</strong> หากชำระเงินหลัง 6โมงจะได้รับสินค้าช้ากว่า ... วัน
+          </div>
     </div>
 
     {{-- style="margin-bottom:20px;" --}}
     @foreach ($shopGroup as $key => $group)
 
-    <div class="row carts">
+    <div class="row carts d-none d-sm-none d-md-block d-lg-block">
 
         <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{ $key }}</h5>
         @foreach ($group as $product)
-        <div class="col-md-12">
+        <div class="col-md-8">
             {{-- <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5> style="border-top: solid 2px
             #e7eaec;"--}}
             <div class="row">
-                <div class="col-2" style="font-weight:bold;">รูป</div>
+                <div class="col-2" style="font-weight:bold;"></div>
                 <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
                 <div class="col-2" style="font-weight:bold;">ราคา</div>
                 <div class="col-2" style="font-weight:bold;">จำนวน</div>
                 <div class="col-1" style="font-weight:bold;">รวม</div>
                 <div class="col-1" style="font-weight:bold;">แก้ไข</div>
             </div>
-
+          
             <div class="row" style="border-top: solid 1px #e7eaec;padding:2% 0%;">
 
                 <div class="col-2">
@@ -298,17 +310,71 @@ $sum=0;$count=0;$count2=0;
             </div>
             <div class="row" style="border-top: solid 2px #e7eaec;">
                 <div class="col-8 float-right "> </div>
-                <div class="col-4 float-left">1 Items Total: {{number_format($Total)  }} THB </div>
+                <div class="col-4 float-left">Total: {{number_format($Total)  }} THB </div>
             </div>
             @php
             $count2+=$Total
             @endphp
 
         </div>
+        
+        @endforeach
+       
+        @include('saler')
+    </div>
+    @endforeach
+
+    @foreach ($shopGroup as $key => $group)
+    <div class="row carts pro-sm d-md-none d-lg-none d-xl-none">
+
+        <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{ $key }}</h5>
+        @foreach ($group as $product)
+     
+            <div class="row " style="border-top: solid 1px #e7eaec;padding:2% 0%;">
+                <div class="col-6">
+                    <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
+                        class="img-fluid">
+                </div>
+                <div class="col-6">
+                 <dt> {{ $product->name }} </dt> ราคา :  {{ $product->price }}
+                 <br>ค่าหิ้ว : {{ $product->attributes->fee }}
+                 <br> ค่าจัดส่ง :{{ $product->attributes->shippping }}
+                 <br>
+
+                                <div>
+                    <span>
+                        <button style="float:left;"  type="button" onclick="decrease({{$product->id}})" class="btn-sm btn btn-default">-</button>
+                        <p style="float:left;" id="product-{{$product->id}}">&nbsp {{ $qty }} &nbsp <p>
+                        <button style="float:left;"  type="button" onclick="increase({{$product->id}})" class="btn-sm btn btn-default">+</button>
+                    </span>
+                </div><br> 
+                @php
+                $qty = $product->quantity;
+                $p = $product->price;
+                $f = $product->attributes->fee;
+                $s = $product->attributes->shippping;
+                $sum = $qty*$p;
+                @endphp            
+                
+               
+                @php
+                $count+=$sum;$Total = ($sum+$f+$s);
+                @endphp 
+                <div class="float-left">Total: {{number_format($Total)  }} THB </div>
+                <br>
+                <div class="float-right ">
+                    <button class="btn btn-danger" href="{{ route('cart.remove', ['id' => $product->id]) }}">
+                        <i class="far fa-trash-alt"></i></button> </div>
+                 </div>
+            {{-- <div  style="border-top: solid 2px #e7eaec;">
+              
+            </div> --}}
+            </div>
+            
+        
         @endforeach
         @include('saler')
     </div>
-    <div style="width:150px; height:5px; margin:auto; background-color:black;"></div>
     @endforeach
 
     <div class="pp col-md-12 col-sm-12">
@@ -323,12 +389,10 @@ $sum=0;$count=0;$count2=0;
                     @if(!empty($mapSeller))
                     @foreach ($mapSeller as $key => $seller)
                     <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}">
-                    @php
-                    $seller_id = $seller->id;
-                    $seller_name = $seller->name;
-                    @endphp
-                    {{$seller_id}}
-                    {{$seller_name}}
+                        @php
+                        $seller_id = $seller->id;
+                        $seller_name = $seller->name;
+                        @endphp
                     @endforeach
                     @endif
                     <button type="button" class="btn btn-success btn-block" onclick="saveData()">Submit</button>

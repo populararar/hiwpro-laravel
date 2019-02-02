@@ -11,6 +11,20 @@
     display: block!important;
     margin: auto;
 }
+.seller-mini{
+    border:1px solid #eee;
+    padding:5px; 
+    cursor: pointer;
+    text-align:center;
+    margin: 5px;
+}
+.seller-mini:hover{
+    background-color: #df3423;
+    transition: opacity .5s ease-out;
+    -moz-transition: opacity .5s ease-out;
+    -webkit-transition: opacity .5s ease-out;
+    -o-transition: opacity .5s ease-out;
+}
 .seller{
     width:220px;
     height: :180px; 
@@ -20,7 +34,8 @@
     padding:5px; 
     text-align:center;
     opacity: 1;
-    cursor: pointer;
+    float:left;
+    
 }
 .seller:hover{
     color: black;
@@ -46,7 +61,7 @@ label {
 </style>
 
 <div class="col-sm-12" style="padding:2% 5%; background-color:white;margin-top:2%;">
-    <div class="row">
+    <div class="row d-none d-sm-none d-md-block d-lg-block">
         @foreach ($group->sellers as $seller)
             @php
             $eventShopId = $group->first()->attributes->event_shop_id;
@@ -59,7 +74,7 @@ label {
                             <div class="col-md-12 my-4">
                                 <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
                                 <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}"> 
-                                {{ $seller->id }} - {{ $seller->name }}
+                                {{ $seller->name }}
                                 <p>คะแนนนักหิ้ว</p>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -76,7 +91,29 @@ label {
     </div>
 
 </div>
-
+<div class="container">
+    <div class="row  d-md-none d-lg-none d-xl-none">
+        @foreach ($group->sellers as $seller)
+        @php
+        $eventShopId = $group->first()->attributes->event_shop_id;
+        // dd($eventShopId);
+        @endphp
+       
+        <div id="col-xs-6 col-md-3 row-seller-{{ $eventShopId.'-'.$seller->id }} col-md-3 " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
+            <label class="seller-mini" id="seller-{{ $seller->id }}">
+            <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
+            <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}"> 
+            {{ $seller->name }}
+            <p>คะแนนนักหิ้ว</p>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+        </div>
+        
+    @endforeach
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         <?php foreach ($group->sellers as $seller) { ?>
