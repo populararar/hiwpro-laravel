@@ -225,43 +225,31 @@ $sum=0;$count=0;$count2=0;
 @endphp
 
 <div class="container">
+
     <div class="row" style="text-align:center;">
-        <div class="col-sm-12 col-md-3" style="border-bottom:2px solid #df3433;">
-            <i class="fas fa-book-open"></i>
-            <br>รายการสั่งซื้อ</div>
-        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3">สรุปรายการสั่งซื้อ</div>
-        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3">ที่อยู่การจัดส่ง</div>
-        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3">ยืนยันการสั่งซื้อ</div>
+        <div class="col-sm-12 col-md-3"> 
+            <h1 style="text-align:center; margin-top: 2%; color: #df3433;"> <i class="fas fa-book-open"></i></h1>
+            <h4 style="text-align:center; margin-top: 2%; color: #df3433; font-weight:bolder;">รายการสั่งซื้อ </h4>
+            <div style="width:50px;height:5px; background-color:#cf2132;margin:auto;"></div></div>
+
+        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>สรุปรายการสั่งซื้อ</div>
+        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>ที่อยู่การจัดส่ง</div>
+        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>ยืนยันการสั่งซื้อ</div>
     </div>
-    <div class="row" style="background-color:#fff; margin-top:5%;">
-        <div class="col-12">
-            <div class="form-group">
-                <div class="btn-group d-flex justify-content-center ">
-                    <button style="text-align:center;max-width:22.5%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"
-                        type="button" class="btn btn-danger">รายการสั่งซื้อ</button>
-                    <button style="text-align:center;max-width:22.5%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"
-                        type="button" class="btn btn-outline-danger">สรุปรายการสั่งซื้อ</button>
-                    <button style="text-align:center;max-width:22.5%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"
-                        type="button" class="btn btn-outline-danger align-self-center ">ที่อยู่การจัดส่ง</button>
-                    <button style="text-align:center;max-width:22.5%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"
-                        type="button" class="btn btn-outline-danger align-self-center ">ยืนยันการสั่งซื้อ</button>
-                </div>
-            </div>
-        </div>
+    
+    <div class="shadow-sm p-3 mb-5 bg-white rounded">
         <div class="alert alert-warning alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Warning!</strong> หากชำระเงินหลัง 6โมงจะได้รับสินค้าช้ากว่า ... วัน
-          </div>
-    </div>
-
+            <strong>Warning!</strong> หากไม่ได้กดรับภายใน1สัปดาห์หลังจากมีการอัพเดทเลขแทร็คไว้ ถือว่าได้รับสินค้าแล้ว
+        </div>
     {{-- style="margin-bottom:20px;" --}}
-    @foreach ($shopGroup as $key => $group)
+   
 
-    <div class="row carts d-none d-sm-none d-md-block d-lg-block">
-
+    <div class="row carts d-none d-sm-none d-md-block d-lg-block" style="padding:2%;">
+        @foreach ($shopGroup as $key => $group)
         <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{ $key }}</h5>
         @foreach ($group as $product)
-        <div class="col-md-8">
+        <div class="col-md-12">
             {{-- <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5> style="border-top: solid 2px
             #e7eaec;"--}}
             <div class="row">
@@ -310,7 +298,7 @@ $sum=0;$count=0;$count2=0;
             </div>
             <div class="row" style="border-top: solid 2px #e7eaec;">
                 <div class="col-8 float-right "> </div>
-                <div class="col-4 float-left">Total: {{number_format($Total)  }} THB </div>
+                <div class="col-4 float-left">Total: {{ number_format($Total)  }} THB </div>
             </div>
             @php
             $count2+=$Total
@@ -319,8 +307,10 @@ $sum=0;$count=0;$count2=0;
         </div>
         
         @endforeach
-       
-        @include('saler')
+       <div class="col-12">
+           @include('saler')
+       </div>
+        
     </div>
     @endforeach
 
@@ -330,7 +320,7 @@ $sum=0;$count=0;$count2=0;
         <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{ $key }}</h5>
         @foreach ($group as $product)
      
-            <div class="row " style="border-top: solid 1px #e7eaec;padding:2% 0%;">
+            <div class="row" style="border-top: solid 1px #e7eaec;padding:2% 0%;">
                 <div class="col-6">
                     <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
                         class="img-fluid">
@@ -373,11 +363,16 @@ $sum=0;$count=0;$count2=0;
             
         
         @endforeach
-        @include('saler')
+        @include('saler') 
     </div>
     @endforeach
 
-    <div class="pp col-md-12 col-sm-12">
+   
+</div>
+{{-- rr d-flex flex-row --}}
+</div>
+</div> 
+<div class="col-md-12 col-sm-12">
         <div class="card border-danger mb-3" style="max-width: 100%;">
             <div class="card-header">Order Summary</div>
             <div class="card-body">
@@ -388,11 +383,7 @@ $sum=0;$count=0;$count2=0;
 
                     @if(!empty($mapSeller))
                     @foreach ($mapSeller as $key => $seller)
-                    <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}">
-                        @php
-                        $seller_id = $seller->id;
-                        $seller_name = $seller->name;
-                        @endphp
+                    <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}">                      
                     @endforeach
                     @endif
                     <button type="button" class="btn btn-success btn-block" onclick="saveData()">Submit</button>
@@ -403,6 +394,7 @@ $sum=0;$count=0;$count2=0;
         </div>
     </div>
 </div>
+
 {{-- rr d-flex flex-row --}}
 </div>
 </div>

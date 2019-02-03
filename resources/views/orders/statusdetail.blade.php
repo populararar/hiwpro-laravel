@@ -144,6 +144,10 @@
 
   <div class="weapper" style="margin-top: 2%; padding:3% 5%; ">
     <h5>ข้อมูลคำสั่งซื้อ </h5>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Warning!</strong> หากไม่ได้กดรับภายใน1สัปดาห์หลังจากมีการอัพเดทเลขแทร็คไว้ ถือว่าได้รับสินค้าแล้ว
+    </div>
     <div class="row">
       <div class=" col-md-4">
         <h6 style="margin-top: 2%;">เลขคำสั่งซื้อ : </h6>

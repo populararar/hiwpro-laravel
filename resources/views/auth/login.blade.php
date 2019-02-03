@@ -39,12 +39,18 @@
         background-color: red;
     }
     .login-page, .register-page {
-        background: transparent;
+        background: url('https://sv1.picz.in.th/images/2019/02/03/TZ66PV.jpg') no-repeat;
     }
 </style>
-<body class="hold-transition login-page">
+
+
+
+<body class="hold-transition login-page"> 
+   
+        {{-- <img src="https://sv1.picz.in.th/images/2019/02/03/TZ2A41.md.jpg" alt="TZ2A41.jpg" border="0" /> --}}
 <div class="login-box">
     <div class="login-logo">
+            <i class="ion-cube"></i><br>
         <a href="{{ url('/home') }}"><b>HIW PRO</b></a>
     </div>
 

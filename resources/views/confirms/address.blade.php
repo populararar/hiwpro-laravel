@@ -79,22 +79,17 @@ $sum=0;$count=0;$count2=0;
 @endphp
 
 <div class="container" style="padding: 0 5%;">
-  <div class="col">
-    <h4 style="margin-top: 2%; color: #df3433;">ที่อยู่การจัดส่ง </h4>
-    <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>
-  </div>
 
-  <div class="row" style="background-color:#fff;">
-    <div class="col-12">
-      <div class="form-group">
-        <div class="btn-group d-flex justify-content-center ">
-          <button style="text-align:center; width: 50%;" type="button" class="btn btn-outline-danger">รายการสั่งซื้อ</button>
-          <button style="text-align:center; width: 50%;" type="button" class="btn btn-outline-danger">สรุปรายการสั่งซื้อ</button>
-          <button style="text-align:center;width:50% " type="button" class="btn btn-danger align-self-center ">ที่อยู่การจัดส่ง</button>
-          <button style="text-align:center;width:50% " type="button" class="btn btn-outline-danger align-self-center ">ยืนยันการสั่งซื้อ</button>
-        </div>
-      </div>
-    </div>
+
+  <div class="row" style="text-align:center;margin-top:2.5%;">
+      <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br></i>รายการสั่งซื้อ</div> 
+      <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>สรุปรายการสั่งซื้อ</div>
+      <div class="col-sm-12 col-md-3"> 
+          <h1 style="text-align:center; margin-top: 2%; color: #df3433;"><i class="fas fa-address-card"></i></h1>
+          <h4 style="text-align:center; margin-top: 2%; color: #df3433; font-weight:bolder;">ที่อยู่การจัดส่ง</h4>
+          <div style="width:50px;height:5px; background-color:#cf2132;margin:auto;"></div></div>
+      
+      <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>ยืนยันการสั่งซื้อ</div>
   </div>
 
   <div class="weapper" style="background-color: #F9F9F9; padding:3% 5%; margin-top:2.5%; ">

@@ -202,6 +202,7 @@ section {
 h5{
     text-align: center;
 }
+
 </style>
 
 @php
@@ -209,100 +210,100 @@ $sum=0;$count=0;$count2=0;
 @endphp
 
 <div class="container" style="padding: 0 5%;">
-    <div class="col">
-        <h4 style="margin-top: 2%; color: #df3433;">รายการสั่งซื้อ </h4>
-        <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>
+    
+    <div class="row" style="text-align:center;margin-top:2.5%;">
+        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br></i>รายการสั่งซื้อ</div> 
+        <div class="col-sm-12 col-md-3"> 
+            <h1 style="text-align:center; margin-top: 2%; color: #df3433;"><i class="fas fa-box-open"></i></h1>
+            <h4 style="text-align:center; margin-top: 2%; color: #df3433; font-weight:bolder;">สรุปรายการสั่งซื้อ </h4>
+            <div style="width:50px;height:5px; background-color:#cf2132;margin:auto;"></div></div>
+        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>ที่อยู่การจัดส่ง</div>
+        <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>ยืนยันการสั่งซื้อ</div>
     </div>
 
-
-    <div class="weapper d-flex flex-column" style="background-color:white; padding:3%; ">
-            <div class="rr d-flex flex-row">
-                <div class="pp col-md-12 col-sm-12">
-        @foreach ($shopGroup as $key => $group)
-        @php 
-            $eventShopId = $group->first()->attributes->event_shop_id;
-            // dd($mapSeller[$eventShopId]->name);
-        @endphp
-        <div class="row" style="margin-bottom:20px;">
-            <h5 style="border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
-            @foreach ($group as $product)
-            <div class="col-md-8 col-sm-12" style="padding:2% 5%; background-color:white;margin-top:2%;">
-                {{-- <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5> --}}
-                <div class="row" style="border-top: solid 2px #e7eaec;">
-                    <div class="col-2" style="font-weight:bold;">รูป</div>
-                    <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
-                    <div class="col-2" style="font-weight:bold;">ราคา</div>
-                    <div class="col-2" style="font-weight:bold;">จำนวน</div>
-                    <div class="col-2" style="font-weight:bold;">รวม</div>
-                </div>
-
-                <div class="row" style="border-top: solid 1px #e7eaec;padding:5% 0%;">
-
-                    <div class="col-2">
-                        <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
-                            class="img-fluid">
-                    </div>
-                    <div class="col-4">{{ $product->name }}<br> ค่าหิ้ว<br>ค่าจัดส่ง<br> </div>
-                    <div class="col-2">{{ $product->price }}<br>{{ $product->attributes->fee }}<br>{{
-                        $product->attributes->shippping }}
-                    </div>
-                    <div class="col-2">{{
-
-                        $qty = $product->quantity,
-                        $p = $product->price,
-                        $f = $product->attributes->fee,
-                        $s = $product->attributes->shippping
-                        }}
-                    </div>
-                    <div class="col-2">{{ $sum = $qty*$p }}</div>
-                   
-
-                    @php
-                    $count+=$sum;
-                    @endphp
-
-                </div>
-                <div class="row" style="border-top: solid 2px #e7eaec;">
-                    <div class="col-8 float-right "> 1 Items Total: {{ $Total = ($sum+$f+$s) }} THB</div>
-                    <div class="col-4 float-left"> </div>
-                </div>
-                @php
-                     $count2+=$Total;
+<div class="weapper">
+    <div class="row" style="margin-top:3%;">
+                @foreach ($shopGroup as $key => $group)
+                @php 
+                    $eventShopId = $group->first()->attributes->event_shop_id;
+                    // dd($mapSeller[$eventShopId]->name);
                 @endphp
-              
-            </div>
-            @endforeach
-            <div class="col-md-4 col-sm-12">
-                <h5> SELLER</h5>
-                <div class="row"  style="max-width: 18rem;  margin:auto; border:1px solid #eee;padding:5px; text-align:center;">
-                        <div class="col-md-12 ">
-                            <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}">
+                <div class="row" style="margin-bottom:20px;">
+                    <h5 style="border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
+                    @foreach ($group as $product)
+                    <div class="col-md-8" style="padding:2% 5%; background-color:white;">
+
+                        <div class="row" style="border-top: solid 2px #e7eaec;">
+                            <div class="col-2" style="font-weight:bold;">รูป</div>
+                            <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
+                            <div class="col-2" style="font-weight:bold;">ราคา</div>
+                            <div class="col-2" style="font-weight:bold;">จำนวน</div>
+                            <div class="col-2" style="font-weight:bold;">รวม</div>
                         </div>
-                        <div class="col-md-12">
-                            
-                            {{$mapSeller[$eventShopId]->id}} - {{ $mapSeller[$eventShopId]->name }}
-                            <p>คะแนนนักหิ้ว</p>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+        
+                        <div class="row" style="border-top: solid 1px #e7eaec;padding:5% 0%;">
+                            <div class="col-2">
+                                <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
+                                    class="img-fluid">
+                            </div>
+                            <div class="col-4">{{ $product->name }}<br> ค่าหิ้ว<br>ค่าจัดส่ง<br> </div>
+                            <div class="col-2">{{ $product->price }}<br>{{ $product->attributes->fee }}
+                            <br>{{ $product->attributes->shippping }}
+                            </div>
+                             @php
+                                $qty = $product->quantity;
+                                $p = $product->price;
+                                $f = $product->attributes->fee;
+                                $s = $product->attributes->shippping;
+                                $sum = $qty*$p;
+                                $count+=$sum;
+                                $Total = $sum+$f+$s;
+                            @endphp
+                            <div class="col-2">{{ $qty }}
+                            </div>
+                            <div class="col-2">{{ number_format($sum)}}</div>
                         </div>
-                </div>
-                   
-            </div>
-        </div>
-        <div style="width:150px; height:5px; margin:auto; background-color:black;"></div>
-        @endforeach
+                        <div class="row" style="border-top: solid 2px #e7eaec;">
+                            <div class="col-8 float-right "> Total: {{ number_format($Total)  }} THB</div>
+                            <div class="col-4 float-left"> </div>
+                        </div>
+
+                        @php
+                             $count2+=$Total;
+                        @endphp
+                      
+                    </div>
+                    @endforeach
+                
+                    <div class="col-md-4 ">
+                        <h5> <i class="fas fa-user"></i> หิ้วโดย</h5>
+                        <div class="row"  style="max-width: 18rem;padding:10% 0%; margin:auto; border:1px solid #eee;padding:5px; text-align:center;">
+                                <div class="col-md-12 ">
+                                    <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}">
+                                </div>
+                                <div class="col-md-12">
+                                    
+                                    {{$mapSeller[$eventShopId]->id}} - {{ $mapSeller[$eventShopId]->name }}
+                                    <p>คะแนนนักหิ้ว</p>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                        </div>
+                    </div>
+                    @endforeach
+        
+       <a class="btn btn-success btn-block" href="{{route('confirms.edit',['confirm'=>'address'])}}">ดำเนินการต่อ</a>
     </div>
-    {{-- pp --}}
-        <div class="pp col-md-4 col-sm-12">
-              
-        </div>
-    </div>
-{{-- rr d-flex flex-row --}}
-    </div>
-    <a class="btn btn-success btn-block" href="{{ route('confirms.edit' ,['confirm' => 'address' ]) }}">Submit</a>
 </div>
+
+
+
+</div>
+</div>
+{{-- container --}}
+    
 
 @endsection
 

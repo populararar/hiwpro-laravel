@@ -180,6 +180,12 @@ img.card-img-top {
           </div>
 </div>
 {{-- container --}}
+
+
+
+
+
+
 @endsection
 
 @section('scripts')
