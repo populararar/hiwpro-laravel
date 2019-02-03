@@ -408,15 +408,26 @@ class HomeController extends Controller
 
     public function registerStore(Request $request)
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'role' => 'required',
             'email' => 'required|unique:users|max:255',
             'password' => 'required|min:6|max:18',
             'password_confirmation' => 'required|same:password|min:6|max:18',
-            // 'national_id' => 'required|same:password|min:6|max:13',
-            // 'national_img' => 'required',
+            // 'national_id' => 'required|min:13|max:13',
+            // 'img_id1' => 'required',
+            // 'img_id2' => 'required',
         ]);
+
+        $input = $request->all();
+        // $path = $input->file('img_id1')->store('public/upload');
+        // $path2 = $input->file('img_id2')->store('public/upload');
+        
+       
+
+        // $input["image_product_id"] = str_replace("public", "", $path);
+        // $input["img_product"] = str_replace("public", "", $path2);
 
         if ($validator->fails()) {
             return redirect()->route('register')
@@ -426,7 +437,22 @@ class HomeController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        // dd($input);
+
+        // $profile = [
+        //     // 'tel' => $
+        //     // 'img' => "",
+        //     // 'address_id' => $
+        //     // 'bank_num' => $input['bank_name'],
+        //     // 'bank_name' => $input['password'],
+        //     'national_id' => $input['national_id'],
+        //     'national_img' => $input['img_id1'],
+        //     'national_img2' => $input['img_id2'],
+        //     'user_id' => $user->id,
+        //     'status',
+        // ];
+        
+        // $profileInput = $this->profileRepository->create($profile);
+
         $user = $this->usersRepository->create($input);
 
         if (empty($user)) {

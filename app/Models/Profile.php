@@ -51,6 +51,7 @@ class Profile extends Model
         'bank_name',
         'national_id',
         'national_img',
+        'national_img2',
         'user_id',
         'status'
     ];
@@ -69,6 +70,7 @@ class Profile extends Model
         'bank_name' => 'string',
         'national_id' => 'string',
         'national_img' => 'string',
+        'national_img2' => 'string',
         'user_id' => 'integer'
     ];
 

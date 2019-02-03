@@ -1,11 +1,3 @@
-{{-- @php
-    $id = $profiles->user->id;
-    dd($id);
-@endphp --}}
-{{-- @if ($id==1){
-   admin
-} 
-@endif --}}
 <style>
 .container{
     text-align: center;
@@ -13,6 +5,7 @@
 </style>
 
 <div class="container">
+    <h3 style="margin-top:3%;"><i class="fas fa-user-alt"></i></h3>
     <h3>กรอกข้อมูลส่วนตัว</h3>
 
     <div class="row" style="text-align:right;margin:2% 0%;">
@@ -26,21 +19,15 @@
     <div class="row" style="text-align:right;margin:2% 0%;">
         <div class="col-md-4"><label  class=" w-5" for="inputname_card">รูปประจำตัว : </label></div>
         <div class="col-md-6">
-            <input name="img" type="file" class="form-control">
+        <input name="img" type="file" class="form-control">
         <input name="img" type="hidden" class="form-control" >
         </div>
     </div>
 
-    {{-- <!-- Address Id Field -->
-    <div class="form-group col-sm-6">
-        {!! Form::label('address_id', 'Address Id:') !!}
-        {!! Form::number('address_id', null, ['class' => 'form-control']) !!}
-    </div> --}}
-
     @if($roleName=="SELLER")
 
     <div class="row" style="text-align:right;margin:2% 0%;">
-        <div class="col-md-4"><label  class=" w-5" for="inputname_card">รูปประจำตัว : </label></div>
+        <div class="col-md-4"><label  class=" w-5" for="inputname_card">เลขธนาคาร : </label></div>
         <div class="col-md-6">
             <input name="bank_num" type="text" class="form-control">
         <input name="bank_num" type="hidden" class="form-control" >
@@ -70,31 +57,32 @@
     </div>
 
     <div class="row" style="text-align:right;margin:2% 0%;">
-        <div class="col-md-4"><label  class=" w-5" for="inputname_card">รูปประจำตัว : </label></div>
+        <div class="col-md-4"><label  class=" w-5" for="inputname_card">รูปบัตรประชาชน : </label></div>
         <div class="col-md-6">
-            <input name="national_id" type="text" class="form-control">
+            <input name="national_id" type="file" class="form-control">
         <input name="national_id" type="hidden" class="form-control" >
         </div>
     </div>
 
     <div class="row" style="text-align:right;margin:2% 0%;">
-        <div class="col-md-4"><label  class=" w-5" for="inputname_card">รูปประจำตัว : </label></div>
+        <div class="col-md-4"><label  class=" w-5" for="inputname_card">รูปประจำตัวพร้อมบัตรประชาชน : </label></div>
         <div class="col-md-6">
             <input name="national_img" type="file" class="form-control">
         <input name="national_img" type="hidden" class="form-control" >
         </div>
     </div>
 
+    <div class="row" style="text-align:right;margin:2% 0%;">
+            <div class="col-md-4"><label  class=" w-5" for="inputname_card">รูปประจำตัวพร้อมบัตรประชาชน : </label></div>
+            <div class="col-md-6">
+                <input name="national_img" type="file" class="form-control">
+            <input name="national_img2" type="hidden" class="form-control" >
+            </div>
+        </div>
+
     <input name="user_id" type="hidden" class="form-control"  >
 
     @endif
-
-    {{-- <!-- User Id Field -->
-    <div class="form-group col-sm-6">
-        {!! Form::label('user_id', 'User Id:') !!}
-        {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
-    </div> --}}
-
     <!-- Submit Field -->
     <div class="form-group col-sm-12">
         {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}

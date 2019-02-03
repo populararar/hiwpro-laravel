@@ -527,6 +527,7 @@ body {
                                   <input type="file" class="form-control-file" name="img_id1"  id="img_id1">
                                 </div>
                             </div>
+                            
                             <div class="form-group has-feedback{{ $errors->has('img_id2') ? ' has-error' : '' }}" >
                                 <div class="form-group">
                                     <label for="img">หลักฐานรูปตนเองพร้อมบัตร</label>

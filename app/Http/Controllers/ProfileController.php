@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-
+use Validator;
 class ProfileController extends AppBaseController
 {
     /** @var  UsersRepository */
@@ -65,9 +65,57 @@ class ProfileController extends AppBaseController
      * @return Response
      */
     public function store(CreateProfileRequest $request)
-    {
+    {   
+        $user = Auth::user();
+        // dd($user->usersRoles);
+        // foreach($user->usersRoles as $item){
+        //     if($item->role_id == 3){
+        //         $path = $request->file('img')->store('public/upload');
+
+        //         $input = $request->all();
+
+        //         $input["img"] = str_replace("public", "", $path);
+
+        //         $profile = $this->profileRepository->create($input);
+        //         Flash::success('Profile saved successfully.');
+
+        //     }
+        //     else if($item->role_id == 2){
+        //         $path = $request->file('img')->store('public/upload');
+        //         $id_img = $request->file('national_img')->store('public/upload');
+        //         $id_img2 = $request->file('national_img2')->store('public/upload');
+                
+        //         $input = $request->all();
+
+        //         $input["img"] = str_replace("public", "", $path);
+        //         $input["national_img"] = str_replace("public", "", $id_img);
+        //         $input["national_img2"] = str_replace("public", "", $id_img2);
+
+        //         $profile = [
+        //             'tel' => $input['bank_name'],
+        //             'bank_num' => $input['bank_num'],
+        //             'bank_name' => $input['bank_name'],
+        //             'national_id' => $input['national_id'],
+        //             'national_img' => $input['national_img'],
+        //             'national_img2' => $input['national_img2'],
+        //             'user_id' => $user->id,
+        //             'status',
+        //         ];
+        
+        //         $profileInput = $this->profileRepository->create($profile);
+
+        //         Flash::success('Profile saved successfully.');
+                
+        //     }
+            
+        // }
+      
+
+        $path = $request->file('img')->store('public/upload');
+
         $input = $request->all();
 
+        $input["img"] = str_replace("public", "", $path);
         $profile = $this->profileRepository->create($input);
 
         Flash::success('Profile saved successfully.');
@@ -111,7 +159,6 @@ class ProfileController extends AppBaseController
     public function admin()
     {
         $user = Auth::user();
-
         $profile = $this->profileRepository->findWithoutFail($user->id);
 
         if (empty($profile)) {
