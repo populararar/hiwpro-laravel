@@ -229,9 +229,9 @@ $sum=0;$count=0;$count2=0;
                     // dd($mapSeller[$eventShopId]->name);
                 @endphp
                 <div class="row" style="margin-bottom:20px;">
-                    <h5 style="border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
                     @foreach ($group as $product)
-                    <div class="col-md-8" style="padding:2% 5%; background-color:white;">
+                    <h5 style="border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
+                    <div class="col-md-8" style="padding:2% 5%;">
 
                         <div class="row" style="border-top: solid 2px #e7eaec;">
                             <div class="col-2" style="font-weight:bold;">รูป</div>
@@ -274,8 +274,7 @@ $sum=0;$count=0;$count2=0;
                       
                     </div>
                     @endforeach
-                
-                    <div class="col-md-4 ">
+                    <div class="col-md-4">
                         <h5> <i class="fas fa-user"></i> หิ้วโดย</h5>
                         <div class="row"  style="max-width: 18rem;padding:10% 0%; margin:auto; border:1px solid #eee;padding:5px; text-align:center;">
                                 <div class="col-md-12 ">
@@ -293,14 +292,11 @@ $sum=0;$count=0;$count2=0;
                         </div>
                     </div>
                     @endforeach
-        
-       <a class="btn btn-success btn-block" href="{{route('confirms.edit',['confirm'=>'address'])}}">ดำเนินการต่อ</a>
+                    <a class="btn btn-success btn-block" href="{{route('confirms.edit',['confirm'=>'address'])}}">ดำเนินการต่อ</a>
+                </div>
     </div>
 </div>
 
-
-
-</div>
 </div>
 {{-- container --}}
     
