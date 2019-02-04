@@ -5,7 +5,6 @@
         <th>Customer Id</th>
         <th>Order Date</th>
         <th>Address</th>
-        
         <th>Exp Date</th>
         <th>Slip Status</th>
         <th>Total Price</th>

@@ -56,7 +56,7 @@ body{
 @foreach (Auth::user()->usersRoles as $item)
     
     @if($item->role_id==1)
-        <body class="skin-white sidebar-mini">
+        <body class="skin-black sidebar-mini">
     @endif
     @if($item->role_id==2)
         <body class="skin-red sidebar-mini">

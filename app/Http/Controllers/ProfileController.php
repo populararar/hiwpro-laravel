@@ -28,21 +28,35 @@ class ProfileController extends AppBaseController
         $this->usersRepository = $usersRepo;
     }
 
-    /**
-     * Display a listing of the Profile.
+    // /**
+    //  * Display a listing of the Profile.
+    //  *
+    //  * @param Request $request
+    //  * @return Response
+    //  */
+    // // public function index(Request $request)
+    // // {
+    // //     $user = Auth::user();
+    // //     // $this->profileRepository->pushCriteria(new RequestCriteria($request));
+    // //     $profile = $this->profileRepository->findWhere(['user_id' => $user->id])->first();
+
+    // //     return view('profiles.main')
+    // //         ->with('profile', $profile)->with('$user',$user);
+    // // }
+
+      /**
+     * Show the form for creating a new Profile.
      *
-     * @param Request $request
      * @return Response
      */
-    // public function index(Request $request)
-    // {
-    //     $user = Auth::user();
-    //     // $this->profileRepository->pushCriteria(new RequestCriteria($request));
-    //     $profile = $this->profileRepository->findWhere(['user_id' => $user->id])->first();
+    public function customer()
+    {
+        $user = Auth::user();
+        $roleName = $user->usersRoles->first()->role->name;
 
-    //     return view('profiles.main')
-    //         ->with('profile', $profile)->with('$user',$user);
-    // }
+        return view('profiles.customer')->with('roleName',$roleName);
+    }
+
 
     /**
      * Show the form for creating a new Profile.
@@ -64,61 +78,57 @@ class ProfileController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateProfileRequest $request)
+    public function store(Request  $request)
     {   
         $user = Auth::user();
         // dd($user->usersRoles);
-        // foreach($user->usersRoles as $item){
-        //     if($item->role_id == 3){
-        //         $path = $request->file('img')->store('public/upload');
+        foreach($user->usersRoles as $item){
+            if($item->role_id == 3){
+                $path = $request->file('img_new')->store('public/upload');
 
-        //         $input = $request->all();
+                $input = $request->all();
 
-        //         $input["img"] = str_replace("public", "", $path);
+                $input["img"] = str_replace("public", "", $path);
+                $input = [
+                    'tel' => $input['tel'],
+                    'user_id' => $user->id,
+                    'img' => $input["img"],
+                ];
+                $profile = $this->profileRepository->create($input);
+                Flash::success('Profile saved successfully.');
+                return redirect(route('profiles.customer'));
 
-        //         $profile = $this->profileRepository->create($input);
-        //         Flash::success('Profile saved successfully.');
-
-        //     }
-        //     else if($item->role_id == 2){
-        //         $path = $request->file('img')->store('public/upload');
-        //         $id_img = $request->file('national_img')->store('public/upload');
-        //         $id_img2 = $request->file('national_img2')->store('public/upload');
+            }
+            else if($item->role_id == 2){
+                $path = $request->file('img_new')->store('public/upload');
+                $id_img = $request->file('national_img')->store('public/upload');
+                $id_img2 = $request->file('national_img2')->store('public/upload');
                 
-        //         $input = $request->all();
+                $input = $request->all();
 
-        //         $input["img"] = str_replace("public", "", $path);
-        //         $input["national_img"] = str_replace("public", "", $id_img);
-        //         $input["national_img2"] = str_replace("public", "", $id_img2);
+                $input["img"] = str_replace("public", "", $path);
+                $input["national_img"] = str_replace("public", "", $id_img);
+                $input["national_img2"] = str_replace("public", "", $id_img2);
 
-        //         $profile = [
-        //             'tel' => $input['bank_name'],
-        //             'bank_num' => $input['bank_num'],
-        //             'bank_name' => $input['bank_name'],
-        //             'national_id' => $input['national_id'],
-        //             'national_img' => $input['national_img'],
-        //             'national_img2' => $input['national_img2'],
-        //             'user_id' => $user->id,
-        //             'status',
-        //         ];
+                $profile = [
+                    'tel' => $input['tel'],
+                    'bank_num' => $input['bank_num'],
+                    'bank_name' => $input['bank_name'],
+                    'national_id' => $input['national_id'],
+                    'national_img' => $input['national_img'],
+                    'national_img2' => $input['national_img2'],
+                    'user_id' => $user->id,
+                    'status',
+                ];
         
-        //         $profileInput = $this->profileRepository->create($profile);
+                $profileInput = $this->profileRepository->create($profile);
 
-        //         Flash::success('Profile saved successfully.');
-                
-        //     }
+                Flash::success('Profile saved successfully.');
+                return redirect(route('profiles.index'));
+            }
             
-        // }
-      
+        }
 
-        $path = $request->file('img')->store('public/upload');
-
-        $input = $request->all();
-
-        $input["img"] = str_replace("public", "", $path);
-        $profile = $this->profileRepository->create($input);
-
-        Flash::success('Profile saved successfully.');
 
         return redirect(route('profiles.index'));
     }

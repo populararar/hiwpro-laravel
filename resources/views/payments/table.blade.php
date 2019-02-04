@@ -1,7 +1,7 @@
 <table class="table table-responsive" id="payments-table">
     <thead>
         <tr>
-        <th>Img Path</th>
+        <th>Order No.</th>
         <th>Total</th>
         <th>Bank From</th>
         <th>Bank To</th>
@@ -12,12 +12,17 @@
     <tbody>
     @foreach($payments as $payment)
         <tr>
-            <td><img src="{{ asset('/storage/'.$payment->img_path) }}" alt="" width="50"></td>
-           
+            {{-- <td><img src="{{ asset('/storage/'.$payment->img_path) }}" alt="" width="50"></td> --}}
+            <td>{!! $payment->order->order_number !!}</td>
             <td>{!! $payment->total !!}</td>
             <td>{!! $payment->bank_from !!}</td>
             <td>{!! $payment->bank_to !!}</td>
-            <td>{!! $payment->status !!}</td>
+            @if (!empty($payment->status))
+                <td><p class='btn btn-info'>ยืนยันเรียบร้อย</p></td>
+            @else
+                <td ><p class='btn btn-warning'>รอการตรวจสอบ</td>
+            @endif
+           
             <td>
                 {!! Form::open(['route' => ['payments.destroy', $payment->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

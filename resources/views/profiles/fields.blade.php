@@ -12,15 +12,14 @@
         <div class="col-md-4"><label  class=" w-5" for="inputname_card">เบอร์โทรศัพท์ : </label></div>
         <div class="col-md-6">
             <input name="tel" type="text" class="form-control">
-        <input name="tel" type="hidden" class="form-control" >
         </div>
     </div>
 
     <div class="row" style="text-align:right;margin:2% 0%;">
         <div class="col-md-4"><label  class=" w-5" for="inputname_card">รูปประจำตัว : </label></div>
         <div class="col-md-6">
-        <input name="img" type="file" class="form-control">
-        <input name="img" type="hidden" class="form-control" >
+            <input name="img_new" type="file" class="form-control">
+            {{-- <input name="img" type="hidden" class="form-control" > --}}
         </div>
     </div>
 

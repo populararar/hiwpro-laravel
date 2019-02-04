@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<link href="https://fonts.googleapis.com/css?family=Kanit|Open+Sans" rel="stylesheet">
     <section class="content-header">
-        <h1>
+        <h1 style="font-family: 'Kanit', sans-serif;">
             Payment
         </h1>
     </section>

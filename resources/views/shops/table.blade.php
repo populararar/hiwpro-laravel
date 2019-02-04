@@ -2,8 +2,8 @@
     <thead>
         <tr>
             <th>Name</th>
-        <th style="width:50%;">Detail</th>
-        <th>Location Location Id</th>
+            <th style="width:50%;">Detail</th>
+            <th>Location Location Id</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
@@ -27,3 +27,15 @@
     @endforeach
     </tbody>
 </table>
+
+@section('scripts')
+    <script>
+    // In your Javascript (external .js resource or <script> tag)
+    // $(document).ready(function() {
+    //     $('#robots').select2();
+    // });
+    $(document).ready( function () {
+    $('#shops-table').DataTable();
+    } );
+    </script>
+@endsection
