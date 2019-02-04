@@ -15,8 +15,8 @@ class AddSellerReturnOrderDetail extends Migration
     {
         Schema::table('order_detail', function (Blueprint $table) {
             //
-            $table->integer('seller_actual_qty');
-            $table->dateTime('seller_actual_at');
+            $table->integer('seller_actual_qty')->nullable();
+            $table->dateTime('seller_actual_at')->nullable();
         });
     }
 

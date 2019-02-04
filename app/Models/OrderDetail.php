@@ -47,7 +47,9 @@ class OrderDetail extends Model
         'shipping_rate',
         'order_header_id',
         'seller_id',
-        'product_id'
+        'product_id',
+        'seller_actual_qty',
+        'seller_actual_at',
     ];
 
     /**

@@ -15,8 +15,8 @@ class AddSellerReturnOrderHeader extends Migration
     {
         Schema::table('order_header', function (Blueprint $table) {
             //
-            $table->integer('seller_actual_price');
-            $table->dateTime('seller_actual_at');
+            $table->integer('seller_actual_price')->nullable();
+            $table->dateTime('seller_actual_at')->nullable();
         });
     }
 
