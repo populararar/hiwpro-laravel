@@ -50,6 +50,7 @@ class OrderDetail extends Model
         'product_id',
         'seller_actual_qty',
         'seller_actual_at',
+        'seller_actual_status',
     ];
 
     /**
@@ -63,7 +64,8 @@ class OrderDetail extends Model
         'price' => 'string',
         'option' => 'string',
         'fee' => 'string',
-        'shipping_rate' => 'string'
+        'shipping_rate' => 'string',
+        'seller_actual_qty' => 'integer'
     ];
 
     /**

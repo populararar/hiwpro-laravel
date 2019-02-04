@@ -17,6 +17,7 @@ class AddSellerReturnOrderDetail extends Migration
             //
             $table->integer('seller_actual_qty')->nullable();
             $table->dateTime('seller_actual_at')->nullable();
+            $table->dateTime('seller_actual_status')->default(0);
         });
     }
 

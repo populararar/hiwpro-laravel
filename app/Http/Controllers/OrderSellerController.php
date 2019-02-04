@@ -5,22 +5,27 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateOrderHeaderRequest;
 use App\Http\Requests\UpdateOrderHeaderRequest;
+use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
+use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-use DB;
 
 class OrderSellerController extends AppBaseController
 {
     /** @var  OrderHeaderRepository */
     private $orderHeaderRepository;
 
-    public function __construct(OrderHeaderRepository $orderHeaderRepo)
+    /** @var  OrderDetailRepository */
+    private $orderDetailRepository;
+
+    public function __construct(OrderHeaderRepository $orderHeaderRepo, OrderDetailRepository $orderDetailRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
+        $this->orderDetailRepository = $orderDetailRepo;
     }
 
     /**
@@ -95,7 +100,7 @@ class OrderSellerController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id,Request $request)
+    public function edit($id, Request $request)
     {
         $user = Auth::user();
 
@@ -107,7 +112,12 @@ class OrderSellerController extends AppBaseController
             return redirect(route('orderHeaders.index'));
         }
 
-        return view('order_sellers.edit')->with('orderHeader', $orderHeader)->with('user', $user);
+        $orderDetails = $this->orderDetailRepository->findWhere(['order_header_id' => $orderHeader->id]);
+
+        return view('order_sellers.edit')
+            ->with('orderHeader', $orderHeader)
+            ->with('orderDetails', $orderDetails)
+            ->with('user', $user);
     }
 
     /**
@@ -118,8 +128,9 @@ class OrderSellerController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateOrderHeaderRequest $request)
+    public function update($id, Request $request)
     {
+
         $orderHeader = $this->orderHeaderRepository->findWithoutFail($id);
 
         if (empty($orderHeader)) {
@@ -128,11 +139,47 @@ class OrderSellerController extends AppBaseController
             return redirect(route('orderSellers.index'));
         }
 
-        $orderHeader = $this->orderHeaderRepository->update($request->all(), $id);
+        $formDetail = $request->input('form-detail');
+        if (empty($formDetail)) {
+            $orderHeader = $this->orderHeaderRepository->update($request->all(), $id);
 
-        Flash::success('Order Header updated successfully.');
+            Flash::success('Order Header updated successfully.');
 
+            return redirect(route('orderSellers.index'));
+        }
+        # New feature - for seller update qty
+        $detailIDs = $request->input('detail_id');
+        $actualQty = $request->input('seller_actual_qty');
+        foreach ($detailIDs as $key => $detailId) {
+            $qty = $actualQty[$key];
+            $this->orderDetailRepository->update([
+                'seller_actual_qty' => (int) $qty,
+                'seller_actual_at' => Carbon::now()->toDateTimeString(),
+                'seller_actual_status' => 1,
+            ], $detailId);
+        }
+        # New feature - edit total price
+        $this->updateNewTotalPrice($orderHeader->id);
+
+        Flash::success('Order Detail updated successfully.');
         return redirect(route('orderSellers.index'));
+    }
+
+    private function updateNewTotalPrice($id)
+    {
+        $total = 0;
+        $detail = $this->orderDetailRepository->findWhere(['order_header_id' => $id]);
+        foreach ($detail as $item) {
+            $price = $item->price;
+            $actualQty = $item->seller_actual_qty;
+            $fee = $item->fee;
+            $ship = $item->shipping_rate;
+            $value = ($price * $actualQty) + $fee + $ship ;
+            $total = $total + $value;
+        }
+        $this->orderHeaderRepository->update([
+            'total_price' => $total,
+        ], $id);
     }
 
     /**

@@ -1,23 +1,38 @@
-@extends('layouts.app')
+@extends('layouts.app') @section('content')
+<section class="content-header">
+    <h1>
+        ข้อมูลคำสั่งซื้อ
+    </h1>
+</section>
+<div class="content">
+    @include('adminlte-templates::common.errors')
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="row">
+                {!! Form::model($orderHeader, ['route' =>
+                ['orderSellers.update', $orderHeader->id], 'method' => 'patch'])
+                !!} @include('order_sellers.fields') {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+</div>
 
-@section('content')
-    <section class="content-header">
-        <h1>
-            รายการสินค้า
-        </h1>
-   </section>
-   <div class="content">
-       @include('adminlte-templates::common.errors')
-       <div class="box box-primary">
-           <div class="box-body">
-               <div class="row">
-                   {!! Form::model($orderHeader, ['route' => ['orderSellers.update', $orderHeader->id], 'method' => 'patch']) !!}
+<section class="content-header">
+    <h1>
+        รายการ คำสั่งซื้อ
+    </h1>
+</section>
+<div class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="row">
+                {!! Form::model($orderHeader, ['route' =>
+                ['orderSellers.update', $orderHeader->id], 'method' => 'patch',
+                'name' =>'form-detail-seller']) !!}
+                @include('order_sellers.detail') {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+</div>
 
-                        @include('order_sellers.fields')
-
-                   {!! Form::close() !!}
-               </div>
-           </div>
-       </div>
-   </div>
 @endsection
