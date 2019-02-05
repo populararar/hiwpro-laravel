@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/login.css') }}">
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/navbar-header.css') }}">
-    <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/=.css') }}">
 
 
     
@@ -191,10 +191,10 @@
                         <!-- widgets list -->
 
                         <ul>
-                            <li><a href="index.php"><i class="fa fa-angle-double-right"></i> หน้าหลัก</a></li>
-                            <li><a href="Listproduct.php"><i class="fa fa-angle-double-right"></i> สินค้า</a></li>
+                            <li><a href="{{ url('/') }}"><i class="fa fa-angle-double-right"></i> หน้าหลัก</a></li>
+                            <li><a href="{{ url('/eventinfo') }}"><i class="fa fa-angle-double-right"></i> โปรโมชั่น</a></li>
                             <li><a href="#"><i class="fa fa-angle-double-right"></i> เกี่ยวกับเรา</a></li>
-                            <li><a href="Bolg.php"><i class="fa fa-angle-double-right"></i> บทความ</a></li>
+                            <li><a href="#"><i class="fa fa-angle-double-right"></i> บทความ</a></li>
                             <li><a href="#"><i class="fa fa-angle-double-right"></i> ติดต่อเรา</a></li>
                         </ul>
                     </li>

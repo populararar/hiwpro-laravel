@@ -220,6 +220,7 @@ caption {
 
 </style>
 
+
 @php
 $sum=0;$count=0;$count2=0;
 @endphp
@@ -243,75 +244,79 @@ $sum=0;$count=0;$count2=0;
             <strong>Warning!</strong> หากไม่ได้กดรับภายใน1สัปดาห์หลังจากมีการอัพเดทเลขแทร็คไว้ ถือว่าได้รับสินค้าแล้ว
         </div>
     {{-- style="margin-bottom:20px;" --}}
-   
-
-    <div class="row carts d-none d-sm-none d-md-block d-lg-block" style="padding:2%;">
-        @foreach ($shopGroup as $key => $group)
+  
+    @foreach ($shopGroup as $key => $group)
+    <div class="row carts d-none d-sm-none s-md-block d-lg-block" style="padding:2%;">
+       
         <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{ $key }}</h5>
-        @foreach ($group as $product)
-        <div class="col-md-12">
-            {{-- <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5> style="border-top: solid 2px
-            #e7eaec;"--}}
-            <div class="row">
-                <div class="col-2" style="font-weight:bold;"></div>
-                <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
-                <div class="col-2" style="font-weight:bold;">ราคา</div>
-                <div class="col-2" style="font-weight:bold;">จำนวน</div>
-                <div class="col-1" style="font-weight:bold;">รวม</div>
-                <div class="col-1" style="font-weight:bold;">แก้ไข</div>
-            </div>
-          
-            <div class="row" style="border-top: solid 1px #e7eaec;padding:2% 0%;">
+            @foreach ($group as $product)
+            <div class="col-md-12">
+                {{-- <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5> style="border-top: solid 2px
+                #e7eaec;"--}}
+                {{-- header --}}
+                <div class="row">
 
-                <div class="col-2">
-                    <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
-                        class="img-fluid">
+                    <div class="col-2" style="font-weight:bold;"></div>
+                    <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
+                    <div class="col-2" style="font-weight:bold;">ราคา</div>
+                    <div class="col-2" style="font-weight:bold;">จำนวน</div>
+                    <div class="col-1" style="font-weight:bold;">รวม</div>
+                    <div class="col-1" style="font-weight:bold;">แก้ไข</div>
                 </div>
-                <div class="col-4">{{ $product->name }}<br> ค่าหิ้ว<br>ค่าจัดส่ง<br> </div>
-                <div class="col-2">{{ $product->price }}<br>{{ $product->attributes->fee }}<br>{{
-                    $product->attributes->shippping }}
+                {{-- body --}}
+                <div class="row" style="border-top: solid 1px #e7eaec;padding:2% 0%;">
+
+                    <div class="col-2">
+                        <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
+                            class="img-fluid">
+                    </div>
+                    <div class="col-4">{{ $product->name }}<br> ค่าหิ้ว<br>ค่าจัดส่ง<br> </div>
+                    <div class="col-2">{{ $product->price }}<br>{{ $product->attributes->fee }}<br>{{
+                        $product->attributes->shippping }}
+                    </div>
+
+                    @php
+                    $qty = $product->quantity;
+                    $p = $product->price;
+                    $f = $product->attributes->fee;
+                    $s = $product->attributes->shippping;
+                    @endphp
+                    <div class="col-2">
+                        <span>
+                            <button style="float:left;"  type="button" onclick="decrease({{$product->id}})" class="btn-sm btn btn-default">-</button>
+                            <p style="float:left;" id="product-{{$product->id}}">&nbsp {{ $qty }} &nbsp <p>
+                            <button style="float:left;"  type="button" onclick="increase({{$product->id}})" class="btn-sm btn btn-default">+</button>
+
+                        </span>
+                    </div>
+                    <div class="col-1"><p id="product-total-{{$product->id}}">{{ number_format($sum = $qty*$p) }}</p></div>
+                    <div class="col-1"><a href="{{ route('cart.remove', ['id' => $product->id]) }}" style="color:#df3433;"><i
+                                class="far fa-trash-alt"></i></a>
+                    </div>
+
+                    @php
+                    $count+=$sum;$Total = ($sum+$f+$s);
+                    @endphp
+
+                </div>
+                {{-- footer --}}
+                <div class="row" style="border-top: solid 2px #e7eaec;">
+                    <div class="col-8 float-right "> </div>
+                    <div class="col-4 float-left">Total: {{ number_format($Total)  }} THB </div>
                 </div>
 
                 @php
-                $qty = $product->quantity;
-                $p = $product->price;
-                $f = $product->attributes->fee;
-                $s = $product->attributes->shippping;
-                @endphp
-                <div class="col-2">
-                    <span>
-                        <button style="float:left;"  type="button" onclick="decrease({{$product->id}})" class="btn-sm btn btn-default">-</button>
-                        <p style="float:left;" id="product-{{$product->id}}">&nbsp {{ $qty }} &nbsp <p>
-                        <button style="float:left;"  type="button" onclick="increase({{$product->id}})" class="btn-sm btn btn-default">+</button>
-
-                    </span>
-                </div>
-                <div class="col-1"><p id="product-total-{{$product->id}}">{{ number_format($sum = $qty*$p) }}</p></div>
-                <div class="col-1"><a href="{{ route('cart.remove', ['id' => $product->id]) }}" style="color:#df3433;"><i
-                            class="far fa-trash-alt"></i></a>
-                </div>
-
-                @php
-                $count+=$sum;$Total = ($sum+$f+$s);
+                $count2+=$Total
                 @endphp
 
             </div>
-            <div class="row" style="border-top: solid 2px #e7eaec;">
-                <div class="col-8 float-right "> </div>
-                <div class="col-4 float-left">Total: {{ number_format($Total)  }} THB </div>
-            </div>
-            @php
-            $count2+=$Total
-            @endphp
-
+            @endforeach
         </div>
-        
-        @endforeach
-       <div class="col-12">
+       <div class="col-md-12 d-none d-sm-none s-md-block d-lg-block">
            @include('saler')
        </div>
         
-    </div>
+    
     @endforeach
 
     @foreach ($shopGroup as $key => $group)
@@ -356,22 +361,22 @@ $sum=0;$count=0;$count2=0;
                     <button class="btn btn-danger" href="{{ route('cart.remove', ['id' => $product->id]) }}">
                         <i class="far fa-trash-alt"></i></button> </div>
                  </div>
-            {{-- <div  style="border-top: solid 2px #e7eaec;">
+            <div  style="border-top: solid 2px #e7eaec;">
               
-            </div> --}}
             </div>
             
         
         @endforeach
-        @include('saler') 
+        <div class="col-12">
+            @include('saler')
+        </div>
+
     </div>
     @endforeach
-
-   
-</div>
-{{-- rr d-flex flex-row --}}
-</div>
+       </div> 
+    </div>
 </div> 
+
 <div class="col-md-12 col-sm-12">
         <div class="card border-danger mb-3" style="max-width: 100%;">
             <div class="card-header">Order Summary</div>

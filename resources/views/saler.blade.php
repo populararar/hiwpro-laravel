@@ -68,30 +68,52 @@ label {
 .modal-content {
     width: 150%;
 }
+@media screen and (max-width: 578px) {
+  
+  .show-sm {
+        display: inline;
+    }
+  
+}
+.show-sm {
+        display: none;
+    }
 </style>
-<!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-       เลือกนักหิ้ว
-    </button>
-      
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            <div class="row col-md-12 d-none d-sm-none d-md-block d-lg-block">
+
+            <div class="row d-sm-none d-md-block">
                 @foreach ($group->sellers as $seller)
                     @php
                     $eventShopId = $group->first()->attributes->event_shop_id;
                     // dd($eventShopId);
                     @endphp
                 
+                    <div class="d-md-none d-lg-none d-xl-none" id="row-seller-{{ $eventShopId.'-'.$seller->id }} col-md-3 " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
+                            <div class="col">
+                                <label class="seller" id="seller-{{ $seller->id }}"> 
+                                    <div class="col-md-12 my-4">
+                                        <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
+                                        <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}"> 
+                                        {{ $seller->name }}
+                                        <p>คะแนนนักหิ้ว</p>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                
+                                </label>
+                            </div>
+                    </div>
+                @endforeach
+
+            </div>
+
+            {{-- <div class="row d-md-none d-lg-none d-xl-none">
+                @foreach ($group->sellers as $seller)
+                    @php
+                    $eventShopId = $group->first()->attributes->event_shop_id;
+                    // dd($eventShopId);
+                    @endphp
                     <div id="row-seller-{{ $eventShopId.'-'.$seller->id }} col-md-3 " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
                             <div class="col">
                                 <label class="seller" id="seller-{{ $seller->id }}"> 
@@ -109,44 +131,8 @@ label {
                                 </label>
                             </div>
                     </div>
-                    
                 @endforeach
-
-    </div>
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">ตกลง</button>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-    
-
-    <div class="row  d-md-none d-lg-none d-xl-none">
-        @foreach ($group->sellers as $seller)
-        @php
-        $eventShopId = $group->first()->attributes->event_shop_id;
-        // dd($eventShopId);
-        @endphp
-        <div class="col-12" id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
-            <label class="seller-mini" id="seller-{{ $seller->id }}">
-            <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
-            <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}"> 
-            {{ $seller->name }}
-            <p>คะแนนนักหิ้ว</p>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-        </div>
-        @endforeach
-    </div>
-
+            </div> --}}
 <script>
     $(document).ready(function() {
         <?php foreach ($group->sellers as $seller) { ?>

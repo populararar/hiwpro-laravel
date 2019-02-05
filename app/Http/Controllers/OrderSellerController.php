@@ -169,6 +169,7 @@ class OrderSellerController extends AppBaseController
     {
         $total = 0;
         $detail = $this->orderDetailRepository->findWhere(['order_header_id' => $id]);
+        dd($detail);
         foreach ($detail as $item) {
 
             $price = $item->price;

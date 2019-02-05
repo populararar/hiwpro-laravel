@@ -2,6 +2,7 @@
     <input type="hidden" name="form-detail" value="true" />
     @foreach($orderDetails as $key => $item)
     <div class="form-inline" style="padding:5px">
+        {{-- {{dd($key,$item->id)}} --}}
         <input
             type="hidden"
             name="detail_id[{{ $key }}]"
