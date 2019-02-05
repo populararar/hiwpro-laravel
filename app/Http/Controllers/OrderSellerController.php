@@ -170,11 +170,12 @@ class OrderSellerController extends AppBaseController
         $total = 0;
         $detail = $this->orderDetailRepository->findWhere(['order_header_id' => $id]);
         foreach ($detail as $item) {
+
             $price = $item->price;
             $actualQty = $item->seller_actual_qty;
             $fee = $item->fee;
-            $ship = $item->shipping_rate;
-            $value = ($price * $actualQty) + $fee + $ship ;
+            $ship = (int) $item->shipping_rate;
+            $value = ($price * $actualQty) + ($fee + $ship);
             $total = $total + $value;
         }
         $this->orderHeaderRepository->update([
