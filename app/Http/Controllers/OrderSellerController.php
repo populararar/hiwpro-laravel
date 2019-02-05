@@ -178,7 +178,8 @@ class OrderSellerController extends AppBaseController
             $total = $total + $value;
         }
         $this->orderHeaderRepository->update([
-            'total_price' => $total,
+            'seller_actual_price' => $total,
+            'seller_actual_at' => Carbon::now()->toDateTimeString(),
         ], $id);
     }
 
