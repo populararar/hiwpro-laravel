@@ -4,3 +4,5 @@ STARTS CURRENT_TIMESTAMP + INTERVAL 1 HOUR
 	DO CALL update_seller_event_joined();
 		 
 SHOW events;
+
+SHOW PROCESSLIST;
