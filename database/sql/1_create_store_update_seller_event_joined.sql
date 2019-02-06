@@ -1,5 +1,5 @@
 DELIMITER ;;
-CREATE DEFINER=`snooker`@`%` PROCEDURE `update_seller_event_joined`()
+CREATE PROCEDURE `update_seller_event_joined`()
 BEGIN
 
 DECLARE v_finished INT DEFAULT 0;
