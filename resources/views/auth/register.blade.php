@@ -367,18 +367,17 @@
                                 @endif
                             </div>
 
-                            <div class="form-group has-feedback{{ $errors->has('img_pro') ? ' has-error' : '' }}" >
-                                <div class="form-group">
-                                    <label class="float-left" for="file">รูปประจำตัว</label>
-                                    <input type="file" class="form-control-file" name="img_pro" id="img_pro" placeholder="">
-                                    <input type="hidden" class="form-control-file" name="img_pro"  id="img_pro">
+                            <div class="col-sm-6 imgUp">
+                                <div class="imagePreview  has-feedback{{ $errors->has('img_pro') ? ' has-error' : '' }}"></div>
+                                    <label class="btn btn-danger">รูปประจำตัว
+                                    <input name="img_pro" type="file" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
+                                    </label>
                                     @if ($errors->has('img_pro'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('img_pro') }}</strong>
                                         </span>
                                     @endif
-                                </div>
-                            </div>
+                                </div><!-- col-2 -->
 
                             <h4>รายละเอียดส่วนตัว</h4>
                             <img src="https://sv1.picz.in.th/images/2019/01/19/9yeiX8.jpg" class="img-fluid" alt="">
@@ -413,7 +412,7 @@
                             </div>
     
                             <div class="row" style="text-align:right;margin:2% 0%;">
-                                <div class="col-md-4"><label for="exampleInputName2">จ่ายเงินผ่านบัตร :</label></div>
+                                <div class="col-md-4"><label for="exampleInputName2">ชื่อธนาคาร :</label></div>
                                 <div class="col-md-6">
                                         <select name="bank_name"  class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
                                                 <option value="ธนาคารกรุงเทพ" selected>ธนาคารกรุงเทพ</option>
