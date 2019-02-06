@@ -96,7 +96,7 @@ class EventJoinedController extends AppBaseController
         $eventShops = $this->eventShopRepository->findWhere(['event_id' => $id]);
 
         $now = Carbon::now()->toDateTimeString();
-        
+
         $events = $this->eventRepository->findWhere([['event_exp', '>', $now]]);
 
         foreach ($events as $event) {
@@ -148,8 +148,8 @@ class EventJoinedController extends AppBaseController
             }
         }
 
-       $count = $eventShops->where('joined', false)->count();
-       $countUnjoin = $eventShops->where('joined', true)->count();
+        $count = $eventShops->where('joined', false)->count();
+        $countUnjoin = $eventShops->where('joined', true)->count();
 
         // dd($eventShops);
 
@@ -183,10 +183,14 @@ class EventJoinedController extends AppBaseController
         $user = Auth::user();
 
         $eventShop_ids = $request->input("shop_id");
-        foreach ($eventShop_ids as $eventShop_id) {
+        $last_dates = $request->input("last_date");
+
+        foreach ($eventShop_ids as $key => $eventShop_id) {
+            $last_date = $last_dates[$key];
             $this->eventJoinedRepository->create([
                 'seller_seller_id' => $user->id,
                 'event_shop_id' => $eventShop_id,
+                'last_date_at' => $last_date.' 12:00:00',
             ]);
         }
 

@@ -190,6 +190,17 @@
             {{ $num }} ชิ้น </h6>
         </p>
       </div>
+      <div class="col-lg-4">
+        @if(!empty($orderHeaders->seller_actual_price))
+          <h6 style="margin-top: 2%;">ราคาที่แม่ค้าได้แปะๆ : </h6>
+          <p>
+            <h6 class="font-gray">
+              {{ $orderHeaders->seller_actual_price }} บาท </h6>
+          </p>
+          @endif
+        </div>
+
+
     </div>
     <div class="col-lg-6">
       <h5>ข้อมูลการจัดส่ง </h5>

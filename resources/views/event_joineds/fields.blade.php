@@ -9,12 +9,17 @@
     <form action="{{ route('eventJoineds.update', [ 'eventJoined' =>  $event->event_id]) }}" method="post">
         <input name="_method" type="hidden" value="PATCH">
         @csrf
-        @foreach ($eventShops as $eventShop)
+        @foreach ($eventShops as $key => $eventShop)
             @if( !$eventShop->joined )
             <div class="form-group col-sm-12">
                 {!! Form::label('event_shop_id', 'Event Shop Id:') !!}
-                {!! Form::checkbox('shop_id[]', $eventShop->id , null) !!}
+                {!! Form::checkbox('shop_id['.$key.']', $eventShop->id , null) !!}
                 {!! $eventShop->shop->name !!}
+                @php 
+                    $exp = explode(' ',$event->event_exp);
+                    $start = explode(' ',$event->startDate);
+                @endphp 
+            <input name="last_date[{{$key}}]" min="{{ $start[0] }}" max="{{  $exp[0] }}" type="date" class="form-control">
             </div>
             @endif
 
@@ -45,7 +50,34 @@
         @endif
     @endforeach
 
+   
+
 </div>
 <!-- Event Shop Id Field -->
+
+
+@section('scripts')
+<script>
+    $(function() {
+    $('.tabs li').on('click', function() {
+        var tabId = $(this).attr('data-tab');
+
+        $('.tabs li').removeClass('current');
+        $('.tab-pane').removeClass('current'); 
+
+        $(this).addClass('current');
+        $('#' + tabId).addClass('current');
+        });
+    });
+    
+    $(function () {
+        $('.date-picker').datetimepicker({
+           format: 'YYYY-MM-DD'
+            // format: 'YYYY-MM-DD HH:mm:ss'
+        });
+    });
+
+</script>
+@endsection
 
 

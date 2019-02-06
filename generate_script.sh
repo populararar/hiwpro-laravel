@@ -37,6 +37,9 @@ php artisan infyom:scaffold Profile  --fromTable --tableName=profile --primary=i
 
 php artisan infyom:scaffold SellerReview  --fromTable --tableName=seller_review --primary=id --relations
 
+php artisan infyom:scaffold Notification  --fromTable --tableName=notification --primary=id --relations
+
+
 
 ALTER TABLE `hiwpro`.`event_joined` 
 ADD COLUMN `created_at` TIMESTAMP NULL AFTER `score`,

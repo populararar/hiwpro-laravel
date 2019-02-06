@@ -91,7 +91,7 @@ input:disabled{
 img.card-img-top {
     margin: auto;
     /* width: 300px; */
-    border-radius: 10%;
+    border-3radius: 10%;
 }
 </style>
 <div class="container">

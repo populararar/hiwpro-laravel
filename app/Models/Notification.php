@@ -6,39 +6,45 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class EventJoined
+ * Class Notification
  * @package App\Models
- * @version December 14, 2018, 11:42 am UTC
+ * @version February 6, 2019, 1:08 pm UTC
  *
- * @property \App\Models\EventShop eventShop
- * @property \App\Models\Seller seller
+ * @property \App\Models\OrderHeader orderHeader
+ * @property \Illuminate\Database\Eloquent\Collection category
+ * @property \Illuminate\Database\Eloquent\Collection eventJoined
  * @property \Illuminate\Database\Eloquent\Collection eventShop
+ * @property \Illuminate\Database\Eloquent\Collection orderDetail
  * @property \Illuminate\Database\Eloquent\Collection permissions
  * @property \Illuminate\Database\Eloquent\Collection product
  * @property \Illuminate\Database\Eloquent\Collection productEvent
  * @property \Illuminate\Database\Eloquent\Collection usersRoles
- * @property integer seller_seller_id
- * @property integer event_shop_id
- * @property integer score
+ * @property integer order_id
+ * @property integer user_id
+ * @property string title
+ * @property string massage
+ * @property integer status
  */
-class EventJoined extends Model
+class Notification extends Model
 {
     use SoftDeletes;
 
-    public $table = 'event_joined';
-
+    public $table = 'notification';
+    
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
+
 
     protected $dates = ['deleted_at'];
 
     protected $primaryKey = 'id';
 
     public $fillable = [
-        'seller_seller_id',
-        'event_shop_id',
-        'score',
-        'last_date_at',
+        'order_id',
+        'user_id',
+        'title',
+        'massage',
+        'status'
     ];
 
     /**
@@ -48,9 +54,11 @@ class EventJoined extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'seller_seller_id' => 'integer',
-        'event_shop_id' => 'integer',
-        'score' => 'integer',
+        'order_id' => 'integer',
+        'user_id' => 'integer',
+        'title' => 'string',
+        'massage' => 'string',
+        'status' => 'integer'
     ];
 
     /**
@@ -59,24 +67,14 @@ class EventJoined extends Model
      * @var array
      */
     public static $rules = [
-
+        
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function eventShop()
+    public function orderHeader()
     {
-        return $this->belongsTo(\App\Models\EventShop::class);
+        return $this->belongsTo(\App\Models\OrderHeader::class,'order_id');
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     **/
-    public function seller()
-    {
-        return $this->belongsTo(\App\Models\Users::class, 'seller_seller_id');
-    }
-
-   
 }

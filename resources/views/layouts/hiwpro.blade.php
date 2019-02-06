@@ -131,6 +131,7 @@
                        
                         <a class="dropdown-item" href="{{ route('profiles.index') }}">ข้อมูลส่วนตัว</a>
                         <a class="dropdown-item" href="{{route('orders.store') }}">ประวัติการสั่งซื้อ</a>
+                        <a class="dropdown-item" href="{{ route('notifications.index') }}">ข้อความ {!! session('notify') !!}</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout.index') }}">ออกจากระบบ</a>
                     </div>

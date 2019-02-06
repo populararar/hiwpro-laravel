@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateOrderHeaderRequest;
 use App\Http\Requests\UpdateOrderHeaderRequest;
+use App\Repositories\NotificationRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
 use Carbon\Carbon;
@@ -16,16 +17,20 @@ use Response;
 
 class OrderSellerController extends AppBaseController
 {
+    /** @var  NotificationRepository */
+    private $notificationRepository;
+
     /** @var  OrderHeaderRepository */
     private $orderHeaderRepository;
 
     /** @var  OrderDetailRepository */
     private $orderDetailRepository;
 
-    public function __construct(OrderHeaderRepository $orderHeaderRepo, OrderDetailRepository $orderDetailRepo)
+    public function __construct(NotificationRepository $notificationRepo, OrderHeaderRepository $orderHeaderRepo, OrderDetailRepository $orderDetailRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
+        $this->notificationRepository = $notificationRepo;
     }
 
     /**
@@ -150,8 +155,14 @@ class OrderSellerController extends AppBaseController
         # New feature - for seller update qty
         $detailIDs = $request->input('detail_id');
         $actualQty = $request->input('seller_actual_qty');
+        $complete = true;
         foreach ($detailIDs as $key => $detailId) {
             $qty = $actualQty[$key];
+            $detail = $this->orderDetailRepository->findWithoutFail($detailId);
+            if ($detail->qrt != $qty) {
+                $complete = false;
+            }
+
             $this->orderDetailRepository->update([
                 'seller_actual_qty' => (int) $qty,
                 'seller_actual_at' => Carbon::now()->toDateTimeString(),
@@ -160,9 +171,31 @@ class OrderSellerController extends AppBaseController
         }
         # New feature - edit total price
         $this->updateNewTotalPrice($orderHeader->id);
-
+        $this->saveNotification($orderHeader,$complete);
         Flash::success('Order Detail updated successfully.');
         return redirect(route('orderSellers.index'));
+    }
+
+    private function saveNotification($order, $complete)
+    {
+        if ($complete) {
+            $this->notificationRepository->create([
+                'order_id' => $order->id,
+                'user_id' => $order->customer_id,
+                'title' => 'สินค้ากำลังอยู่ในระหว่างการจัดส่ง',
+                'massage' => '',
+                'status' => 0,
+            ]);
+        } else {
+            $this->notificationRepository->create([
+                'order_id' => $order->id,
+                'user_id' => $order->customer_id,
+                'title' => 'กรุณาตรวจสอบรายการสินค้า',
+                'massage' => '',
+                'status' => 0,
+            ]);
+        }
+
     }
 
     private function updateNewTotalPrice($id)

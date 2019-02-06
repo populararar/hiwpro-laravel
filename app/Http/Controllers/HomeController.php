@@ -6,6 +6,7 @@ use App\Mail\OrderShipped;
 use App\Repositories\EventJoinedRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\EventShopRepository;
+use App\Repositories\NotificationRepository;
 use App\Repositories\PermissionsRepository;
 use App\Repositories\ProducteventRepository;
 use App\Repositories\ProductRepository;
@@ -23,6 +24,8 @@ use Validator;
 
 class HomeController extends Controller
 {
+    /** @var  NotificationRepository */
+    private $notificationRepository;
 
     /** @var  ProfileRepository */
     private $profileRepository;
@@ -56,7 +59,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(ProfileRepository $profileRepo, EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo
+    public function __construct(NotificationRepository $notificationRepo, ProfileRepository $profileRepo, EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo
         , UsersRepository $usersRepo, PermissionsRepository $permissionRepo) {
         $this->eventJoinedRepository = $eventJoinedRepo;
         $this->usersRepository = $usersRepo;
@@ -67,6 +70,7 @@ class HomeController extends Controller
         $this->productRepository = $productRepo;
         $this->userRolesRepository = $userRolesRepo;
         $this->profileRepository = $profileRepo;
+        $this->notificationRepository = $notificationRepo;
     }
 
     public function mail()
@@ -364,6 +368,17 @@ class HomeController extends Controller
         }
         $events = $events->sortByDesc('last_date');
 
+        if (Auth::check()) {
+            $user = Auth::user();
+            $notify = $this->notificationRepository->findWhere(['user_id' => $user->id, 'status' => 0]);
+
+            if (!empty($notify)) {
+                session()->put('notify', count($notify));
+            } else {
+                session()->put('notify', 0);
+            }
+        }
+
         return view('home')->with('events', $events);
     }
 
@@ -436,7 +451,7 @@ class HomeController extends Controller
                 'img_pro' => 'required',
                 'img_id1' => 'required',
                 'img_id2' => 'required',
-                
+
             ]);
         }
 
@@ -447,7 +462,7 @@ class HomeController extends Controller
         }
 
         if ($role == 2) {
-           
+
             $path = $request->file('img_pro')->store('public/upload');
             $path2 = $request->file('img_id1')->store('public/upload');
             $path3 = $request->file('img_id2')->store('public/upload');
@@ -457,11 +472,11 @@ class HomeController extends Controller
             $input["national_img2"] = str_replace("public", "", $path3);
         }
         if ($role == 3) {
-           
+
             $path = $request->file('img_pro')->store('public/upload');
-          
+
             $input["img"] = str_replace("public", "", $path);
-          
+
         }
 
         $input['password'] = bcrypt($input['password']);
@@ -480,8 +495,7 @@ class HomeController extends Controller
             'status' => '1',
         ]);
 
-
-        if(empty($input['bank_num'])){
+        if (empty($input['bank_num'])) {
             $profile = [
                 'tel' => $input['tel_add'],
                 'img' => $input['img'],
@@ -492,10 +506,9 @@ class HomeController extends Controller
                 // 'national_img' => $input['national_img'],
                 // 'national_img2' => $input['national_img2'],
                 'user_id' => $user->id,
-                'status'=> 1
+                'status' => 1,
             ];
-        }
-        else{
+        } else {
             $profile = [
                 'tel' => $input['tel_add'],
                 'img' => $input['img'],
@@ -506,16 +519,11 @@ class HomeController extends Controller
                 'national_img' => $input['national_img'],
                 'national_img2' => $input['national_img2'],
                 'user_id' => $user->id,
-                'status'=> 1
+                'status' => 1,
             ];
         }
-            
-          
-
-    
 
         $profileInput = $this->profileRepository->create($profile);
-
 
         Flash::success('Register saved successfully.');
 

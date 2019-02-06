@@ -103,6 +103,7 @@ Route::middleware(['login'])->group(function () {
     Route::resource('payments', 'PaymentController');
     Route::resource('sellerReviews', 'SellerReviewController');
 
-  
+    Route::resource('notifications', 'NotificationController');
 });
 Route::get('/mail', 'HomeController@mail');
+

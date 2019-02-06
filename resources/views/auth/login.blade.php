@@ -40,6 +40,8 @@
     }
     .login-page, .register-page {
         background: url('https://sv1.picz.in.th/images/2019/02/03/TZ66PV.jpg') no-repeat;
+        background-size:  cover ;
+        background-position: center center;
     }
 </style>
 
