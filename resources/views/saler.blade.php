@@ -7,10 +7,10 @@
     /* margin-right: -15px; */
     /* margin-left: -15px; */
 }
-.d-block {
+/* .d-block {
     display: block!important;
     margin: auto;
-}
+} */
 .seller-mini{
     border:1px solid #eee;
     padding:5px; 
@@ -80,19 +80,18 @@ label {
     }
 </style>
 
-            <div class="row d-sm-none d-md-block">
+            <div class="col-lg-12 justify-content-around row">
                 @foreach ($group->sellers as $seller)
                     @php
                     $eventShopId = $group->first()->attributes->event_shop_id;
                     // dd($eventShopId);
                     @endphp
-                
-                    <div class="d-md-none d-lg-none d-xl-none" id="row-seller-{{ $eventShopId.'-'.$seller->id }} col-md-3 " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
+                    <div class="" id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
                             <div class="col">
-                                <label class="seller" id="seller-{{ $seller->id }}"> 
+                                <label class="seller  " id="seller-{{ $seller->id }}"> 
                                     <div class="col-md-12 my-4">
                                         <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
-                                        <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}"> 
+                                        <img class="mx-auto card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}"> 
                                         {{ $seller->name }}
                                         <p>คะแนนนักหิ้ว</p>
                                         <i class="fas fa-star"></i>
@@ -105,10 +104,9 @@ label {
                             </div>
                     </div>
                 @endforeach
+            </div> 
 
-            </div>
-
-            {{-- <div class="row d-md-none d-lg-none d-xl-none">
+            {{-- <div class="col-12  justify-content-around">
                 @foreach ($group->sellers as $seller)
                     @php
                     $eventShopId = $group->first()->attributes->event_shop_id;

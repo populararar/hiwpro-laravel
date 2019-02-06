@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/login.css') }}">
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/navbar-header.css') }}">
-    <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/=.css') }}">
+    <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/home.css') }}">
 
 
     
@@ -63,7 +63,10 @@
 
    <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/src/js/owl.carousel.js') }}"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
    <script src="{{ asset('lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+
 </head>
 
 <body>

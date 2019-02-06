@@ -93,7 +93,7 @@ img:hover{
 @endforeach  
 @endif 
 </div>
-  </div>
+  </div>  
   <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-end">
         <li class="page-item disabled">

@@ -56,10 +56,6 @@
 
 @section('scripts')
     <script>
-    // In your Javascript (external .js resource or <script> tag)
-    // $(document).ready(function() {
-    //     $('#robots').select2();
-    // });
     $(document).ready( function () {
     $('#orderHeaders-table').DataTable();
     } );

@@ -51,9 +51,10 @@ class LoginMiddlware
                 'role_id' =>$role_id
             ])->first();
 
-            // dd($menu , $user->id ,  $permission );
+            // dd($menu , $role_id ,  $permission );
 
             if(empty( $permission )){
+                // dd('00000001');
                 abort(404);
             }
 

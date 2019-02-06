@@ -228,9 +228,9 @@ $sum=0;$count=0;$count2=0;
                     $eventShopId = $group->first()->attributes->event_shop_id;
                     // dd($mapSeller[$eventShopId]->name);
                 @endphp
-                <div class="row" style="margin-bottom:20px;">
+                <div class="" style="margin-bottom:20px;">
                     @foreach ($group as $product)
-                    <h5 style="border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
+                    <h5 style="text-align:left; border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
                     <div class="col-md-8" style="padding:2% 5%;">
 
                         <div class="row" style="border-top: solid 2px #e7eaec;">
