@@ -49,7 +49,6 @@ class EventJoinedController extends AppBaseController
 
         $this->eventRepository->pushCriteria(new RequestCriteria($request));
         $events = $this->eventRepository->findWhere([['event_exp', '>', $now]]);
-
         //select * from table where id > 1 and id < 3;
 
         return view('event_joineds.index')

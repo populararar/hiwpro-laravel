@@ -245,42 +245,39 @@ $sum=0;$count=0;$count2=0;
         </div>
     {{-- style="margin-bottom:20px;" --}}
   
-    @foreach ($shopGroup as $key => $group)
-    <div class="row carts d-none d-sm-none s-md-block d-lg-block" style="padding:2%;">
-       
-        <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{ $key }}</h5>
-            @foreach ($group as $product)
-            <div class="col-md-12">
-                {{-- <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5> style="border-top: solid 2px
-                #e7eaec;"--}}
-                {{-- header --}}
-                <div class="row">
+            @foreach ($shopGroup as $key => $group)
+            <div class="row carts d-none d-sm-block" style="padding:2%;">
+            
+                <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{ $key }}</h5>
+                    @foreach ($group as $product)
+                    <div class="col-md-12">
+                        {{-- <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5> style="border-top: solid 2px
+                        #e7eaec;"--}}
+                        {{-- header --}}
+                        <div class="row col-12">
 
-                    <div class="col-2" style="font-weight:bold;"></div>
-                    <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
-                    <div class="col-2" style="font-weight:bold;">ราคา</div>
-                    <div class="col-2" style="font-weight:bold;">จำนวน</div>
-                    <div class="col-1" style="font-weight:bold;">รวม</div>
-                    <div class="col-1" style="font-weight:bold;">แก้ไข</div>
-                </div>
-                {{-- body --}}
-                <div class="row" style="border-top: solid 1px #e7eaec;padding:2% 0%;">
+                            <div class="col-2" style="font-weight:bold;"></div>
+                            <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
+                            <div class="col-2" style="font-weight:bold;">ราคา</div>
+                            <div class="col-2" style="font-weight:bold;">จำนวน</div>
+                            <div class="col-1" style="font-weight:bold;">รวม</div>
+                            <div class="col-1" style="font-weight:bold;">แก้ไข</div>
+                        </div>
+                        {{-- body --}}
+                <div class="row col-12" style="border-top: solid 1px #e7eaec;padding:2% 0%;">
 
                     <div class="col-2">
                         <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
                             class="img-fluid">
                     </div>
-                    <div class="col-4">{{ $product->name }}<br> ค่าหิ้ว<br>ค่าจัดส่ง<br> </div>
-                    <div class="col-2">{{ $product->price }}<br>{{ $product->attributes->fee }}<br>{{
-                        $product->attributes->shippping }}
-                    </div>
-
                     @php
                     $qty = $product->quantity;
                     $p = $product->price;
                     $f = $product->attributes->fee;
                     $s = $product->attributes->shippping;
                     @endphp
+                    <div class="col-4">{{$product->name}}<br>ค่าหิ้ว<br>ค่าจัดส่ง</div>
+                    <div class="col-2">{{$p}}<br>{{$f}}<br>{{$s}}</div>
                     <div class="col-2">
                         <span>
                             <button style="float:left;"  type="button" onclick="decrease({{$product->id}})" class="btn-sm btn btn-default">-</button>
@@ -294,7 +291,7 @@ $sum=0;$count=0;$count2=0;
                                 class="far fa-trash-alt"></i></a>
                     </div>
 
-                    @php
+                            @php
                     $count+=$sum;$Total = ($sum+$f+$s);
                     @endphp
 
@@ -305,22 +302,20 @@ $sum=0;$count=0;$count2=0;
                     <div class="col-4 float-left">Total: {{ number_format($Total)  }} THB </div>
                 </div>
 
-                @php
-                $count2+=$Total
-                @endphp
+                        @php
+                        $count2+=$Total
+                        @endphp
 
             </div>
             @endforeach
         </div>
-       <div class="col-md-12 d-none d-sm-none s-md-block d-lg-block">
-           @include('saler')
-       </div>
-        
-    
-    @endforeach
+            <div class="row col-lg-12 justify-content-center">
+                @include('saler')
+            </div>
+            @endforeach
 
-    @foreach ($shopGroup as $key => $group)
-    <div class="row carts pro-sm d-md-none d-lg-none d-xl-none">
+            @foreach ($shopGroup as $key => $group)
+            <div class="row carts pro-sm d-block d-sm-none">
 
         <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{ $key }}</h5>
         @foreach ($group as $product)
@@ -336,71 +331,66 @@ $sum=0;$count=0;$count2=0;
                  <br> ค่าจัดส่ง :{{ $product->attributes->shippping }}
                  <br>
 
-                                <div>
-                    <span>
-                        <button style="float:left;"  type="button" onclick="decrease({{$product->id}})" class="btn-sm btn btn-default">-</button>
-                        <p style="float:left;" id="product-{{$product->id}}">&nbsp {{ $qty }} &nbsp <p>
-                        <button style="float:left;"  type="button" onclick="increase({{$product->id}})" class="btn-sm btn btn-default">+</button>
-                    </span>
-                </div><br> 
-                @php
-                $qty = $product->quantity;
-                $p = $product->price;
-                $f = $product->attributes->fee;
-                $s = $product->attributes->shippping;
-                $sum = $qty*$p;
-                @endphp            
+                <div>
+                            <span>
+                                <button style="float:left;"  type="button" onclick="decrease({{$product->id}})" class="btn-sm btn btn-default">-</button>
+                                <p style="float:left;" id="product-{{$product->id}}">&nbsp {{ $qty }} &nbsp <p>
+                                <button style="float:left;"  type="button" onclick="increase({{$product->id}})" class="btn-sm btn btn-default">+</button>
+                            </span>
+                </div><br>
+                        @php
+                        $qty = $product->quantity;
+                        $p = $product->price;
+                        $f = $product->attributes->fee;
+                        $s = $product->attributes->shippping;
+                        $sum = $qty*$p;
+                        $count+=$sum;$Total = ($sum+$f+$s);
+                        @endphp 
+                        <div class="float-left">Total: {{number_format($Total)  }} THB </div>
+                        <br>
+                        <div class="float-right ">
+                            <button class="btn btn-danger" href="{{ route('cart.remove', ['id' => $product->id]) }}">
+                                <i class="far fa-trash-alt"></i></button> </div>
+                        </div>
+                    <div  style="border-top: solid 2px #e7eaec;">
+                    
+                    </div>
+                    
                 
-               
-                @php
-                $count+=$sum;$Total = ($sum+$f+$s);
-                @endphp 
-                <div class="float-left">Total: {{number_format($Total)  }} THB </div>
-                <br>
-                <div class="float-right ">
-                    <button class="btn btn-danger" href="{{ route('cart.remove', ['id' => $product->id]) }}">
-                        <i class="far fa-trash-alt"></i></button> </div>
-                 </div>
-            <div  style="border-top: solid 2px #e7eaec;">
-              
-            </div>
-            
-        
-        @endforeach
-        <div class="col-12">
-            @include('saler')
-        </div>
+                @endforeach
+                <div class="col-12">
+                    @include('saler')
+                </div>
 
-    </div>
-    @endforeach
+            </div>
+            @endforeach
        </div> 
     </div>
 </div> 
 
-<div class="col-md-12 col-sm-12">
-        <div class="card border-danger mb-3" style="max-width: 100%;">
-            <div class="card-header">Order Summary</div>
-            <div class="card-body">
-                {{-- <h5>{{$Total}}</h5> --}}
-                <h5 style="text-align:center;"><span> TOTAL <font color="red"> {{ number_format($count2)}} </font>TH</span></h5>
-                <form id="cart-form" method="POST" name="cart-form" action="{{route('confirms.store')}}">
-                    {!! csrf_field() !!}
+    <div class="col-md-12 col-sm-12">
+            <div class="card border-danger mb-3 mt-5" style="max-width: 100%;">
+                <div class="card-header">Order Summary</div>
+                <div class="card-body">
+                    {{-- <h5>{{$Total}}</h5> --}}
+                    <h5 style="text-align:center;"><span> TOTAL <font color="red"> {{ number_format($count2)}} </font>TH</span></h5>
+                    <form id="cart-form" method="POST" name="cart-form" action="{{route('confirms.store')}}">
+                        {!! csrf_field() !!}
 
-                    @if(!empty($mapSeller))
-                    @foreach ($mapSeller as $key => $seller)
-                    <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}">                      
-                    @endforeach
-                    @endif
-                    <button type="button" class="btn btn-success btn-block" onclick="saveData()">Submit</button>
-                </form>
-                {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                    the card's content.</p> --}}
+                        @if(!empty($mapSeller))
+                        @foreach ($mapSeller as $key => $seller)
+                        <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}">                      
+                        @endforeach
+                        @endif
+                        <button type="button" class="btn btn-success btn-block col-4 mx-auto" onclick="saveData()">Submit</button>
+                    </form>
+                    {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the card's content.</p> --}}
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-{{-- rr d-flex flex-row --}}
 </div>
 </div>
 <script type="text/javascript">

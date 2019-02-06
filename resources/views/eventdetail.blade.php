@@ -198,7 +198,7 @@ img:hover{
                     <div class="carousel-item active">
                         <div class="row">
                             <div class="col-lg-3 col-md-4 col-sm-12">
-                                <img class="card-img-top  card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_05.png')}}">
+                                <img class="card-img-top  card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_14.png')}}">
                             </div>
                             <div class="col-lg-3 col-md-4  d-none d-sm-none d-md-block">
                                 <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_06.jpg')}}">
@@ -207,23 +207,23 @@ img:hover{
                                 <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}">
                             </div>
                             <div class="col-lg-3 d-none d-md-none d-lg-block">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_05.png')}}">
                             </div>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <div class="row">
                             <div class="col-lg-3 col-md-4 col-sm-12">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_08.png')}}">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_08.png')}}">
                             </div>
                             <div class="col-lg-3 col-md-4  d-none d-sm-none d-md-block">
                                 <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_09.jpg')}}">
                             </div>
                             <div class="col-lg-3 col-md-4 d-none d-sm-none d-md-block">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_11.png')}}">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_11.png')}}">
                             </div>
                             <div class="col-lg-3 d-none d-md-none d-lg-block">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_11.png')}}">
+                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_13.png')}}">
                             </div>
                         </div>
                     </div>

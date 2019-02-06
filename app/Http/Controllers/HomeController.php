@@ -74,11 +74,12 @@ class HomeController extends Controller
         Mail::to('ker13530018@gmail.com')->send(new OrderShipped());
     }
 
-    public function cartRemove($id, Request $request){
+    public function cartRemove($id, Request $request)
+    {
         \Cart::remove($id);
         return redirect()->route('cart.detail');
     }
-    
+
     public function increase($id, Request $request)
     {
         // dd( );
@@ -408,26 +409,36 @@ class HomeController extends Controller
 
     public function registerStore(Request $request)
     {
-        $user = Auth::user();
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'role' => 'required',
-            'email' => 'required|unique:users|max:255',
-            'password' => 'required|min:6|max:18',
-            'password_confirmation' => 'required|same:password|min:6|max:18',
-            // 'national_id' => 'required|min:13|max:13',
-            // 'img_id1' => 'required',
-            // 'img_id2' => 'required',
-        ]);
-
         $input = $request->all();
-        // $path = $input->file('img_id1')->store('public/upload');
-        // $path2 = $input->file('img_id2')->store('public/upload');
-        
-       
+        $role = $input['role'];
+        // $user = Auth::user();
+        if ($role == 3) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'role' => 'required',
+                'email' => 'required|unique:users|max:255',
+                'password' => 'required|min:6|max:18',
+                'password_confirmation' => 'required|same:password|min:6|max:18',
+                'img_pro' => 'required',
+            ]);
 
-        // $input["image_product_id"] = str_replace("public", "", $path);
-        // $input["img_product"] = str_replace("public", "", $path2);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'role' => 'required',
+                'email' => 'required|unique:users|max:255',
+                'password' => 'required|min:6|max:18',
+                'password_confirmation' => 'required|same:password|min:6|max:18',
+                'national_id' => 'required|min:13|max:13',
+                'bank_account' => 'required',
+                'bank_num' => 'required|min:10|max:10',
+                'bank_name' => 'required',
+                'img_pro' => 'required',
+                'img_id1' => 'required',
+                'img_id2' => 'required',
+                
+            ]);
+        }
 
         if ($validator->fails()) {
             return redirect()->route('register')
@@ -435,23 +446,25 @@ class HomeController extends Controller
                 ->withInput();
         }
 
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
+        if ($role == 2) {
+           
+            $path = $request->file('img_pro')->store('public/upload');
+            $path2 = $request->file('img_id1')->store('public/upload');
+            $path3 = $request->file('img_id2')->store('public/upload');
 
-        // $profile = [
-        //     // 'tel' => $
-        //     // 'img' => "",
-        //     // 'address_id' => $
-        //     // 'bank_num' => $input['bank_name'],
-        //     // 'bank_name' => $input['password'],
-        //     'national_id' => $input['national_id'],
-        //     'national_img' => $input['img_id1'],
-        //     'national_img2' => $input['img_id2'],
-        //     'user_id' => $user->id,
-        //     'status',
-        // ];
-        
-        // $profileInput = $this->profileRepository->create($profile);
+            $input["img"] = str_replace("public", "", $path);
+            $input["national_img"] = str_replace("public", "", $path2);
+            $input["national_img2"] = str_replace("public", "", $path3);
+        }
+        if ($role == 3) {
+           
+            $path = $request->file('img_pro')->store('public/upload');
+          
+            $input["img"] = str_replace("public", "", $path);
+          
+        }
+
+        $input['password'] = bcrypt($input['password']);
 
         $user = $this->usersRepository->create($input);
 
@@ -461,13 +474,48 @@ class HomeController extends Controller
                 ->withInput();
         }
 
-        $role = $input['role'];
-
         $role = $this->userRolesRepository->create([
             'user_id' => $user->id,
             'role_id' => $role,
             'status' => '1',
         ]);
+
+
+        if(empty($input['bank_num'])){
+            $profile = [
+                'tel' => $input['tel_add'],
+                'img' => $input['img'],
+                // 'address_id' => $
+                // 'bank_num' => $input['bank_num'],
+                // 'bank_name' => $input['bank_name'],
+                // 'national_id' => $input['national_id'],
+                // 'national_img' => $input['national_img'],
+                // 'national_img2' => $input['national_img2'],
+                'user_id' => $user->id,
+                'status'=> 1
+            ];
+        }
+        else{
+            $profile = [
+                'tel' => $input['tel_add'],
+                'img' => $input['img'],
+                // 'address_id' => $
+                'bank_num' => $input['bank_num'],
+                'bank_name' => $input['bank_name'],
+                'national_id' => $input['national_id'],
+                'national_img' => $input['national_img'],
+                'national_img2' => $input['national_img2'],
+                'user_id' => $user->id,
+                'status'=> 1
+            ];
+        }
+            
+          
+
+    
+
+        $profileInput = $this->profileRepository->create($profile);
+
 
         Flash::success('Register saved successfully.');
 

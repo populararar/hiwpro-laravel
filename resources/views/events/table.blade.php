@@ -8,7 +8,7 @@
         <th>Type</th>
         <th>Exp</th>
         <th>Income</th>
-            <th colspan="3">Action</th>
+            <th >Action</th>
         </tr>
     </thead>
     <tbody>
