@@ -1,20 +1,20 @@
 <table class="table table-responsive" id="events-table">
     <thead>
-        <tr>
-            <th width="50%">Eventname</th>
-            <th>Startdate</th>
-            <th>Lastdate</th>
-            <th>Image</th>
-            <th colspan="3">Action</th>
+        <tr> 
+            <th></th>
+            <th>ชื่ออีเว้นต์</th>
+            <th>วันเริ่มงาน</th>
+            <th>วันสิ้นสุดงาน</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach($events as $event)
-        <tr>
+        <tr> 
+            <td><img  src="{{ asset('/storage/'.$event->imgPath) }}" alt="" width="200"></td>
             <td>{!! $event->eventName !!}</td>
             <td>{!! $event->startDate !!}</td>
             <td>{!! $event->lastDate !!}</td>
-            <td><img src="{{ asset('/storage/'.$event->imgPath) }}" alt="" width="50"></td>
             <!-- Imgpath Field -->
             <td>
 
@@ -30,3 +30,11 @@
         @endforeach
     </tbody>
 </table>
+
+@section('scripts')
+    <script>
+    $(document).ready( function () {
+    $('#events-table').DataTable();
+} );
+    </script>
+@endsection

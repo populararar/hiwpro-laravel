@@ -20,7 +20,7 @@
         <th>Payment Date</th> --}}
         <th>Accepted Date</th>
         <th>Status</th>
-            <th colspan="3">Action</th>
+            <th >Action</th>
         </tr>
     </thead>
     <tbody>
@@ -54,3 +54,11 @@
     @endforeach
     </tbody>
 </table>
+
+@section('scripts')
+    <script>
+    $(document).ready( function () {
+    $('#orderHeaders-table').DataTable();
+} );
+    </script>
+@endsection

@@ -77,7 +77,7 @@ img:hover{
         <img style="border-radius: 10%" src="{{ asset('/storage/'.$event->imgPath) }}" class="img-fluid">
         </div>
         <div class="col-sm-12 col-md-7 ">
-        <h3 style="font-size:1.5em; border-bottom: 1px dotted #cccccc;">{{ $event->eventName }}</h3>
+        <a href="/eventdetail/{{ $event->event_id }}"><h3 style="font-size:1.5em; border-bottom: 1px dotted #cccccc;">{{ $event->eventName }}</h3></a>
             <i style="color: #df3433;" class="far fa-calendar"></i> 
             {{ $event->start_date }} - {{ $event->last_date }}
 

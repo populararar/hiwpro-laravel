@@ -9,7 +9,7 @@ DECLARE evIds CURSOR FOR
 			SELECT `id` FROM `event_shop` WHERE event_id  IN (
 				SELECT event_id FROM `event` WHERE deleted_at IS NULL AND now() < event_exp
 			)
-		);
+		) AND deleted_at IS NULL;
 
    
 -- declare NOT FOUND handler
@@ -31,13 +31,13 @@ DECLARE CONTINUE HANDLER
     ITERATE get_eventId;
    END IF;
    
-   SELECT  DATE_FORMAT( now() , '%Y-%m-%d 12:00:00') INTO @now;
-   IF @last <  @now THEN 
+   SELECT now() INTO @now;
+   IF  @now >= @last THEN 
      UPDATE `event_joined` SET deleted_at = @now WHERE id =  evId;
    END IF;
    
    
  END LOOP get_eventId;
  CLOSE evIds;
-END;;
+END
 DELIMITER ;

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <style>
 img.eventJoined{
-    border-right: 5px solid #555555;
+    border-radius: 10%;
     padding: 2%; 
     width: 500px;
 }
@@ -11,9 +11,12 @@ p{
 }
 </style>
 <div class="row">
-    <h1 style="font-family:Kanit, sans-serif;text-align:center;">{!! $event->eventName !!}</h1>
-    <div class="col-md-6"> <img class="eventJoined" src="{{ asset('/storage/'.$event->imgPath) }}"></div>
+    
+    <div class="col-md-6"> <img class="eventJoined " src="{{ asset('/storage/'.$event->imgPath) }}"></div>
+
     <div class="col-md-6">
+        <h4 style="font-family:Kanit, sans-serif;">{!! $event->eventName !!}</h4>
+
         <div class="row">
             <div class="col-md-1">
                 <p><i class="fas fa-calendar-week"></i></p>

@@ -20,7 +20,7 @@
             @if (!empty($payment->status))
                 <td><p class='btn btn-info'>ยืนยันเรียบร้อย</p></td>
             @else
-                <td ><p class='btn btn-warning'>รอการตรวจสอบ</td>
+                <td ><a href="{!! route('payments.edit', [$payment->id]) !!}"><p class='btn btn-warning'>รอการตรวจสอบ</button></p></td>
             @endif
            
             <td>

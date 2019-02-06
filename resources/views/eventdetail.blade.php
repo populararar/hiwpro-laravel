@@ -32,6 +32,12 @@ img:hover{
     padding: 5%;
     text-align: center;
 }
+p.card-in{
+    color:#df3433; 
+    
+    line-height :1.2;
+    margin:2%;
+}
 /* 
 .col-md-3 {
     -ms-flex: 0 0 25%;
@@ -122,7 +128,7 @@ img:hover{
                         <img class='card-img-top' src="{{ asset('/storage/'.$pe->product->image_product_id) }}">
                         {{-- text-truncate --}}
                         <div class="card-in" >
-                            <p style='color:#df3433; font-size:1em;line-height :1.2;margin:2%;'> {{  $pe->product->name }} </p>
+                            <p > {{  $pe->product->name }} </p>
                             <span>
                                 <font color="red">{{  $pe->product->price }} บาท</font>
                                 <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{$pe->product->actual_price}} บาท</font>
@@ -158,7 +164,7 @@ img:hover{
                 <div class="col-6">
                     <img class='card-img-top' src="{{ asset('/storage/'.$pe->product->image_product_id) }}"></a>
                     <div class="card-in">
-                        <p style='color:#df3433; font-size:1em;line-height :1.2;margin:2%;'> {{  $pe->product->name }} </p>
+                        <p > {{  $pe->product->name }} </p>
                         <span>
                             <font color="red">{{  $pe->product->price }} บาท</font>
                             <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{$pe->product->actual_price}} บาท</font>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Kanit|Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kanit:400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('hiwpro/bootstrap-4.1/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('hiwpro/fontawesome5.1/css/all.css') }}">
 
@@ -25,8 +26,18 @@
 
     <style>
         body{
-        font-family: 'Kanit';
+        font-family: 'Kanit', sans-serif;;
     }
+    h1{
+        font-weight: 700;
+    }
+    h2{
+        font-weight: 500;
+    }
+    h3{
+        font-weight: 300;
+    }
+
 	 li.clock {
     display: inline-block;
     font-size: 0.80em;
