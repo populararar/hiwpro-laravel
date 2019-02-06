@@ -80,7 +80,7 @@ label {
     }
 </style>
 
-            <div class="col-lg-12 d-none d-sm-block justify-content-around row">
+            <div class="col-lg-12 justify-content-around row">
                 @foreach ($group->sellers as $seller)
                     @php
                     $eventShopId = $group->first()->attributes->event_shop_id;
@@ -88,7 +88,7 @@ label {
                     @endphp
                     <div class="" id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
                             <div class="col">
-                                <label class="seller" id="seller-{{ $seller->id }}"> 
+                                <label class="seller  " id="seller-{{ $seller->id }}"> 
                                     <div class="col-md-12 my-4">
                                         <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
                                         <img class="mx-auto card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}"> 
@@ -104,9 +104,9 @@ label {
                             </div>
                     </div>
                 @endforeach
-            </div>
+            </div> 
 
-            <div class="col-12 d-block d-sm-none">
+            {{-- <div class="col-12  justify-content-around">
                 @foreach ($group->sellers as $seller)
                     @php
                     $eventShopId = $group->first()->attributes->event_shop_id;
@@ -130,7 +130,7 @@ label {
                             </div>
                     </div>
                 @endforeach
-            </div>
+            </div> --}}
 <script>
     $(document).ready(function() {
         <?php foreach ($group->sellers as $seller) { ?>

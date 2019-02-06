@@ -309,7 +309,7 @@ $sum=0;$count=0;$count2=0;
             </div>
             @endforeach
         </div>
-            <div class="row col-lg-12 justify-content-center">
+            <div class="row d-none d-sm-block col-lg-12 justify-content-center">
                 @include('saler')
             </div>
             @endforeach
@@ -358,7 +358,9 @@ $sum=0;$count=0;$count2=0;
                     
                 
                 @endforeach
-                <div class="col-12">
+                {{-- <div class="col-12"><h3>เลือกนักหิ้ว</h3> </div> --}}
+               
+                <div class="col-12 d-block d-sm-none">
                     @include('saler')
                 </div>
 
