@@ -1,24 +1,38 @@
-<table class="table table-responsive" id="notifications-table">
+<div class="weapper" >
+
+ 
+<table class="table table-hover " id="notifications-table">
     <thead>
         <tr>
-            <th>Order Id</th>
+        <th>Order Id</th>
         <th>User Id</th>
         <th>Title</th>
         <th>Order</th>
         <th>Status</th>
-            <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($notifications as $notification)
-        <tr>
+@php
+  $status =  $notification->status;
+        $read="";
+@endphp
+        @if ($status == 1)
+            <tr class="table-danger">@php $read = "ยังไม่อ่าน"; @endphp           
+        @else
+        <tr>@php $read = "อ่านแล้ว"; @endphp 
+
+        @endif
+     
+            <td><a href="{{route('orders.statusdetail',[ $notification->orderHeader->order_number])}}" >
+            {!! $notification->orderHeader->order_number !!}</a></td>
             <td>{!! $notification->order_id !!}</td>
             <td>{!! $notification->user_id !!}</td>
             <td>{!! $notification->title !!}</td>
-            <td><a href="{{route('orders.statusdetail',[ $notification->orderHeader->order_number])}}" class="btn btn-info">
-            {!! $notification->orderHeader->order_number !!}</a></td>
-            <td>{!! $notification->status !!}</td>
-            <td>
+            
+            <td > <p >{{ $read}}</p></td>
+            
+                
                 {!! Form::open(['route' => ['notifications.destroy', $notification->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{!! route('notifications.show', [$notification->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
@@ -31,3 +45,12 @@
     @endforeach
     </tbody>
 </table>
+</div>
+
+@section('scripts')
+    <script>
+    $(document).ready( function () {
+    $('#notifications-table').DataTable();
+} );
+    </script>
+@endsection

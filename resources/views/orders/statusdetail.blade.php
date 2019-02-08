@@ -150,34 +150,34 @@
     </div>
     <div class="row">
       <div class=" col-md-4">
-        <h6 style="margin-top: 2%;">เลขคำสั่งซื้อ : </h6>
+        <p>เลขคำสั่งซื้อ : </p>
         <p>
-          <h6 class="font-gray">{{ $orderHeaders->order_number}}</h6>
+          <p class="font-gray">{{ $orderHeaders->order_number}}</p>
         </p>
       </div>
       <div class="col-md-4">
-        <h6 style="margin-top: 2%;">ชื่อผู้จัดส่ง : </h6>
+        <p>ชื่อผู้จัดส่ง : </p>
         <p>
-          <h6 class="font-gray">{{ $orderHeaders->name.' '.$orderHeaders->lastname}} </h6>
+          <p class="font-gray">{{ $orderHeaders->name.' '.$orderHeaders->lastname}} </p>
         </p>
       </div>
       <div class=" col-lg-4">
-        <h6 style="margin-top: 2%;">สถานะการชำระเงิน : </h6>
+        <p>สถานะการชำระเงิน : </p>
         <p>
-          <h6 class="font-gray">{{ $status}} </h6>
+          <p class="font-gray">{{ $status}} </p>
         </p>
       </div>
     </div>
 
     <div class="row">
       <div class=" col-lg-4">
-        <h6 style="margin-top: 2%;">ที่อยู่ในการจัดส่ง : </h6>
+        <p>ที่อยู่ในการจัดส่ง : </p>
         <p>
-        <h6 class="font-gray">{{ $orderHeaders->address }}</h6>
+        <p class="font-gray">{{ $orderHeaders->address }}</p>
         </p>
       </div>
       <div class="col-lg-4">
-        <h6 style="margin-top: 2%;">จำนวนสินค้า : </h6>
+        <p>จำนวนสินค้า : </p>
         <p>
           @php
           $num=0;
@@ -186,16 +186,16 @@
                 $num+=$item->qrt;
               }
           @endphp
-          <h6 class="font-gray">
-            {{ $num }} ชิ้น </h6>
+          <p class="font-gray">
+            {{ $num }} ชิ้น </p>
         </p>
       </div>
       <div class="col-lg-4">
         @if(!empty($orderHeaders->seller_actual_price))
-          <h6 style="margin-top: 2%;">ราคาที่แม่ค้าได้แปะๆ : </h6>
+          <p>ราคาที่แม่ค้าได้แปะๆ : </p>
           <p>
-            <h6 class="font-gray">
-              {{ $orderHeaders->seller_actual_price }} บาท </h6>
+            <p class="font-gray">
+              {{ $orderHeaders->seller_actual_price }} บาท </p>
           </p>
           @endif
         </div>
@@ -208,13 +208,12 @@
 
     <div class="row">
       <div class=" col-lg-6">
-        <h6 style="margin-top: 2%;">หมายเลขติดตามพัสดุ : </h6>
-        <h6 style="margin-top: 2%; ">{{ $orderHeaders->tracking_number }}   </h6>
+        <p>หมายเลขติดตามพัสดุ : {{ $orderHeaders->tracking_number }}</p>
         <p>
           <span>ตรวจสอบสถานะพัสดุ :<font color="red"> <a href="http://track.thailandpost.com/">http://track.thailandpost.com/</a></font></span>
           
             <p>
-          </h6>
+          </p>
         </p>
       </div>
     </div>
@@ -322,7 +321,7 @@
           <img class='card-img-top w-50' src="{{ asset('/storage/'.$item->product->image_product_id) }}">
       </div>
       <div class="col-md-7 " style="padding-top:2%;">
-        <h3 style="border-left:5px solid #df3433; padding-left: 5px;">ชื่อสินค้า : {{$item->product->name}}</h3>
+        <h1 style="border-left:5px solid #df3433; padding-left: 5px;">ชื่อสินค้า : {{$item->product->name}}</h1>
         <p>ประเภทสินค้า : เครื่องสำอางค์</p>
         <p>ชื่อผู้หิ้ว : {{$item->seller->name }}</p>
         <p>จำนวน {{$item->qrt }} ชิ้น</p>

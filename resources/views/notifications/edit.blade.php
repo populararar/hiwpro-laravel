@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.hiwpro')
 
 @section('content')
     <section class="content-header">

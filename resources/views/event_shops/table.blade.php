@@ -6,7 +6,7 @@
             <th style="width:25%;">Event name</th>
             <th>Shop Id</th>
             <th>Shop name</th>
-            <th colspan="4">Action</th>
+            <th >Action</th>
         </tr>
     </thead>
     <tbody>

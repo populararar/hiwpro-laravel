@@ -29,13 +29,18 @@
         font-family: 'Kanit', sans-serif;;
     }
     h1{
-        font-weight: 700;
+        font-weight: lighter;
+        
     }
     h2{
         font-weight: 500;
     }
     h3{
         font-weight: 300;
+        
+    }
+    p{
+        font-weight: lighter;
     }
 
 	 li.clock {

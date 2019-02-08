@@ -1,26 +1,34 @@
-@extends('layouts.app')
+@extends('layouts.hiwpro')
 
 @section('content')
-    <section class="content-header">
-        <h1 class="pull-left">Notifications</h1>
-        <h1 class="pull-right">
-           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('notifications.create') !!}">Add New</a>
-        </h1>
-    </section>
-    <div class="content">
-        <div class="clearfix"></div>
+<style>
+.topic h1{
+    margin-top: 2%; 
+    color: #df3433;
+    text-align: center;
+}
+.under_topic{
+    width:50px;
+    height:5px; 
+    background-color:#cf2132;
+    margin:auto;
+}
+</style>
+<div class="wrapper" style=" padding:3%; ">
 
-        @include('flash::message')
+        <div class="mx-auto topic">
+            <h1><i class="fas fa-money-check-alt"></i></h1>
+            <h1>กล่องข้อความ </h1>
+            <div class="under_topic"></div>
+        </div>
+          @include('flash::message')       
+        <div class="shadow">
+                @include('notifications.table')
+        </div>
+       
+       
 
-        <div class="clearfix"></div>
-        <div class="box box-primary">
-            <div class="box-body">
-                    @include('notifications.table')
-            </div>
-        </div>
-        <div class="text-center">
-        
-        </div>
-    </div>
+  
+
 @endsection
 

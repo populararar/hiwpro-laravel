@@ -86,9 +86,9 @@ h4,h5{
         @endphp
 
 ้
-<div class="weapper" style="background-color: #fff; padding:3%; ">
+<div class="weapper" style=" padding:3%; ">
     <h1 style="margin-top: 2%; color: #df3433;"> <i class="fas fa-money-check-alt"></i></h1>
-        <h4 style="margin-top: 2%; color: #df3433; font-weight:bolder;">ชำระเงิน </h4>
+        <h1 style="margin-top: 2%; color: #df3433; font-weight:bolder;">ชำระเงิน </h1>
         <div style="width:50px;height:5px; background-color:#cf2132;margin:auto;"></div>
 
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
@@ -130,89 +130,7 @@ h4,h5{
             </div>   
         </div>   
     
- {{--         <div class="tab-example">
-             <ul class="tabs">
-                    <li class="tab-link" data-tab="tab1">จ่ายเงินผ่านบัตร</li>
-                    <li class="tab-link" data-tab="tab2">โอนเงินเข้าธนาคาร</li>
-                    
-                </ul>
-                <div class="tab-contents">
-                    <div class="tab-pane" id="tab1">
-                        
-                        <div class="form-inline">
-                                <div class="form-group">
-                                  <label for="inputname_card">จ่ายเงินผ่านบัตร  </label>
-                                  <select  class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                                        <option value="0" selected>ธนาคารกรุงเทพ</option>
-                                        <option value="1">ธนาคารกรุงศรีอยุธยา</option>
-                                        <option value="2">ธนาคารกสิกรไทย</option>
-                                        <option value="3">ธนาคารไทยพาณิชย์</option>
-                                        <option value="4">ธนาคารกรุงไทย</option>
-                                        <option value="5">ธนาคารทหารไทย</option>
-                                        <option value="6">ธนาคารเกียรตินาคิน</option>
-                                        <option value="7">ธนาคารซิติแบงก์</option>
-                                        <option value="8">ธนาคารซีไอเอ็มบี ไทย</option>
-                                        <option value="9">ธนาคารธนชาต</option>
-                                        <option value="10">ธนาคารนครหลวงไทย</option>
-                                        <option value="11">ธนาคารยูโอบี</option>
-                                        <option value="12">ธนาคารไอซีบีซี (ไทย)</option>
-                                        <option value="13">ธนาคารอื่นๆ</option>
-                                        <option value="14">ธนาคารกรุงเทพ</option>
-                                </select>                               
-                                </div>
-                        </div>
-                        <div class="form-inline">
-                                <div class="form-group">
-                                  <label for="inputname_card">ชื่อผู้ถือบัตร</label>
-                                  <input type="text" id="name_card" class="form-control mx-sm-3">
-                                  <small id="passwordHelpInline" class="text-muted">
-                                    Must be 8-20 characters long.
-                                  </small>
-                                </div>
-                        </div>
-                        <div class="form-inline">
-                                <div class="form-group">
-                                  <label for="inputname_card">เลขหน้าบัตร</label>
-                                  <input type="number" id="num_card" class="form-control mx-sm-3">
-                               
-                                </div>
-                        </div>
-                        <div class="form-inline">
-                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">วันหมดอายุ(ดด/ปป)</label>
-                                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                                    <option selected>Jan(01)</option>
-                                    <option value="1">Feb(02)</option>
-                                    <option value="2">Mar(03)</option>
-                                    <option value="3">Apr(04)</option>
-                                    <option value="4">May(05)</option>
-                                    <option value="5">Jun(06)</option>
-                                    <option value="6">Jul(07)</option>
-                                    <option value="7">Aug(08)</option>
-                                    <option value="8">Sep(09)</option>
-                                    <option value="9">Oct(10)</option>
-                                    <option value="10">Nov(11)</option>
-                                    <option value="12">Dec(12)</option>
-                                </select>
-                                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                                        <option selected>2019</option>
-                                        <option value="1">2020</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                <div class="form-group">
-                                    <label for="inputPassword6">เลข CVV</label>
-                                    <input type="password" id="inputPassword6" class="form-control mx-sm-3" aria-describedby="passwordHelpInline">
-                                    <small id="passwordHelpInline" class="text-muted">
-                                    
-                                    </small>
-                                </div>
-                        </div>
-                        <div action="{{route('orders.store') }}" method="POST">
-                                @csrf
-                            <button class="btn btn-success btn-block" type="submit">Submit</button>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tab2">  --}}
+ 
 
     <div class="accordion" id="accordionExample">
             <div class="card">
