@@ -30,7 +30,6 @@
     }
     h1{
         font-weight: lighter;
-        
     }
     h2{
         font-weight: 500;
@@ -71,6 +70,18 @@
     .navbar-light .navbar-nav .nav-link {
         color: rgb(0, 0, 0);
     }
+    .topic h1{
+    margin-top: 2%; 
+    color: #df3433;
+    text-align: center;
+    }
+    .under_topic{
+        width:50px;
+        height:5px; 
+        background-color:#cf2132;
+        margin:auto;
+        margin-bottom: 2%;
+    }
 </style>
    <script type="text/javascript" src="{{ asset('hiwpro/js/jquery-3.3.1.min.js') }}"></script>
    <script type="text/javascript" src="{{ asset('hiwpro/js/popper.min.js') }}"></script>
@@ -105,11 +116,22 @@
                 <a class="nav-link" href="{{ url('/eventinfo') }}">โปรโมชั่น</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">นักหิ้วมือโปร</a>
+                    <a class="nav-link" href="{{ route('profiles.index') }}">นักหิ้วมือโปร</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('register') }}">หิ้วกับเรา</a>
                 </li>
+                @if (!Auth::guest())
+                <li class="nav-item d-block d-sm-none">
+                    <a class="nav-link" href="{{ route('profiles.index') }}">ข้อมูลส่วนตัว</a>
+                </li>
+                <li class="nav-item d-block d-sm-none">
+                    <a class="nav-link" href="{{route('orders.index') }}">ประวัติการสั่งซื้อ</a>
+                </li>
+                <li class="nav-item d-block d-sm-none">
+                    <a class="nav-link" href="{{ route('notifications.index') }}">ข้อความ {!! session('notify') !!}</a>
+                </li>
+                @endif
 
             </ul>
             <ul class="nav justify-content-end">
@@ -124,7 +146,7 @@
                 </li>
 
                 @if (!Auth::guest())
-                <li class="dropdown">
+                <li class="dropdown d-none d-sm-block">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {!! Auth::user()->name !!}
                         <span class="caret"></span></a>

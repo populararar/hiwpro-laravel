@@ -154,9 +154,9 @@ h4,h5{
              
                                      </div>
                                      <div class="col-md-7 " style="padding-top:2%;">
-                                         <h5  style="border-left:5px solid #df3433;">ชื่อสินค้า : {{$item->product->name}}</h5>
+                                         <h1  style="border-left:5px solid #df3433;">ชื่อสินค้า : {{$item->product->name}}</h1>
                                          <p> ประเภทสินค้า : เครื่องสำอางค์</p>
-                                         <p>ชื่อผู้หิ้ว : {{$item->seller->name }}</p>
+                                         <p> ชื่อผู้หิ้ว : {{$item->seller->name }}</p>
                                          <p> จำนวน {{$item->qrt }} ชิ้น</p>
                                          <p> ราคา {{$item->price }} บาท</p>
                                      </div>
@@ -178,7 +178,7 @@ h4,h5{
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
                    
-                    
+                    <div style="overflow-x:auto;">
                         <table class="table table-borderless">
                                 <thead>
                                     <tr>
@@ -221,7 +221,8 @@ h4,h5{
 
                                 </tbody>
                         </table>
-                                <br>
+                     </div>     
+                            <br>
                             <span>
                                 <font color="red">*</font>
                                 หลังจากโอนเงินชำระค่าสินค้าเรียบร้อยแล้ว รบกวนลูกค้าแจ้งชำระเงินโดยส่งหลักฐาน 

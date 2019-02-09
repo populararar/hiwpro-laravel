@@ -435,6 +435,7 @@ class HomeController extends Controller
                 'password' => 'required|min:6|max:18',
                 'password_confirmation' => 'required|same:password|min:6|max:18',
                 'img_pro' => 'required',
+                'tel_add' => 'required',
             ]);
 
         } else {
@@ -451,6 +452,7 @@ class HomeController extends Controller
                 'img_pro' => 'required',
                 'img_id1' => 'required',
                 'img_id2' => 'required',
+                'tel_add' => 'required',
 
             ]);
         }
@@ -513,6 +515,7 @@ class HomeController extends Controller
                 'tel' => $input['tel_add'],
                 'img' => $input['img'],
                 // 'address_id' => $
+                'bank_account' => $input['bank_account'],
                 'bank_num' => $input['bank_num'],
                 'bank_name' => $input['bank_name'],
                 'national_id' => $input['national_id'],

@@ -50,7 +50,7 @@ Route::middleware(['login'])->group(function () {
     Route::resource('profiles', 'ProfileController');
     // Route::get('/profiles', 'ProfileController@main')->name('profiles.main');
     Route::get('/profiles/create', 'ProfileController@create')->name('profiles.create');
-    Route::get('/profiles/customer', 'ProfileController@customer')->name('profiles.customer');
+    Route::get('/profiles/customer/{id}', 'ProfileController@customer')->name('profiles.customer');
     // Route::get('/main', 'ProfileController@admin')->name('profiles.admin');
 
     Route::resource('confirms', 'ConfirmController');

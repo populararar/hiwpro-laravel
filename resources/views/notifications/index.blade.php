@@ -2,17 +2,7 @@
 
 @section('content')
 <style>
-.topic h1{
-    margin-top: 2%; 
-    color: #df3433;
-    text-align: center;
-}
-.under_topic{
-    width:50px;
-    height:5px; 
-    background-color:#cf2132;
-    margin:auto;
-}
+
 </style>
 <div class="wrapper" style=" padding:3%; ">
 

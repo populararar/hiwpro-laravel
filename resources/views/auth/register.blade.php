@@ -385,7 +385,7 @@
                                 <div class="col-md-4"><label for="exampleInputName2">ชื่อบัญชี :</label></div>
                                 <div class="col-md-6">
                                         <div class="form-group has-feedback{{ $errors->has('bank_account') ? ' has-error' : '' }}">
-                                            <input type="text" name="bank_account" class="form-control" placeholder="เลขบัญชี">
+                                            <input type="text" name="bank_account" class="form-control" placeholder="ชื่อบัญชี">
                                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     
                                             @if ($errors->has('bank_account'))
