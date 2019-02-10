@@ -168,7 +168,8 @@ class ProfileController extends AppBaseController
 
         $profile = $this->profileRepository->findWhere(['user_id' => $user->id])->first();
         $user_id = $this->usersRepository->findWhere(['id' => $user->id])->first();
-        // dd($user_id);
+
+        // dd($profile,$user);
         // $roleName = $user->usersRoles->first()->role->name;
 
         return view('profiles.main')
@@ -252,7 +253,8 @@ class ProfileController extends AppBaseController
     {
         $profile = $this->profileRepository->findWithoutFail($id);
         $user = Auth::user();
-        $roleName = $user->usersRoles->first()->role->name;
+        $userProfile = $user->usersRoles->first();
+        $user_id = $this->usersRepository->findWhere(['id' => $user->id])->first();
 
         $newPath = '';
 
@@ -271,12 +273,17 @@ class ProfileController extends AppBaseController
         if ($newPath != '') {
             $input['img'] = str_replace("public", "", $newPath);
         }
+        // dd($user_id);
+        $input['user_id'] = $user_id->id;
 
         $profile = $this->profileRepository->update($input, $id);
 
         Flash::success('Profile updated successfully.');
 
-        return redirect(route('profiles.main'));
+        return redirect(route('profiles.index'));
+        // ->with('profile', $profile)
+        // ->with('user_id',$user_id)
+        // ->with('userProfile',$userProfile)
     }
 
     /**
