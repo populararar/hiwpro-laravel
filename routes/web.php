@@ -45,6 +45,10 @@ Route::get('/cart/product/{id}/remove', 'HomeController@cartRemove')->name('cart
 Route::post('/cart/order', 'HomeController@order')->name('cart.order');
 Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}', 'HomeController@addSeller')->name('cart.seller.add');
 
+Route::get('/seller/review', 'HomeController@sellerReview')->name('home.seller_rate');
+
+// Route::get('/cart/product/{id}/remove', 'HomeController@cartRemove')->name('cart.remove');
+
 Route::middleware(['login'])->group(function () {
 
     Route::resource('profiles', 'ProfileController');

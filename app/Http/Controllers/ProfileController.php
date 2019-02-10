@@ -28,22 +28,6 @@ class ProfileController extends AppBaseController
         $this->usersRepository = $usersRepo;
     }
 
-    // /**
-    //  * Display a listing of the Profile.
-    //  *
-    //  * @param Request $request
-    //  * @return Response
-    //  */
-    // // public function index(Request $request)
-    // // {
-    // //     $user = Auth::user();
-    // //     // $this->profileRepository->pushCriteria(new RequestCriteria($request));
-    // //     $profile = $this->profileRepository->findWhere(['user_id' => $user->id])->first();
-
-    // //     return view('profiles.main')
-    // //         ->with('profile', $profile)->with('$user',$user);
-    // // }
-
       /**
      * Show the form for creating a new Profile.
      *
@@ -275,15 +259,17 @@ class ProfileController extends AppBaseController
         }
         // dd($user_id);
         $input['user_id'] = $user_id->id;
-
+        $id2 = $user_id->id;
         $profile = $this->profileRepository->update($input, $id);
+
+        $user_update = $this->usersRepository->update($input, $id2);
 
         Flash::success('Profile updated successfully.');
 
-        return redirect(route('profiles.index'));
-        // ->with('profile', $profile)
-        // ->with('user_id',$user_id)
-        // ->with('userProfile',$userProfile)
+        return redirect(route('profiles.index'))
+        ->with('profile', $profile)
+        ->with('user_id',$user_id)
+        ->with('userProfile',$userProfile);
     }
 
     /**

@@ -113,7 +113,7 @@ img.card-img-top {
                     {!! csrf_field() !!}
                 
 
-                <h4 style='border-bottom:2px solid #df3433; font-size:1.8em;margin:0%;'>{{ $product->name }}</h4>
+                <h3 style='border-bottom:2px solid #df3433; font-size:1.8em;margin:0%;'>{{ $product->name }}</h3>
                 <div class="line">
                    <span>
                         <font color="black">ราคา</font>
@@ -127,7 +127,7 @@ img.card-img-top {
                         ค่าหิ้ว {{ $product->fee }} บาท/ชิ้น
                     </div>
                     <div class="line col-sm-12 col-md-6">
-                        ค่าจัดส่ง {{ $product->shipping_price }} บาท
+                        ค่าจัดส่ง {{ $product->shipping_price }} บาท/ชิ้น
                     </div>
                 </div>
 
@@ -154,28 +154,43 @@ img.card-img-top {
 
     <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:5%;">
             <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">รายละเอียดสินค้า</a>
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">เงื่อนไขการใช้บริการ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">รายละเอียดสินค้า</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">รายละเอียดสินค้า</a>
             </li>
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> 
                 <div class="container my-3">
-
-                    {{ $product->name }}
-                    <br>
-                    <span><font color="red">{{ $product->price }}</font> จาก <del class>฿{{ $product->actual_price }}</del> บาท</span>
-                    <br>
-                    {{ $product->productdetail }}
+                <span><font color="#df3433">
+                    <i class="fas fa-shopping-bag"></i></font> การใช้บริการ 
+                    <font color="#df3433">
+                    <i class="fas fa-shopping-basket"></i></font> เลือกสินค้า
+                    <font color="#df3433">
+                    <i class="fas fa-users"></i></font> เลือกนักหิ้ว
+                    <font color="#df3433">
+                    <i class="fas fa-address-book"></i></font> คำนวนราคา
+                    <font color="#df3433">
+                    <i class="fas fa-file-alt"></i></font> ใส่รายละเอียด
+                    <font color="#df3433">
+                    <i class="fas fa-shipping-fast"></i></font> จัดส่ง
+                </span>
                 </div>
                
             </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="container my-3">
+                    <h5>{{ $product->name }}</h5> 
+                    
+                    <span>ราคา <font color="red">{{ $product->price }}</font> จาก <del class>฿{{ $product->actual_price }}</del> บาท</span>
+                    <br>
+                    {{ $product->productdetail }}
+                </div>
+            </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
           </div>
 </div>

@@ -98,4 +98,12 @@ class Profile extends Model
     {
         return $this->hasOne(\App\Models\Address::class);
     }
+
+     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function users()
+    {
+        return $this->hasOne(\App\Models\User::class);
+    }
 }

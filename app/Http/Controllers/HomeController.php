@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Validator;
-
+use Response;
 class HomeController extends Controller
 {
     /** @var  NotificationRepository */
@@ -78,6 +78,23 @@ class HomeController extends Controller
         Mail::to('ker13530018@gmail.com')->send(new OrderShipped());
     }
 
+    public function sellerReview(Request $request)
+    {
+      
+        $profile = $this->profileRepository->all();
+        $user = Auth::user();
+        
+        // $roleName = $user->usersRoles->first()->role->name;
+        // $user_id = $this->userRolesRepository->findWhere(['id' => $user->id])->first();
+
+
+        // $role_id = $user->usersRoles->first()->role_id;
+        return view('home.seller_rate')
+        ->with('user',$user)
+        // ->with('user_id',$user_id)
+        ->with('profile',$profile);
+    }
+
     public function cartRemove($id, Request $request)
     {
         \Cart::remove($id);
@@ -119,32 +136,21 @@ class HomeController extends Controller
 
     public function cartDetail(Request $request)
     {
-        // $id = $req->id ;
-        // $name = $req->name;
-        // $quantity = $req->quantity;
-        // $cost = $req->cost;
-        // $image = $req->image;
-
-        // Cart::add(array('id' => $id,
-        //                 'name' => $name,
-        //                 'qty' => $quantity,
-        //                 'price' => $cost,
-        //                 'image' => $image));
-
-        // $cart = Cart::content();
-
         $cart = \Cart::getContent();
         $shopGroup = $cart->groupBy('attributes.key')->sort();
-
+       
         $shopGroup = $shopGroup->map(function ($item, $key) {
             // Get saller in event shop
             $eventShopId = $item->first()->attributes->event_shop_id;
             $item->sellers = $this->getSallerInEventShop($eventShopId);
+           
+            // $profile =  $this->profileRepository->findWhere(['user_id' => $item->sellers->id ]);
             return $item;
         });
 
         if ($request->session()->has('sellers')) {
             $sellers = $request->session()->get('sellers');
+          
             $mapSeller = [];
             foreach ($sellers as $s) {
                 $arr = explode('-', $s);
@@ -153,11 +159,12 @@ class HomeController extends Controller
                 // Query seller data
                 $mapSeller[$eventShopId] = $this->usersRepository->findWithoutFail($sellerId);
             }
-
+            dd($mapSeller);
             return view('cart')
                 ->with('cart', $cart)
                 ->with('mapSeller', $mapSeller)
-                ->with('shopGroup', $shopGroup);
+                ->with('shopGroup', $shopGroup)
+                ->with('profile', $profile);
         }
         // $request->session()->put('_cart', $cart);
 
@@ -180,6 +187,7 @@ class HomeController extends Controller
     public function addSeller($eventShopId, $sellerId, Request $request)
     {
         // dd($request->session()->get('_cart'));
+
         $cart = $request->session()->get('_cart');
         $updatelog = [];
         foreach ($cart as $item) {
@@ -338,8 +346,9 @@ class HomeController extends Controller
 
     public function cartSeller()
     {
+        
         $cart = \Cart::getContent();
-        return view('cart2')->with('cart', $cart);
+        return view('cart')->with('cart', $cart);
     }
 
     /**
@@ -361,6 +370,7 @@ class HomeController extends Controller
     {
         $now = Carbon::now()->toDateTimeString();
         $events = $this->eventRepository->findWhere([['event_exp', '>', $now]]);
+        $profile = $this->profileRepository->all();
 
         foreach ($events as $event) {
             $event->start_date = $this->formatEventDate($event->startDate);
@@ -379,7 +389,7 @@ class HomeController extends Controller
             }
         }
 
-        return view('home')->with('events', $events);
+        return view('home')->with('profile',$profile)->with('events', $events);
     }
 
     private function formatEventDate($dateTime)

@@ -2,8 +2,6 @@
 
 @section('content')
 
-<div class="container">
-
 <style>
 img:hover{
   opacity: 0.5;
@@ -11,7 +9,7 @@ img:hover{
   transition:ease-in 0.2s;
 }
 </style>
-</div>
+
       <div class="col-md-12 d-lg-none d-xl-blocke">
         <img class="card-img-top" style="border-radius: 2%;" src="{{ asset('hiwpro/images/sephora-cover.png')}}">
       </div>

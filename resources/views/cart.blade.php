@@ -9,8 +9,8 @@
             font-size: 25px;
             font-weight: 700;
             line-height: 30px;
-            padding: 0 2px
-            ;min-width: 35px;
+            padding: 0 2px;
+            min-width: 35px;
             text-align: center;
         }
 

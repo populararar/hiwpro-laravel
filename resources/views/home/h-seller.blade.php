@@ -1,5 +1,5 @@
 <div class="weapper" style="background-color: #F9F9F9; padding:3% 5%; ">
-        <h4 style="margin-top: 2%; color: #df3433;">นักหิ้วมือโปร</h4>
+        <a href="/seller/review"><h4 style="margin-top: 2%; color: #df3433;">นักหิ้วมือโปร</h4></a>
         <h5>POPULAR THIS MONTH </h5>
         <div class="line-g">
             <div class="line-r">
@@ -100,75 +100,25 @@
     
     <div class="weapper" style="background-color: #fff; padding:3% 5%; ">
             <h4 style="margin-top: 2%; color: #df3433;">นักหิ้วหน้าใหม่ </h4>
+           
+            {{-- {{dd($user)}} --}}
             <h5>SELLER & SEGGESTION </h5>
             <div class="line-g">
-                    <div class="line-r">
-                    </div>
+                <div class="line-r">
                 </div>
+            </div>
             <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-            <div class="carousel-wrap">
-                <div class="owl-carousel">
-                    <div class="item card-n">
-                        <img  src="{{ asset('hiwpro/images/thumbnail-02.png') }}" class="image" >
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-03.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-04.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-05.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-06.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-07.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-08.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-09.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-10.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-11.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-12.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-
-                    <div class="item card-n">
-                        <img class="image" src="{{ asset('hiwpro/images/thumbnail-13.png') }}">
-                        <div class="middle"><div class="text">Name</div></div>
-                    </div>
-                </div>
-           </div>
-                        
+      
+            <div class="owl-carousel owl-theme">
+                
+                @foreach ($profile as $item)
+                    @if ($item->national_img)
+                        <div class="item card-n">
+                            <img src="{{ asset('/storage/'.$item->img) }}" class="img-fluid" >
+                            <div class="middle"><div class="text">{{$item->tel}}</div></div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
     
-        </div><!-- weapper pink 4-->
+    </div>

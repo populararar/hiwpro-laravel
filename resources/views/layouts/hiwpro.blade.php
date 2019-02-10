@@ -100,7 +100,8 @@
     <div class="sticky-top">
     <nav class="sticky-top navbar-top  navbar navbar-expand-lg navbar-light bg-light" >
 
-        <a class="navbar-brand" href="index.php"><img class="img-fluid" style="box-sizing: border-box; margin: 0 10%;"
+        <a class="navbar-brand"  href="{{ url('/') }}">
+            <img class="img-fluid" style="box-sizing: border-box; margin: 0 10%;"
                 src="{{ asset('hiwpro/images/logo.png') }}" alt="">HIWPRO</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,7 +117,7 @@
                 <a class="nav-link" href="{{ url('/eventinfo') }}">โปรโมชั่น</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profiles.index') }}">นักหิ้วมือโปร</a>
+                    <a class="nav-link" href="{{ route('home.seller_rate') }}">นักหิ้วมือโปร</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('register') }}">หิ้วกับเรา</a>

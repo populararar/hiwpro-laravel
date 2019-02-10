@@ -35,9 +35,7 @@
 </div>
    
     @if($role=="SELLER")
-   {{-- <a href="{!! route('profiles.create') !!}" class='btn btn-default btn-xs'>สร้างโปรไฟล์ของฉัน</a>
-   <a href="{!! route('profiles.create') !!}" class='btn btn-default btn-xs'>รับงาน</a>
-   <a href="{!! route('profiles.create') !!}" class='btn btn-default btn-xs'>ตรวจสอบ</a>  --}}
+   <a style="margin-left:45%;" href="{{ url('/orderSellers') }}" class='btn btn-default btn-xs'>กลับไปหน้าแม่ค้า</a>
     @endif 
     @if($role=="USER")
     {{-- @include('profiles.customer'); --}}

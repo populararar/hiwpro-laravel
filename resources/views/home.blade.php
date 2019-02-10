@@ -314,27 +314,21 @@
                     <script>
                            
                 
-                            $('.owl-carousel').owlCarousel({
-                            loop: true,
-                            margin: 10,
-                            nav: true,
-                            navText: [
-                                "<i class='fa fa-caret-left'></i>",
-                                "<i class='fa fa-caret-right'></i>"
-                            ],
-                            autoplay: true,
-                            autoplayHoverPause: true,
-                            responsive: {
-                                0: {
-                                items: 1
-                                },
-                                600: {
-                                items: 3
-                                },
-                                1000: {
-                                items: 5
+                           $('.owl-carousel').owlCarousel({
+                                loop:true,
+                                margin:10,
+                                nav:true,
+                                responsive:{
+                                    0:{
+                                        items:1
+                                    },
+                                    600:{
+                                        items:3
+                                    },
+                                    1000:{
+                                        items:5
+                                    }
                                 }
-                            }
                             })
                        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 

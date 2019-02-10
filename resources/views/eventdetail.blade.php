@@ -49,7 +49,7 @@ p.card-in{
     flex: 0 0 25%;
     max-width: 22%;
     float: left;
-    height: 330px;
+    height: 350px;
 }
 .col-sm-fix{
     /* -ms-flex: 0 0 25%;
