@@ -39,6 +39,10 @@ php artisan infyom:scaffold SellerReview  --fromTable --tableName=seller_review 
 
 php artisan infyom:scaffold Notification  --fromTable --tableName=notification --primary=id --relations
 
+php artisan infyom:scaffold ReportAdmin  --fromTable --tableName=order_header --primary=id --relations
+
+php artisan infyom:scaffold ReportSeller  --fromTable --tableName=order_header --primary=id --relations
+
 
 
 ALTER TABLE `hiwpro`.`event_joined` 
