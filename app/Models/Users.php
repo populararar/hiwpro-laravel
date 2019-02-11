@@ -80,6 +80,6 @@ class Users extends Authenticatable
      **/
     public function profile()
     {
-        return $this->hasOne(\App\Models\Profile::class);
+        return $this->hasOne(\App\Models\Profile::class,'user_id');
     }
 }

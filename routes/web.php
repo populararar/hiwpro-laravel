@@ -108,11 +108,10 @@ Route::middleware(['login'])->group(function () {
     Route::resource('sellerReviews', 'SellerReviewController');
 
     Route::resource('notifications', 'NotificationController');
+
+    Route::resource('reportAdmins', 'ReportAdminController');
+
+    Route::resource('reportSellers', 'ReportSellerController');
 });
 Route::get('/mail', 'HomeController@mail');
 
-
-
-Route::resource('reportAdmins', 'ReportAdminController');
-
-Route::resource('reportSellers', 'ReportSellerController');

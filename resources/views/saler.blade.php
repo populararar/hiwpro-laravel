@@ -139,8 +139,6 @@ label {
                       
             <div class="col-lg-12 justify-content-around row">
                 @foreach ($group->sellers as $seller) 
-              
-                {{-- {{dd($seller)}} --}}
                  {{-- {{dd($seller->profile)}} --}}
                     @php
                     $eventShopId = $group->first()->attributes->event_shop_id;
@@ -155,9 +153,14 @@ label {
                                            
                                         @endforeach --}}
                                         <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
-                                        <img class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+                                        
+                                            @if(empty($seller->profile))
+                                            <img class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+                                            @else
+                                            <img class="mx-auto card rounded img-fluid" src="{{ asset('storage') }}/{{ $seller->profile->img }}"> 
+                                            @endif
                                         {{ $seller->name }}
-                                        <p>คะแนนนักหิ้ว</p>
+                                        <p>คะแนนนักหิ้ว {{ $seller->avg }}</p>
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>

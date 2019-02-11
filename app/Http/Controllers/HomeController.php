@@ -11,6 +11,7 @@ use App\Repositories\PermissionsRepository;
 use App\Repositories\ProducteventRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\ProfileRepository;
+use App\Repositories\SellerReviewRepository;
 use App\Repositories\UserRolesRepository;
 use App\Repositories\UsersRepository;
 use Carbon\Carbon;
@@ -20,10 +21,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Validator;
 use Response;
+use Validator;
+
 class HomeController extends Controller
 {
+    /** @var  SellerReviewRepository */
+    private $sellerReviewRepository;
+
     /** @var  NotificationRepository */
     private $notificationRepository;
 
@@ -59,7 +64,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(NotificationRepository $notificationRepo, ProfileRepository $profileRepo, EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo
+    public function __construct(SellerReviewRepository $sellerReviewRepo, NotificationRepository $notificationRepo, ProfileRepository $profileRepo, EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo
         , UsersRepository $usersRepo, PermissionsRepository $permissionRepo) {
         $this->eventJoinedRepository = $eventJoinedRepo;
         $this->usersRepository = $usersRepo;
@@ -71,6 +76,7 @@ class HomeController extends Controller
         $this->userRolesRepository = $userRolesRepo;
         $this->profileRepository = $profileRepo;
         $this->notificationRepository = $notificationRepo;
+        $this->sellerReviewRepository = $sellerReviewRepo;
     }
 
     public function mail()
@@ -80,19 +86,18 @@ class HomeController extends Controller
 
     public function sellerReview(Request $request)
     {
-      
+
         $profile = $this->profileRepository->all();
         $user = Auth::user();
-        
+
         // $roleName = $user->usersRoles->first()->role->name;
         // $user_id = $this->userRolesRepository->findWhere(['id' => $user->id])->first();
 
-
         // $role_id = $user->usersRoles->first()->role_id;
         return view('home.seller_rate')
-        ->with('user',$user)
-        // ->with('user_id',$user_id)
-        ->with('profile',$profile);
+            ->with('user', $user)
+            // ->with('user_id',$user_id)
+            ->with('profile', $profile);
     }
 
     public function cartRemove($id, Request $request)
@@ -138,19 +143,19 @@ class HomeController extends Controller
     {
         $cart = \Cart::getContent();
         $shopGroup = $cart->groupBy('attributes.key')->sort();
-       
+
         $shopGroup = $shopGroup->map(function ($item, $key) {
             // Get saller in event shop
             $eventShopId = $item->first()->attributes->event_shop_id;
             $item->sellers = $this->getSallerInEventShop($eventShopId);
-           
+
             // $profile =  $this->profileRepository->findWhere(['user_id' => $item->sellers->user_id ]);
             return $item;
         });
 
         if ($request->session()->has('sellers')) {
             $sellers = $request->session()->get('sellers');
-          
+
             $mapSeller = [];
             foreach ($sellers as $s) {
                 $arr = explode('-', $s);
@@ -159,14 +164,14 @@ class HomeController extends Controller
                 // Query seller data
                 $mapSeller[$eventShopId] = $this->usersRepository->findWithoutFail($sellerId);
             }
-            // dd($mapSeller->users->name);
+            // dd($mapSeller);
             return view('cart')
                 ->with('cart', $cart)
                 ->with('mapSeller', $mapSeller)
                 ->with('shopGroup', $shopGroup);
-                // ->with('profile', $profile)
+            // ->with('profile', $profile)
         }
-        // $request->session()->put('_cart', $cart);
+        // dd($request->session()->get('sellers'));
 
         return view('cart')->with('cart', $cart)->with('shopGroup', $shopGroup);
     }
@@ -214,7 +219,7 @@ class HomeController extends Controller
 
         $request->session()->put('_cart', $cart);
 
-        dd($updatelog, $request->session()->get('_cart'));
+        // dd($updatelog, $request->session()->get('_cart'));
 
         return response()->json(['cart' => $cart]);
     }
@@ -230,6 +235,14 @@ class HomeController extends Controller
     {
         $eventJoineds = $this->eventJoinedRepository->with('seller')->findWhere(['event_shop_id' => $eventShopId]);
         $sellers = $eventJoineds->map(function ($eventJoin) {
+
+            $sellerId = $eventJoin->seller->id;
+            $reviews = $this->sellerReviewRepository->findWhere(['user_id' => $sellerId]);
+            $avg = $reviews->avg('score');
+            if(empty($avg)) {
+                $avg = 0;
+            }
+            $eventJoin->seller->avg = $avg;
             return $eventJoin->seller;
         });
 
@@ -346,7 +359,7 @@ class HomeController extends Controller
 
     public function cartSeller()
     {
-        
+
         $cart = \Cart::getContent();
         return view('cart')->with('cart', $cart);
     }
@@ -389,7 +402,7 @@ class HomeController extends Controller
             }
         }
 
-        return view('home')->with('profile',$profile)->with('events', $events);
+        return view('home')->with('profile', $profile)->with('events', $events);
     }
 
     private function formatEventDate($dateTime)
