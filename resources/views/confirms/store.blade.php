@@ -227,12 +227,14 @@ $sum=0;$count=0;$count2=0;
                 @php 
                     $eventShopId = $group->first()->attributes->event_shop_id;
                     // dd($mapSeller[$eventShopId]->name);
-                @endphp
-                <div class="" style="margin-bottom:20px;">
-                    @foreach ($group as $product)
-                    <h5 style="text-align:left; border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
+                @endphp  
+                @foreach ($group as $product)
+                <div class="row col-12" style="margin-bottom:20px;">
+                  <div class="col-md-12">
+                      <h5 style="text-align:left; border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
+                  </div>
+                    
                     <div class="col-md-8" style="padding:2% 5%;">
-
                         <div class="row" style="border-top: solid 2px #e7eaec;">
                             <div class="col-2" style="font-weight:bold;">รูป</div>
                             <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
@@ -274,26 +276,22 @@ $sum=0;$count=0;$count2=0;
                       
                     </div>
                     @endforeach
-                    <div class="col-md-4">
-                        <h5> <i class="fas fa-user"></i> หิ้วโดย</h5>
-                        <div class="row"  style="max-width: 18rem;padding:10% 0%; margin:auto; border:1px solid #eee;padding:5px; text-align:center;">
-                                <div class="col-md-12 ">
-                                    <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}">
-                                </div>
-                                <div class="col-md-12">
-                                    
-                                    {{$mapSeller[$eventShopId]->id}} - {{ $mapSeller[$eventShopId]->name }}
-                                    <p>คะแนนนักหิ้ว</p>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                        </div>
+                    <div class="col-md-3 my-4" style="text-align:center;">
+                            {{-- @foreach ($seller->profile as $item)
+                            @endforeach --}}
+                            {{-- <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" /> --}}
+                            <img  class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+                            {{ $mapSeller[$eventShopId]->name }}
+                            <p>คะแนนนักหิ้ว</p>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                     </div>
+                 </div>  
                     @endforeach
                     <a class="btn btn-success btn-block" href="{{route('confirms.edit',['confirm'=>'address'])}}">ดำเนินการต่อ</a>
-                </div>
+                
     </div>
 </div>
 

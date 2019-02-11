@@ -87,23 +87,24 @@ label {
 </style>
 
 
-                <div class="owl-carousel owl-theme justify-content-around plum row">
-                    
+                {{-- <div class="owl-carousel owl-theme justify-content-around plum row">
                         @foreach ($group->sellers as $seller)
                         {{-- {{dd($seller)}} --}}
-                         {{-- {{dd($seller->profile)}} --}}
+                         {{-- {{dd($seller->profile)}} 
                             @php
                             $eventShopId = $group->first()->attributes->event_shop_id;
                             // dd($eventShopId);
                             @endphp
                             <div class=" rebeccapurple" id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
                                     <div class="col">
+
+
                                         <label class="seller" id="seller-{{ $seller->id }}"> 
                                             <div class="item">
                                                 
                                                 {{-- @foreach ($seller->profile as $item)
                                                    
-                                                @endforeach --}}
+                                                @endforeach 
                                                 
                                                 <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
                                                 <img class="mx-auto card rounded img-fluid" src="{{ asset('hiwpro/images/people.png')}}"> 
@@ -119,11 +120,26 @@ label {
                                     </div>
                             </div>
                         @endforeach
-                    </div> 
-
-
+                        </div>  --}}
+                        @foreach ($group->sellers as $seller)
+                            @php
+                                $count = $seller->id;
+                            @endphp 
+                        @endforeach
+                        @if (empty($count))
+                            <div class="alert alert-danger" role="alert">
+                                ขณะนี้ ไม่มีนักหิ้วสะดวกไปหิ้วให้คุณ
+                            </div> 
+                        @else
+                        <div class="alert alert-primary" role="alert">
+                                กรุณาเลือกนักหิ้ว<br>
+                                *คุณสามารถเลือกนักหิ้วได้ 1 คน ต่อ 1 shop
+                        </div> 
+                        @endif 
+                      
             <div class="col-lg-12 justify-content-around row">
-                @foreach ($group->sellers as $seller)
+                @foreach ($group->sellers as $seller) 
+              
                 {{-- {{dd($seller)}} --}}
                  {{-- {{dd($seller->profile)}} --}}
                     @php
@@ -138,9 +154,8 @@ label {
                                         {{-- @foreach ($seller->profile as $item)
                                            
                                         @endforeach --}}
-                                        
                                         <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
-                                        <img class="mx-auto card rounded img-fluid" src="{{ asset('hiwpro/images/people.png')}}"> 
+                                        <img class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
                                         {{ $seller->name }}
                                         <p>คะแนนนักหิ้ว</p>
                                         <i class="fas fa-star"></i>

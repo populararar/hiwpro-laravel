@@ -241,7 +241,7 @@ $sum=0;$count=0;$count2=0;
     <div class="shadow-sm p-3 mb-5 bg-white rounded">
         <div class="alert alert-warning alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Warning!</strong> หากไม่ได้กดรับภายใน1สัปดาห์หลังจากมีการอัพเดทเลขแทร็คไว้ ถือว่าได้รับสินค้าแล้ว
+            <strong>Warning!</strong> กรุณาอ่านเงื่อนไขการใช้บริการก่อนสั่งซื้อสินค้า <a href="#" class="alert-link"></a>
         </div>
     {{-- style="margin-bottom:20px;" --}}
   

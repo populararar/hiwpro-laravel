@@ -200,24 +200,34 @@ $sum=0;$count=0;$count2=0;
 @endphp
 
 <div class="container" style="padding: 0 5%;">
-    <div class="col">
-        <h4 style="margin-top: 2%; color: #df3433;">สรุปรายการสั่งซื้อ </h4>
-        <p class="h9">สั่งซื้อสินค้ากับหิ้วโปร</p>
-    </div>
+        <div class="row" style="text-align:center;margin-top:2.5%;">
+            <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br></i>รายการสั่งซื้อ</div> 
+            <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>สรุปรายการสั่งซื้อ</div>
+            <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>ที่อยู่การจัดส่ง</div>
+            <div class="col-sm-12 col-md-3"> 
+                <h1 style="text-align:center; margin-top: 2%; color: #df3433;"><i class="fas fa-address-card"></i></h1>
+                <h4 style="text-align:center; margin-top: 2%; color: #df3433; font-weight:bolder;">ยืนยันการสั่งซื้อ</h4>
+                <div style="width:50px;height:5px; background-color:#cf2132;margin:auto;"></div>
+            </div>
+            
+            
+        </div>
+
+
     <div class="row">
         <div class="col-2">
             <h5 style="margin-top: 2%; ">ข้อมูลการจัดส่ง : </h5>
         </div>
         <div class=" col-6">
-            <h6>{{ $address['name'].' '.$address['lastname'] }}</h6>
-            <h6>{{ $address['email'] }}</h6>
-            <h6 style="margin-top: 2%; color: gray;">
-                {{ $address['address'].' '.$address['city'].' '.$address['state'].' '.$address['country'].' '.$address['zip'] }} </h6>
+            <p>{{ $address['name'].' '.$address['lastname'] }}</p>
+            <p>{{ $address['email'] }}</p>
+            <p style="margin-top: 2%; color: gray;">
+                {{ $address['address'].' '.$address['city'].' '.$address['state'].' '.$address['country'].' '.$address['zip'] }} </p>
             
         </div>
     </div>
 
-    <div class="weapper" style="background-color: #F9F9F9; padding:3%; ">
+    <div class="weapper shadow" style="padding:3%; ">
         @foreach ($shopGroup as $key => $group)
         @php
         $eventShopId = $group->first()->attributes->event_shop_id;

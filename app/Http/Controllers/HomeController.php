@@ -144,7 +144,7 @@ class HomeController extends Controller
             $eventShopId = $item->first()->attributes->event_shop_id;
             $item->sellers = $this->getSallerInEventShop($eventShopId);
            
-            // $profile =  $this->profileRepository->findWhere(['user_id' => $item->sellers->id ]);
+            // $profile =  $this->profileRepository->findWhere(['user_id' => $item->sellers->user_id ]);
             return $item;
         });
 
@@ -159,12 +159,12 @@ class HomeController extends Controller
                 // Query seller data
                 $mapSeller[$eventShopId] = $this->usersRepository->findWithoutFail($sellerId);
             }
-            dd($mapSeller);
+            // dd($mapSeller->users->name);
             return view('cart')
                 ->with('cart', $cart)
                 ->with('mapSeller', $mapSeller)
-                ->with('shopGroup', $shopGroup)
-                ->with('profile', $profile);
+                ->with('shopGroup', $shopGroup);
+                // ->with('profile', $profile)
         }
         // $request->session()->put('_cart', $cart);
 
