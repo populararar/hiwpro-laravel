@@ -146,7 +146,10 @@ class OrderSellerController extends AppBaseController
 
         $formDetail = $request->input('form-detail');
         if (empty($formDetail)) {
-            $orderHeader = $this->orderHeaderRepository->update($request->all(), $id);
+            
+            $input = $request->all();
+            $input['status'] = 'COMPLETED';
+            $orderHeader = $this->orderHeaderRepository->update($input, $id);
 
             Flash::success('Order Header updated successfully.');
 

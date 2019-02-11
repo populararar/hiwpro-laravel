@@ -11,4 +11,11 @@
     </li>
     @endif
     @endforeach 
-@endif
+@endif<li class="{{ Request::is('reportAdmins*') ? 'active' : '' }}">
+    <a href="{!! route('reportAdmins.index') !!}"><i class="fa fa-edit"></i><span>Report Admins</span></a>
+</li>
+
+<li class="{{ Request::is('reportSellers*') ? 'active' : '' }}">
+    <a href="{!! route('reportSellers.index') !!}"><i class="fa fa-edit"></i><span>Report Sellers</span></a>
+</li>
+
