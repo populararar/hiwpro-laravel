@@ -383,12 +383,19 @@ class HomeController extends Controller
     {
         $now = Carbon::now()->toDateTimeString();
         $events = $this->eventRepository->findWhere([['event_exp', '>', $now]]);
+        $event_now = $this->eventRepository->findWhere([['startDate', '>=', $now]])->first();
+
+        // dd($event_now);
         $profile = $this->profileRepository->all();
 
         foreach ($events as $event) {
             $event->start_date = $this->formatEventDate($event->startDate);
             $event->last_date = $this->formatEventDate($event->lastDate);
         }
+        
+        $event_now->start_date = $this->formatEventDate($event_now->startDate);
+        $event_now->last_date = $this->formatEventDate($event_now->lastDate);
+        
         $events = $events->sortByDesc('last_date');
 
         if (Auth::check()) {
@@ -402,7 +409,10 @@ class HomeController extends Controller
             }
         }
 
-        return view('home')->with('profile', $profile)->with('events', $events);
+        return view('home')
+        ->with('profile', $profile)
+        ->with('events', $events)
+        ->with('event_now', $event_now);
     }
 
     private function formatEventDate($dateTime)

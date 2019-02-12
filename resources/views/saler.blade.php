@@ -84,6 +84,18 @@ label {
 .rebeccapurple{
     background-color: rebeccapurple;
 }
+.img-size{
+    width: 125px;
+    height: 125px;
+    object-fit: contain;
+}
+.img-size-in{
+    height: 100%;
+    max-width: 100%;
+    display: block;
+    margin: auto;
+    /* overflow: hidden; */
+}
 </style>
 
 
@@ -153,7 +165,13 @@ label {
                                            
                                         @endforeach --}}
                                         <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
-                                        
+                                            {{-- <div class="mx-auto card img-size">
+                                                @if(empty($seller->profile))
+                                                <img class="mx-auto img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+                                                @else
+                                                <img class="mx-auto img-fluid" src="{{ asset('storage') }}/{{ $seller->profile->img }}"> 
+                                                @endif
+                                            </div> --}}
                                             @if(empty($seller->profile))
                                             <img class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
                                             @else
@@ -161,10 +179,29 @@ label {
                                             @endif
                                         {{ $seller->name }}
                                         <p>คะแนนนักหิ้ว {{ $seller->avg }}</p>
+                                        @if ($seller->avg==0)
+                                        ยังไม่มีคะแนน
+                                        @elseif($seller->avg==1)
+                                        <i class="fas fa-star"></i>
+                                        @elseif($seller->avg==2)
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        @elseif($seller->avg==3)
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        @elseif($seller->avg==4)
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
+                                        @elseif($seller->avg==5)
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        @endif
                                     </div>
                                 
                                 </label>

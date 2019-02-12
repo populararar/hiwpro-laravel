@@ -58,7 +58,8 @@
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6">
-                                <img class="img-fluid" style="border-radius: 2%;" src="{{ asset('hiwpro/images/p_02.png')}}">
+                                @if(!empty($events))
+                                <img class="img-fluid" style="border-radius: 2%;" src="{{ asset('/storage/'.$event_now->imgPath) }}">
                                 <div class="text-center" style="text-align: center;">
                                     <ul style="padding: 0;">
                                         <li class="clock"><span id="days"></span>days</li>
@@ -70,13 +71,17 @@
                                 </div>
                             </div>
                             <div class=".d-xs-none  col-sm-6 col-md-6" style="text-align: center;">
-                                <h1 style="color: black;">KOREA FAIR<br>4-9/12</h1>
-                                <p style="padding:5%;">อันยองงง พาส่องงาน Korea Expo 2018 เครื่องสำอางสัญชาติเกาหลี  ไม่ว่าจะเป็น Laneige, It's Skin, Etude, Sulwhasoo หรือ innisfree ก็มีหมดเลยจ้า ไม่ต้องง้อร้านพรี
-                                เพราะราคาดีเหมือนซื้อเกาหลีเลยค่าา เอ้า สาวๆตุนด่วน !!
+                                
+                                {{-- {{dd($events)}} --}}
+                                
+                                <h1 style="color: black;">{{$event_now->eventName}}<br>
+                                    {{ $event_now->start_date }} - {{ $event_now->last_date }}
+                                    
+                                <p style="padding:5%;"> {{ $event_now->detail }}
                                      </p>
-                
-                                <button type="button" style="text-align: center; border-radius: 30px;" class="btn btn-outline-danger align-self-center">ดูเพิ่มเติม</button>
-                
+                                <a href="/eventdetail/{{ $event_now->event_id }}"class="btn btn-outline-danger align-self-center"
+                                     style="text-align: center; border-radius: 30px;" >ดูเพิ่มเติม</a>
+                                     @endif
                             </div>
                         </div>
                 
@@ -208,48 +213,6 @@
                 
                 @include('home.h-seller')
                 
-
-                    {{-- <div class="weapper howto" style="">
-                    <div id="carouselExampleFade" style="box-sizing:border-box; hight:20%;" class="carousel slide carousel-fade" data-ride="carousel">
-                        <div class="carousel-inner">
-                
-                            <div class="carousel-item active">
-                                <div class="p-3 mb-2 bg-danger text-white text-center"><h4>5 Step การสั่งซื้อ</h4></div>
-                                <div class="carousel-wrap">
-                                    <div class="owl-carousel" style="padding: 0% 3%; color: #fff;">
-                                        <div class="item"><div class="col rounded-circle"><div class="how">1<h1><i class="fas fa-search"></i> </h1>ค้นหา</div></div></div>
-                                        <div class="item"><div class="col rounded-circle"><div class="how">2<h1><i class="fas fa-shopping-cart"></i> </h1>เลือกสินค้า</div></div></div> 
-                                        <div class="item"><div class="col rounded-circle"><div class="how">3<h1><i class="fas fa-shipping-fast"></i> </h1>ชำระเงิน</div></div></div> 
-                                        <div class="item"><div class="col rounded-circle"><div class="how">4<h1><i class="fas fa-shipping-fast"></i> </h1>รอรับของ</div></div></div> 
-                                        <div class="item"><div class="col rounded-circle"><div class="how">5<h1><i class="fas fa-boxes"></i> </h1>ได้สินค้า</div></div></div> 
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <div class="carousel-item">
-                                <div class="p-3 mb-2 bg-danger text-white text-center"><h4>5 Step นักหิ้วมือโปร</h4></div>
-                                <div class="carousel-wrap">
-                                    <div class="owl-carousel" style="padding: 0% 3%; color: #fff;">
-                                        <div class="item"><div class="col rounded-circle"><div class="how">1<h1><i class="far fa-newspaper"></i> </h1>ตามโปร</div></div></div> 
-                                        <div class="item"><div class="col rounded-circle"><div class="how">2<h1><i class="far fa-calendar-plus"></i> </h1>กด JION</div></div></div> 
-                                        <div class="item"><div class="col rounded-circle"><div class="how">3<h1><i class="fas fa-shopping-cart"></i> </h1>ซื้อสินค้า</div></div></div> 
-                                        <div class="item"><div class="col rounded-circle"><div class="how">4<h1><i class="fas fa-box"></i> </h1>จัดส่ง</div></div></div> 
-                                        <div class="item"><div class="col rounded-circle"><div class="how">5<h1><i class="fas fa-hand-holding-usd"></i> </h1>รับเงิน</div></div></div> 
-                                    </div>
-                                </div>
-                            </div>
-                           
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                    </div><!-- How to --> --}}
                 
                 
                     <div class="weapper" style="padding:0 5%;">

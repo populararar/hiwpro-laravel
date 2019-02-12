@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/navbar-header.css') }}">
     <link rel="stylesheet" href="{{ asset('hiwpro/css/frontend/home.css') }}">
 
+    {{-- <link rel="shortcut icon" href="{{{ asset('image/logo.png') }}}"> --}}
 
     
 
@@ -26,7 +27,7 @@
 
     <style>
         body{
-        font-family: 'Kanit', sans-serif;;
+        font-family: 'Kanit', sans-serif;
     }
     h1{
         font-weight: lighter;
@@ -54,10 +55,6 @@
     display: block;
     font-size: 4EM;
     color: red;
-  }
-  .howto{
-	background-image: url('/Christmas/public/images/bg-howto.png');
-	padding-top: 5%; padding-bottom: 5%;
   }
   .navbar-top{
     position: relative;
