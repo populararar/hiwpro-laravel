@@ -77,7 +77,7 @@ class EventShopController extends AppBaseController
     public function create()
     {
         // TODO : event_endDate > date_now
-        $dateNow = Carbon::now()->format('Y-m-d 23:59:59');
+        $dateNow = Carbon::now()->setTimezone('Asia/Bangkok')->format('Y-m-d 23:59:59');
         $events = $this->eventRepository->findWhere([['event_exp', '>', $dateNow]]);
 
         $events = $events->mapWithKeys(function ($item) {

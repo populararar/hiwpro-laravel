@@ -9,6 +9,7 @@ use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
 use App\Repositories\SellerReviewRepository;
 use App\Repositories\UsersRepository;
+use App\Repositories\NotificationRepository;
 use Carbon\Carbon;
 use Carbon\DateTimeZone;
 use Flash;
@@ -20,6 +21,9 @@ use Validator;
 
 class OrderController extends AppBaseController
 {
+     /** @var  NotificationRepository */
+     private $notificationRepository;
+
     /** @var  SellerReviewRepository */
     private $sellerReviewRepository;
 
@@ -32,12 +36,13 @@ class OrderController extends AppBaseController
     /** @var  OrderHeaderRepository */
     private $orderHeaderRepository;
 
-    public function __construct(SellerReviewRepository $sellerReviewRepo, OrderDetailRepository $orderDetailRepo, OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo)
+    public function __construct(NotificationRepository $notificationRepo ,SellerReviewRepository $sellerReviewRepo, OrderDetailRepository $orderDetailRepo, OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->usersRepository = $usersRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->sellerReviewRepository = $sellerReviewRepo;
+        $this->notificationRepository = $notificationRepo;
 
     }
 
@@ -49,6 +54,10 @@ class OrderController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+        
+        $notifications = $this->notificationRepository->findWhere(['user_id' => $user->id])->sortByDesc('created_at')->sortBy('status');
+
         $this->orderHeaderRepository->pushCriteria(new RequestCriteria($request));
 
         $user = Auth::user();
@@ -64,6 +73,7 @@ class OrderController extends AppBaseController
 
         return view('orders.index')
             ->with('orderHeaders', $orderHeaders)
+            ->with('notifications', $notifications)
             ->with('user', $user);
     }
 
@@ -171,7 +181,7 @@ class OrderController extends AppBaseController
             return redirect()->route('home');
         }
 
-        $now = Carbon::now()->toDateTimeString();
+        $now = Carbon::now()->setTimezone('Asia/Bangkok')->toDateTimeString();
 
         $user = Auth::user();
         $i = 0;
@@ -214,7 +224,7 @@ class OrderController extends AppBaseController
             }
         }
 
-        Flash::success('Order Header saved successfully.');
+        Flash::success('ขอขอบคุณสำหรับการช้อปปิ้งสินค้ากับหิ้วโปร เราได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว และกำลังดำเนินการตรวจสอบรายการคำสั่งซื้อนี้ ทางเราจะทำการส่งข้อมูลการอับเดททางข้อความให้คุณทราบโดยเร็ว');
         \Cart::clear();
         $request->session()->forget('sellers');
         $request->session()->forget('address');

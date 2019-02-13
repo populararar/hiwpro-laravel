@@ -1,4 +1,4 @@
-<div class="weapper" >
+
 
  
 <table class="table table-hover " id="notifications-table">
@@ -13,26 +13,24 @@
     </thead>
     <tbody>
     @foreach($notifications as $notification)
-@php
-  $status =  $notification->status;
+        @php
+        $status =  $notification->status;
         $read="";
-@endphp
+        @endphp
         @if ($status == 1)
-            <tr class="table-danger">@php $read = "ยังไม่อ่าน"; @endphp           
+            <tr class="table-danger" id="demo" onclick="window.location.href = '{{route('orders.statusdetail',[ $notification->orderHeader->order_number])}}';">@php $read = "ยังไม่อ่าน"; @endphp   
+
         @else
         <tr>@php $read = "อ่านแล้ว"; @endphp 
-
         @endif
      
             <td><a href="{{route('orders.statusdetail',[ $notification->orderHeader->order_number])}}" >
             {!! $notification->orderHeader->order_number !!}</a></td>
+            
             <td>{!! $notification->order_id !!}</td>
             <td>{!! $notification->user_id !!}</td>
             <td>{!! $notification->title !!}</td>
-            
             <td > <p >{{ $read}}</p></td>
-            
-                
                 {!! Form::open(['route' => ['notifications.destroy', $notification->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{!! route('notifications.show', [$notification->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
@@ -45,12 +43,24 @@
     @endforeach
     </tbody>
 </table>
-</div>
+
+
+
 
 @section('scripts')
-    <script>
+    {{-- <script>
     $(document).ready( function () {
     $('#notifications-table').DataTable();
-} );
-    </script>
+    } );
+    </script> --}}
+
+    
+
+<script>
+    $('tr').click(function() {
+    location.href = 'route('orders.statusdetail',[ $notification->orderHeader->order_number])';
+});
+
+
+</script>
 @endsection

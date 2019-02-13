@@ -6,6 +6,8 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateNotificationRequest;
 use App\Http\Requests\UpdateNotificationRequest;
 use App\Repositories\NotificationRepository;
+use App\Repositories\UsersRepository;
+use App\Repositories\OrderHeaderRepository;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,12 +16,20 @@ use Response;
 
 class NotificationController extends AppBaseController
 {
+    /** @var  OrderHeaderRepository */
+    private $orderHeaderRepository;
+
+    /** @var  UsersRepository */
+    private $usersRepository;
+
     /** @var  NotificationRepository */
     private $notificationRepository;
 
-    public function __construct(NotificationRepository $notificationRepo)
+    public function __construct(OrderHeader $orderHeader, UsersRepository $usersRepo,NotificationRepository $notificationRepo)
     {
         $this->notificationRepository = $notificationRepo;
+        $this->usersRepository = $usersRepo;
+        $this->orderHeaderRepository = $orderHeaderRepo;
     }
 
     /**
@@ -35,6 +45,8 @@ class NotificationController extends AppBaseController
         $this->notificationRepository->pushCriteria(new RequestCriteria($request));
         $notifications = $this->notificationRepository->findWhere(['user_id' => $user->id])->sortByDesc('created_at')->sortBy('status');
 
+        $user = $this->usersRepository->findwhere(['id'=> $notifications->orderHeader->seller_id])->sortByDesc('created_at')->sortBy('status');
+        dd( $user );
         return view('notifications.index')
             ->with('notifications', $notifications);
     }

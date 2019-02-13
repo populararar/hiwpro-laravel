@@ -126,7 +126,11 @@
     }
     if ($status_send == "CONFIRMED") {
         # code...
-        $status ='ได้รับสินค้าแล้ว';
+        $status ='ได้ส่งข้อมูลการสั่งซื้อไปยังผู้ขายแล้ว';
+    }
+    if ($status_send == "COMPLETED") {
+        # code...
+        $status ='สินค้าถูกจัดส่งแล้วกรุณาตรวจสอบ';
     }
 
     
@@ -142,11 +146,45 @@
 
   @include('flash::message')
 
+  {{-- <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:5%;">
+    <li class="nav-item">
+      <a class="nav-link active" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">เงื่อนไขการใช้บริการ</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="sent-tab" data-toggle="tab" href="#sent" role="tab" aria-controls="sent" aria-selected="false">รายละเอียดสินค้า</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">รายละเอียดสินค้า</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab"> 
+        <div class="container my-3">
+        {{-- content 1--}}
+
+
+        {{-- end history 
+        </div>
+       
+    </div>
+    <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab">
+        <div class="container my-3">
+        {{-- content 2  -
+        </div>
+    </div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+      {{-- content 3 --
+  </div>
+
+  tab --}}
+
+
   <div class="weapper" style="margin-top: 2%; padding:3% 5%; ">
     <h5>ข้อมูลคำสั่งซื้อ </h5>
     <div class="alert alert-warning alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Warning!</strong> หากไม่ได้กดรับภายใน1สัปดาห์หลังจากมีการอัพเดทเลขแทร็คไว้ ถือว่าได้รับสินค้าแล้ว
+        <strong>Warning!</strong> 
+       แก้ 
     </div>
     <div class="row">
       <div class=" col-md-4">

@@ -45,8 +45,8 @@ class EventJoinedController extends AppBaseController
         // $this->eventJoinedRepository->pushCriteria(new RequestCriteria($request));
         // $eventJoineds = $this->eventJoinedRepository->all();
 
-        $now = Carbon::now()->toDateTimeString();
-
+        $now = Carbon::now()->setTimezone('Asia/Bangkok')->toDateTimeString();
+        //editTimeZone
         $this->eventRepository->pushCriteria(new RequestCriteria($request));
         $events = $this->eventRepository->findWhere([['event_exp', '>', $now]]);
         //select * from table where id > 1 and id < 3;
@@ -95,7 +95,7 @@ class EventJoinedController extends AppBaseController
         $event = $this->eventRepository->findWithoutFail($id);
         $eventShops = $this->eventShopRepository->findWhere(['event_id' => $id]);
 
-        $now = Carbon::now()->toDateTimeString();
+        $now = Carbon::now()->setTimezone('Asia/Bangkok')->toDateTimeString();
 
         $events = $this->eventRepository->findWhere([['event_exp', '>', $now]]);
 

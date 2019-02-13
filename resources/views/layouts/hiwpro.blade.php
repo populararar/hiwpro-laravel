@@ -23,6 +23,23 @@
 
     
 
+    <script type="text/javascript" src="{{ asset('hiwpro/js/jquery-3.3.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('hiwpro/js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('hiwpro/bootstrap-4.1/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
+ 
+    <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/src/js/owl.carousel.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
+    <script src="{{ asset('lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+ 
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+
     <title>HIWPRO</title>
 
     <style>
@@ -80,17 +97,7 @@
         margin-bottom: 2%;
     }
 </style>
-   <script type="text/javascript" src="{{ asset('hiwpro/js/jquery-3.3.1.min.js') }}"></script>
-   <script type="text/javascript" src="{{ asset('hiwpro/js/popper.min.js') }}"></script>
-   <script type="text/javascript" src="{{ asset('hiwpro/bootstrap-4.1/js/bootstrap.min.js') }}"></script>
-   <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
-
-   <script type="text/javascript" src="{{ asset('hiwpro/OwlCarousel/src/js/owl.carousel.js') }}"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-   
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
-   <script src="{{ asset('lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
-
+  
 </head>
 
 <body>

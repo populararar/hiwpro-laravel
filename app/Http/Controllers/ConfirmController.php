@@ -212,9 +212,13 @@ class ConfirmController extends Controller
         $orderHeader = $this->orderHeaderRepository->update([
             'payment_id' => $payment->id,
             'slip_status' => "UPLOADED",
-            // 'shipping_date'=> Carbon::now()->toDateTimeString(),
+            // 'shipping_date'=> Carbon::now()->setTimezone('Asia/Bangkok')->toDateTimeString(),
         ], $orderHeaders->id);
 
+        Flash::success(' ขอขอบคุณสำหรับการช้อปปิ้งสินค้ากับหิ้วโปร 
+        เราได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว และกำลังดำเนินการตรวจสอบรายการคำสั่งซื้อนี้ 
+        ทางเราจะทำการส่งข้อมูลการอับเดททาง ข้อความให้คุณทราบโดยเร็ว');
+       
         return redirect()->route('orders.statusdetail', [$orderHeaders->order_number]);
     }
 

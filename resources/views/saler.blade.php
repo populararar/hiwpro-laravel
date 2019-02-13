@@ -96,145 +96,13 @@ label {
     margin: auto;
     /* overflow: hidden; */
 }
+.seller-card img{
+    width: 150px;;
+}
+.seller-card label{
+    height: 250px;
+}
 </style>
-
-
-                {{-- <div class="owl-carousel owl-theme justify-content-around plum row">
-                        @foreach ($group->sellers as $seller)
-                        {{-- {{dd($seller)}} --}}
-                         {{-- {{dd($seller->profile)}} 
-                            @php
-                            $eventShopId = $group->first()->attributes->event_shop_id;
-                            // dd($eventShopId);
-                            @endphp
-                            <div class=" rebeccapurple" id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
-                                    <div class="col">
-
-
-                                        <label class="seller" id="seller-{{ $seller->id }}"> 
-                                            <div class="item">
-                                                
-                                                {{-- @foreach ($seller->profile as $item)
-                                                   
-                                                @endforeach 
-                                                
-                                                <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
-                                                <img class="mx-auto card rounded img-fluid" src="{{ asset('hiwpro/images/people.png')}}"> 
-                                                {{ $seller->name }}
-                                                <p>คะแนนนักหิ้ว</p>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
-                                        
-                                        </label>
-                                    </div>
-                            </div>
-                        @endforeach
-                        </div>  --}}
-                        @foreach ($group->sellers as $seller)
-                            @php
-                                $count = $seller->id;
-                            @endphp 
-                        @endforeach
-                        @if (empty($count))
-                            <div class="alert alert-danger" role="alert">
-                                ขณะนี้ ไม่มีนักหิ้วสะดวกไปหิ้วให้คุณ
-                            </div> 
-                        @else
-                        <div class="alert alert-primary" role="alert">
-                                กรุณาเลือกนักหิ้ว<br>
-                                *คุณสามารถเลือกนักหิ้วได้ 1 คน ต่อ 1 shop
-                        </div> 
-                        @endif 
-                      
-            <div class="col-lg-12 justify-content-around row">
-                @foreach ($group->sellers as $seller) 
-                 {{-- {{dd($seller->profile)}} --}}
-                    @php
-                    $eventShopId = $group->first()->attributes->event_shop_id;
-                    // dd($eventShopId);
-                    @endphp
-                    <div class="" id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
-                            <div class="col">
-                                <label class="seller  " id="seller-{{ $seller->id }}"> 
-                                    <div class="col-md-12 my-4">
-                                        
-                                        {{-- @foreach ($seller->profile as $item)
-                                           
-                                        @endforeach --}}
-                                        <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
-                                            {{-- <div class="mx-auto card img-size">
-                                                @if(empty($seller->profile))
-                                                <img class="mx-auto img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
-                                                @else
-                                                <img class="mx-auto img-fluid" src="{{ asset('storage') }}/{{ $seller->profile->img }}"> 
-                                                @endif
-                                            </div> --}}
-                                            @if(empty($seller->profile))
-                                            <img class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
-                                            @else
-                                            <img class="mx-auto card rounded img-fluid" src="{{ asset('storage') }}/{{ $seller->profile->img }}"> 
-                                            @endif
-                                        {{ $seller->name }}
-                                        <p>คะแนนนักหิ้ว {{ $seller->avg }}</p>
-                                        @if ($seller->avg==0)
-                                        ยังไม่มีคะแนน
-                                        @elseif($seller->avg==1)
-                                        <i class="fas fa-star"></i>
-                                        @elseif($seller->avg==2)
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        @elseif($seller->avg==3)
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        @elseif($seller->avg==4)
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        @elseif($seller->avg==5)
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        @endif
-                                    </div>
-                                
-                                </label>
-                            </div>
-                    </div>
-                @endforeach
-            </div> 
-
-            {{-- <div class="col-12  justify-content-around">
-                @foreach ($group->sellers as $seller)
-                    @php
-                    $eventShopId = $group->first()->attributes->event_shop_id;
-                    // dd($eventShopId);
-                    @endphp
-                    <div id="row-seller-{{ $eventShopId.'-'.$seller->id }} col-md-3 " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
-                            <div class="col">
-                                <label class="seller" id="seller-{{ $seller->id }}"> 
-                                    <div class="col-md-12 my-4">
-                                        <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
-                                        <img class="d-block card rounded img-fluid" src="{{ asset('hiwpro/images/bobby1.png')}}"> 
-                                        {{ $seller->name }}
-                                        <p>คะแนนนักหิ้ว</p>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                
-                                </label>
-                            </div>
-                    </div>
-                @endforeach
-            </div> --}}
 
              <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
              <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -242,6 +110,50 @@ label {
              <!-- Include all compiled plugins (below), or include individual files as needed -->
              <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
              <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/owl.carousel.min.js"></script>
+             
+        @foreach ($group->sellers as $seller)  
+         @php
+         $eventShopId = $group->first()->attributes->event_shop_id;
+         @endphp
+  {{-- <input name=“seller[][]”> --}}
+         <div class="col-12 seller-card " id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
+            <label class="seller " id="seller-{{ $seller->id }}"> 
+                     <input type="radio" name="seller[][]" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
+                    @if(empty($seller->profile))
+                    <img class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+                    @else
+                    <img class="mx-auto card rounded img-fluid " src="{{ asset('storage') }}/{{ $seller->profile->img }}"> 
+                    @endif
+                    {{ $seller->name }}
+                    <p>คะแนนนักหิ้ว</p>
+                             @if ($seller->avg==0)
+                             ยังไม่มีคะแนน
+                             @elseif($seller->avg==1)
+                             <i class="fas fa-star"></i>
+                             @elseif($seller->avg==2)
+                             <i class="fas fa-star"></i>
+                             <i class="fas fa-star"></i>
+                             @elseif($seller->avg==3)
+                             <i class="fas fa-star"></i>
+                             <i class="fas fa-star"></i>
+                             <i class="fas fa-star"></i>
+                             @elseif($seller->avg==4)
+                             <i class="fas fa-star"></i>
+                             <i class="fas fa-star"></i>
+                             <i class="fas fa-star"></i>
+                             <i class="fas fa-star"></i>
+                             @elseif($seller->avg==5)
+                             <i class="fas fa-star"></i>
+                             <i class="fas fa-star"></i>
+                             <i class="fas fa-star"></i>
+                             <i class="fas fa-star"></i>
+                             <i class="fas fa-star"></i>
+                             @endif
+                     </label>
+        </div>
+     @endforeach
+
+
             
 <script>
     $(document).ready(function() {
@@ -266,10 +178,10 @@ label {
             items:1
         },
         600:{
-            items:2
+            items:3
         },
         1000:{
-            items:5
+            items:4
         }
     }
 })

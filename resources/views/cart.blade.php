@@ -217,6 +217,13 @@ caption {
     display: table-caption;
     text-align: -webkit-center;
 }
+.sum-order{
+    position:absolute;
+    top:0px;
+    right:0px;
+    z-index: 1020;
+}
+
 
 </style>
 
@@ -231,7 +238,8 @@ $sum=0;$count=0;$count2=0;
         <div class="col-sm-12 col-md-3"> 
             <h1 style="text-align:center; margin-top: 2%; color: #df3433;"> <i class="fas fa-book-open"></i></h1>
             <h4 style="text-align:center; margin-top: 2%; color: #df3433; font-weight:bolder;">รายการสั่งซื้อ </h4>
-            <div style="width:50px;height:5px; background-color:#cf2132;margin:auto;"></div></div>
+            <div style="width:50px;height:5px; background-color:#cf2132;margin:auto;"></div>
+        </div>
 
         <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>สรุปรายการสั่งซื้อ</div>
         <div class="col-sm-3 d-none d-sm-none d-md-block col-md-3"><br><br><i class="fas fa-caret-right float-left"></i>ที่อยู่การจัดส่ง</div>
@@ -256,15 +264,14 @@ $sum=0;$count=0;$count2=0;
                         {{-- header --}}
                         <div class="row col-12">
                             <div class="col-2" style="font-weight:bold;"></div>
-                            <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
+                            <div class="col-3" style="font-weight:bold;">ชื่อสินค้า</div>
                             <div class="col-2" style="font-weight:bold;">ราคา</div>
-                            <div class="col-2" style="font-weight:bold;">จำนวน</div>
+                            <div class="col-3" style="font-weight:bold;">จำนวน</div>
                             <div class="col-1" style="font-weight:bold;">รวม</div>
                             <div class="col-1" style="font-weight:bold;">แก้ไข</div>
                         </div>
                         {{-- body --}}
                 <div class="row col-12" style="border-top: solid 1px #e7eaec;padding:2% 0%;">
-
                     <div class="col-2">
                         <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
                             class="img-fluid">
@@ -274,10 +281,13 @@ $sum=0;$count=0;$count2=0;
                     $p = $product->price;
                     $f = $product->attributes->fee;
                     $s = $product->attributes->shippping;
+                    $price = number_format($p);
+                    $fee = number_format($f);
+                    $shipping = number_format($s);
                     @endphp
-                    <div class="col-4">{{$product->name}}<br>ค่าหิ้ว<br>ค่าจัดส่ง</div>
-                    <div class="col-2">{{$p}}<br>{{$f}}<br>{{$s}}</div>
-                    <div class="col-2">
+                    <div class="col-3">{{$product->name}}<br>ค่าหิ้ว<br>ค่าจัดส่ง</div>
+                    <div class="col-2">{{$price}}<br>{{$fee}}<br>{{ $shipping }}</div>
+                    <div class="col-3">
                         <span>
                             <button style="float:left;"  type="button" onclick="decrease({{$product->id}})" class="btn-sm btn btn-default">-</button>
                             <p style="float:left;" id="product-{{$product->id}}">&nbsp {{ $qty }} &nbsp <p>
@@ -285,14 +295,16 @@ $sum=0;$count=0;$count2=0;
 
                         </span>
                     </div>
-                    <div class="col-1"><p id="product-total-{{$product->id}}">{{ number_format($sum = $qty*$p) }}</p></div>
-                    <div class="col-1"><a href="{{ route('cart.remove', ['id' => $product->id]) }}" style="color:#df3433;"><i
-                                class="far fa-trash-alt"></i></a>
+                    <div class="col-1"><p id="product-total-{{$product->id}}">{{ number_format($sum = $qty*$p) }}
+                        @php
+                        $count += $sum;
+                        $Total = ($sum+($f+$s));
+                        @endphp
+                    <br><br>{{number_format($Total)}}</p></div>
+                    <div class="col-1"><a href="{{ route('cart.remove', ['id' => $product->id]) }}" style="color:#df3433;"><i class="far fa-trash-alt"></i></a>
                     </div>
 
-                            @php
-                    $count+=$sum;$Total = ($sum+$f+$s);
-                    @endphp
+                    
 
                 </div>
                 {{-- footer --}}
@@ -335,7 +347,8 @@ $sum=0;$count=0;$count2=0;
                                 <p style="float:left;" id="product-{{$product->id}}">&nbsp {{ $qty }} &nbsp <p>
                                 <button style="float:left;"  type="button" onclick="increase({{$product->id}})" class="btn-sm btn btn-default">+</button>
                             </span>
-                        </div><br>
+                        </div>
+                        <br>
                                 @php
                                 $qty = $product->quantity;
                                 $p = $product->price;
@@ -358,7 +371,10 @@ $sum=0;$count=0;$count2=0;
                     {{-- <div class="col-12"><h3>เลือกนักหิ้ว</h3> </div> --}}
                 
                     <div class="col-12 d-block d-sm-none">
-                        @include('saler')
+                        <div class="row col-12">
+                            @include('saler')
+                        </div>
+                        
                     </div>
 
                 </div>
@@ -366,29 +382,27 @@ $sum=0;$count=0;$count2=0;
             </div> 
             @endforeach 
     </div>
-    <div class="wrapper row">
-        <div class="col-12">
-                    <div class="fixed-bottom card border-danger mb-3 mt-5" style="max-width: 100%;">
-                        <div class="card-header">Order Summary</div>
-                        <div class="card-body">
-                            {{-- <h5>{{$Total}}</h5> --}}
-                            <h5 style="text-align:center;"><span> TOTAL <font color="red"> {{ number_format($count2)}} </font>TH</span></h5>
-                            <form id="cart-form" method="POST" name="cart-form" action="{{route('confirms.store')}}">
-                                {!! csrf_field() !!}
+    
+        <div class="card border-danger mb-3 mt-5" style="max-width: 100%;">
+            <div class="card-header">Order Summary</div>
+            <div class="card-body">
+                {{-- <h5>{{$Total}}</h5> --}}
+                <h5 style="text-align:center;"><span> TOTAL <font color="red"> {{ number_format($count2)}} </font>TH</span></h5>
+                <form id="cart-form" method="POST" name="cart-form" action="{{route('confirms.store')}}">
+                    {!! csrf_field() !!}
 
-                                @if(!empty($mapSeller))
-                                @foreach ($mapSeller as $key => $seller)
-                                <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}">                      
-                                @endforeach
-                                @endif
-                                <button type="button" class="btn btn-success btn-block col-4 mx-auto" onclick="saveData()">Submit</button>
-                            </form>
-                            {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                                the card's content.</p> --}}
-                        </div>
-                    </div>
-        </div> 
-    </div>
+                    @if(!empty($mapSeller))
+                    @foreach ($mapSeller as $key => $seller)
+                    <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}">                      
+                    @endforeach
+                    @endif
+                    <button type="button" class="btn btn-success btn-block col-4 mx-auto" onclick="saveData()">Submit</button>
+                </form>
+                {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                    the card's content.</p> --}}
+            </div>
+        </div>
+     
    
 </div> 
 
@@ -408,7 +422,7 @@ function increase(id) {
                     var fee = product.attributes.fee
                     var shippping   = product.attributes.shippping
 
-                    var total = (Number(price)+Number(fee)) *Number(quantity)
+                    var total = (Number(price)+Number(fee)+Number(shippping)) *Number(quantity)
 
                     $('#product-' + id).text(quantity)
                     $('#product-total-' + id).text(total)
@@ -428,7 +442,7 @@ function increase(id) {
                     var fee = product.attributes.fee
                     var shippping   = product.attributes.shippping
 
-                    var total = (Number(price)+Number(fee)) *Number(quantity)
+                    var total = (Number(price)+Number(fee)+Number(shippping)) *Number(quantity)
 
                     $('#product-' + id).text(quantity)
                     $('#product-total-' + id).text(total)
@@ -449,7 +463,7 @@ function increase(id) {
                     var fee = product.attributes.fee
                     var shippping   = product.attributes.shippping
 
-                    var total = (Number(price)+Number(fee)) *Number(quantity)
+                    var total = (Number(price)+Number(fee)+Number(shippping)) *Number(quantity)
 
                     $('#product-' + id).text(quantity)
                     $('#product-total-' + id).text(total)
