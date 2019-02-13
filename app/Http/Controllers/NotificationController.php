@@ -6,8 +6,8 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateNotificationRequest;
 use App\Http\Requests\UpdateNotificationRequest;
 use App\Repositories\NotificationRepository;
-use App\Repositories\UsersRepository;
 use App\Repositories\OrderHeaderRepository;
+use App\Repositories\UsersRepository;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +25,7 @@ class NotificationController extends AppBaseController
     /** @var  NotificationRepository */
     private $notificationRepository;
 
-    public function __construct(OrderHeader $orderHeader, UsersRepository $usersRepo,NotificationRepository $notificationRepo)
+    public function __construct(OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo, NotificationRepository $notificationRepo)
     {
         $this->notificationRepository = $notificationRepo;
         $this->usersRepository = $usersRepo;
@@ -45,8 +45,8 @@ class NotificationController extends AppBaseController
         $this->notificationRepository->pushCriteria(new RequestCriteria($request));
         $notifications = $this->notificationRepository->findWhere(['user_id' => $user->id])->sortByDesc('created_at')->sortBy('status');
 
-        $user = $this->usersRepository->findwhere(['id'=> $notifications->orderHeader->seller_id])->sortByDesc('created_at')->sortBy('status');
-        dd( $user );
+        $user = $this->usersRepository->findwhere(['id' => $notifications->orderHeader->seller_id])->sortByDesc('created_at')->sortBy('status');
+        // dd( $user );
         return view('notifications.index')
             ->with('notifications', $notifications);
     }
@@ -126,6 +126,23 @@ class NotificationController extends AppBaseController
         }
 
         return view('notifications.edit')->with('notification', $notification);
+    }
+
+    public function read($id, Request $request)
+    {
+        $notification = $this->notificationRepository->findWithoutFail($id);
+
+        if (empty($notification)) {
+            Flash::error('Notification not found');
+
+            return response()->json([]);
+        }
+
+        $notification = $this->notificationRepository->update(['status' => 0], $id);
+
+        Flash::success('Notification updated successfully.');
+
+        return response()->json([]);
     }
 
     /**

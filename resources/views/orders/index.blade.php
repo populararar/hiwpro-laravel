@@ -141,8 +141,14 @@ $sum=0;$count=0;$count2=0;
                                             }
                                             @endphp
                                             
-                                                <td><a href="{{route('orders.statusdetail',[ $notification->orderHeader->order_number])}}" >
-                                                {!! $notification->orderHeader->order_number !!}</a></td>
+                                                <td>
+                                                    {{-- <a href="{{route('orders.statusdetail',[ $notification->orderHeader->order_number])}}" >
+                                                {!! $notification->orderHeader->order_number !!}</a> --}}
+                                                    <a href="#" onclick="javascript:read('{{$notification->orderHeader->order_number}}' , '{{ $notification->id }}')">
+                                                            {!! $notification->orderHeader->order_number !!}
+                                                    </a>
+                                        
+                                            </td>
                                                 <td>{!! $notification->order_id !!}</td>
                                                 <td>{!! $notification->user_id !!}</td>
                                                 <td>{!! $notification->title !!}</td>
@@ -165,7 +171,18 @@ $sum=0;$count=0;$count2=0;
                                         </tbody>
                                     </table>
                                     </div>
-                                    
+                                    <script>
+                                    function read(order_number,id){
+                                        // alert(order_number)
+                                        $.ajax({
+                                            url:'{{ route('notifications.index') }}/'+id+'/read',
+                                            method:'GET',
+                                            success:function(){
+                                                window.location.href = "{{route('orders.statusdetail',[ $notification->orderHeader->order_number])}}"
+                                            }
+                                        })
+                                    }
+                                    </script>
                                     
                                    
                                 {{-- end notification --}}

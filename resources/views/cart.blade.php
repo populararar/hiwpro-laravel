@@ -300,7 +300,7 @@ $sum=0;$count=0;$count2=0;
                         $count += $sum;
                         $Total = ($qty*($p+$f+$s));
                         @endphp
-                    <br><br><br><br> {{number_format($Total)}}</p></div>
+                    <br><br><br><br></p></div>
                     <div class="col-1"><a href="{{ route('cart.remove', ['id' => $product->id]) }}" style="color:#df3433;"><i class="far fa-trash-alt"></i></a>
                     </div>
 

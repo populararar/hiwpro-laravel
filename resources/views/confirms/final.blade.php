@@ -277,9 +277,10 @@ $sum=0;$count=0;$count2=0;
                                 <div class="col-2">{{ number_format($sum)}}<br></div>
                             </div>
                             <div class="row" style="border-top: solid 2px #e7eaec;">
-                                <div class="col-8 float-right "> Total: {{ number_format($Total)  }} THB</div>
-                                <div class="col-4 float-left"> {{ number_format($Total)  }}</div>
+                                <div class="col-8 float-right "> </div>
+                                <div class="col-4 "> <p class="float-right">Total: {{ number_format($Total)  }} THB</p>     </div>
                             </div>
+                           
     
                             @php
                                  $count2+=$Total;
@@ -288,16 +289,17 @@ $sum=0;$count=0;$count2=0;
                         </div>
                         @endforeach
                         <div class="col-md-3 my-4" style="text-align:center;">
-                                {{-- @foreach ($seller->profile as $item)
-                                @endforeach --}}
-                                {{-- <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" /> --}}
-                                <img  class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
-                                {{ $mapSeller[$eventShopId]->name }}
-                                <p>คะแนนนักหิ้ว</p>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                            @if(empty($mapSeller[$eventShopId]->profile))
+                            <img width="150px" class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+                            @else
+                            <img width="150px" class="mx-auto card rounded img-fluid" src="{{ asset('storage') }}/{{ $mapSeller[$eventShopId]->profile->img }}"> 
+                            @endif
+                            {{ $mapSeller[$eventShopId]->name }}
+                            <p>คะแนนนักหิ้ว</p>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
                      </div>  
                         @endforeach

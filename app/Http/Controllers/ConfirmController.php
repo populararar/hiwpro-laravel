@@ -61,6 +61,7 @@ class ConfirmController extends Controller
                 $sellerId = $arr[1];
                 // Query seller data
                 $mapSeller[$eventShopId] = $this->usersRepository->findWithoutFail($sellerId);
+                // dd( $mapSeller[$eventShopId]->profile);
             }
 
             $cart = \Cart::getContent();

@@ -5,17 +5,17 @@
     {!! Form::text('address', null, ['class' => 'form-control','readonly'=>true]) !!}
 </div>
 
-<!-- Order Date Field -->
+{{-- <!-- Order Date Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('order_date', 'Order Date:') !!}
     {!! Form::date('order_date', null, ['class' => 'form-control','readonly'=>true]) !!}
-</div>
+</div> --}}
 
-<!-- Exp Date Field -->
+{{-- <!-- Exp Date Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('exp_date', 'Exp Date:') !!}
     {!! Form::date('exp_date', null, ['class' => 'form-control','readonly'=>true]) !!}
-</div>
+</div> --}}
 
 <!-- Slip Status Field -->
 <div class="form-group col-sm-6">
@@ -51,20 +51,26 @@
 <!-- Shipping Date Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('shipping_date', 'Shipping Date:') !!}
-    {!! Form::date('shipping_date', null, ['class' => 'form-control','readonly'=>true]) !!}
+    {!! Form::text('shipping_date', null, ['class' => 'form-control','readonly'=>true]) !!}
 </div>
 
-<!-- Payment Date Field -->
+{{-- <!-- Payment Date Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('payment_date', 'Payment Date:') !!}
-    {!! Form::date('payment_date', null, ['class' => 'form-control','readonly'=>true]) !!}
+    {!! Form::date('payment_date', null, ['class' => 'form-control']) !!}
+</div> --}}
+
+<!-- Lastdate Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('payment_date', 'วันที่ชำระเงิน:') !!}
+    {!! Form::text('payment_date', null, ['class' => 'form-control date-picker','readonly'=>true]) !!}
 </div>
 
-<!-- Accepted Date Field -->
+{{-- <!-- Accepted Date Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('accepted_date', 'Accepted Date:') !!}
     {!! Form::date('accepted_date', null, ['class' => 'form-control','readonly'=>true]) !!}
-</div>
+</div> --}}
 
 <!-- Status Field -->
 <div class="form-group col-sm-6">

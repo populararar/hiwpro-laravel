@@ -89,11 +89,11 @@ $sum=0;$count=0;$count2=0;
                             @endforeach --}}
                             {{-- <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" /> --}}
                             @if(empty($mapSeller[$eventShopId]->profile))
-                            <img class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+                            <img width="150px" class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
                             @else
-                            <img  class="mx-auto card rounded img-fluid" src="{{ asset('storage') }}/{{ $mapSeller[$eventShopId]->profile->img }}"> 
+                            <img width="150px" class="mx-auto card rounded img-fluid" src="{{ asset('storage') }}/{{ $mapSeller[$eventShopId]->profile->img }}"> 
                             @endif
-                            {{-- {{dd($mapSeller[$eventShopId])}} --}}
+                            {{-- {{dd($mapSeller[$eventShopId]->profile)}} --}}
                             {{ $mapSeller[$eventShopId]->name }}
                             <p>คะแนนนักหิ้ว</p>{{$mapSeller[$eventShopId]->avg}}
                             <i class="fas fa-star"></i>

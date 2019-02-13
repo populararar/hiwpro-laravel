@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateOrderHeaderRequest;
 use App\Http\Requests\UpdateOrderHeaderRequest;
+use App\Models\OrderHeader;
 use App\Repositories\NotificationRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
@@ -23,14 +24,18 @@ class OrderSellerController extends AppBaseController
     /** @var  OrderHeaderRepository */
     private $orderHeaderRepository;
 
+    /** @var  OrderHeaderRepository */
+    private $orderHeader;
+
     /** @var  OrderDetailRepository */
     private $orderDetailRepository;
 
-    public function __construct(NotificationRepository $notificationRepo, OrderHeaderRepository $orderHeaderRepo, OrderDetailRepository $orderDetailRepo)
+    public function __construct(OrderHeader $orderHeader, NotificationRepository $notificationRepo, OrderHeaderRepository $orderHeaderRepo, OrderDetailRepository $orderDetailRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->notificationRepository = $notificationRepo;
+        $this->orderHeader = $orderHeader;
     }
 
     /**
@@ -44,7 +49,10 @@ class OrderSellerController extends AppBaseController
         $user_id = Auth::user()->id;
 
         $this->orderHeaderRepository->pushCriteria(new RequestCriteria($request));
-        $orderHeaders = $this->orderHeaderRepository->findWhere(['seller_id' => $user_id, 'status' => 'CONFIRMED'])->sortByDesc('updated_at');
+        $orderHeaders = $this->orderHeader
+        // ->Where('seller_id', $user_id)
+            ->whereRaw('seller_id =? and (status = ? or status = ?)', [$user_id, 'CONFIRMED', 'COMPLETED'])
+            ->orderBy('updated_at', 'desc')->get();
 
         return view('order_sellers.index')
             ->with('orderHeaders', $orderHeaders);
@@ -146,9 +154,15 @@ class OrderSellerController extends AppBaseController
 
         $formDetail = $request->input('form-detail');
         if (empty($formDetail)) {
-            
+
             $input = $request->all();
             $input['status'] = 'COMPLETED';
+            $input['order_date'] = $orderHeader->order_date;
+            $input['exp_date'] = $orderHeader->exp_date;
+            if (empty($input['shipping_date'])) {
+                $input['shipping_date'] = Carbon::now()->setTimezone('Asia/Bangkok')->toDateTimeString();
+            }
+
             $orderHeader = $this->orderHeaderRepository->update($input, $id);
 
             Flash::success('Order Header updated successfully.');
@@ -174,7 +188,7 @@ class OrderSellerController extends AppBaseController
         }
         # New feature - edit total price
         $this->updateNewTotalPrice($orderHeader->id);
-        $this->saveNotification($orderHeader,$complete);
+        $this->saveNotification($orderHeader, $complete);
         Flash::success('Order Detail updated successfully.');
         return redirect(route('orderSellers.index'));
     }

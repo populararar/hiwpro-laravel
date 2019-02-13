@@ -45,7 +45,10 @@
                 {!! Form::open(['route' => ['orderSellers.destroy', $orderHeader->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{!! route('orderSellers.show', [$orderHeader->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a href="{!! route('orderSellers.edit', [$orderHeader->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
+                    @if ($orderHeader->status!='COMPLETED')
+                         <a href="{!! route('orderSellers.edit', [$orderHeader->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
+                    @endif
+                    
                     {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
                 </div>
                 {!! Form::close() !!}

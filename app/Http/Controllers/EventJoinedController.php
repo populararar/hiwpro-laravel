@@ -190,7 +190,7 @@ class EventJoinedController extends AppBaseController
             $this->eventJoinedRepository->create([
                 'seller_seller_id' => $user->id,
                 'event_shop_id' => $eventShop_id,
-                'last_date_at' => $last_date.' 12:00:00',
+                'last_date_at' => $last_date.' 18:00:00',
             ]);
         }
 
