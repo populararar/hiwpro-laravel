@@ -110,12 +110,22 @@ label {
              <!-- Include all compiled plugins (below), or include individual files as needed -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/owl.carousel.min.js"></script>
+        @php
+        $eventShopId = $group->first()->attributes->event_shop_id;
+        @endphp
+
+        @if(!empty($eventShopId))
+            @foreach($group->sellers as $seller)
+                @if (empty($seller))
+                    <div class="alert alert-warning" role="alert">ไม่มีแม่ค้า</div>
+                @endif
+            @endforeach
+        @endif  
              
         @foreach ($group->sellers as $seller)  
          @php
          $eventShopId = $group->first()->attributes->event_shop_id;
          @endphp
-  {{-- <input name=“seller[][]”> --}}
          <div class="col-12 mx-auto seller-card " id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
             <label class="seller " id="seller-{{ $seller->id }}"> 
                      <input type="radio" name="seller[][]" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />

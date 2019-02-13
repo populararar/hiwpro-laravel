@@ -132,6 +132,10 @@
         # code...
         $status ='สินค้าถูกจัดส่งแล้วกรุณาตรวจสอบ';
     }
+    if ($status_send == "ACCEPT") {
+        # code...
+        $status ='ได้รับสินค้าเรียบร้อย';
+    }
 
     
     
@@ -145,48 +149,25 @@
   </div>
   @include('flash::message')
  
-
-  {{-- <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:5%;">
-    <li class="nav-item">
-      <a class="nav-link active" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">เงื่อนไขการใช้บริการ</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="sent-tab" data-toggle="tab" href="#sent" role="tab" aria-controls="sent" aria-selected="false">รายละเอียดสินค้า</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">รายละเอียดสินค้า</a>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab"> 
-        <div class="container my-3">
-        {{-- content 1--}}
-
-
-        {{-- end history 
-        </div>
-       
-    </div>
-    <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab">
-        <div class="container my-3">
-        {{-- content 2  -
-        </div>
-    </div>
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-      {{-- content 3 --
-  </div>
-
-  tab --}}
-
-
   <div class="weapper" style="margin-top: 2%; padding:3% 5%; ">
       @include('flash::message')
     <h5>ข้อมูลคำสั่งซื้อ </h5>
-    <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>ตำเตือน!</strong> 
-      กรุณาตรวจสอบหลักฐานการโอนก่อนกดชำระเงิน เพื่อป้องกันข้อผิดพลาดกรุณาอ่าน <br> <a href="">เงื่อนไขการใช้บริการ</a>
-    </div>
+
+    @if ($status =='WAITING' && $status_send == "CREATED") 
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>ตำเตือน!</strong> 
+            กรุณาตรวจสอบหลักฐานการโอนก่อนกดชำระเงิน เพื่อป้องกันข้อผิดพลาดกรุณาอ่าน <br> <a href="" data-toggle="modal" data-target="#exampleModalLong">เงื่อนไขการใช้บริการ</a>
+        </div>
+    @endif
+    @if ($status =='UPLOADED' && $status_send == "COMPLETED") 
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>ตำเตือน!</strong> 
+            หากไม่กดรับสินค้าภายใน 7 วันหลังจากมีผู้เซนต์รับสินค้าจะถือว่าได้รับสินค้าแล้ว<br> <a href="" data-toggle="modal" data-target="#exampleModalLong">เงื่อนไขการใช้บริการ</a>
+        </div>
+    @endif
+    
     <div class="row">
       <div class=" col-md-4">
         <p>เลขคำสั่งซื้อ : </p>
@@ -237,7 +218,7 @@
               {{ $orderHeaders->seller_actual_price }} บาท </p>
           </p>
           @endif
-        </div>
+      </div>
 
 
     </div>
@@ -263,17 +244,98 @@
     @php
        $status = $orderHeaders->slip_status;
     @endphp
-    @if ($status =='WAITING') 
+    @if ($status =='WAITING' && $status_send == "CLOSE") 
+    <div class="alert alert-warning" role="alert">
+      ไม่สามารถทำการสั่งซื้อได้เนื่องจากหมดเวลาทำรายการ หากต้องการสั่งซื้อสินค้ากรุณาทำรายการไหม่อีกครั้ง <br> 
+      <a href="#" data-toggle="modal" data-target="#exampleModalLong">เงื่อนไขการใช้บริการ</a>
+      <!-- Button trigger modal -->
+<!-- Modal -->
+      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">ข้อกำหนดและเงื่อนไข</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+<dl class="row">
+  <dt class="col-sm-1">1.</dt>
+  <dd class="col-sm-11">
+    <span>
+      ผู้สั่งซื้อทำการชำระเงินผ่านช่องทางการชำระเงินของหิ้วโปร 
+    <font color='black'> ภายใน 2 ชั่วโมง </font>นับจากการกดยืนยันการชำระเงิน
+    หากชำระเงินหลังจากเวลาที่กำหนด คำสั่งซื้อจะถูกยกเลิก จะต้องทำการสั่งซื้อสินค้าอีกครั้ง</p>
+    </span>
+      </dd>
+
+  <dt class="col-sm-1">2.</dt>
+  <dd class="col-sm-11">
+    หากทำการชำระเงินแล้ว แต่แจ้งหลักฐานในการชำระเงินล่าช้า 
+      กรุณาติดต่อทางหิ้วโปร เพื่อทำการอัปเดทสถานะ
+  </dd>
+
+  <dt class="col-sm-1">3.</dt>
+  <dd class="col-sm-11">หากผู้ใช้ยืนยันคำสั่งซื้อ
+      <font color='black'> ภายหลังจากเวลา 18.00 น. </font>
+    รายการสั่งซื้อนั้นจะถูกส่งให้เป็นคำสั่งซื้อของวันถัดไป </dd>
+
+  <dt class="col-sm-1">4.</dt>
+  <dd class="col-sm-11">
+    <p>กรณีสินค้าหมด ทางหิ้วโปรจะทำการตรวจสอบยอดเงิน
+    และ ทำการชำระเงินคืนให้แก่ผู้สั่งซื้อ ภายใน 3-7 วันทำการ</p>
+  <dt class="col-sm-1">5.</dt>
+  <dd class="col-sm-11">
+    กรณีผู้สั่งซื้อรับสินค้าไม่ครบตามรายการสั่งซื้อ<br>
+    สามารถกด <font color='black'> “ คืนเงิน ”</font>  หิ้วโปรจะทำการตรวจสอบ
+    และ ทำการชำระเงินคืนให้แก่ผู้สั่งซื้อ
+    ภายใน 3-7 วัน นับจากวันที่<font color='black'> กด“ คืนเงิน ” </font></p>
+  </dd>
+
+  <dt class="col-sm-1">6.</dt>
+  <dd class="col-sm-11">
+    กรณีผู้สั่งซื้อแจ้งชำระเงินผิดพลาด (ชำระเงินไม่ครบตามจำนวน)
+    หิ้วโปรจะทำการส่งe-mail เพื่อแจ้งเตือนลูกค้า เพื่อให้ทำการชำระเงินอีกครั้ง
+    และ จะทำการคืนเงินที่ชำระผิดพลาดไปยังบัญชีของผู้สั่งซื้อ</p>
+  </dd>
+
+  <dt class="col-sm-1">7.</dt>
+  <dd class="col-sm-11">กรณีสินค้าชำรุด ซึ่งเกิดจากการขนส่ง  <font color='black'>หิ้วโปรไม่มีส่วนรับผิดชอบ</font></dd>
+
+  <dt class="col-sm-1">8.</dt>
+  <dd class="col-sm-11">หากผู้ใช้ยืนยันคำสั่งซื้อ<font color='#4a3804'> ภายหลังจากเวลา 18.00 น. </font>รายการสั่งซื้อนั้นจะถูกส่งให้เป็นคำสั่งซื้อของวันถัดไป </dd>
+
+</dl>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    @endif
+
+    @if ($status =='WAITING'&& $status_send == "CREATE") 
         <div class="col-md-6"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-warning w-100">ชำระเงิน</a> </div> 
         {{-- <div class="col-md-6"><button disabled="disabled" type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>    --}}
     @endif
 
-    @if ($status =='UPLOADED') 
+    @if ($status =='UPLOADED' && $status_send == "COMPLETED") 
       @if ($reviewCount< 1)
             <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
       @endif
       
         {{-- <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div> --}}
+    @endif
+
+    @if ($status =='UPLOADED' &&  $status_send == "CONFIRMED") 
+      @if ($reviewCount< 1)
+            <div class="col-md-6"><button type="button" class="btn btn-defult w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" disabled>ได้รับสินค้า</button></div>
+      @endif
     @endif
 
    
@@ -352,6 +414,10 @@
 @php
   $num = $orderHeaders->total_price;
   $formattedNum = number_format($num);  
+  $price = $item->price;
+  $qrt = $item->qrt;
+  $sum = $price*$qrt;
+  $sum = number_format($sum);
 @endphp
 
   <div class="shadow-sm  mb-5 bg-white rounded">
@@ -364,7 +430,8 @@
         <p>ประเภทสินค้า : เครื่องสำอางค์</p>
         <p>ชื่อผู้หิ้ว : {{$item->seller->name }}</p>
         <p>จำนวน {{$item->qrt }} ชิ้น</p>
-        <p>ราคา {{$item->price }} ชิ้น</p>
+       
+        <p>ราคา {{ $sum }} บาท/ชิ้น</p>
       </div>
     </div>
   </div>
@@ -382,7 +449,6 @@
 
 @section('scripts')
 <script>
-
   $(".imgAdd").click(function(){
         $(this).closest(".row").find('.imgAdd').before(
           '<div class="col-sm-6 imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Upload<input name="img2" type="file" class="uploadFile img" value="Upload Photo" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>');

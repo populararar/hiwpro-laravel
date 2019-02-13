@@ -29,6 +29,12 @@
     {!! Form::number('total_price', null, ['class' => 'form-control','readonly'=>true]) !!}
 </div>
 
+<!-- Event Type Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('tracking', 'ชื่อบริษัทขนส่ง :') !!}
+    {!! Form::select('tracking', ['ThailandPost' => 'บริษัท ไปรษณีย์ไทย จำกัด ThailandPost', 'Kerry' => 'Kerry Express Thailand เคอรี่ เอ็กซ์เพรส'], null, ['class' => 'form-control']) !!}
+</div>
+
 <!-- Tracking Number Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('tracking_number', 'Tracking Number:') !!}

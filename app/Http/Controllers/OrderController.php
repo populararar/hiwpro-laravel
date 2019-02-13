@@ -65,7 +65,7 @@ class OrderController extends AppBaseController
         $orderHeaders = $this->orderHeaderRepository->findWhere(['customer_id' => $user->id]);
         foreach ($orderHeaders as $order) {
             $create = Carbon::parse($order->created_at);
-            if ($order->slip_status == 'WAITING' && $order->status == 'CREATE' && $now->diffInHours($create) >= 1) {
+            if ($order->slip_status == 'WAITING' && $order->status == 'CREATE' && $now->diffInHours($create) >= 2) {
                 $this->orderHeaderRepository->update(['status' => 'CLOSE'], $order->id);
                 $order->status = "CLOSE";
             }

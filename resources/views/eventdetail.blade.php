@@ -130,8 +130,8 @@ p.card-in{
                         <div class="card-in" >
                             <p > {{  $pe->product->name }} </p>
                             <span>
-                                <font color="red">{{  $pe->product->price }} บาท</font>
-                                <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{$pe->product->actual_price}} บาท</font>
+                                <font color="red">{{ number_format($pe->product->price)  }} บาท</font>
+                                <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{number_format($pe->product->actual_price)}} บาท</font>
                             </span>
                         </div> 
                     </a> 
@@ -155,7 +155,6 @@ p.card-in{
                     </div> 
                     @endforeach
                 </div>
-
             </div>
             <div class="container">
                 <div class="row pro-sm d-md-none d-lg-none d-xl-none">
@@ -166,8 +165,8 @@ p.card-in{
                     <div class="card-in">
                         <p > {{  $pe->product->name }} </p>
                         <span>
-                            <font color="red">{{  $pe->product->price }} บาท</font>
-                            <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{$pe->product->actual_price}} บาท</font>
+                            <font color="red">{{  number_format($pe->product->price) }} บาท</font>
+                            <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{ number_format($pe->product->actual_price)}} บาท</font>
                         </span>
                     </div> 
 

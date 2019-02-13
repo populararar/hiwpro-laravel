@@ -383,7 +383,7 @@ $sum=0;$count=0;$count2=0;
             @endforeach 
     </div>
     
-        <div class="card border-danger mb-3 mt-5" style="max-width: 100%;">
+        <div class="col-md-12 card border-danger mb-3 mt-5" style="max-width: 100%;">
             <div class="card-header">Order Summary</div>
             <div class="card-body">
                 {{-- <h5>{{$Total}}</h5> --}}
@@ -515,7 +515,7 @@ function increase(id) {
         })
         var count =  {{ count($shopGroup) }};
         if (i < count) {
-        alert("Please select seller!")
+        alert("กรุณากดเลือกแม่ค้าก่อนสั่งซื้อสินค้า!")
         return
     }
     form.submit()
