@@ -60,7 +60,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 @if(!empty($events))
                                 <img class="img-fluid" style="border-radius: 2%;" src="{{ asset('/storage/'.$event_now->imgPath) }}">
-                                <div class="text-center" style="text-align: center;">
+                                {{-- <div class="text-center" style="text-align: center;">
                                     <ul style="padding: 0;">
                                         <li class="clock"><span id="days"></span>days</li>
                                         <li class="clock"><span id="hours"></span>Hours</li>
@@ -68,7 +68,7 @@
                 
                                     </ul>
                                     <p id="demo"></p>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class=".d-xs-none  col-sm-6 col-md-6" style="text-align: center;">
                                 
@@ -77,8 +77,8 @@
                                 <h1 style="color: black;">{{$event_now->eventName}}<br>
                                     {{ $event_now->start_date }} - {{ $event_now->last_date }}
                                     
-                                <p style="padding:5%;"> {{ $event_now->detail }}
-                                     </p>
+                                <p style="padding:5%; font-size:1.2rem;"> {{ $event_now->detail }}</p>
+                                     
                                 <a href="/eventdetail/{{ $event_now->event_id }}"class="btn btn-outline-danger align-self-center"
                                      style="text-align: center; border-radius: 30px;" >ดูเพิ่มเติม</a>
                                      @endif
@@ -90,8 +90,8 @@
                 
                 
                     <div class="weapper" style="background-color: #fff; padding:3% 5%; ">
-                        <h4 style="margin-top: 2%; color: #df3433;">สินค้าแนะนำ </h4>
-                        <h5>PRODUCT & SEGGESTION </h5>
+                        <h4 style="margin-top: 2%; color: #df3433;"> สินค้าแนะนำ </h4>
+                        <h5> PRODUCT & SEGGESTION </h5>
                         <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
                         <div class="line-g">
                             <div class="line-r">

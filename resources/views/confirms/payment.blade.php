@@ -252,6 +252,12 @@ h4,h5{
                                 <input type="text" name="name" class="form-control" id="exampleInputName2" placeholder="ชื่อ  - นามสกุล (ที่ตรงกับบัญชี)">
                             </div>
                         </div>
+                        <div class="row" style="text-align:right;margin:2% 0%;">
+                            <div class="col-md-4"><label for="exampleInputName2">เลขบัญชี :</label></div>
+                            <div class="col-md-6">
+                                <input type="text" name="bank_num" class="form-control" id="exampleInputName2" placeholder="กรุณาไส่ตัวเลข 10 หลัก">
+                            </div>
+                        </div>
         
                         
                         <div class="row" style="text-align:right;margin:2% 0%;">
@@ -308,8 +314,14 @@ h4,h5{
                         <div class="clearfix"></div>
                         <div class="row" style="text-align:right;margin:2% 0%;">
                             <div class="col-md-4"><label  class=" w-5" for="inputname_card">เวลาที่โอน :  </label></div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <input name="send_time"  type="datetime-local" class="form-control">
+                            </div>
+                            <div class='col-md-3 input-group date' id='datetimepicker3'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
                             </div>
                         </div>
                         <div class="btnS"><button class="btn btn-danger" style="width:100%;" type="submit"> ยืนยัน </button></div>
@@ -377,7 +389,12 @@ h4,h5{
                         <div class="row" style="text-align:right;margin:2% 0%;">
                             <div class="col-md-4"><label for="exampleInputName2">เลขหน้าบัตร :</label></div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="exampleInputName2" placeholder="เลขหน้าบัตร">
+                                    <input type="text" id="txtAc1" name="txtAc1" size="2" class="required" maxlength = "4" />
+                                    <input type="text" id="txtAc2" name="txtAc2" size="2" class="required" maxlength = "4" />
+                                    <input type="text" id="txtAc3" name="txtAc3" size="2" class="required" maxlength = "4" />
+                                    <input type="text" id="txtAc4" name="txtAc4" size="2" class="required" maxlength = "4" /> * หมายเลขบัตร 16 หลัก                                      
+                                    <input type="hidden" id="txtBank" name="txtBank" size="25"  value="Credit" />
+                                <input type="teuxt" class="form-control" id="exampleInputName2" placeholder="เลขหน้าบัตร">
                             </div>
                         </div>
 

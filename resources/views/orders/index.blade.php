@@ -47,11 +47,11 @@ $sum=0;$count=0;$count2=0;
                                 <table class="table table-hover col-12" id="history-table" >
                                         <thead>
                                             <tr>
-                                            <th scope="col">รหัสออร์เดอร์</th>
-                                            <th scope="col">ชื่อผู้ส่ง</th>
-                                            <th scope="col">วันที่สั่ง</th>
-                                            <th scope="col">ราคาทั้งหมด</th>
-                                            <th scope="col">สถานะการจ่ายเงิน</th>
+                                            <th scope="col">รหัสออร์เดอร์ <i class="fas fa-sort"></i></i></th>
+                                            <th scope="col">ชื่อผู้ส่ง <i class="fas fa-sort"></i></i></th>
+                                            <th scope="col">วันที่สั่ง <i class="fas fa-sort"></i></i></th>
+                                            <th scope="col">ราคาทั้งหมด <i class="fas fa-sort"></i></i></th>
+                                            <th scope="col">สถานะการจ่ายเงิน <i class="fas fa-sort"></i></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>  
@@ -68,7 +68,15 @@ $sum=0;$count=0;$count2=0;
                                         }
                                         if($status == 'UPLOADED')
                                         {
-                                            $status_show = 'รอการอนุมัติ';
+                                            $status_show = 'รอตรวจสอบ';
+                                        }
+                                        if($order->status == 'CONFIRMED')
+                                        {
+                                            $status_show = 'คำสั่งซื้อสำเร็จ';
+                                        }
+                                        if($order->status == 'COMPLETED')
+                                        {
+                                            $status_show = 'จัดส่งสินค้าแล้ว';
                                         }
                                         
                                     @endphp
@@ -122,6 +130,16 @@ $sum=0;$count=0;$count2=0;
                                             <tr> @php $read = "อ่านแล้ว"; @endphp 
                                     
                                             @endif
+                                            @php
+                                            if($notification->orderHeader->status == 'CONFIRMED')
+                                            {
+                                                $status_show = 'คำสั่งซื้อสำเร็จ';
+                                            }
+                                            if($notification->orderHeader->status == 'COMPLETED')
+                                            {
+                                                $status_show = 'จัดส่งสินค้าแล้ว';
+                                            }
+                                            @endphp
                                             
                                                 <td><a href="{{route('orders.statusdetail',[ $notification->orderHeader->order_number])}}" >
                                                 {!! $notification->orderHeader->order_number !!}</a></td>
@@ -129,7 +147,9 @@ $sum=0;$count=0;$count2=0;
                                                 <td>{!! $notification->user_id !!}</td>
                                                 <td>{!! $notification->title !!}</td>
                                                 
-                                                <td > <p>{{$notification->orderHeader->status}} - {{$order->slip_status}}</p></td>
+                                                <td > <p>
+                                                    {{$status_show}}
+                                                    {{$notification->orderHeader->status}} - {{$order->slip_status}}</p></td>
                                                 
                                                     
                                                     {!! Form::open(['route' => ['notifications.destroy', $notification->id], 'method' => 'delete']) !!}
@@ -163,6 +183,16 @@ $sum=0;$count=0;$count2=0;
 
 
          
+                </div>
+
+                <div class="wrapper">
+                    <div class="card">
+                        <h2>สถานะการสั่งซื้อ</h2>
+                        <p>รอการชำระเงิน</p>
+                        <p>รอตรวจสอบ</p>
+                        <p>คำสั่งซื้อสำเร็จ</p>
+                        <p>จัดส่งสินค้าแล้ว</p>
+                    </div>
                 </div>
    
 </div>

@@ -108,15 +108,15 @@ label {
              <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
                     
              <!-- Include all compiled plugins (below), or include individual files as needed -->
-             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-             <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/owl.carousel.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/owl.carousel.min.js"></script>
              
         @foreach ($group->sellers as $seller)  
          @php
          $eventShopId = $group->first()->attributes->event_shop_id;
          @endphp
   {{-- <input name=“seller[][]”> --}}
-         <div class="col-12 seller-card " id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
+         <div class="col-12 mx-auto seller-card " id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
             <label class="seller " id="seller-{{ $seller->id }}"> 
                      <input type="radio" name="seller[][]" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
                     @if(empty($seller->profile))

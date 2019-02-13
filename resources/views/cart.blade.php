@@ -298,9 +298,9 @@ $sum=0;$count=0;$count2=0;
                     <div class="col-1"><p id="product-total-{{$product->id}}">{{ number_format($sum = $qty*$p) }}
                         @php
                         $count += $sum;
-                        $Total = ($sum+($f+$s));
+                        $Total = ($qty*($p+$f+$s));
                         @endphp
-                    <br><br>{{number_format($Total)}}</p></div>
+                    <br><br><br><br> {{number_format($Total)}}</p></div>
                     <div class="col-1"><a href="{{ route('cart.remove', ['id' => $product->id]) }}" style="color:#df3433;"><i class="far fa-trash-alt"></i></a>
                     </div>
 
@@ -310,7 +310,7 @@ $sum=0;$count=0;$count2=0;
                 {{-- footer --}}
                 <div class="row" style="border-top: solid 2px #e7eaec;">
                     <div class="col-8 float-right "> </div>
-                    <div class="col-4 float-left">Total: {{ number_format($Total)  }} THB </div>
+                    <div class="col-4 "> <p class="float-right">Total: {{ number_format($Total)  }} THB</p>     </div>
                 </div>
 
                         @php

@@ -143,8 +143,8 @@
   <div class="page-header">
     <h3>สถานะการจัดส่งสินค้า</h3>
   </div>
-
   @include('flash::message')
+ 
 
   {{-- <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:5%;">
     <li class="nav-item">
@@ -180,11 +180,12 @@
 
 
   <div class="weapper" style="margin-top: 2%; padding:3% 5%; ">
+      @include('flash::message')
     <h5>ข้อมูลคำสั่งซื้อ </h5>
     <div class="alert alert-warning alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Warning!</strong> 
-       แก้ 
+        <strong>ตำเตือน!</strong> 
+      กรุณาตรวจสอบหลักฐานการโอนก่อนกดชำระเงิน เพื่อป้องกันข้อผิดพลาดกรุณาอ่าน <br> <a href="">เงื่อนไขการใช้บริการ</a>
     </div>
     <div class="row">
       <div class=" col-md-4">

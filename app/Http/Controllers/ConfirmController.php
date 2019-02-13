@@ -6,14 +6,19 @@ use App\Repositories\EventRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
 use App\Repositories\PaymentRepository;
+use App\Repositories\ProfileRepository;
 use App\Repositories\UsersRepository;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Response;
+use Flash;
 
 class ConfirmController extends Controller
 {
+    /** @var  ProfileRepository */
+    private $profileRepository;
+
     /** @var  PaymentRepository */
     private $paymentRepository;
 
@@ -30,13 +35,14 @@ class ConfirmController extends Controller
     /** @var  OrderDetailRepository */
     private $orderDetailRepository;
 
-    public function __construct(PaymentRepository $paymentRepo, OrderDetailRepository $orderDetailRepo, EventRepository $eventRepo, OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo)
+    public function __construct( ProfileRepository $profileRepo,PaymentRepository $paymentRepo, OrderDetailRepository $orderDetailRepo, EventRepository $eventRepo, OrderHeaderRepository $orderHeaderRepo, UsersRepository $usersRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->usersRepository = $usersRepo;
         $this->eventRepository = $eventRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->paymentRepository = $paymentRepo;
+        $this->profileRepository = $profileRepo;
     }
 
     public function index(Request $request)
@@ -216,8 +222,8 @@ class ConfirmController extends Controller
         ], $orderHeaders->id);
 
         Flash::success(' ขอขอบคุณสำหรับการช้อปปิ้งสินค้ากับหิ้วโปร 
-        เราได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว และกำลังดำเนินการตรวจสอบรายการคำสั่งซื้อนี้ 
-        ทางเราจะทำการส่งข้อมูลการอับเดททาง ข้อความให้คุณทราบโดยเร็ว');
+        ระบบกำลังดำเนินการตรวจสอบรายการคำสั่งซื้อนี้ 
+        ทางเราจะทำการส่งข้อมูลการอัปเดททาง ข้อความให้คุณทราบโดยเร็ว');
        
         return redirect()->route('orders.statusdetail', [$orderHeaders->order_number]);
     }

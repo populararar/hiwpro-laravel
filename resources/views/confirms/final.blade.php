@@ -228,65 +228,81 @@ $sum=0;$count=0;$count2=0;
     </div>
 
     <div class="weapper shadow" style="padding:3%; ">
-        @foreach ($shopGroup as $key => $group)
-        @php
-        $eventShopId = $group->first()->attributes->event_shop_id;
-        // dd($mapSeller[$eventShopId]->name);
-        @endphp
-        <div class="row" style="margin-bottom:20px;">
-            <h5 style="border-left: 5px solid #df3433;padding-left:5px;">SHOP : {{ $key }} </h5>
-            @foreach ($group as $product)
-            <div class="col-12" style="padding:2% 5%; background-color:white;margin-top:2%;">
-                <h5 style="color:#df3433;">#{{ $product->id }} {{ $product->name }}</h5>
-                <div class="row" style="border-top: solid 2px #e7eaec;">
-                    <div class="col-2" style="font-weight:bold;">รูป</div>
-                    <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
-                    <div class="col-2" style="font-weight:bold;">ราคา</div>
-                    <div class="col-2" style="font-weight:bold;">จำนวน</div>
-                    <div class="col-1" style="font-weight:bold;">รวม</div>
-                    <div class="col-1" style="font-weight:bold;">หิ้วโดย</div>
-                </div>
-
-                <div class="row" style="border-top: solid 1px #e7eaec;padding:5% 0%;">
-
-                    <div class="col-2">
-                        <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
-                            class="img-fluid">
-                    </div>
-                    <div class="col-4">{{ $product->name }}<br> ค่าหิ้ว<br>ค่าจัดส่ง<br> </div>
-                    <div class="col-2">{{ $product->price }}<br>{{ $product->attributes->fee }}<br>{{
-                        $product->attributes->shippping }}
-                    </div>
-                    <div class="col-2">{{
-
-                        $qty = $product->quantity,
-                        $p = $product->price,
-                        $f = $product->attributes->fee,
-                        $s = $product->attributes->shippping
-                        }}
-                    </div>
-                    <div class="col-1">{{ $sum = $qty*$p }}</div>
-                    <div class="col-1">#{{$mapSeller[$eventShopId]->id}}{{ $mapSeller[$eventShopId]->name }}</div>
+            <div class="row" style="margin-top:3%;">
+                    @foreach ($shopGroup as $key => $group)
+                    @php 
+                        $eventShopId = $group->first()->attributes->event_shop_id;
+                        // dd($mapSeller[$eventShopId]->name);
+                    @endphp  
+                    @foreach ($group as $product)
+                    <div class="row col-12" style="margin-bottom:20px;">
+                      <div class="col-md-12">
+                          <h5 style="text-align:left; border-left: 5px solid #df3433;padding-left:5px;"> {{ $key }}</h5>
+                      </div>
+                        
+                        <div class="col-md-8" style="padding:2% 5%;">
+                            <div class="row" style="border-top: solid 2px #e7eaec;">
+                                <div class="col-2" style="font-weight:bold;">รูป</div>
+                                <div class="col-4" style="font-weight:bold;">ชื่อสินค้า</div>
+                                <div class="col-2" style="font-weight:bold;">ราคา</div>
+                                <div class="col-2" style="font-weight:bold;">จำนวน</div>
+                                <div class="col-2" style="font-weight:bold;">รวม</div>
+                            </div>
+            
+                            <div class="row" style="border-top: solid 1px #e7eaec;padding:5% 0%;">
+                                <div class="col-2">
+                                    <img style="border-radius: 10%" src="{{ asset('/storage/'.$product->attributes->image_product_id ) }}"
+                                        class="img-fluid">
+                                </div>
+                                <div class="col-4">{{ $product->name }}<br> ค่าหิ้ว<br>ค่าจัดส่ง<br> </div>
+                                <div class="col-2">{{ $product->price }}<br>{{ $product->attributes->fee }}
+                                <br>{{ $product->attributes->shippping }}
+                                </div>
+                                 @php
+                                   $qty = $product->quantity;
+                                    $p = $product->price;
+                                    $f = $product->attributes->fee;
+                                    $s = $product->attributes->shippping;
+    
+                                    $price = number_format($p);
+                                    $fee = number_format($f);
+                                    $shipping = number_format($s);
+                                   
+                                    $sum = $qty*$p;
+                                    $count+=$sum;
+                                    $Total = $qty*($p+$f+$s);
+                                @endphp
+                                <div class="col-2">{{ $qty }}
+                                </div>
+                                <div class="col-2">{{ number_format($sum)}}<br></div>
+                            </div>
+                            <div class="row" style="border-top: solid 2px #e7eaec;">
+                                <div class="col-8 float-right "> Total: {{ number_format($Total)  }} THB</div>
+                                <div class="col-4 float-left"> {{ number_format($Total)  }}</div>
+                            </div>
+    
+                            @php
+                                 $count2+=$Total;
+                            @endphp
+                          
+                        </div>
+                        @endforeach
+                        <div class="col-md-3 my-4" style="text-align:center;">
+                                {{-- @foreach ($seller->profile as $item)
+                                @endforeach --}}
+                                {{-- <input type="radio" name="rating" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" /> --}}
+                                <img  class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+                                {{ $mapSeller[$eventShopId]->name }}
+                                <p>คะแนนนักหิ้ว</p>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                        </div>
+                     </div>  
+                        @endforeach
                     
-                    @php
-                    $count+=$sum;
-                    @endphp
-
-                </div>
-                <div class="row" style="border-top: solid 2px #e7eaec;">
-                    <div class="col-8 float-right "> 1 Items Total: {{ $Total = ($sum+$f+$s) }} THB</div>
-                    <div class="col-4 float-left"> @php
-                        $count2+=$Total
-                    @endphp </div>
-                </div>
-
-            </div>
-            @endforeach
-        </div>
-        @endforeach
-
-        
-
+        </div>     
     </div>
 
     <form action="{{route('orders.store') }}" method="POST">
