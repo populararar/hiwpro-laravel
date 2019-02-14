@@ -78,12 +78,4 @@ class Payment extends Model
     {
         return $this->belongsTo(\App\Models\OrderHeader::class, 'order_id');
     }
-
-      /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     **/
-    public function orders()
-    {
-        return $this->hasOne(\App\Models\OrderHeader::class, 'order_id');
-    }
 }
