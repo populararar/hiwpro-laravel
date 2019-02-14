@@ -122,16 +122,21 @@ class OrderController extends AppBaseController
         $input["order_id"] = $order->id;
         $input["user_id"] = $order->seller_id;
         $input["customer_id"] = $user = Auth::user()->id;
+        $score = $input["rating"];
+
         //Upload file
         $path = $request->file('img1')->store('public/upload');
         $path2 = $request->file('img2')->store('public/upload');
 
-        $input["img1"] = str_replace("public", "", $path);
+        $input["img"] = str_replace("public", "", $path);
         $input["img2"] = str_replace("public", "", $path2);
 
         $review = $this->sellerReviewRepository->create($input);
 
-        $this->orderHeaderRepository->update(['status' => 'COMPLETED'],$order->id);
+        $this->orderHeaderRepository->update([
+            'status' => 'ACCEPTED',
+            'score' => $score ,
+        ],$order->id);
 
         Flash::success('Review Seller successfully.');
 

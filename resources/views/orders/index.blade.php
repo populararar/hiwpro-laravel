@@ -76,7 +76,7 @@ $sum=0;$count=0;$count2=0;
                                             # code...
                                             $status_show ='รอการชำระเงิน';
                                         }
-                                        if ($status == "WAITING" && $status_send == "CLOSED") {
+                                        if ($status == "WAITING" && $status_send == "CLOSE") {
                                             # code...
                                             $status_show ='ออร์เดอร์หมดอายุ';
                                         }
