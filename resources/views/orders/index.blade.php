@@ -15,6 +15,14 @@
 @php
 $sum=0;$count=0;$count2=0;
 @endphp
+@php
+ 
+    // dd($status);
+    
+
+    
+    
+@endphp
 
 <div class="container" >
     
@@ -29,17 +37,17 @@ $sum=0;$count=0;$count2=0;
                 <div class="shadow">
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:5%;">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">ที่ต้องชำระ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="sent-tab" data-toggle="tab" href="#sent" role="tab" aria-controls="sent" aria-selected="false">สินค้าที่ต้องได้รับ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">เงื่อนไขการใช้งาน</a>
-                            </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">ที่ต้องชำระ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="sent-tab" data-toggle="tab" href="#sent" role="tab" aria-controls="sent" aria-selected="false">สินค้าที่ต้องได้รับ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">เงื่อนไขการใช้งาน</a>
+                        </li>
+                    </ul>
+                        <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab"> 
                                 <div class="container my-3">
                                 {{-- content 1--}}
@@ -51,7 +59,7 @@ $sum=0;$count=0;$count2=0;
                                             <th scope="col">ชื่อผู้ส่ง <i class="fas fa-sort"></i></i></th>
                                             <th scope="col">วันที่สั่ง <i class="fas fa-sort"></i></i></th>
                                             <th scope="col">ราคาทั้งหมด <i class="fas fa-sort"></i></i></th>
-                                            <th scope="col">สถานะการจ่ายเงิน <i class="fas fa-sort"></i></i></th>
+                                            <th scope="col">สถานะ <i class="fas fa-sort"></i></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>  
@@ -60,23 +68,33 @@ $sum=0;$count=0;$count2=0;
                                         $num = $order->total_price;
                                         $formattedNum = number_format($num);
                                         $status = $order->slip_status;
+                                        $status_send = $order->status;
 
                                         $status_show = '';
-                                        if($status == 'WAITING')
-                                        {
-                                            $status_show = 'รอการชำระเงิน';
+                                       
+                                        if ($status == "WAITING") {
+                                            # code...
+                                            $status_show ='รอการชำระเงิน';
                                         }
-                                        if($status == 'UPLOADED')
-                                        {
-                                            $status_show = 'รอตรวจสอบ';
+                                        if ($status == "WAITING" && $status_send == "CLOSED") {
+                                            # code...
+                                            $status_show ='ออร์เดอร์หมดอายุ';
                                         }
-                                        if($order->status == 'CONFIRMED')
-                                        {
-                                            $status_show = 'คำสั่งซื้อสำเร็จ';
+                                        if ($status == "UPLOADED") {
+                                            # code...
+                                           $status_show ='รอการตรวจสอบ';
                                         }
-                                        if($order->status == 'COMPLETED')
-                                        {
-                                            $status_show = 'จัดส่งสินค้าแล้ว';
+                                        if ($status_send == "CONFIRMED") {
+                                            # code...
+                                           $status_show ='ตรวจสอบเรียบร้อย';
+                                        }
+                                        if ($status_send == "COMPLETED") {
+                                            # code...
+                                           $status_show ='กำลังจัดส่ง';
+                                        }
+                                        if ($status_send == "ACCEPT") {
+                                            # code...
+                                           $status_show ='ได้รับสินค้าแล้ว';
                                         }
                                         
                                     @endphp
@@ -87,12 +105,13 @@ $sum=0;$count=0;$count2=0;
                                             <td>{{ $order->order_date}}</td>
                                             <td>{{ $formattedNum }} บาท</td>
                                             <td>
-                                                    @if($status == 'WAITING')
-                                                    <a href="{{route('orders.statusdetail',[ $order->order_number])}}" class="font-weight-light btn btn-warning">รอการชำระเงิน</a>
+                                                    <a href="{{route('orders.statusdetail',[ $order->order_number])}}" class="font-weight-light ">{{$status_show}}</a>
+                                                    {{-- @if($status == 'WAITING')
+                                                    
                                                     @endif
                                                     @if($status == 'UPLOADED')
-                                                    <a href="{{route('orders.statusdetail',[ $order->order_number])}}" class="font-weight-light btn btn-info">รอการอนุมัติ</a>
-                                                    @endif
+                                                    <a href="{{route('orders.statusdetail',[ $order->order_number])}}" class="font-weight-light btn btn-info">{{$status_show}}</a>
+                                                    @endif --}}
                                     {{-- <a href="{{route('orders.statusdetail',[ $order->order_number])}}" class="btn btn-info">{{$status_show}}</a> --}}
                                                 
                                             </td>
@@ -194,24 +213,7 @@ $sum=0;$count=0;$count2=0;
                             </div>
                         
                             {{-- tab --}}
-
-
-
-
-
-         
-                </div>
-
-                <div class="wrapper">
-                    <div class="card">
-                        <h2>สถานะการสั่งซื้อ</h2>
-                        <p>รอการชำระเงิน</p>
-                        <p>รอตรวจสอบ</p>
-                        <p>คำสั่งซื้อสำเร็จ</p>
-                        <p>จัดส่งสินค้าแล้ว</p>
-                    </div>
-                </div>
-   
+                </div>   
 </div>
 
 @endsection
