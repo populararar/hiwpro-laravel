@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Models\OrderDetail;
 use App\Repositories\OrderHeaderRepository;
 use App\Repositories\ReportSellerRepository;
+use App\Repositories\SellerReviewRepository;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
@@ -19,6 +20,9 @@ use Response;
 
 class ReportSellerController extends AppBaseController
 {
+    /** @var  SellerReviewRepository */
+    private $sellerReviewRepository;
+
     /** @var  ReportSellerRepository */
     private $reportSellerRepository;
 
@@ -31,13 +35,14 @@ class ReportSellerController extends AppBaseController
 
     private $orderDetail;
 
-    public function __construct(OrderHeaderRepository $orderHeaderRepo, OrderDetail $orderDetail, Lavacharts $lava, Event $event, ReportSellerRepository $reportSellerRepo)
+    public function __construct(SellerReviewRepository $sellerReviewRepo,OrderHeaderRepository $orderHeaderRepo, OrderDetail $orderDetail, Lavacharts $lava, Event $event, ReportSellerRepository $reportSellerRepo)
     {
         $this->reportSellerRepository = $reportSellerRepo;
         $this->event = $event;
         $this->orderDetail = $orderDetail;
         $this->lava = $lava;
         $this->orderHeaderRepository = $orderHeaderRepo;
+        $this->sellerReviewRepository = $sellerReviewRepo;
     }
 
     /**
@@ -69,10 +74,26 @@ class ReportSellerController extends AppBaseController
         //     echo ' qty  : '.$itemQty. '<br>';
         // }    
         // exit;
- 
+        
+        $countSent = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'COMPLETED')->count('id');
+        $countOrder = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'CONFIRMED')->count('id');
+        $countIncome = \DB::table('order_header')
+        ->where('seller_id' , Auth::user()->id)
+        ->selectRaw("SUM(seller_actual_price) AS income")->get()->first();
+            // dd($countIncome);
         $this->setTotalFree($this->lava, $start, $end);
 
+        $reviews = $this->sellerReviewRepository->findWhere(['user_id' => Auth::user()->id]);
+        $avg = $reviews->avg('score');
+        if (empty($avg)) {
+            $avg = 0;
+        }
+
         return view('report_sellers.index')
+            ->with('avg', $avg)
+            ->with('countIncome', $countIncome)
+            ->with('countOrder', $countOrder)
+            ->with('countSent', $countSent)
             ->with('lava', $this->lava)
             ->with('orderGroup', $orderGroup)
             ->with('reportSellers', $reportSellers);
