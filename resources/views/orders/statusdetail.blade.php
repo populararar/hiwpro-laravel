@@ -142,6 +142,7 @@
 @endphp
 
 
+
 {{-- {{ dd($orderHeaders)}} --}}
 <div class="container" style="padding: 0 5%;">
   <div class="page-header">
@@ -318,6 +319,15 @@
 
     </div>
     @endif
+
+    <div class="col-sm-12" id="count-down">
+    <ul style="padding: 0;">
+        <li class="clock"><span id="days"></span>days</li>
+        <li class="clock"><span id="hours"></span>Hours</li>
+        <li class="clock"><span id="minutes"></span>Minutes</li>
+    </ul>
+    <p id="demo"></p>
+    </div>
 
     @if ($status =='WAITING'&& $status_send == "CREATE") 
         <div class="col-md-6"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-warning w-100">ชำระเงิน</a> </div> 
@@ -504,6 +514,38 @@
           
         });
     });
+
+      // Set the date we're counting down to
+      var countDownDate = new Date("{{$expTime}}").getTime();
+
+      // Update the count down every 1 second
+      var x = setInterval(function() {
+
+      // Get todays date and time
+      var now = new Date().getTime();
+          
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+          
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+
+
+      // Output the result in an element with id="demo"
+      document.getElementById("demo").innerHTML = days + " DAYS " + hours + " HOURS "
+      + minutes + " MINUTES " + seconds + " s ";
+          
+      // If the count down is over, write some text 
+      if (distance < 0) {
+          clearInterval(x);
+          $('#count-down').css('display','none')
+          document.getElementById("demo").innerHTML = "EXPIRED";
+      }
+      }, 1000);            
 
 </script>
 @endsection

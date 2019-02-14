@@ -239,7 +239,7 @@ class HomeController extends Controller
             $sellerId = $eventJoin->seller->id;
             $reviews = $this->sellerReviewRepository->findWhere(['user_id' => $sellerId]);
             $avg = $reviews->avg('score');
-            if(empty($avg)) {
+            if (empty($avg)) {
                 $avg = 0;
             }
             $eventJoin->seller->avg = $avg;
@@ -392,10 +392,10 @@ class HomeController extends Controller
             $event->start_date = $this->formatEventDate($event->startDate);
             $event->last_date = $this->formatEventDate($event->lastDate);
         }
-        
+
         $event_now->start_date = $this->formatEventDate($event_now->startDate);
         $event_now->last_date = $this->formatEventDate($event_now->lastDate);
-        
+
         $events = $events->sortByDesc('last_date');
 
         if (Auth::check()) {
@@ -410,9 +410,9 @@ class HomeController extends Controller
         }
 
         return view('home')
-        ->with('profile', $profile)
-        ->with('events', $events)
-        ->with('event_now', $event_now);
+            ->with('profile', $profile)
+            ->with('events', $events)
+            ->with('event_now', $event_now);
     }
 
     private function formatEventDate($dateTime)
@@ -587,6 +587,11 @@ class HomeController extends Controller
             Auth::login($user);
             // get role permission
             $this->getPermissions();
+
+            if ($request->session()->has('back.fullUrl')) {
+                $fullUrl = $request->session()->pull('back.fullUrl');
+                return redirect($fullUrl);
+            }
 
             if ($user->usersRoles->first()->role->name == 'ADMIN') {
                 return redirect()->route('dashboards.index');

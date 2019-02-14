@@ -62,6 +62,8 @@ class LoginMiddlware
                 return $next($request);
             }
         }
+        $fullUrl = $request->fullUrl();
+        $request->session()->put('back.fullUrl', $fullUrl);
         return redirect()->route('login.index');
     }
 }

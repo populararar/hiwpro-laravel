@@ -90,10 +90,18 @@ class OrderController extends AppBaseController
     public function statusdetail($id, Request $request)
     {
         $user = Auth::user();
-        $orderHeaders = $this->orderHeaderRepository->with('orderDetails')->findWhere(['customer_id' => $user->id, 'order_number' => $id])->first();
-        $reviewCount = $this->sellerReviewRepository->findWhere(['order_id' => $orderHeaders->id])->count('id');
+        $orderHeaders = $this->orderHeaderRepository
+        ->with('orderDetails')->findWhere(['customer_id' => $user->id, 'order_number' => $id])->first();
 
-        return view('orders.statusdetail')->with('orderHeaders', $orderHeaders)->with('reviewCount', $reviewCount);
+        $expTime = Carbon::parse($orderHeaders->created_at)->setTimezone('Asia/Bangkok')->addHours(2)->toDateTimeString();
+
+        $reviewCount = $this->sellerReviewRepository
+        ->findWhere(['order_id' => $orderHeaders->id])->count('id');
+
+        return view('orders.statusdetail')
+        ->with('expTime', $expTime)
+        ->with('orderHeaders', $orderHeaders)
+        ->with('reviewCount', $reviewCount);
     }
 
     public function sellerReview(Request $request)

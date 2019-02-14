@@ -9,6 +9,9 @@
 </head>
 <body>
     
-<h1>hello</h1>
+<h1>กรุณาตรวจสอบสินค้าที่ไได้รับในระบบ</h1>
+<a href="{{ route('orders.statusdetail',[ $order->order_number]) }}">ตรวจสอบที่นี้</a>
+
+
 </body>
 </html>

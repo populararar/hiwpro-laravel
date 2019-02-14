@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateOrderHeaderRequest;
 use App\Http\Requests\UpdateOrderHeaderRequest;
+use App\Mail\OrderShipped;
 use App\Models\OrderHeader;
 use App\Repositories\NotificationRepository;
 use App\Repositories\OrderDetailRepository;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -204,6 +206,9 @@ class OrderSellerController extends AppBaseController
                 'status' => 0,
             ]);
         } else {
+            // $orderHeader
+            $customerEmail = $order->customer->email;
+            Mail::to($customerEmail)->send(new OrderShipped($order, 'NO_COMPLETE'));
             $this->notificationRepository->create([
                 'order_id' => $order->id,
                 'user_id' => $order->customer_id,

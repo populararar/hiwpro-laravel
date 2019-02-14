@@ -21,6 +21,7 @@ class ReportAdminController extends AppBaseController
     private $reportAdminRepository;
 
     private $event;
+    
     private $lava;
 
     private $orderDetail;

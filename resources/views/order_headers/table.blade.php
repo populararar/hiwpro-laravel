@@ -23,7 +23,7 @@
     @foreach($orderHeaders as $orderHeader)
         <tr>
             <td>{!! $orderHeader->order_number !!}</td> 
-            <td>{!! $orderHeader->customer->name !!}</td>
+            <td>{{ empty($orderHeader->customer->name) ? 'UNDEFIND' :  $orderHeader->customer->name }}</td>
             <td>{!! $orderHeader->order_date !!}</td>
             <td>{!! $orderHeader->address !!}</td>
             

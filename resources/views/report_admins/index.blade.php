@@ -24,7 +24,6 @@
                 <button type="button" onclick="javascript:location.href='{{ route('reportAdmins.index') }}'">clear</button>
             </form>
        
-  
             <div id="perf_div"></div>
             {!! $lava->render('ColumnChart', 'Income', 'perf_div') !!}
      

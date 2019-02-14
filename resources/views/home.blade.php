@@ -60,7 +60,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 @if(!empty($events))
                                 <img class="img-fluid" style="border-radius: 2%;" src="{{ asset('/storage/'.$event_now->imgPath) }}">
-                                {{-- <div class="text-center" style="text-align: center;">
+                                <div class="text-center" style="text-align: center;">
                                     <ul style="padding: 0;">
                                         <li class="clock"><span id="days"></span>days</li>
                                         <li class="clock"><span id="hours"></span>Hours</li>
@@ -68,7 +68,7 @@
                 
                                     </ul>
                                     <p id="demo"></p>
-                                </div> --}}
+                                </div>
                             </div>
                             <div class=".d-xs-none  col-sm-6 col-md-6" style="text-align: center;">
                                 
@@ -306,7 +306,7 @@
                         // end  script for tab steps
 
                                // Set the date we're counting down to
-            var countDownDate = new Date("Jan 27, 2019 15:37:25").getTime();
+            var countDownDate = new Date("2019-02-15 15:37:25").getTime();
 
             // Update the count down every 1 second
             var x = setInterval(function() {

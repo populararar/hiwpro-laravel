@@ -43,6 +43,7 @@ php artisan infyom:scaffold ReportAdmin  --fromTable --tableName=order_header --
 
 php artisan infyom:scaffold ReportSeller  --fromTable --tableName=order_header --primary=id --relations
 
+php artisan infyom:scaffold SellerReport  --fromTable --tableName=order_header --primary=id --relations
 
 
 ALTER TABLE `hiwpro`.`event_joined` 
