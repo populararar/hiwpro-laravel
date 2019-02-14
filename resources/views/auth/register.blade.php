@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <title>สมัครสมาชิก</title>
   </head>
   <style>
@@ -296,13 +296,14 @@
                             <div class="col-xs-8 col-md-8">
                                 <div class="checkbox icheck">
                                     <label>
-                                        <input type="checkbox"> I agree to the <a href="#">terms</a>
+                                        <input type="checkbox" id="checkbox-customer" value="true"> 
+                                        I agree to the @include('orders.terms_cus')
                                     </label>
                                 </div>
                             </div>
                             <!-- /.col -->
                             <div class="col-xs-4 col-md-4">
-                                <button type="submit" class="btn btn-danger btn-block btn-flat">Register</button>
+                                <button type="submit" id="btn-customer" class="btn btn-danger btn-block btn-flat" disabled>Register</button>
                             </div>
                             <!-- /.col -->
                         </div>
@@ -310,7 +311,19 @@
     
                     <a href="{{ url('/login') }}" class="text-center">I already have a membership</a>
                 </div>
+               
+                <script type="text/javascript">
+                        $('#checkbox-customer').change(function(){
+                            if(this.checked){
+                                $('#btn-customer').attr('disabled',false)
+                            }else{
+                                $('#btn-customer').attr('disabled',true)
+                            }
+                        })
+                </script>
+           
                     <!-- /.form-box -->
+                    
         </section>
 
 
@@ -498,14 +511,14 @@
                                 <div class="col-xs-8 col-md-8">
                                     <div class="checkbox icheck">
                                         <label>
-                                            <input type="checkbox"> I agree to the <a href="#">terms</a>
+                                            <input type="checkbox" id="checkbox-seller" value="true"> I agree to the @include('orders.terms_seller')
+                                            
                                         </label>
                                     </div>
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-xs-4 col-md-4">
-                                    
-                                    <button type="submit" class="btn btn-danger btn-block btn-flat">Register</button>
+                                    <button type="submit" id="btn-seller" class="btn btn-danger btn-block btn-flat" disabled>Register</button>
                                 </div>
                                 <!-- /.col -->
                             </div>
@@ -513,6 +526,15 @@
         
                         <a href="{{ url('/login') }}" class="text-center">I already have a membership</a>
                     </div>
+                    <script type="text/javascript">
+                        $('#checkbox-seller').change(function(){
+                            if(this.checked){
+                                $('#btn-seller').attr('disabled',false)
+                            }else{
+                                $('#btn-seller').attr('disabled',true)
+                            }
+                        })
+                    </script>
            
         </section>
           

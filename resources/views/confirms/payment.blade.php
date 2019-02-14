@@ -73,7 +73,7 @@ h4,h5{
 
 
 <div class="container">
-        @php
+    @php
             $num = $orderHeaders->total_price;
             $formattedNum = number_format($num);
 
@@ -85,7 +85,6 @@ h4,h5{
             }
         @endphp
 
-้
 <div class="weapper" style=" padding:3%; ">
     <h1 style="margin-top: 2%; color: #df3433;"> <i class="fas fa-money-check-alt"></i></h1>
         <h1 style="margin-top: 2%; color: #df3433; font-weight:bolder;">ชำระเงิน </h1>

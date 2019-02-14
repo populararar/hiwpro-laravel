@@ -240,83 +240,17 @@
     </div>
     <!-- row -->
 </div>
+
 <div class="wrapper">
   <div class="row">
     @php
        $status = $orderHeaders->slip_status;
     @endphp
     @if ($status =='WAITING' && $status_send == "CLOSE") 
+
     <div class="alert alert-warning" role="alert">
       ไม่สามารถทำการสั่งซื้อได้เนื่องจากหมดเวลาทำรายการ หากต้องการสั่งซื้อสินค้ากรุณาทำรายการไหม่อีกครั้ง <br> 
-      <a href="#" data-toggle="modal" data-target="#exampleModalLong">เงื่อนไขการใช้บริการ</a>
-      <!-- Button trigger modal -->
-<!-- Modal -->
-      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">ข้อกำหนดและเงื่อนไข</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-<dl class="row">
-  <dt class="col-sm-1">1.</dt>
-  <dd class="col-sm-11">
-    <span>
-      ผู้สั่งซื้อทำการชำระเงินผ่านช่องทางการชำระเงินของหิ้วโปร 
-    <font color='black'> ภายใน 2 ชั่วโมง </font>นับจากการกดยืนยันการชำระเงิน
-    หากชำระเงินหลังจากเวลาที่กำหนด คำสั่งซื้อจะถูกยกเลิก จะต้องทำการสั่งซื้อสินค้าอีกครั้ง</p>
-    </span>
-      </dd>
-
-  <dt class="col-sm-1">2.</dt>
-  <dd class="col-sm-11">
-    หากทำการชำระเงินแล้ว แต่แจ้งหลักฐานในการชำระเงินล่าช้า 
-      กรุณาติดต่อทางหิ้วโปร เพื่อทำการอัปเดทสถานะ
-  </dd>
-
-  <dt class="col-sm-1">3.</dt>
-  <dd class="col-sm-11">หากผู้ใช้ยืนยันคำสั่งซื้อ
-      <font color='black'> ภายหลังจากเวลา 18.00 น. </font>
-    รายการสั่งซื้อนั้นจะถูกส่งให้เป็นคำสั่งซื้อของวันถัดไป </dd>
-
-  <dt class="col-sm-1">4.</dt>
-  <dd class="col-sm-11">
-    <p>กรณีสินค้าหมด ทางหิ้วโปรจะทำการตรวจสอบยอดเงิน
-    และ ทำการชำระเงินคืนให้แก่ผู้สั่งซื้อ ภายใน 3-7 วันทำการ</p>
-  <dt class="col-sm-1">5.</dt>
-  <dd class="col-sm-11">
-    กรณีผู้สั่งซื้อรับสินค้าไม่ครบตามรายการสั่งซื้อ<br>
-    สามารถกด <font color='black'> “ คืนเงิน ”</font>  หิ้วโปรจะทำการตรวจสอบ
-    และ ทำการชำระเงินคืนให้แก่ผู้สั่งซื้อ
-    ภายใน 3-7 วัน นับจากวันที่<font color='black'> กด“ คืนเงิน ” </font></p>
-  </dd>
-
-  <dt class="col-sm-1">6.</dt>
-  <dd class="col-sm-11">
-    กรณีผู้สั่งซื้อแจ้งชำระเงินผิดพลาด (ชำระเงินไม่ครบตามจำนวน)
-    หิ้วโปรจะทำการส่งe-mail เพื่อแจ้งเตือนลูกค้า เพื่อให้ทำการชำระเงินอีกครั้ง
-    และ จะทำการคืนเงินที่ชำระผิดพลาดไปยังบัญชีของผู้สั่งซื้อ</p>
-  </dd>
-
-  <dt class="col-sm-1">7.</dt>
-  <dd class="col-sm-11">กรณีสินค้าชำรุด ซึ่งเกิดจากการขนส่ง  <font color='black'>หิ้วโปรไม่มีส่วนรับผิดชอบ</font></dd>
-
-  <dt class="col-sm-1">8.</dt>
-  <dd class="col-sm-11">หากผู้ใช้ยืนยันคำสั่งซื้อ<font color='#4a3804'> ภายหลังจากเวลา 18.00 น. </font>รายการสั่งซื้อนั้นจะถูกส่งให้เป็นคำสั่งซื้อของวันถัดไป </dd>
-
-</dl>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
-            </div>
-          </div>
-        </div>
-      </div>
-
+     @include('orders.terms_cus')
     </div>
     @endif
 
@@ -351,130 +285,13 @@
    
   </div>
   @if ($reviewCount< 1)
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">ได้รับสินค้าเรียบร้อย</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          <form method="POST" action="{{ route('orders.sellerreview', [$orderHeaders->order_number]) }}" enctype="multipart/form-data">
-              {!! csrf_field() !!} 
-              <input type="hidden" name="order_id" value="{{ $orderHeaders->id }}">
-              <input type="hidden" name="order_number" value="{{ $orderHeaders->order_number }}">
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">คะแนน:</label>
-                {{-- <input name="score" type="text" class="form-control" id="recipient-name"> --}}
-                <fieldset class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                    <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                    <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                    <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                    <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                    <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                    <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                    <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                </fieldset>
-            </div>
-            <div class="form-group has-feedback{{ $errors->has('comment') ? ' has-error' : '' }}">
-              <label for="message-text" class="col-form-label">Comment:</label>
-              <textarea name="comment" class="form-control" id="message-text"></textarea>
-              @if ($errors->has('comment'))
-                  <span class="help-block">
-                      <strong>{{ $errors->first('comment') }}</strong>
-                  </span>
-              @endif
-            </div>
-            <div class="row">
-                <div class="col-sm-6 imgUp">
-                  <div class="imagePreview  has-feedback{{ $errors->has('img1') ? ' has-error' : '' }}"></div>
-                    <label class="btn btn-primary">Upload
-                      <input name="img1" type="file" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
-                    </label>
-                    @if ($errors->has('img1'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('img1') }}</strong>
-                        </span>
-                    @endif
-                </div><!-- col-2 -->
-                <i class="fa fa-plus imgAdd"></i>
-            </div><!-- row -->
-        </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-outline-danger">Send message</button>
-          </div>
-         </form>
-      </div>
-    </div>
-  </div>
+    @include('orders.review_seller')
   @endif
   <!-- weapper -->
   <div class="page-header">
     <h3> ข้อมูลสินค้า</h3>
   </div>
- 
-@foreach( $orderHeaders->orderDetails as $item)
-@php
-  $num = $orderHeaders->total_price;
-  $formattedNum = number_format($num);  
-  $price = $item->price;
-  $qrt = $item->qrt;
-  $sum = $price*$qrt;
-  $sum = number_format($sum);
-@endphp
-
-  <div class="shadow-sm  mb-5 bg-white rounded">
-    <div class="row">
-      <div class="col-md-5">
-          <img class='card-img-top w-50' src="{{ asset('/storage/'.$item->product->image_product_id) }}">
-      </div>
-      <div class="col-md-7 " style="padding-top:2%;">
-        <h1 style="border-left:5px solid #df3433; padding-left: 5px;">ชื่อสินค้า : {{$item->product->name}}</h1>
-        <p>ประเภทสินค้า : เครื่องสำอางค์</p>
-        <p>ชื่อผู้หิ้ว : {{$item->seller->name }}</p>
-        <p>จำนวน {{$item->qrt }} ชิ้น</p>
-       
-        <p>ราคา {{ $sum }} บาท/ชิ้น</p>
-      </div>
-    </div>
-  </div> 
-  @if(!empty($orderHeaders->seller_actual_price))
-  <div class="page-header">
-      <h3>สินค้าที่จัดส่ง</h3>
-    </div>
-  <div class="shadow-sm  mb-5 bg-white rounded">
-      <div class="row">
-        <div class="col-md-5">
-            <img class='card-img-top w-50' src="{{ asset('/storage/'.$item->product->image_product_id) }}">
-        </div>
-       
-          <p>ราคาที่แม่ค้าได้แปะๆ : </p>
-          <p>
-            <p class="font-gray">
-              {{ $orderHeaders->seller_actual_price }} บาท </p>
-          </p>
-       
-        <div class="col-md-7 " style="padding-top:2%;">
-          <h1 style="border-left:5px solid #df3433; padding-left: 5px;">ชื่อสินค้า : {{$item->product->name}}</h1>
-          <p>ประเภทสินค้า : เครื่องสำอางค์</p>
-          <p>ชื่อผู้หิ้ว : {{$item->seller->name }}</p>
-          <p>จำนวน {{$item->qrt }} ชิ้น</p>
-         
-          <p>ราคา {{ $sum }} บาท/ชิ้น</p>
-        </div>
-      </div>
-    </div>
-  @endif
-
-
- @endforeach
+  @include('orders.product')
 
 </div>
 <!-- container -->
