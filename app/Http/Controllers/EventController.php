@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Khill\Lavacharts\Lavacharts;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-
+use DB;
 class EventController extends AppBaseController
 {
     /** @var  EventRepository */

@@ -7,16 +7,22 @@ use App\Http\Requests\CreateReportAdminRequest;
 use App\Http\Requests\UpdateReportAdminRequest;
 use App\Models\Event;
 use App\Models\OrderDetail;
+use App\Models\OrderHeader;
 use App\Repositories\ReportAdminRepository;
+use App\Repositories\OrderHeaderRepository;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Khill\Lavacharts\Lavacharts;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
 class ReportAdminController extends AppBaseController
 {
+    /** @var  OrderHeaderRepository */
+    private $orderHeaderRepository;
+
     /** @var  ReportAdminRepository */
     private $reportAdminRepository;
 
@@ -26,12 +32,17 @@ class ReportAdminController extends AppBaseController
 
     private $orderDetail;
 
-    public function __construct(OrderDetail $orderDetail, Lavacharts $lava, ReportAdminRepository $reportAdminRepo, Event $event)
+    private $orderHeader;
+
+    public function __construct(OrderHeaderRepository $orderHeaderRepo,OrderHeader $orderHeader, OrderDetail $orderDetail, Lavacharts $lava, ReportAdminRepository $reportAdminRepo, Event $event)
     {
         $this->reportAdminRepository = $reportAdminRepo;
-        $this->event = $event;
+        $this->orderHeaderRepository = $orderHeaderRepo;
         $this->orderDetail = $orderDetail;
+        $this->orderHeader = $orderHeader;
+        $this->event = $event;
         $this->lava = $lava;
+        
     }
 
     /**
@@ -52,18 +63,87 @@ class ReportAdminController extends AppBaseController
         if (empty($end)) {
             $end = Carbon::now()->endOfMonth()->format('Y-m-d');
         }
-
-        // $countOrder = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'COMPLETED')->count('id');
-        // $countOrder = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'CREATED')->count('id');
+        $countUser = \DB::table('users_roles')->where('role_id', '3')->count('id');
+        $countSeller = \DB::table('users_roles')->where('role_id', '2')->count('id');
+        $countOrder1 = \DB::table('order_header')->where('status', 'CREATED')->count('id');
+        $countOrder2 = \DB::table('order_header')->where('status', 'COMFIRMED')->count('id');
+        $countOrder3 = \DB::table('order_header')->where('status', 'COMPLETED')->count('id');
+        $countOrder4 = \DB::table('order_header')->where('status', 'ACCEPTED')->count('id');
 
         $this->setIncomeChart($this->lava, $start, $end);
 
         $this->setTotalFree($this->lava, $start, $end);
 
+        $this->setOrderChart($this->lava);
+
+        $stats = [
+            'countSeller' => $countSeller,
+            'countCustomer' => $countUser,
+            'countOrder1' => $countOrder1,
+            'countOrder2' => $countOrder2,
+            'countOrder3' => $countOrder3,
+            'countOrder4' => $countOrder4,
+        ];
+
         return view('report_admins.index')
             ->with('lava', $this->lava)
-            ->with('reportAdmins', $reportAdmins);
+            ->with('stats',$stats)
+            ->with('reportAdmin', $reportAdmins);
     }
+    private function getCountOrder()
+    {
+
+        $data = $this->orderHeader->selectRaw('YEAR(created_at) , MONTH(created_at) , count(id) AS count')
+            ->where('status', 'CONFIRMED')
+            ->orWhere('status', 'ACCEPTED')
+            ->groupBy("YEAR(created_at)")
+            ->groupBy("MONTH(created_at)")
+            ->get();
+
+        // dd($data);
+
+        foreach ($data as $row) {
+            $a = $row->toArray();
+            $success = $this->orderHeader->selectRaw('count(id) AS count')
+                ->whereRaw('YEAR(created_at) = ? and MONTH(created_at) = ? and status = ?', [$a['YEAR(created_at)'], $a['MONTH(created_at)'], 'COMPLETED'])
+                ->first();
+
+            $row->countSuccess = (int) $success->count;
+        }
+
+        return $data;
+
+    }
+
+    private function setOrderChart($lava)
+    {
+        $orders = $lava->DataTable();
+
+        $orders->addStringColumn('Year-Month')
+            ->addNumberColumn('fail')
+            ->addNumberColumn('success');
+
+        $data = $this->getCountOrder();
+        foreach ($data as $row) {
+            $arr = $row->toArray();
+            $countFail = $arr["count"];
+            $countSuccess = $arr["countSuccess"];
+
+            $yearMouth = sprintf("%d-%02d", $arr["YEAR(created_at)"], $arr["MONTH(created_at)"]);
+            
+            $orders->addRow([$yearMouth, $countFail, $countSuccess]);
+        }
+
+        $lava->ColumnChart('Orders', $orders, [
+            'title' => 'Order counter',
+            // 'titleTextStyle' => [
+            //     'color'    => '#eb6b2c',
+            //     'fontSize' => 12
+            // ]
+        ]);
+
+    }
+
 
     private function setTotalFree($lava, $start, $end)
     {

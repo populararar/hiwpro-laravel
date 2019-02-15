@@ -10,7 +10,6 @@
 </section>
 <div class="content">
     <div class="clearfix"></div>
-
     @include('flash::message')
     <div class="box box-danger">
             <div class="box-body">
@@ -20,10 +19,10 @@
                                     class="bs-callout bs-callout-info"
                                     id="callout-btn-group-tooltips">
                                     <h4>
-                                            {{-- {{$countOrder}} --}}
+                                            {{ $stats['countOrder1'] }}
                                     </h4>
                                     <p>
-                                            ชำระเงินแล้ว
+                                            นักหิ้ว
                                     </p>
                                 </div>
                             </div>
@@ -32,10 +31,10 @@
                                     class="bs-callout bs-callout-info"
                                     id="callout-btn-group-tooltips">
                                     <h4>
-                                            {{-- {{$countPrepared}}  --}}
+                                            {{ $stats['countOrder2'] }}
                                     </h4>
                                     <p>
-                                            หิ้วแล้วรอจัดส่ง
+                                            ลูกค้า
                                     </p>
                                 </div>
                             </div>
@@ -44,7 +43,7 @@
                                     class="bs-callout bs-callout-info"
                                     id="callout-btn-group-tooltips">
                                     <h4>
-                                            {{-- {{$countFinish}} --}}
+                                            {{ $stats['countOrder3'] }}
                                     </h4>
                                     <p>
                                             ได้รับสินค้า
@@ -56,7 +55,7 @@
                                     class="bs-callout bs-callout-info"
                                     id="callout-btn-group-tooltips">
                                     <h4>
-                                            {{-- {{$countSum}} --}}
+                                            {{ $stats['countOrder4'] }}
                                     </h4>
                                     <p>
                                             ออร์เดอร์ทั้งหมด
@@ -91,9 +90,64 @@
             {{-- @include('report_admins.table') --}}
         </div>
     </div>
+    <div class="clearfix"></div>
+    <div class="box box-danger">
+            <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                                <div
+                                    class="bs-callout bs-callout-info"
+                                    id="callout-btn-group-tooltips">
+                                    <h4>
+                                            {{ $stats['countOrder1'] }}
+                                    </h4>
+                                    <p>
+                                            ชำระเงินเรียบร้อย
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div
+                                    class="bs-callout bs-callout-info"
+                                    id="callout-btn-group-tooltips">
+                                    <h4>
+                                            {{ $stats['countOrder2'] }}
+                                    </h4>
+                                    <p>
+                                            ตรวจสอบเรียบร้อย
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div
+                                    class="bs-callout bs-callout-info"
+                                    id="callout-btn-group-tooltips">
+                                    <h4>
+                                            {{ $stats['countOrder3'] }}
+                                    </h4>
+                                    <p>
+                                            จัดส่งเรียบร้อย
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div
+                                    class="bs-callout bs-callout-info"
+                                    id="callout-btn-group-tooltips">
+                                    <h4>
+                                            {{ $stats['countOrder4'] }}
+                                    </h4>
+                                    <p>
+                                            รับสินค้า
+                                    </p>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+        </div>
+    
     <div class="text-center">
-
-    <div class="box box-primary col-sm-6">
+    <div class="box box-primary col-sm-12">
         <div class="box-body">
             ข้อมูลยอดออร์เดอร์ 
             <div id="order_div"></div>
