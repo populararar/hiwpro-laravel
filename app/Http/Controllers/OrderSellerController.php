@@ -55,8 +55,17 @@ class OrderSellerController extends AppBaseController
         // ->Where('seller_id', $user_id)
             ->whereRaw('seller_id =? and (status = ? or status = ?)', [$user_id, 'CONFIRMED', 'COMPLETED'])
             ->orderBy('updated_at', 'desc')->get();
+            $countOrder = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'CONFIRMED')->count('id');
+            $countPrepared = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'PREPARED')->count('id');
+            $countFinish = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'COMPLETED')->count('id');
+            $countSum = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->count('id');
+       
 
         return view('order_sellers.index')
+            ->with('countSum', $countSum)
+            ->with('countOrder', $countOrder)
+            ->with('countPrepared', $countPrepared)
+            ->with('countFinish', $countFinish)
             ->with('orderHeaders', $orderHeaders);
     }
 
@@ -158,6 +167,7 @@ class OrderSellerController extends AppBaseController
         if (empty($formDetail)) {
 
             $input = $request->all();
+            $input['tracking'] = $input['tracking_name'];
             $input['status'] = 'COMPLETED';
             $input['order_date'] = $orderHeader->order_date;
             $input['exp_date'] = $orderHeader->exp_date;
@@ -187,6 +197,15 @@ class OrderSellerController extends AppBaseController
                 'seller_actual_at' => Carbon::now()->toDateTimeString(),
                 'seller_actual_status' => 1,
             ], $detailId);
+        }
+        if(!empty($actualQty)){
+            $orderHeader = $this->orderHeaderRepository->update(['status' => 'PREPARED'], $id);
+            Flash::success('Order Detail updated successfully.');
+
+            return view('order_sellers.edit')
+            ->with('orderHeader', $orderHeader)
+            ->with('orderDetails', $orderDetails)
+            ->with('user', $user);
         }
         # New feature - edit total price
         $this->updateNewTotalPrice($orderHeader->id);

@@ -1,4 +1,11 @@
 @extends('layouts.app') @section('content')
+<style>
+h5,h1,h3{
+    font-family: 'Kanit';
+    /* font-weight: bolder; */
+}
+
+</style>
 <section class="content-header">
     <h1>
         ข้อมูลคำสั่งซื้อ

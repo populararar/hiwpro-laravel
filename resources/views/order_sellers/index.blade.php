@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<link href="https://getbootstrap.com/docs/3.3/assets/css/docs.min.css" rel="stylesheet"/>
 @section('content')
     <section class="content-header">
         <h1 class="pull-left">รายการสินค้า</h1>
@@ -15,20 +15,56 @@
         <div class="clearfix"></div>
         <div class="box box-danger">
             <div class="box-body">
-                <div class="row">
-                    <div class="col-md-3 box-card mx-auto card">
-                        <h1>20</h1>
-                        ยอดออร์เดอร์</div>
-                    <div class="col-md-3 box-card mx-auto card">
-                        <h1>2,300</h1>
-                        รายได้/บาท</div>
-                    <div class="col-md-3 box-card mx-auto card">
-                        <h1>20</h1>
-                        คะแนนดาว</div>
-                    <div class="col-md-3 box-card mx-auto card">
-                        <h1>20</h1>
-                        โบนัส/บาท</div>
-                </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                                <div
+                                    class="bs-callout bs-callout-info"
+                                    id="callout-btn-group-tooltips">
+                                    <h4>
+                                            {{$countOrder}}
+                                    </h4>
+                                    <p>
+                                            ชำระเงินแล้ว
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div
+                                    class="bs-callout bs-callout-info"
+                                    id="callout-btn-group-tooltips">
+                                    <h4>
+                                            {{$countPrepared}} 
+                                    </h4>
+                                    <p>
+                                            หิ้วแล้วรอจัดส่ง
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div
+                                    class="bs-callout bs-callout-info"
+                                    id="callout-btn-group-tooltips">
+                                    <h4>
+                                            {{$countFinish}}
+                                    </h4>
+                                    <p>
+                                            ได้รับสินค้า
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div
+                                    class="bs-callout bs-callout-info"
+                                    id="callout-btn-group-tooltips">
+                                    <h4>
+                                            {{$countSum}}
+                                    </h4>
+                                    <p>
+                                            ออร์เดอร์ทั้งหมด
+                                    </p>
+                                </div>
+                            </div>
+                    </div>
             </div>
         </div>
         <div class="clearfix"></div>

@@ -224,9 +224,16 @@ class ConfirmController extends Controller
 
         Flash::success(' ขอขอบคุณสำหรับการช้อปปิ้งสินค้ากับหิ้วโปร 
         ระบบกำลังดำเนินการตรวจสอบรายการคำสั่งซื้อนี้ 
-        ทางเราจะทำการส่งข้อมูลการอัปเดททาง ข้อความให้คุณทราบโดยเร็ว');
+        ทางเราจะทำการส่งข้อมูลการอัปเดททางข้อความให้คุณทราบโดยเร็ว');
        
         return redirect()->route('orders.statusdetail', [$orderHeaders->order_number]);
     }
 
 }
+
+Flash::success('Update product Order successfully');
+
+            return view('order_sellers.edit')
+            ->with('orderHeader', $orderHeader)
+            ->with('orderDetails', $orderDetails)
+            ->with('user', $user);

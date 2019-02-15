@@ -2,6 +2,7 @@
   $num = $orderHeader->total_price;
   $formattedNum = number_format($num);  
 @endphp --}}
+
 <table class="table table-responsive" id="orderHeaders-table">
     <thead>
         <tr>
@@ -27,7 +28,7 @@
     @foreach($orderHeaders as $orderHeader)
         <tr>
             <td>{!! $orderHeader->order_number !!}</td>
-            <td>{!! $orderHeader->customer_id !!}</td>
+            <td>{!! $orderHeader->customer->name !!}</td>
             <td>{!! $orderHeader->address !!}</td>
             <td>{!! $orderHeader->order_date !!}</td>
             {{-- <td>{!! $orderHeader->exp_date !!}</td> --}}
@@ -45,6 +46,7 @@
                 {!! Form::open(['route' => ['orderSellers.destroy', $orderHeader->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{!! route('orderSellers.show', [$orderHeader->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
+
                     @if ($orderHeader->status!='COMPLETED')
                          <a href="{!! route('orderSellers.edit', [$orderHeader->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
                     @endif
