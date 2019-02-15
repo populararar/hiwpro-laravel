@@ -167,7 +167,7 @@ class OrderSellerController extends AppBaseController
         if (empty($formDetail)) {
 
             $input = $request->all();
-            $input['tracking'] = $input['tracking_name'];
+            $input['tracking'] = $input['tracking'];
             $input['status'] = 'COMPLETED';
             $input['order_date'] = $orderHeader->order_date;
             $input['exp_date'] = $orderHeader->exp_date;

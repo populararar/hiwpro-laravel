@@ -124,19 +124,19 @@
         # code...
         $status ='ออร์เดอร์หมดอายุ';
     }
-    if ($status_send == "CONFIRMED") {
-        # code...
-        $status ='ได้ส่งข้อมูลการสั่งซื้อไปยังผู้ขายแล้ว';
+    if($orderHeaders->status == 'CONFIRMED'){
+        $status = 'ชำระเงินแล้ว';
     }
-    if ($status_send == "COMPLETED") {
-        # code...
-        $status ='สินค้าถูกจัดส่งแล้วกรุณาตรวจสอบ';
+    if($orderHeaders->status == 'PREPARED'){
+        $status = 'หิ้วแล้วรอการจัดส่ง';
     }
-    if ($status_send == "ACCEPTED") {
-        # code...
-        $status ='ได้รับสินค้าเรียบร้อย';
+    if($orderHeaders->status == 'COMPLETED'){
+        $status = 'จัดส่งแล้ว';
     }
-    
+    if($orderHeaders->status == 'ACCEPTED'){
+        $status = 'ได้รับสินค้า';
+    }
+
 @endphp
 
 
@@ -181,7 +181,7 @@
         </p>
       </div>
       <div class=" col-lg-4">
-        <p>สถานะการชำระเงิน : </p>
+        <p>สถานะ : </p>
         <p>
           <p class="font-gray">{{ $status}} </p>
         </p>
@@ -276,7 +276,7 @@
     {{-- <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div> --}}
     @if ($status =='UPLOADED' &&  $status_send == "CONFIRMED") 
     <div class="alert alert-primary" role="alert">
-        หากได้รับสินต้าแล้วกรุณากดรับสินค้า
+        หากได้รับสินค้าแล้วกรุณากดรับสินค้า
     </div>
       @if ($reviewCount< 1)
             <div class="col-md-6"><button type="button" class="btn btn-defult w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" disabled>ได้รับสินค้า</button></div>

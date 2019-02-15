@@ -136,7 +136,7 @@ $sum=0;$count=0;$count2=0;
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputCity">ประเทศ</label>
-          <input id="country" name="country" type="text" class="form-control" id="inputCity" placeholder="ตัวอักษรไทยหรือภาษาอัง..">
+          <input id="country" name="country" type="text" class="form-control" id="inputCity" value="ประเทศไทย" readonly>
         </div>
         <div class="form-group col-md-6">
           <label for="inputPassword4">รหัสไปรษณีย์</label>

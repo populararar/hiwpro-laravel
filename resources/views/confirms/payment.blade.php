@@ -316,12 +316,7 @@ h4,h5{
                             <div class="col-md-3">
                                 <input name="send_time"  type="datetime-local" class="form-control">
                             </div>
-                            <div class='col-md-3 input-group date' id='datetimepicker3'>
-                                <input type='text' class="form-control" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-time"></span>
-                                </span>
-                            </div>
+                           
                         </div>
                         <div class="btnS"><button class="btn btn-danger" style="width:100%;" type="submit"> ยืนยัน </button></div>
                         </form>    
