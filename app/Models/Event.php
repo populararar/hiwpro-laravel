@@ -69,4 +69,11 @@ class Event extends Model
     ];
 
     
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function eventShops()
+    {
+        return $this->hasMany(\App\Models\EventShop::class,'event_id');
+    }
 }

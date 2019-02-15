@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\OrderShipped;
 use App\Repositories\EventJoinedRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\EventShopRepository;
@@ -19,7 +18,6 @@ use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Validator;
@@ -79,9 +77,28 @@ class HomeController extends Controller
         $this->sellerReviewRepository = $sellerReviewRepo;
     }
 
-    public function mail()
+    public function searchEvent(Request $request)
     {
-        Mail::to('ker13530018@gmail.com')->send(new OrderShipped());
+        $now = Carbon::now()->setTimezone('Asia/Bangkok')->toDateTimeString();
+        $key = $request->input('q');
+        $events = $this->eventRepository->findWhere([
+            ['eventName', 'like', '%' . $key . '%'],
+            ['startDate', '<=', $now],
+            ['lastDate', '>=', $now],
+        ]);
+
+        $eventShops = [];
+        if (count($events) > 0) {
+            foreach ($events as $event) {
+                foreach ($event->eventShops as $eventShop) {
+                    array_push($eventShops, $eventShop->id);
+                }
+            }
+        }
+
+        $productEvents =  $this->producteventRepository->findWhereIn( 'event_shop_id', $eventShops);
+
+        dd($events, $eventShops, $productEvents);
     }
 
     public function sellerReview(Request $request)

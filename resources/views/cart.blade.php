@@ -321,7 +321,9 @@ $sum=0;$count=0;$count2=0;
             @endforeach
             </div>
             <div class="row d-none d-sm-block col-lg-12 justify-content-center">
-                @include('saler')
+                @if (count($group->sellers) > 0)
+                    @include('saler')
+                @endif
             </div>
             @endforeach
 

@@ -27,6 +27,7 @@ Route::get('/register', 'HomeController@register')->name('register');
 Route::post('/register', 'HomeController@registerStore')->name('register.store');
 
 Route::get('/home', 'HomeController@index');
+Route::get('/searchEvent', 'HomeController@searchEvent');
 Route::get('/eventinfo', 'HomeController@eventinfo');
 Route::get('/eventdetail/{id}', 'HomeController@eventdetail')->name('event.detail');
 Route::get('/eventshop/{event_shop_id}/product/{id}', 'HomeController@eventproduct')->name('event.detail.product');
