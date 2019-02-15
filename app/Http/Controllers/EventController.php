@@ -170,8 +170,8 @@ class EventController extends AppBaseController
     {
 
         $data = $this->orderHeader->selectRaw('YEAR(created_at) , MONTH(created_at) , count(id) AS count')
-            ->where('status', 'CREATE')
-            ->orWhere('status', 'CONFIRMED')
+            ->where('status', 'CONFIRMED')
+            ->orWhere('status', 'ACCEPTED')
             ->groupBy("YEAR(created_at)")
             ->groupBy("MONTH(created_at)")
             ->get();

@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>
+        <h1 style="font-family:'Kanit';">
             Report Admin
         </h1>
    </section>

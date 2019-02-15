@@ -52,7 +52,7 @@
                                     <td>
                                         <p>
                                             {{$status_show}}
-                                            {{$notification->orderHeader->status}} - {{$order->slip_status}}</p>
+                                            {{-- {{$notification->orderHeader->status}} - {{$order->slip_status}}</p> --}}
                                     </td>
 
 
@@ -91,19 +91,5 @@
 
 
 @section('scripts')
-    {{-- <script>
-    $(document).ready( function () {
-    $('#notifications-table').DataTable();
-    } );
-    </script> --}}
-
-    
-
-<script>
-    $('tr').click(function() {
-    location.href = 'route('orders.statusdetail',[ $notification->orderHeader->order_number])';
-});
-
-
-</script>
+ 
 @endsection
