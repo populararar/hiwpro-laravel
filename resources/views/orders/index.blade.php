@@ -87,19 +87,18 @@ $sum=0;$count=0;$count2=0;
                                     # code...
                                     $status_show ='รอการตรวจสอบ';
                                     }
-                                    if ($status_send == "CONFIRMED") {
-                                    # code...
-                                    $status_show ='ตรวจสอบเรียบร้อย';
+                                    if($order->status == 'CONFIRMED'){
+                                        $status_show = 'ชำระเงินแล้ว';
                                     }
-                                    if ($status_send == "COMPLETED") {
-                                    # code...
-                                    $status_show ='กำลังจัดส่ง';
+                                    if($order->status == 'PREPARED'){
+                                        $status_show = 'หิ้วแล้วรอการจัดส่ง';
                                     }
-                                    if ($status_send == "ACCEPTED") {
-                                    # code...
-                                    $status_show ='ได้รับสินค้าแล้ว';
+                                    if($order->status == 'COMPLETED'){
+                                        $status_show = 'จัดส่งแล้ว';
                                     }
-
+                                    if($order->status == 'ACCEPTED'){
+                                        $status_show = 'ได้รับสินค้า';
+                                    }
                                     @endphp
 
                                     <tr class="text-truncate">

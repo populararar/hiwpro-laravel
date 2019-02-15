@@ -4,6 +4,8 @@
 @php
 $num = $orderHeaders->total_price;
 $formattedNum = number_format($num);  
+$sum = 0;
+$count = 0;
 @endphp
 <div class="container">
         <div class="col text-center">
@@ -23,11 +25,6 @@ $formattedNum = number_format($num);
                   <div class="row  p-1 border-top">
                     <div class="col-lg-4">ชื่อ:</div>
                     <div class="col-lg-4">{{$user->name}}</div>
-                  </div>
-            
-                  <div class="row  p-1 border-top">
-                    <div class="col-lg-4"></div>
-                    <div class="col-lg-4"></div>
                   </div>
             
                   <div class="row  p-1 border-top">
@@ -54,21 +51,38 @@ $formattedNum = number_format($num);
                         <th class="font-weight-light">รวม</th>
                       </tr>
                     </thead>
-            
+
+                    @foreach( $orderHeaders->orderDetails as $item)
+                    @php
+
+                        $sum = $item->price * $item->qrt;
+                    @endphp
                     <tbody>
-                      <td>Shine Control Sheer Face Powder SPF15 PA+++ </td>
-                      <td>300</td>
-                      <td>2</td>
-                      <td>600</td>
+                      <td>{{$item->product->name }}</td>
+                      <td> {{number_format($item->price) }} </td>
+                      <td>{{$item->qrt }}</td>
+                      <td>{{number_format($item->price * $item->qrt) }}</td>
             
-                    </tbody>
+                    </tbody> 
+                    @php
+                    
+                        $count += $sum;
+                    @endphp
+                    @endforeach
+                    <tbody>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ number_format($count)}}</td>
+              
+                      </tbody> 
                   </table>
             
                   <!--------------ตารางชื่อสินค้า----------------->
             
             
                   <div style="margin-top: 2%;  ">
-                    <h9>รวมทั้งหมด 600 บาท </h9>
+                    <h9>{{number_format($sum) }}</h9>
                   </div>
             
             

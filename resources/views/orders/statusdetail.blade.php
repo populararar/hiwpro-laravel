@@ -209,15 +209,7 @@
             {{ $num }} ชิ้น </p>
         </p>
       </div>
-      <div class="col-lg-4">
-        @if(!empty($orderHeaders->seller_actual_price))
-          <p>ราคาที่แม่ค้าได้แปะๆ : </p>
-          <p>
-            <p class="font-gray">
-              {{ $orderHeaders->seller_actual_price }} บาท </p>
-          </p>
-        @endif
-      </div>
+     
 
 
     </div>
@@ -252,38 +244,51 @@
     </div>
     @endif
 
-    <div class="col-sm-12" id="count-down">
-    <ul style="padding: 0;">
-        <li class="clock"><span id="days"></span>days</li>
-        <li class="clock"><span id="hours"></span>Hours</li>
-        <li class="clock"><span id="minutes"></span>Minutes</li>
-    </ul>
-    <p id="demo"></p>
-    </div>
+ 
 
-    @if ($status =='WAITING'&& $status_send == "CREATE") 
+    @if ($status =='WAITING'&& $status_send == "CREATE")
+      <div class="col-sm-12" id="count-down" style="text-align: center;">
+        <h1>เหลือเวลาในการชำระเงิน</h1>
+      <p id="demo"></p>
+      </div> 
         <div class="col-md-6"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-warning w-100">ชำระเงิน</a> </div> 
         {{-- <div class="col-md-6"><button disabled="disabled" type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>    --}}
     @endif
 
-    @if ($status =='UPLOADED' && $status_send == "COMPLETED") 
+    @if ($status =='UPLOADED' && $status_send == "CONFIRMED") 
+      @if ($reviewCount< 1)
+        <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
+      @endif
+        <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div>
+    @endif
+
+    @if ($status =='UPLOADED' &&  $status_send == "PREPARED") 
+   
+      @if ($reviewCount< 1)
+            <div class="col-md-6"><button type="button" class="btn btn-defult w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" disabled>ได้รับสินค้า</button></div>
+      @endif
+    @endif
+
+    @if ($status =='UPLOADED' && $status_send == "COMPLETED")  
+    <div class="alert alert-danger col-md-12" role="alert">
+      หากได้รับสินค้าแล้วกรุณากดรับสินค้า
+    </div>
       {{-- {{dd($reviewCount)}} --}}
       @if ($reviewCount< 1)
         <div class="col-md-6"><button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>
       @endif
         <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div>
     @endif
+
     {{-- <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div> --}}
-    @if ($status =='UPLOADED' &&  $status_send == "CONFIRMED") 
-    <div class="alert alert-primary" role="alert">
-        หากได้รับสินค้าแล้วกรุณากดรับสินค้า
-    </div>
-      @if ($reviewCount< 1)
-            <div class="col-md-6"><button type="button" class="btn btn-defult w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" disabled>ได้รับสินค้า</button></div>
-      @endif
+   
+
+
+    @if ($status =='UPLOADED' && $status_send == "ACCEPTED")
+      <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div>
+  
     @endif
 
-   
   </div>
   @if ($reviewCount< 1)
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -416,8 +421,8 @@
 
 
       // Output the result in an element with id="demo"
-      document.getElementById("demo").innerHTML = days + " DAYS " + hours + " HOURS "
-      + minutes + " MINUTES " + seconds + " s ";
+      document.getElementById("demo").innerHTML = "<h1 style='color:#dc3545; text-align:center;'>"+ hours + " HOURS "
+      + minutes + " MINUTES " + seconds + " s </h1>";
           
       // If the count down is over, write some text 
       if (distance < 0) {
