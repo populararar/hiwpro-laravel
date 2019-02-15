@@ -80,7 +80,7 @@ class ReportAdminController extends AppBaseController
         }
 
         $lava->ColumnChart('Fee', $income, [
-            'title' => 'Fee Growth',
+            'title' => 'ค่าหิ้วรวม(บาท)',
             'titleTextStyle' => [
                 'color' => '#eb6b2c',
                 'fontSize' => 14,
@@ -130,7 +130,7 @@ class ReportAdminController extends AppBaseController
         }
 
         $lava->ColumnChart('Income', $income, [
-            'title' => 'Income Growth',
+            'title' => 'รายได้รวม(บาท)',
             'titleTextStyle' => [
                 'color' => '#eb6b2c',
                 'fontSize' => 14,
