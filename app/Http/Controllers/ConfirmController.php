@@ -231,9 +231,3 @@ class ConfirmController extends Controller
 
 }
 
-Flash::success('Update product Order successfully');
-
-            return view('order_sellers.edit')
-            ->with('orderHeader', $orderHeader)
-            ->with('orderDetails', $orderDetails)
-            ->with('user', $user);

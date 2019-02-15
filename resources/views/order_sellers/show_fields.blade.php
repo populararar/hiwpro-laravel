@@ -107,22 +107,23 @@ h5,h1,h3{
                         <p> ประเภทสินค้า : เครื่องสำอางค์</p>
                         <p> ชื่อผู้หิ้ว : {{$orderdetail->seller->name }}</p>
                         <p> จำนวน {{$orderdetail->qrt }} ชิ้น</p>
-                        <p> ราคา {{$orderdetail->product->price}} บาท/ชิ้น/ชิ้น</p>
-                        <p> ค่าหิ้ว {{$orderdetail->product->fee}} บาท/ชิ้น</p>
-                        <p> ค่าส่ง {{$orderdetail->product->shipping_price}} บาท/ชิ้น</p>
-                        <h5>ราคารวม {{$sum}}</h5>
-                        
+                        <p> ราคา {{number_format($price)}} บาท/ชิ้น/ชิ้น</p>
+                        <p> ค่าหิ้ว {{number_format($fee)}} บาท/ชิ้น</p>
+                        <p> ค่าส่ง {{number_format($shipping)}} บาท/ชิ้น</p>
+                        <h5>ราคารวม {{number_format($sum)}} บาท </h5>
                     </div>
                     </div>
                 </div>
+                
+                @endforeach
+                <div style="text-align:center;">
+                    <h3><span> ทั้งหมด <font color="red">{{number_format($sum)}}</font> บาท</span></h3>
+                </div>
+
                 @php
                     $sum += $sum;
                     $num += 1;
                 @endphp
-                @endforeach
-                <div style="text-align:center;">
-                    <h3><span> ทั้งหมด <font color="red"> {{$sum}} </font> บาท</span></h3>
-                </div>
                 
             </div>
         

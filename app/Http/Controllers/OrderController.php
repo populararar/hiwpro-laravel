@@ -202,7 +202,8 @@ class OrderController extends AppBaseController
             $orderNumber = Carbon::now()->format('Ymd') . $i++ . '' . Carbon::now()->micro;
             $totalPrice = 0;
             foreach ($group as $item) {
-                $totalPrice = $totalPrice + ($item->price + $item->attributes->fee + $item->attributes->shippping);
+                
+                $totalPrice += ($item->quantity * ($item->price + $item->attributes->fee + $item->attributes->shippping)) ;
             }
             $eventShopId = $group->first()->attributes->event_shop_id;
             $seller = $mapSeller[$eventShopId];
