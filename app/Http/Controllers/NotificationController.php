@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateNotificationRequest;
 use App\Repositories\NotificationRepository;
 use App\Repositories\OrderHeaderRepository;
 use App\Repositories\UsersRepository;
+use Carbon\Carbon;
+use Carbon\DateTimeZone;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,15 +41,22 @@ class NotificationController extends AppBaseController
      * @return Response
      */
     public function index(Request $request)
-    {
-        $user = Auth::user();
-
+    { 
+        
         $this->notificationRepository->pushCriteria(new RequestCriteria($request));
+
+        $user = Auth::user();
+        $now = Carbon::now()->setTimezone('Asia/Bangkok');
+        $orderHeaders = $this->orderHeaderRepository->findWhere(['customer_id' => $user->id]);
+
+        $user = Auth::user();
+        
         $notifications = $this->notificationRepository->findWhere(['user_id' => $user->id])->sortByDesc('created_at')->sortBy('status');
 
         $user = $this->usersRepository->findwhere(['id' => $notifications->orderHeader->seller_id])->sortByDesc('created_at')->sortBy('status');
         // dd( $user );
         return view('notifications.index')
+            ->with('orderHeaders', $orderHeaders)
             ->with('notifications', $notifications);
     }
 

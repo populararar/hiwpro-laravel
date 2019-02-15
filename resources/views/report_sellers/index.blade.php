@@ -202,7 +202,7 @@ h4{
 
         <div class="box box-primary">
             <div class="mx-auto">
-                <form method="GET" action="{{ route('reportAdmins.index') }}">
+                <form method="GET" action="{{ route('reportSellers.index') }}">
                     <input type="date" name="start">
                     <input type="date" name="end">
                     <button class="btn btn-danger" type="submit">search</button>
@@ -210,11 +210,9 @@ h4{
                 </form>
             </div>
             
-            
                 <div id="perf_div_fee"></div>
                 {!! $lava->render('ColumnChart', 'Fee', 'perf_div_fee') !!}
               
-
             <div class="box-body">
                     {{-- @include('report_sellers.table') --}}
             </div>

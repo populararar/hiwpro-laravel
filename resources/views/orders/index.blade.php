@@ -95,7 +95,7 @@ $sum=0;$count=0;$count2=0;
                                     # code...
                                     $status_show ='กำลังจัดส่ง';
                                     }
-                                    if ($status_send == "ACCEPT") {
+                                    if ($status_send == "ACCEPTED") {
                                     # code...
                                     $status_show ='ได้รับสินค้าแล้ว';
                                     }

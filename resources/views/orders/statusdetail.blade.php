@@ -120,9 +120,9 @@
         # code...
         $status ='รอการตรวจสอบ';
     }
-    if ($status_send == "") {
+    if ($status_send == "CLOSE") {
         # code...
-        $status ='รอรับสินค้า';
+        $status ='ออร์เดอร์หมดอายุ';
     }
     if ($status_send == "CONFIRMED") {
         # code...
@@ -132,12 +132,10 @@
         # code...
         $status ='สินค้าถูกจัดส่งแล้วกรุณาตรวจสอบ';
     }
-    if ($status_send == "ACCEPT") {
+    if ($status_send == "ACCEPTED") {
         # code...
         $status ='ได้รับสินค้าเรียบร้อย';
     }
-
-    
     
 @endphp
 

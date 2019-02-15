@@ -77,4 +77,5 @@ class Notification extends Model
     {
         return $this->belongsTo(\App\Models\OrderHeader::class,'order_id');
     }
+
 }
