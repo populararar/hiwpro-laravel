@@ -249,7 +249,7 @@ $sum=0;$count=0;$count2=0;
     <div class="row col-12 shadow-sm p-3 mb-5 bg-white rounded" style="padding:2%;">
         <div class="alert alert-warning alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Warning!</strong> กรุณาอ่านเงื่อนไขการใช้บริการก่อนสั่งซื้อสินค้า <a href="#" class="alert-link"></a>
+            <strong>Warning!</strong> กรุณาอ่านเงื่อนไขการใช้บริการก่อนสั่งซื้อสินค้า @include('orders.terms_cus')
         </div>
     {{-- style="margin-bottom:20px;" --}}
   
@@ -324,6 +324,13 @@ $sum=0;$count=0;$count2=0;
                 @if (count($group->sellers) > 0)
                     @include('saler')
                 @endif
+                @if (count($group->sellers) < 0)
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Warning!</strong>อีเว้นต์นี้ยังไม่เปิดให้บริการ<a href="#" class="alert-link"></a>
+                    </div>
+                @endif
+
             </div>
             @endforeach
 
@@ -384,7 +391,7 @@ $sum=0;$count=0;$count2=0;
             </div> 
             @endforeach 
     </div>
-    
+
         <div class="col-md-12 card border-danger mb-3 mt-5" style="max-width: 100%;">
             <div class="card-header">Order Summary</div>
             <div class="card-body">
@@ -404,7 +411,7 @@ $sum=0;$count=0;$count2=0;
                     the card's content.</p> --}}
             </div>
         </div>
-     
+
    
 </div> 
 

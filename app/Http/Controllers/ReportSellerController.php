@@ -81,6 +81,7 @@ class ReportSellerController extends AppBaseController
         ->where('seller_id' , Auth::user()->id)
         ->selectRaw("SUM(seller_actual_price) AS income")->get()->first();
             // dd($countIncome);
+
         $this->setTotalFree($this->lava, $start, $end);
 
         $reviews = $this->sellerReviewRepository->findWhere(['user_id' => Auth::user()->id]);
@@ -134,7 +135,7 @@ class ReportSellerController extends AppBaseController
 
         $data = $this->getTotalFree($start, $end);
         foreach ($data as $row) {
-            $a = $row;
+            $a = $row;          //, $a->sum
             $income->addRow([$a->first()->date, $a->sumQty, $a->sum, $a->sumPercent]);
         }
 

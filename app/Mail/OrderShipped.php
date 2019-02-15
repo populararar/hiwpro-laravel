@@ -41,7 +41,7 @@ class OrderShipped extends Mailable
                 break;
             case 'NO_COMPLETE_PAYMENT':
                 # code...
-                $view = 'emails.orders_no_complete_payment';
+                $view = 'emails.orders_no_payment';
                 break;
             default:
                 # code...

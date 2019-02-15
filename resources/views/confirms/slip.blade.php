@@ -12,13 +12,6 @@ $formattedNum = number_format($num);
               </div>
             
             
-            
-           
-            
-            
-            
-            
-            
                 <div class="weapper font-weight-light   " style="margin-top:2%;  ">
             
             
@@ -33,18 +26,18 @@ $formattedNum = number_format($num);
                   </div>
             
                   <div class="row  p-1 border-top">
-                    <div class="col-lg-4">สกุล :</div>
-                    <div class="col-lg-4">คิม</div>
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4"></div>
                   </div>
             
                   <div class="row  p-1 border-top">
-                    <div class="col-lg-4">ที่อยู่การจัดส่ฆง :</div>
+                    <div class="col-lg-4">ที่อยู่การจัดส่ง :</div>
                     <div class="col-lg-6">{{$orderHeaders->address}}</div>
                   </div>
             
                   <div class="row  p-1 border-top">
                     <div class="col-lg-4">เบอร์โทรศัพท์ :</div>
-                    <div class="col-lg-6">0623152625</div>
+                    <div class="col-lg-6">{{$orderHeaders->customer->profile->tel}}</div>
                   </div>
                   <div class="row  p-1 border-top">
                     <div class="col-lg-4">E-mail : </div>

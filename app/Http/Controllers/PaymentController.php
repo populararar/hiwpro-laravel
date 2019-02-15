@@ -144,6 +144,26 @@ class PaymentController extends AppBaseController
 
         return redirect(route('payments.index'));
     }
+    
+    private function sendMail($id)
+    {
+        $order = $this->orderHeaderRepository->findWhere(['id' => $id])->first();
+        $customerEmail = $order->customer->email;
+
+        if($order){
+            Mail::to($customerEmail)->send(new OrderShipped($order, 'NO_COMPLETE_PAYMENT'));
+        }
+        
+        $payment = $this->paymentRepository->findWithoutFail($id);
+
+        if (empty($payment)) {
+            Flash::error('Payment not found');
+
+            return redirect(route('payments.index'));
+        }
+
+        return view('payments.edit')->with('payment', $payment);
+    }
 
     /**
      * Remove the specified Payment from storage.

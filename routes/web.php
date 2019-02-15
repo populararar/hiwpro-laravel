@@ -105,6 +105,9 @@ Route::middleware(['login'])->group(function () {
     Route::post('/orders/seller/review/{id}', 'OrderController@sellerReview')->name('orders.sellerreview');
 
     Route::resource('payments', 'PaymentController');
+    
+    Route::get('payments/{id}/sendmail', 'PaymentController@sendMail');
+
     Route::resource('sellerReviews', 'SellerReviewController');
 
     Route::resource('notifications', 'NotificationController');

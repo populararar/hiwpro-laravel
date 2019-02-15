@@ -202,6 +202,10 @@ class OrderSellerController extends AppBaseController
             $orderHeader = $this->orderHeaderRepository->update(['status' => 'PREPARED'], $id);
             Flash::success('Order Detail updated successfully.');
 
+            $orderDetails = $this->orderDetailRepository->findWhere(['order_header_id' => $orderHeader->id]);
+
+            $user = Auth::user();
+            
             return view('order_sellers.edit')
             ->with('orderHeader', $orderHeader)
             ->with('orderDetails', $orderDetails)

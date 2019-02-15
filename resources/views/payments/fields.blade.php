@@ -157,11 +157,15 @@
               </button>
             </div>
             <div class="modal-body">
-                ยอดเงินที่ท่านส่งมาไม่ถูกต้องกรุณาโอน เงินใหม่ภายใน 1 ชม. (พิมพ์เวลา)
+                หลักฐานในการชำระเงินไม่ถูกต้อง
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Send mail</button>
+
+              {{-- Mail::to($customerEmail)->send(new OrderShipped($order, 'NO_COMPLETE')); --}}
+              {{-- <aclass="btn btn-xs btn-info pull-right">Edit</a> --}}
+            {{-- {{dd($payment->order->order_number)}} --}}
+              <button href="{{ url('/payment/' . $payment->order->id. '/sendmail') }}"  type="button" class="btn btn-primary">Send mail</button>
             </div>
           </div>
         </div>

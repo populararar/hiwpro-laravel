@@ -156,14 +156,14 @@
         <div class="alert alert-warning alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>ตำเตือน!</strong> 
-            กรุณาตรวจสอบหลักฐานการโอนก่อนกดชำระเงิน เพื่อป้องกันข้อผิดพลาดกรุณาอ่าน <br> <a href="" data-toggle="modal" data-target="#exampleModalLong">เงื่อนไขการใช้บริการ</a>
+            กรุณาตรวจสอบหลักฐานการโอนก่อนกดชำระเงิน เพื่อป้องกันข้อผิดพลาดกรุณาอ่าน <br> <a href="" data-toggle="modal" data-target="#exampleModalLong">@include('orders.terms_cus')</a>
         </div>
     @endif
     @if ($status =='UPLOADED' && $status_send == "COMPLETED") 
         <div class="alert alert-warning alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>ตำเตือน!</strong> 
-            หากไม่กดรับสินค้าภายใน 7 วันหลังจากมีผู้เซนต์รับสินค้าจะถือว่าได้รับสินค้าแล้ว<br> <a href="" data-toggle="modal" data-target="#exampleModalLong">เงื่อนไขการใช้บริการ</a>
+            หากไม่กดรับสินค้าภายใน 7 วันหลังจากมีผู้เซนต์รับสินค้าจะถือว่าได้รับสินค้าแล้ว<br> <a href="" data-toggle="modal" data-target="#exampleModalLong">@include('orders.terms_cus')</a>
         </div>
     @endif
     
@@ -275,6 +275,9 @@
     @endif
     {{-- <div class="col-md-6"><a href="{{ route('confirms.slip', [$orderHeaders->order_number])  }}" class="btn btn-info w-100">รายละเอียดใบเสร็จ</a> </div> --}}
     @if ($status =='UPLOADED' &&  $status_send == "CONFIRMED") 
+    <div class="alert alert-primary" role="alert">
+        หากได้รับสินต้าแล้วกรุณากดรับสินค้า
+    </div>
       @if ($reviewCount< 1)
             <div class="col-md-6"><button type="button" class="btn btn-defult w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" disabled>ได้รับสินค้า</button></div>
       @endif
@@ -311,7 +314,7 @@
                     <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
                     <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
                     <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                    <input type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
                 </fieldset>
             </div>
             <div class="form-group has-feedback{{ $errors->has('comment') ? ' has-error' : '' }}">
