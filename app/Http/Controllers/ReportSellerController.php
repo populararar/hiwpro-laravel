@@ -129,18 +129,18 @@ class ReportSellerController extends AppBaseController
         // get count order
 
         $income->addStringColumn('Year-Month')
-            ->addNumberColumn('qty')
-            ->addNumberColumn('free')
-            ->addNumberColumn('90%');
+            // ->addNumberColumn('qty')
+            // ->addNumberColumn('free')
+            ->addNumberColumn('ค่าหิ้ว(บาท)');
 
         $data = $this->getTotalFree($start, $end);
         foreach ($data as $row) {
-            $a = $row;          //, $a->sum
-            $income->addRow([$a->first()->date, $a->sumQty, $a->sum, $a->sumPercent]);
+            $a = $row;          //,  $a->sumQty, $a->sum,
+            $income->addRow([$a->first()->date, $a->sumPercent]);
         }
 
         $lava->ColumnChart('Fee', $income, [
-            'title' => 'Fee Growth',
+            'title' => 'สรุปรายได้',
             'titleTextStyle' => [
                 'color' => '#eb6b2c',
                 'fontSize' => 14,

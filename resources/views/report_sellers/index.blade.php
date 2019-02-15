@@ -131,9 +131,9 @@ h4{
 </style>
     <section class="content-header">
         <h1 class="pull-left">Report Sellers</h1>
-        <h1 class="pull-right">
+        {{-- <h1 class="pull-right">
            <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('reportSellers.create') !!}">Add New</a>
-        </h1>
+        </h1> --}}
 
 
 
@@ -201,7 +201,7 @@ h4{
             </div>
 
         <div class="box box-primary">
-            <div class="mx-auto">
+            <div class="mx-auto" style="padding-left:30%;margin-top:5%;">
                 <form method="GET" action="{{ route('reportSellers.index') }}">
                     <input type="date" name="start">
                     <input type="date" name="end">
@@ -210,8 +210,11 @@ h4{
                 </form>
             </div>
             
-                <div id="perf_div_fee"></div>
+            <div class="col-sm-12">
+               <div id="perf_div_fee"></div>
                 {!! $lava->render('ColumnChart', 'Fee', 'perf_div_fee') !!}
+            </div>
+               
               
             <div class="box-body">
                     {{-- @include('report_sellers.table') --}}

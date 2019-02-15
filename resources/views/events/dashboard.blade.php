@@ -53,13 +53,13 @@
 
   <div class="clearfix"></div>
 
-  <div class="box box-danger col-sm-6">
+  {{-- <div class="box box-danger col-sm-6">
     <div class="box-body">
       ข้อมูลรายได้ 
             <div id="pop_div"></div>
             {!! $lava->render('AreaChart', 'Population', 'pop_div')  !!}
     </div>
-  </div>
+  </div> --}}
 
   
 
