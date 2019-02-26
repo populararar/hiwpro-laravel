@@ -76,29 +76,33 @@ $sum=0;$count=0;$count2=0;
                                     $status_show = '';
 
                                     if ($status == "WAITING") {
-                                    # code...
+                                    # แดง
                                     $status_show ='รอการชำระเงิน';
                                     }
                                     if ($status == "WAITING" && $status_send == "CLOSE") {
-                                    # code...
+                                    # เทาอ่อน
                                     $status_show ='ออร์เดอร์หมดอายุ';
                                     }
                                     if ($status == "UPLOADED") {
-                                    # code...
+                                    # เหลือง
                                     $status_show ='รอการตรวจสอบ';
                                     }
                                     if($order->status == 'CONFIRMED'){
                                         $status_show = 'ชำระเงินแล้ว';
                                     }
+                                    # เขียว
                                     if($order->status == 'PREPARED'){
                                         $status_show = 'หิ้วแล้วรอการจัดส่ง';
                                     }
+                                    # ฟ้า
                                     if($order->status == 'COMPLETED'){
                                         $status_show = 'จัดส่งแล้ว';
                                     }
+                                    # ฟ้า
                                     if($order->status == 'ACCEPTED'){
                                         $status_show = 'ได้รับสินค้า';
                                     }
+                                    # ดำ
                                     @endphp
 
                                     <tr class="text-truncate">
@@ -107,8 +111,49 @@ $sum=0;$count=0;$count2=0;
                                         <td>{{ $order->order_date}}</td>
                                         <td>{{ $formattedNum }} บาท</td>
                                         <td>
+                                            @if ($status == "WAITING" && $status_send == "CLOSE") 
                                             <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
-                                                class="font-weight-light ">{{$status_show}}</a>
+                                                    class="font-weight-light " style="color:gray;">{{$status_show}}</a>
+                                            {{-- # เทาอ่อน --}}
+                                            @endif
+                                          
+                                            @if ($status == "WAITING" && $status_send == "CREATE") 
+                                            <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
+                                                class="font-weight-light " style="color:red;">{{$status_show}}</a>
+                                            @endif
+
+                                           
+                                         
+                                            @if ($status == "UPLOADED") 
+                                            <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
+                                                    class="font-weight-light " style="color:#FFC300;">{{$status_show}}</a>
+                                            {{-- เหลือง --}}
+                                            @endif
+                                       
+                                            @if($order->status == 'CONFIRMED')
+                                            <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
+                                                    class="font-weight-light " style="color:green;">{{$status_show}}</a>
+                                            {{-- # เขียว --}}
+                                            @endif
+
+                                            @if($order->status == 'PREPARED')
+                                            <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
+                                                    class="font-weight-light " style="color:blue;">{{$status_show}}</a>
+                                            {{-- # ฟ้า --}}
+                                            @endif
+
+                                            @if($order->status == 'COMPLETED')
+                                            <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
+                                                    class="font-weight-light " style="color:pink;">{{$status_show}}</a>
+                                            {{-- # ฟ้า --}}
+                                            @endif
+
+                                            @if($order->status == 'ACCEPTED')
+                                            <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
+                                                    class="font-weight-light " style="color:black;">{{$status_show}}</a>
+                                                
+                                            @endif
+                                           
                                             {{-- @if($status == 'WAITING')
                                                     
                                                     @endif

@@ -157,7 +157,7 @@ h4,h5{
                                          <p> ประเภทสินค้า : เครื่องสำอางค์</p>
                                          <p> ชื่อผู้หิ้ว : {{$item->seller->name }}</p>
                                          <p> จำนวน {{$item->qrt }} ชิ้น</p>
-                                         <p> ราคา {{$item->price }} บาท</p>
+                                         <p> ราคา {{ number_format($item->price) }} บาท</p>
                                      </div>
                                      </div>
                                  </div>
@@ -254,7 +254,13 @@ h4,h5{
                         <div class="row" style="text-align:right;margin:2% 0%;">
                             <div class="col-md-4"><label for="exampleInputName2">เลขบัญชี :</label></div>
                             <div class="col-md-6">
-                                <input type="text" name="bank_num" class="form-control" id="exampleInputName2" placeholder="กรุณาไส่ตัวเลข 10 หลัก">
+                                    <input type="text" style="width:15%; float:left; margin-right:2%;" class="form-control"  id="txtAc1" name="txtAc1" size="2" class="required" maxlength = "3" />
+                                    <input type="text" style="width:10%; float:left; margin-right:2%;" class="form-control" id="txtAc2" name="txtAc2" size="2" class="required" maxlength = "1" />
+                                    <input type="text" style="width:15%; float:left; margin-right:2%;" class="form-control" id="txtAc3" name="txtAc3" size="2" class="required" maxlength = "5" />
+                                    <input type="text" style="width:10%; float:left;" class="form-control" id="txtAc4" name="txtAc4" size="2" class="required" maxlength = "1" /> * หมายเลขบัตร 10 หลัก                                      
+                                    <input type="hidden" id="txtBank" name="bank_num" size="25"  value="Credit" />
+
+                                {{-- <input type="text" name="bank_num" class="form-control" id="exampleInputName2" placeholder="กรุณาไส่ตัวเลข 10 หลัก"> --}}
                             </div>
                         </div>
         
@@ -383,12 +389,12 @@ h4,h5{
                         <div class="row" style="text-align:right;margin:2% 0%;">
                             <div class="col-md-4"><label for="exampleInputName2">เลขหน้าบัตร :</label></div>
                             <div class="col-md-6">
-                                    <input type="text" id="txtAc1" name="txtAc1" size="2" class="required" maxlength = "4" />
-                                    <input type="text" id="txtAc2" name="txtAc2" size="2" class="required" maxlength = "4" />
-                                    <input type="text" id="txtAc3" name="txtAc3" size="2" class="required" maxlength = "4" />
-                                    <input type="text" id="txtAc4" name="txtAc4" size="2" class="required" maxlength = "4" /> * หมายเลขบัตร 16 หลัก                                      
+                                    <input type="text" style="width:15%; float:left; margin-right:2%;" class="form-control"  id="txtAc1" name="txtAc1" size="2" class="required" maxlength = "4" />
+                                    <input type="text" style="width:15%; float:left; margin-right:2%;" class="form-control" id="txtAc2" name="txtAc2" size="2" class="required" maxlength = "4" />
+                                    <input type="text" style="width:15%; float:left; margin-right:2%;" class="form-control" id="txtAc3" name="txtAc3" size="2" class="required" maxlength = "4" />
+                                    <input type="text" style="width:15%; float:left;" class="form-control" id="txtAc4" name="txtAc4" size="2" class="required" maxlength = "4" /> * หมายเลขบัตร 16 หลัก                                      
                                     <input type="hidden" id="txtBank" name="txtBank" size="25"  value="Credit" />
-                                <input type="teuxt" class="form-control" id="exampleInputName2" placeholder="เลขหน้าบัตร">
+                                {{-- <input type="teuxt" id="exampleInputName2" placeholder="เลขหน้าบัตร"> --}}
                             </div>
                         </div>
 

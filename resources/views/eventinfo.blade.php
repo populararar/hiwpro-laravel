@@ -48,15 +48,14 @@ img:hover{
 
   
 <div class="row">
-  <div class=" col-md-3 d-none d-md-block d-lg-block">
-    <h4>ค้นหาโดย</h4>
-      <form >
-          <input type="search" placeholder="Search">
-      </form>
-      
-     
-      แบรนด์ <br> หมวดหมู่ <br> ราคา  <br>โปรโมชั่น 
-  </div> {{-- col-2 --}}
+    <div class=" col-md-3 d-none d-md-block d-lg-block">
+        <h4>ค้นหาโดย</h4> ชื่ออีเว้น <br>
+        <div class="float-left col-sm-12 col-md-4">
+            <form method='get' action='/searchEvent' >
+                <input name='q' value='' type="search" placeholder="Search" />
+            </form>
+        </div>
+    </div> {{-- col-2 --}}
  
   <div class="col-md-9 col-sm-12">
     @if(!empty($events))

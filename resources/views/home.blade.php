@@ -40,8 +40,8 @@
                                สินค้าลดราคา แบรนด์ สถานที่
                             </div>
                             <div class="float-right col-sm-12 col-md-4">
-                                <form >
-                                    <input type="search" placeholder="Search">
+                                <form method='get' action='/searchEvent' >
+                                    <input name='q' value='' type="search" placeholder="Search" />
                                 </form>
                             </div>
                         </div>
@@ -60,15 +60,11 @@
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 @if(!empty($events))
                                 <img class="img-fluid" style="border-radius: 2%;" src="{{ asset('/storage/'.$event_now->imgPath) }}">
-                                <div class="text-center" style="text-align: center;">
-                                    <ul style="padding: 0;">
-                                        <li class="clock"><span id="days"></span>days</li>
-                                        <li class="clock"><span id="hours"></span>Hours</li>
-                                        <li class="clock"><span id="minutes"></span>Minutes</li>
-                
-                                    </ul>
-                                    <p id="demo"></p>
-                                </div>
+                                <div class="col-sm-12" id="count-down" style="text-align: center;">
+                                    <br>
+                                        <h1>โอกาสสุดท้ายเหลือเวลาอีก..</h1>
+                                      <p id="demo"></p>
+                                </div> 
                             </div>
                             <div class=".d-xs-none  col-sm-6 col-md-6" style="text-align: center;">
                                 
@@ -81,7 +77,11 @@
                                      
                                 <a href="/eventdetail/{{ $event_now->event_id }}"class="btn btn-outline-danger align-self-center"
                                      style="text-align: center; border-radius: 30px;" >ดูเพิ่มเติม</a>
-                                     @endif
+                                
+                                @php
+                                    $expTime = $event_now->event_exp;
+                                @endphp
+                                @endif
                             </div>
                         </div>
                 
@@ -306,7 +306,7 @@
                         // end  script for tab steps
 
                                // Set the date we're counting down to
-            var countDownDate = new Date("2019-02-15 15:37:25").getTime();
+            var countDownDate = new Date("{{$expTime}}").getTime();
 
             // Update the count down every 1 second
             var x = setInterval(function() {

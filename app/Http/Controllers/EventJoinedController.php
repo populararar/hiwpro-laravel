@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Auth;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
+use Illuminate\Support\Facades\Hash;
+use Validator;
+
 class EventJoinedController extends AppBaseController
 {
     /** @var  EventShopRepository */
@@ -50,6 +53,11 @@ class EventJoinedController extends AppBaseController
         $this->eventRepository->pushCriteria(new RequestCriteria($request));
         $events = $this->eventRepository->findWhere([['event_exp', '>', $now]]);
         //select * from table where id > 1 and id < 3;
+
+        foreach ($events as $event) {
+            $event->start_date = $this->formatEventDate($event->startDate);
+            $event->last_date = $this->formatEventDate($event->lastDate);
+        }
 
         return view('event_joineds.index')
             ->with('events', $events);
@@ -222,5 +230,10 @@ class EventJoinedController extends AppBaseController
         Flash::success('Event Joined deleted successfully.');
 
         return redirect(route('eventJoineds.index'));
+    }
+    
+    private function formatEventDate($dateTime)
+    {
+        return Carbon::parse($dateTime)->format('d M Y');
     }
 }

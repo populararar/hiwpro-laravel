@@ -116,26 +116,33 @@
         # code...
         $status ='รอการชำระเงิน';
     }
+    //แดง
     if ($status == "UPLOADED") {
         # code...
         $status ='รอการตรวจสอบ';
     }
+    //เหลือง
     if ($status_send == "CLOSE") {
         # code...
         $status ='ออร์เดอร์หมดอายุ';
     }
+    //เทาอ่อน
     if($orderHeaders->status == 'CONFIRMED'){
         $status = 'ชำระเงินแล้ว';
     }
+    //เขียว
     if($orderHeaders->status == 'PREPARED'){
         $status = 'หิ้วแล้วรอการจัดส่ง';
     }
+    //ฟ้า
     if($orderHeaders->status == 'COMPLETED'){
         $status = 'จัดส่งแล้ว';
     }
+    //ฟ้า
     if($orderHeaders->status == 'ACCEPTED'){
         $status = 'ได้รับสินค้า';
     }
+    //ดำ
 
 @endphp
 
@@ -251,7 +258,7 @@
         <h1>เหลือเวลาในการชำระเงิน</h1>
       <p id="demo"></p>
       </div> 
-        <div class="col-md-6"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-warning w-100">ชำระเงิน</a> </div> 
+        <div class="col-md-6 mx-auto"><a href="{{ route('confirms.payment', [$orderHeaders->order_number])  }}" class="btn btn-warning w-100">ชำระเงิน</a> </div> 
         {{-- <div class="col-md-6"><button disabled="disabled" type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">ได้รับสินค้า</button></div>    --}}
     @endif
 

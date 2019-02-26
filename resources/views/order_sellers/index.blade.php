@@ -2,7 +2,7 @@
 <link href="https://getbootstrap.com/docs/3.3/assets/css/docs.min.css" rel="stylesheet"/>
 @section('content')
     <section class="content-header">
-        <h1 class="pull-left">รายการสินค้า</h1>
+        <h1 class="pull-left" style="font-family:'Kanit';">My Orders</h1><br>
         {{-- <h1 class="pull-right">
            <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('orderSellers.create') !!}">Add New</a>
         </h1> --}}
@@ -24,7 +24,7 @@
                                             {{$countOrder}}
                                     </h4>
                                     <p>
-                                            ชำระเงินแล้ว
+                                            ยังไม่ส่ง
                                     </p>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                             {{$countPrepared}} 
                                     </h4>
                                     <p>
-                                            หิ้วแล้วรอจัดส่ง
+                                            ส่งแล้ว
                                     </p>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                                             {{$countFinish}}
                                     </h4>
                                     <p>
-                                            ได้รับสินค้า
+                                            ยอดที่หิ้วได้ทั้งหมด
                                     </p>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                             {{$countSum}}
                                     </h4>
                                     <p>
-                                            ออร์เดอร์ทั้งหมด
+                                            จำนวนชิ้น
                                     </p>
                                 </div>
                             </div>

@@ -59,7 +59,11 @@ class OrderSellerController extends AppBaseController
             $countPrepared = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'PREPARED')->count('id');
             $countFinish = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'COMPLETED')->count('id');
             $countSum = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->count('id');
-       
+
+        foreach ($orderHeaders as $orderHeader) {
+            $orderHeader->order_date = $this->formatEventDate($orderHeader->order_date);
+            
+        }
 
         return view('order_sellers.index')
             ->with('countSum', $countSum)
@@ -283,5 +287,9 @@ class OrderSellerController extends AppBaseController
         Flash::success('Order Header deleted successfully.');
 
         return redirect(route('orderHeaders.index'));
+    }
+    private function formatEventDate($dateTime)
+    {
+        return Carbon::parse($dateTime)->format('d M Y');
     }
 }

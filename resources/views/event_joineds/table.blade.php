@@ -13,16 +13,16 @@
         <tr> 
             <td><img  src="{{ asset('/storage/'.$event->imgPath) }}" alt="" width="200"></td>
             <td>{!! $event->eventName !!}</td>
-            <td>{!! $event->startDate !!}</td>
-            <td>{!! $event->lastDate !!}</td>
+            <td>{!! $event->start_date !!}</td>
+            <td>{!! $event->last_date !!}</td>
             <!-- Imgpath Field -->
             <td>
 
                 <div class='btn-group'>
-                    <a href="{!! route('eventJoineds.show', [$event->event_id]) !!}" class='btn btn-default btn-xs'><i
-                            class="glyphicon glyphicon-eye-open"></i></a>
-                    <a href="{!! route('eventJoineds.edit', [$event->event_id]) !!}" class='btn btn-default btn-xs'><i
-                            class="glyphicon glyphicon-edit"></i></a>
+                    <a href="{!! route('eventJoineds.show', [$event->event_id]) !!}" class='btn btn-secondary '>
+                        ดูรายละเอียด </a><br>
+                    <a href="{!! route('eventJoineds.edit', [$event->event_id]) !!}" class='btn btn-danger'>
+                        รับออร์เดอร์</a>
 
                 </div>
             </td>

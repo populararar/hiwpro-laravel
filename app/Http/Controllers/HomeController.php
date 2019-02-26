@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Hash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Validator;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class HomeController extends Controller
 {
@@ -90,15 +92,24 @@ class HomeController extends Controller
         $eventShops = [];
         if (count($events) > 0) {
             foreach ($events as $event) {
+                 $event->start_date = $this->formatEventDate($event->startDate);
+                $event->last_date = $this->formatEventDate($event->lastDate);
                 foreach ($event->eventShops as $eventShop) {
                     array_push($eventShops, $eventShop->id);
                 }
             }
         }
 
+        // $users = DB::table('users')->paginate(15);
+
+    
         $productEvents =  $this->producteventRepository->findWhereIn( 'event_shop_id', $eventShops);
 
-        dd($events, $eventShops, $productEvents);
+        // dd($events, $eventShops, $productEvents);
+        return view('home.search')
+        ->with('events', $events)
+        ->with('eventShops',$eventShops)
+        ->with('productEvents', $productEvents);
     }
 
     public function sellerReview(Request $request)
