@@ -153,6 +153,7 @@
   <div class="page-header">
     <h3>สถานะการจัดส่งสินค้า</h3>
   </div>
+  <br>
   @include('flash::message')
  
   <div class="weapper" style="margin-top: 2%; padding:3% 5%; ">

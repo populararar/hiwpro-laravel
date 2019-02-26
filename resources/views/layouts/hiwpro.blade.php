@@ -134,7 +134,8 @@
                     <a class="nav-link" href="{{route('orders.index') }}">ประวัติการสั่งซื้อ</a>
                 </li>
                 <li class="nav-item d-block d-sm-none">
-                    <a class="nav-link" href="{{ route('notifications.index') }}">ข้อความ {!! session('notify') !!}</a>
+                    <a class="nav-link" href="{{ route('notifications.index') }}">ข้อความ 
+                        <span class="badge badge-danger">{!! session('notify') !!}</span> </a>
                 </li>
                 @endif
 
@@ -163,7 +164,8 @@
                        
                         <a class="dropdown-item" href="{{ route('profiles.index') }}">ข้อมูลส่วนตัว</a>
                         <a class="dropdown-item" href="{{route('orders.store') }}">ประวัติการสั่งซื้อ</a>
-                        <a class="dropdown-item" href="{{ route('notifications.index') }}">ข้อความ {!! session('notify') !!}</a>
+                        <a class="dropdown-item" href="{{ route('notifications.index') }}">ข้อความ 
+                            <span class="badge badge-danger">{!! session('notify') !!}</span></a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout.index') }}">ออกจากระบบ</a>
                     </div>

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Response;
 use Flash;
+use Validator;
 
 class ConfirmController extends Controller
 {
@@ -200,33 +201,57 @@ class ConfirmController extends Controller
     public function paymentStore($id, Request $request)
     {
         $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            // 'name' => 'required',
+            // 'bank_num' => 'required|unique:users|max:10',
+            // 'bank_from' => 'required',
+            // 'bank_to' => 'required',
+            // 'img_path' => 'required',
+            // 'send_time' => 'required',
+        ]);
+
+      
         $orderHeaders = $this->orderHeaderRepository
             ->findWhere(['customer_id' => $user->id, 'order_number' => $id])->first();
         if (empty($orderHeaders)) {
             return redirect()->route('home');
         }
+        
+        if ($validator->fails()) {
+            return view('confirms.payment')->with('orderHeaders', $orderHeaders)->with('user', $user)
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-        $path = $request->file('img_path')->store('public/upload');
+        if(empty($request->file('img_path'))){
+            Flash::error('กรุณาใส่หลักฐานในการโอนเงิน');
+            return view('confirms.payment')->with('orderHeaders', $orderHeaders)->with('user', $user);
+        }
+        else{
+             $path = $request->file('img_path')->store('public/upload');
 
-        $input = $request->all();
+            $input = $request->all();
 
-        $input["img_path"] = str_replace("public", "", $path);
+            $input["img_path"] = str_replace("public", "", $path);
+        
+            $input['order_id'] = $orderHeaders->id;
 
-        $input['order_id'] = $orderHeaders->id;
+            $payment = $this->paymentRepository->create($input);
 
-        $payment = $this->paymentRepository->create($input);
+            $orderHeader = $this->orderHeaderRepository->update([
+                'payment_id' => $payment->id,
+                'slip_status' => "UPLOADED",
+                // 'shipping_date'=> Carbon::now()->setTimezone('Asia/Bangkok')->toDateTimeString(),
+            ], $orderHeaders->id);
 
-        $orderHeader = $this->orderHeaderRepository->update([
-            'payment_id' => $payment->id,
-            'slip_status' => "UPLOADED",
-            // 'shipping_date'=> Carbon::now()->setTimezone('Asia/Bangkok')->toDateTimeString(),
-        ], $orderHeaders->id);
-
-        Flash::success(' ขอขอบคุณสำหรับการช้อปปิ้งสินค้ากับหิ้วโปร 
-        ระบบกำลังดำเนินการตรวจสอบรายการคำสั่งซื้อนี้ 
-        ทางเราจะทำการส่งข้อมูลการอัปเดททางข้อความให้คุณทราบโดยเร็ว');
+            Flash::success(' ขอขอบคุณสำหรับการช้อปปิ้งสินค้ากับหิ้วโปร 
+            ระบบกำลังดำเนินการตรวจสอบรายการคำสั่งซื้อนี้ 
+            ทางเราจะทำการส่งข้อมูลการอัปเดททางข้อความให้คุณทราบโดยเร็ว');
+        
+            return redirect()->route('orders.statusdetail', [$orderHeaders->order_number]);
+        }
        
-        return redirect()->route('orders.statusdetail', [$orderHeaders->order_number]);
     }
 
 }

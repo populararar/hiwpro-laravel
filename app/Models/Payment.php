@@ -41,6 +41,7 @@ class Payment extends Model
     public $fillable = [
         'img_path',
         'total',
+        'bank_num',
         'bank_from',
         'bank_to',
         'send_time',
