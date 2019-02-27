@@ -83,11 +83,11 @@ $sum=0;$count=0;$count2=0;
                                     # เทาอ่อน
                                     $status_show ='ออร์เดอร์หมดอายุ';
                                     }
-                                    if ($status == "UPLOADED") {
+                                    if ($status == "UPLOADED" || $order->status == null) {
                                     # เหลือง
                                     $status_show ='รอการตรวจสอบ';
                                     }
-                                    if($order->status == 'CONFIRMED'){
+                                    if($status == "UPLOADED" && $order->status == 'CONFIRMED'){
                                         $status_show = 'ชำระเงินแล้ว';
                                     }
                                     # เขียว
@@ -124,27 +124,27 @@ $sum=0;$count=0;$count2=0;
 
                                            
                                          
-                                            @if ($status == "UPLOADED") 
+                                            {{-- @if ($status == "UPLOADED" || $order->status == null) 
                                             <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
                                                     class="font-weight-light " style="color:#FFC300;">{{$status_show}}</a>
-                                            {{-- เหลือง --}}
-                                            @endif
+                                            เหลือง 
+                                            @endif --}}
                                        
                                             @if($order->status == 'CONFIRMED')
                                             <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
-                                                    class="font-weight-light " style="color:green;">{{$status_show}}</a>
+                                                    class="font-weight-light " style="color:#2ECC71;">{{$status_show}}</a>
                                             {{-- # เขียว --}}
                                             @endif
 
                                             @if($order->status == 'PREPARED')
                                             <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
-                                                    class="font-weight-light " style="color:blue;">{{$status_show}}</a>
+                                                    class="font-weight-light " style="color:#3498DB;">{{$status_show}}</a>
                                             {{-- # ฟ้า --}}
                                             @endif
 
                                             @if($order->status == 'COMPLETED')
                                             <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
-                                                    class="font-weight-light " style="color:pink;">{{$status_show}}</a>
+                                                    class="font-weight-light " style="color:#3498DB;">{{$status_show}}</a>
                                             {{-- # ฟ้า --}}
                                             @endif
 
@@ -209,6 +209,10 @@ $sum=0;$count=0;$count2=0;
                                     {
                                     $status_show = 'จัดส่งสินค้าแล้ว';
                                     }
+                                    if($notification->orderHeader->status == 'ACCEPTED')
+                                    {
+                                    $status_show = 'ได้รับสินค้าแล้ว';
+                                    }
                                     @endphp
 
                                     <td>
@@ -227,8 +231,8 @@ $sum=0;$count=0;$count2=0;
 
                                     <td>
                                         <p>
-                                            {{$status_show}}
-                                            {{$notification->orderHeader->status}} - {{$order->slip_status}}</p>
+                                            {{$status_show}}</p>
+                                            {{-- {{$notification->orderHeader->status}} - {{$order->slip_status}} --}}
                                     </td>
 
 

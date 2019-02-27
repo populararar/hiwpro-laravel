@@ -405,7 +405,7 @@ $sum=0;$count=0;$count2=0;
                     <input type="hidden" name="seller[]" value="{{ $key.'-'.$seller->id}}">                      
                     @endforeach
                     @endif
-                    <button type="button" class="btn btn-success btn-block col-4 mx-auto" onclick="saveData()">Submit</button>
+                    <button type="submit" class="btn btn-success btn-block col-4 mx-auto" onclick="saveData()">Submit</button>
                 </form>
                 {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of
                     the card's content.</p> --}}

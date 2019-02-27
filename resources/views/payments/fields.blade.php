@@ -151,13 +151,13 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="report">send to {{$payment->order->email}}</h5>
+            <h5 class="modal-title" id="report" style="font-family:'Kanit';">send to {{$payment->order->email}}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-                หลักฐานในการชำระเงินไม่ถูกต้อง
+                หลักฐานในการชำระเงินไม่ถูกต้องส่งข้อความให้ลูกค้าตรวจสอบการชำระเงินอีกครั้ง
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

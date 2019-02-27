@@ -208,7 +208,7 @@
         <div class="box box-primary">
             <main class="main">
                 <h1 style="font-family:Kanit;" >รายการที่ต้องซื้อ</h1>
-                <div class="box" style="width:100%;"> 
+                <div class="box" style="width:100%;padding-left:30px;"> 
                     {{-- {{dd($orderGroup)}} --}}
                     @foreach ($orderGroup as $key => $group)
                         @php

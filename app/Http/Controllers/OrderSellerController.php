@@ -262,7 +262,7 @@ class OrderSellerController extends AppBaseController
             $this->notificationRepository->create([
                 'order_id' => $order->id,
                 'user_id' => $order->customer_id,
-                'title' => 'กรุณาตรวจสอบรายการสินค้า',
+                'title' => 'สินค้าถูกส่งไม่ครบตามจำนวนกรุณาตรวจสอบรายการสินค้า',
                 'massage' => '',
                 'status' => 0,
             ]);

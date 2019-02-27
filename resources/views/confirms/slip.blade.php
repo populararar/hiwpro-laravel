@@ -81,17 +81,15 @@ $count = 0;
                   <!--------------ตารางชื่อสินค้า----------------->
             
             
-                  <div style="margin-top: 2%;  ">
+                  {{-- <div style="margin-top: 2%;  ">
                     <h9>{{number_format($sum) }}</h9>
-                  </div>
+                  </div> --}}
             
-            
-                  <div class="form-group" style="margin-top: 2%;  ">
-                    <div class="btn-group d-flex justify-content-center">
-                      <button style="text-align:center; width: 50%;" type="button" class="btn btn-outline-secondary">ย้อนกลับ</button>
-                      <button style="text-align:center; width: 50%;" type="button" class="btn btn-danger">เลือกซื้อสินค้าเพิ่มเติม</button>
-                    </div>
-                  </div>
+             <a href="{{route('orders.statusdetail',[ $orderHeaders->order_number])}}"
+                           style="text-align:center; width: 50%; float:left;" class="btn btn-outline-secondary">ย้อนกลับ</a>
+            <a href="{{route('home')}}"
+              style="text-align:center; width: 50%; " class="btn btn-danger">เลือกซื้อสินค้าเพิ่มเติม</a>
+              
             
                 </div>
            
