@@ -60,17 +60,40 @@ class OrderSellerController extends AppBaseController
             $countFinish = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'COMPLETED')->count('id');
             $countSum = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->count('id');
 
+        $orderGroup =  $this->getOrderList();
+        // dd($orderGroup);
         foreach ($orderHeaders as $orderHeader) {
             $orderHeader->order_date = $this->formatEventDate($orderHeader->order_date);
-            
         }
 
         return view('order_sellers.index')
             ->with('countSum', $countSum)
             ->with('countOrder', $countOrder)
+            ->with('orderGroup', $orderGroup)
             ->with('countPrepared', $countPrepared)
             ->with('countFinish', $countFinish)
             ->with('orderHeaders', $orderHeaders);
+    }
+    private function getOrderList()
+    {
+        $products = [];
+        $orders = $this->orderHeaderRepository->findWhere(['seller_id' => Auth::user()->id, 'status' => 'CONFIRMED']);
+        foreach ($orders as $order) {
+            $detail = $order->orderDetails;
+            if (count($detail) <= 0) {
+                continue;
+            }
+            foreach ($detail as $key => $item) {
+                # code... product
+                $item->product_name = $item->product->name;
+                $item->product_img = $item->product->image_product_id;
+                array_push($products, $item);
+            }
+        }
+
+        $grouped = collect($products)->groupBy('product_name');
+        // dd($grouped);
+        return $grouped;
     }
 
     /**

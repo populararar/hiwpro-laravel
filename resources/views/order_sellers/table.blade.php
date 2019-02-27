@@ -19,7 +19,7 @@
         {{-- <th>Shipping Id</th>
         <th>Shipping Date</th>
         <th>Payment Date</th> --}}
-        <th>Accepted Date</th>
+        {{-- <th>Accepted Date</th> --}}
         <th>Status</th>
             <th >Action</th>
         </tr>
@@ -39,7 +39,6 @@
             if($orderHeader->status == 'ACCEPTED'){
                 $status = 'ได้รับสินค้า';
             }
-            
         @endphp
         <tr>
             <td>{!! $orderHeader->order_number !!}</td>
@@ -55,18 +54,18 @@
             {{-- <td>{!! $orderHeader->shipping_id !!}</td> --}}
             {{-- <td>{!! $orderHeader->shipping_date !!}</td> --}}
             {{-- <td>{!! $orderHeader->payment_date !!}</td> --}}
-            <td>{!! $orderHeader->accepted_date !!}</td>
+            {{-- <td>{!! $orderHeader->accepted_date !!}</td> --}}
             <td>{!! $status !!}</td>
             <td>
                 {{-- {!! Form::open(['route' => ['orderSellers.destroy', $orderHeader->id], 'method' => 'delete']) !!} --}}
                 <div class='btn-group'>
-                    <a href="{!! route('orderSellers.show', [$orderHeader->id]) !!}" class='btn btn-default'>
+                    <a href="{!! route('orderSellers.show', [$orderHeader->id]) !!}" class='btn btn-primary'>
                         ดูรายละเอียด</a>
-
-                    @if ($orderHeader->status!='COMPLETED')
-                         <a href="{!! route('orderSellers.edit', [$orderHeader->id]) !!}" class='btn btn-default btn-xs'>
-                            <i class="glyphicon glyphicon-edit"></i></a>
-                    @endif
+                   
+                    {{-- @if ($orderHeader->status!='COMPLETED')
+                    <a href="{!! route('orderSellers.edit', [$orderHeader->id]) !!}" class='btn btn-default btn-xs'>
+                        จัดการออร์เดอร์</a>
+                    @endif --}}
                     
                     {{-- {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!} --}}
                 </div>

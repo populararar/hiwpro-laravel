@@ -204,7 +204,7 @@ class ConfirmController extends Controller
 
         $validator = Validator::make($request->all(), [
             // 'name' => 'required',
-            // 'bank_num' => 'required|unique:users|max:10',
+            // 'bank_num' => 'required|max:10',
             // 'bank_from' => 'required',
             // 'bank_to' => 'required',
             // 'img_path' => 'required',
@@ -223,18 +223,22 @@ class ConfirmController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
+      
         if(empty($request->file('img_path'))){
             Flash::error('กรุณาใส่หลักฐานในการโอนเงิน');
             return view('confirms.payment')->with('orderHeaders', $orderHeaders)->with('user', $user);
         }
-        else{
-             $path = $request->file('img_path')->store('public/upload');
+        else{  
+            if(empty($input["name"]) || empty($input["bank_num"]) || empty($input["bank_from"])|| empty($input["bank_to"])||empty( $input["send_time"] )){
+                Flash::error('กรุณาใส่ข้อมูลและหลักฐานในการโอนเงินให้ครบถ้วน');
+                return view('confirms.payment')->with('orderHeaders', $orderHeaders)->with('user', $user);
+            }
+            $path = $request->file('img_path')->store('public/upload');
 
             $input = $request->all();
 
             $input["img_path"] = str_replace("public", "", $path);
-        
+            
             $input['order_id'] = $orderHeaders->id;
 
             $payment = $this->paymentRepository->create($input);

@@ -232,13 +232,8 @@ h4,h5{
                                     <div class="row form-group has-feedback{{ $errors->has('bank_num') ? ' has-error' : '' }}" style="text-align:right;margin:2% 0%;">
                                         <div class="col-md-4"><label for="exampleInputName2">เลขบัญชี :</label></div>
                                         <div class="col-md-6">
-                                                <input type="text" style="width:15%; float:left; margin-right:2%;" class="form-control"  id="txtAc1" name="txtAc1" size="2" class="required" maxlength = "3" />
-                                                <input type="text" style="width:10%; float:left; margin-right:2%;" class="form-control" id="txtAc2" name="txtAc2" size="2" class="required" maxlength = "1" />
-                                                <input type="text" style="width:15%; float:left; margin-right:2%;" class="form-control" id="txtAc3" name="txtAc3" size="2" class="required" maxlength = "5" />
-                                                <input type="text" style="width:10%; float:left;" class="form-control" id="txtAc4" name="txtAc4" size="2" class="required" maxlength = "1" /> * หมายเลขบัตร 10 หลัก     
-            
-                                                <input type="hidden"  name="bank_num"  />
-            
+                                                <input name="bank_num" class="form-control" type="text" id="data" onkeyup="autoTab(this)"  />
+
                                                 @if ($errors->has('bank_num'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('bank_num') }}</strong>
@@ -517,4 +512,30 @@ h4,h5{
     });
 
 </script>
+
+<script type="text/javascript">
+    function autoTab(obj){
+        /* กำหนดรูปแบบข้อความโดยให้ _ แทนค่าอะไรก็ได้ แล้วตามด้วยเครื่องหมาย
+        หรือสัญลักษณ์ที่ใช้แบ่ง เช่นกำหนดเป็น  รูปแบบเลขที่บัตรประชาชน
+        4-2215-54125-6-12 ก็สามารถกำหนดเป็น  _-____-_____-_-__
+        รูปแบบเบอร์โทรศัพท์ 08-4521-6521 กำหนดเป็น __-____-____
+        หรือกำหนดเวลาเช่น 12:45:30 กำหนดเป็น __:__:__
+        ตัวอย่างข้างล่างเป็นการกำหนดรูปแบบเลขบัตรประชาชน
+        */
+            var pattern=new String("___-_-_____-_"); // กำหนดรูปแบบในนี้
+            var pattern_ex=new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้
+            var returnText=new String("");
+            var obj_l=obj.value.length;
+            var obj_l2=obj_l-1;
+            for(i=0;i<pattern.length;i++){           
+                if(obj_l2==i && pattern.charAt(i+1)==pattern_ex){
+                    returnText+=obj.value+pattern_ex;
+                    obj.value=returnText;
+                }
+            }
+            if(obj_l>=pattern.length){
+                obj.value=obj.value.substr(0,pattern.length);           
+            }
+    }
+    </script>
 @endsection

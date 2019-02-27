@@ -19,7 +19,7 @@ h5,h1,h3{
     {!! Form::label('address', 'รายละเอียดการจัดส่ง:') !!}
     <p>{!! $orderHeader->customer->name !!}</p>
     <p>{!! $orderHeader->customer->email !!}</p>
-    <p>{!! $orderHeader->address !!}</p>
+    <p>ที่อยู่ในการจัดส่ง : <br>{!! $orderHeader->address !!}</p>
 </div>
 
 <!-- Tracking Number Field -->
