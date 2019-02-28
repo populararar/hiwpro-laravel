@@ -228,14 +228,19 @@ class ConfirmController extends Controller
             Flash::error('กรุณาใส่หลักฐานในการโอนเงิน');
             return view('confirms.payment')->with('orderHeaders', $orderHeaders)->with('user', $user);
         }
-        else{  
-            if(empty($input["name"]) || empty($input["bank_num"]) || empty($input["bank_from"])|| empty($input["bank_to"])||empty( $input["send_time"] )){
-                Flash::error('กรุณาใส่ข้อมูลและหลักฐานในการโอนเงินให้ครบถ้วน');
-                return view('confirms.payment')->with('orderHeaders', $orderHeaders)->with('user', $user);
-            }
+        else{   
             $path = $request->file('img_path')->store('public/upload');
 
             $input = $request->all();
+            if(empty($input["name"]) ||
+             empty($input["bank_num"]) || 
+             empty($input["bank_from"])|| 
+             empty($input["bank_to"])||
+             empty( $input["send_time"] )){
+                Flash::error('กรุณาใส่ข้อมูลและหลักฐานในการโอนเงินให้ครบถ้วน');
+                return view('confirms.payment')->with('orderHeaders', $orderHeaders)->with('user', $user);
+            }
+           
 
             $input["img_path"] = str_replace("public", "", $path);
             

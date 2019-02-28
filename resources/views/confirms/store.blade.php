@@ -96,10 +96,29 @@ $sum=0;$count=0;$count2=0;
                             {{-- {{dd($mapSeller[$eventShopId]->profile)}} --}}
                             {{ $mapSeller[$eventShopId]->name }}
                             <p>คะแนนนักหิ้ว</p>{{$mapSeller[$eventShopId]->avg}}
+                            @if ( $mapSeller[$eventShopId]->avg==0)
+                            ยังไม่มีคะแนน
+                            @elseif( $mapSeller[$eventShopId]->avg==1)
+                            <i class="fas fa-star"></i>
+                            @elseif( $mapSeller[$eventShopId]->avg==2)
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            @elseif( $mapSeller[$eventShopId]->avg==3)
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            @elseif( $mapSeller[$eventShopId]->avg==4)
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
+                            @elseif( $mapSeller[$eventShopId]->avg==5)
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            @endif
                     </div>
                  </div>  
                     @endforeach

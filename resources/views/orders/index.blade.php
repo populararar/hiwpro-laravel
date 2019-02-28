@@ -83,7 +83,7 @@ $sum=0;$count=0;$count2=0;
                                     # เทาอ่อน
                                     $status_show ='ออร์เดอร์หมดอายุ';
                                     }
-                                    if ($status == "UPLOADED" || $order->status == null) {
+                                    if ($status == "UPLOADED" || $order->status == "CREATE") {
                                     # เหลือง
                                     $status_show ='รอการตรวจสอบ';
                                     }
@@ -117,18 +117,18 @@ $sum=0;$count=0;$count2=0;
                                             {{-- # เทาอ่อน --}}
                                             @endif
                                           
-                                            @if ($status == "WAITING" && $status_send == "CREATE") 
+                                            @if ($status_send == "/CREATE/") 
                                             <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
                                                 class="font-weight-light " style="color:red;">{{$status_show}}</a>
                                             @endif
 
                                            
                                          
-                                            {{-- @if ($status == "UPLOADED" || $order->status == null) 
+                                            @if ($status == "UPLOADED" && $order->status == 'CREATE') 
                                             <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
                                                     class="font-weight-light " style="color:#FFC300;">{{$status_show}}</a>
-                                            เหลือง 
-                                            @endif --}}
+                                            @endif
+                                            {{-- เหลือง --}}
                                        
                                             @if($order->status == 'CONFIRMED')
                                             <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
