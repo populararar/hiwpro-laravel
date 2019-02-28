@@ -63,12 +63,21 @@ class ReportAdminController extends AppBaseController
         if (empty($end)) {
             $end = Carbon::now()->endOfMonth()->format('Y-m-d');
         }
-        $countUser = \DB::table('users_roles')->where('role_id', '3')->count('id');
+      
         $countSeller = \DB::table('users_roles')->where('role_id', '2')->count('id');
-        $countOrder1 = \DB::table('order_header')->where('status', 'CREATED')->count('id');
+        $countUser = \DB::table('users_roles')->where('role_id', '3')->count('id');
+        $countOrder1 = \DB::table('order_header')->where('status', 'CREATE')->count('id');
         $countOrder2 = \DB::table('order_header')->where('status', 'COMFIRMED')->count('id');
         $countOrder3 = \DB::table('order_header')->where('status', 'COMPLETED')->count('id');
         $countOrder4 = \DB::table('order_header')->where('status', 'ACCEPTED')->count('id');
+
+        // $income = $this->event
+        // ->selectRaw(" SUM(income) AS income")
+        // // ->whereRaw('event.startDate >= ? AND event.event_exp <= ?', [$start, $now])
+        // // ->groupBy("YEAR(startDate)")->groupBy("MONTH(startDate)")
+        // ->get();
+
+       
 
         $this->setIncomeChart($this->lava, $start, $end);
 
@@ -83,6 +92,7 @@ class ReportAdminController extends AppBaseController
             'countOrder2' => $countOrder2,
             'countOrder3' => $countOrder3,
             'countOrder4' => $countOrder4,
+            // 'income' => $income,
         ];
 
         return view('report_admins.index')

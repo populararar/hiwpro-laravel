@@ -225,7 +225,9 @@ class OrderSellerController extends AppBaseController
                 'seller_actual_status' => 1,
             ], $detailId);
         }
-        if(!empty($actualQty)){
+
+
+        if($complete ){
             $orderHeader = $this->orderHeaderRepository->update(['status' => 'PREPARED'], $id);
             Flash::success('Order Detail updated successfully.');
 
@@ -238,6 +240,7 @@ class OrderSellerController extends AppBaseController
             ->with('orderDetails', $orderDetails)
             ->with('user', $user);
         }
+        $orderHeader = $this->orderHeaderRepository->update(['status' => 'NOPREPARED'], $id);
         # New feature - edit total price
         $this->updateNewTotalPrice($orderHeader->id);
         $this->saveNotification($orderHeader, $complete);
@@ -247,6 +250,7 @@ class OrderSellerController extends AppBaseController
 
     private function saveNotification($order, $complete)
     {
+        // dd($order, $complete);
         if ($complete) {
             $this->notificationRepository->create([
                 'order_id' => $order->id,

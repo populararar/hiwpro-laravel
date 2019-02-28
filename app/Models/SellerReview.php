@@ -75,5 +75,13 @@ class SellerReview extends Model
         
     ];
 
+
+       /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function seller()
+    {
+        return $this->belongsTo(\App\Models\Users::class,'user_id');
+    }
     
 }

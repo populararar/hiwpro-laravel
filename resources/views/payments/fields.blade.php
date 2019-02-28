@@ -165,7 +165,7 @@
               {{-- Mail::to($customerEmail)->send(new OrderShipped($order, 'NO_COMPLETE')); --}}
               {{-- <aclass="btn btn-xs btn-info pull-right">Edit</a> --}}
             {{-- {{dd($payment->order->order_number)}} --}}
-              <button href="{{ url('/payment/' . $payment->order->id. '/sendmail') }}"  type="button" class="btn btn-primary">Send mail</button>
+              <a href="{{ route('payments.sendMail',[$payment->id, $payment->order->id]) }}"  type="button" class="btn btn-primary">Send mail</a>
             </div>
           </div>
         </div>

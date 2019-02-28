@@ -47,7 +47,7 @@ Route::post('/cart/order', 'HomeController@order')->name('cart.order');
 Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}', 'HomeController@addSeller')->name('cart.seller.add');
 
 Route::get('/seller/review', 'HomeController@sellerReview')->name('home.seller_rate');
-
+Route::get('/seller/review/{id}', 'HomeController@sellerReviewDetail')->name('home.seller_detail');
 // Route::get('/cart/product/{id}/remove', 'HomeController@cartRemove')->name('cart.remove');
 
 Route::middleware(['login'])->group(function () {
@@ -106,7 +106,7 @@ Route::middleware(['login'])->group(function () {
 
     Route::resource('payments', 'PaymentController');
     
-    Route::get('payments/{id}/sendmail', 'PaymentController@sendMail');
+    Route::get('/payments/{id}/order/{order}/sendmail', 'PaymentController@sendMail')->name('payments.sendMail');
 
     Route::resource('sellerReviews', 'SellerReviewController');
 

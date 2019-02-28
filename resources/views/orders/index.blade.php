@@ -35,7 +35,7 @@ $sum=0;$count=0;$count2=0;
         </div>
         @include('flash::message')
         <div class="shadow">
-
+            
             <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:5%;">
                 <li class="nav-item">
                     <a class="nav-link active" id="history-tab" data-toggle="tab" href="#history" role="tab"
@@ -275,6 +275,7 @@ $sum=0;$count=0;$count2=0;
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 {{-- content 3 --}}
             </div>
+
         </div>
 
         {{-- tab --}}

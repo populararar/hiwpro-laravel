@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SellerReview;
 use App\Repositories\EventJoinedRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\EventShopRepository;
@@ -21,8 +22,6 @@ use Illuminate\Support\Facades\Hash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Validator;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 
 class HomeController extends Controller
 {
@@ -59,13 +58,18 @@ class HomeController extends Controller
     /** @var  EventJoinedRepository */
     private $eventJoinedRepository;
 
+    private $sellerReview;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct(SellerReviewRepository $sellerReviewRepo, NotificationRepository $notificationRepo, ProfileRepository $profileRepo, EventJoinedRepository $eventJoinedRepo, UserRolesRepository $userRolesRepo, ProductRepository $productRepo, ProducteventRepository $producteventRepo, EventShopRepository $eventShopRepo, EventRepository $eventRepo
-        , UsersRepository $usersRepo, PermissionsRepository $permissionRepo) {
+        , UsersRepository $usersRepo, PermissionsRepository $permissionRepo
+        , SellerReview $sellerReview
+    ) {
+        $this->sellerReview = $sellerReview;
         $this->eventJoinedRepository = $eventJoinedRepo;
         $this->usersRepository = $usersRepo;
         $this->permissionRepository = $permissionRepo;
@@ -92,7 +96,7 @@ class HomeController extends Controller
         $eventShops = [];
         if (count($events) > 0) {
             foreach ($events as $event) {
-                 $event->start_date = $this->formatEventDate($event->startDate);
+                $event->start_date = $this->formatEventDate($event->startDate);
                 $event->last_date = $this->formatEventDate($event->lastDate);
                 foreach ($event->eventShops as $eventShop) {
                     array_push($eventShops, $eventShop->id);
@@ -102,30 +106,64 @@ class HomeController extends Controller
 
         // $users = DB::table('users')->paginate(15);
 
-    
-        $productEvents =  $this->producteventRepository->findWhereIn( 'event_shop_id', $eventShops);
+        $productEvents = $this->producteventRepository->findWhereIn('event_shop_id', $eventShops);
 
         // dd($events, $eventShops, $productEvents);
         return view('home.search')
-        ->with('events', $events)
-        ->with('eventShops',$eventShops)
-        ->with('productEvents', $productEvents);
+            ->with('events', $events)
+            ->with('eventShops', $eventShops)
+            ->with('productEvents', $productEvents);
+    }
+
+    public function sellerReviewDetail($userId, Request $request)
+    {
+        $reviews = $this->sellerReviewRepository->findWhere(['user_id' => $userId]);
+
+        $avgData = $this->sellerReview->with('seller')
+            ->selectRaw('user_id , AVG(score) AS avg_score')
+            ->where('user_id', $userId)
+            ->groupBy('user_id')
+            ->orderBy('avg_score', 'desc')
+            ->first();
+
+        dd($reviews, $avgData, $avgData->seller->name);
+
     }
 
     public function sellerReview(Request $request)
     {
 
-        $profile = $this->profileRepository->all();
+        // $profile = $this->profileRepository->all();
         $user = Auth::user();
 
-        // $roleName = $user->usersRoles->first()->role->name;
-        // $user_id = $this->userRolesRepository->findWhere(['id' => $user->id])->first();
+        $reviews = $this->sellerReviewRepository->all();
 
-        // $role_id = $user->usersRoles->first()->role_id;
+        $reviewsTopTen = $this->sellerReview->with('seller')
+            ->selectRaw('user_id , AVG(score) AS avg_score')
+        //->where('user_id', $userId)
+            ->groupBy('user_id')
+            ->orderBy('avg_score', 'desc')
+            ->limit(10)->get();
+        // ->first()
+
+        foreach ($reviewsTopTen as $item) {
+            $item->count = $this->sellerReviewRepository->findWhere(['user_id' => $item->user_id])->count();
+        }
+
+        $reviewsTopFour = $this->sellerReview->with('seller')->selectRaw('user_id , AVG(score) AS avg_score')
+            ->groupBy('user_id')
+            ->orderBy('avg_score', 'desc')
+            ->limit(4)->get();
+
+        $newSeller = $this->userRolesRepository->with('user')->findWhere(['role_id' => 2])->sortByDesc('created_at')->take(10);
+        // dd($newSeller->first()->user->name, $reviewsTopTen);
+
         return view('home.seller_rate')
             ->with('user', $user)
-            // ->with('user_id',$user_id)
-            ->with('profile', $profile);
+            ->with('reviewsTopFour', $reviewsTopFour)
+            ->with('reviewsTopTen', $reviewsTopTen);
+        // ->with('user_id',$user_id)
+        // ->with('profile', $profile);
     }
 
     public function cartRemove($id, Request $request)

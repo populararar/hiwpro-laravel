@@ -1,4 +1,3 @@
-<div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab">
                     <div class="container my-3">
                         {{-- content 2  --}}
                         <table class="table table-hover " id="notifications-table">
@@ -14,24 +13,26 @@
                             @if (count($notifications)> 0)
                             <tbody>
                                 @foreach($notifications as $notification)
+                                {{-- {{ dd( $notification)  }} --}}
                                 @php
                                 $status = $notification->status;
                                 $read="";
                                 @endphp
-                                @if ($status == 1)
-                                <tr class="table-danger">@php $read = "ยังไม่อ่าน"; @endphp
+                                    @if ($status == 1)
+                                    <tr class="table-danger">@php $read = "ยังไม่อ่าน"; @endphp
                                     @else
-                                <tr> @php $read = "อ่านแล้ว"; @endphp
+                                    <tr> @php $read = "อ่านแล้ว"; @endphp
 
                                     @endif
                                     @php
                                     if($notification->orderHeader->status == 'CONFIRMED')
                                     {
                                     $status_show = 'คำสั่งซื้อสำเร็จ';
-                                    }
-                                    if($notification->orderHeader->status == 'COMPLETED')
+                                    }else if($notification->orderHeader->status == 'COMPLETED')
                                     {
                                     $status_show = 'จัดส่งสินค้าแล้ว';
+                                    }else{
+                                        $status_show = '';
                                     }
                                     @endphp
 
@@ -52,21 +53,9 @@
                                     <td>
                                         <p>
                                             {{$status_show}}
-                                            {{-- {{$notification->orderHeader->status}} - {{$order->slip_status}}</p> --}}
-                                    </td>
-
-
-                                    {!! Form::open(['route' => ['notifications.destroy', $notification->id], 'method' =>
-                                    'delete']) !!}
-                                    <div class='btn-group'>
-                                        <a href="{!! route('notifications.show', [$notification->id]) !!}"
-                                            class='btn btn-default btn-xs'><i
-                                                class="glyphicon glyphicon-eye-open"></i></a>
-                                        {{-- <a href="{!! route('notifications.edit', [$notification->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a> --}}
-                                        {{-- {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!} --}}
-                                    </div>
-                                    {!! Form::close() !!}
-                                    </td>
+                                            {{-- {{$notification->orderHeader->status}} - {{$order->slip_status}} --}}
+                                    </p>
+                                </td>
                                 </tr>
                                 @endforeach
                             </tbody>

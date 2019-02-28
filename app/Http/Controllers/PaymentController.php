@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
+use App\Mail\OrderShipped;
 use App\Repositories\OrderHeaderRepository;
 use App\Repositories\PaymentRepository;
 use Flash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -130,8 +132,6 @@ class PaymentController extends AppBaseController
             return redirect(route('payments.index'));
         }
 
-       
-
         $input = $request->all();
 
         $input['status'] = 'CONFIRMED';
@@ -139,22 +139,22 @@ class PaymentController extends AppBaseController
         $payment = $this->paymentRepository->update($input, $id);
         // dd('aa',$id , $payment->order_id);
         $this->orderHeaderRepository->update(['status' => 'CONFIRMED'], $payment->order_id);
-       
+
         Flash::success('Payment updated successfully.');
 
         return redirect(route('payments.index'));
     }
-    
-    private function sendMail($id)
+
+    public function sendMail($paymentId,$id)
     {
         $order = $this->orderHeaderRepository->findWhere(['id' => $id])->first();
         $customerEmail = $order->customer->email;
 
-        if($order){
+        if ($order) {
             Mail::to($customerEmail)->send(new OrderShipped($order, 'NO_COMPLETE_PAYMENT'));
         }
-        
-        $payment = $this->paymentRepository->findWithoutFail($id);
+
+        $payment = $this->paymentRepository->findWithoutFail($paymentId);
 
         if (empty($payment)) {
             Flash::error('Payment not found');
@@ -162,7 +162,9 @@ class PaymentController extends AppBaseController
             return redirect(route('payments.index'));
         }
 
-        return view('payments.edit')->with('payment', $payment);
+        Flash::success('Sent Report mail successfully.');
+
+        return redirect()->route('payments.edit',[$paymentId]);
     }
 
     /**

@@ -54,7 +54,7 @@ class NotificationController extends AppBaseController
         $notifications = $this->notificationRepository->findWhere(['user_id' => $user->id])->sortByDesc('created_at')->sortBy('status');
 
         // $user = $this->usersRepository->findwhere(['id' => $notifications->orderHeader->seller_id])->sortByDesc('created_at')->sortBy('status');
-        // dd( $user );
+        // dd( $notifications );
         return view('notifications.index')
             ->with('orderHeaders', $orderHeaders)
             ->with('notifications', $notifications);

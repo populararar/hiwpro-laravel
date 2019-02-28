@@ -24,71 +24,54 @@
             </div>
         </div>
     <div class="row">
+        @foreach ($reviewsTopFour as $key => $item)
         <div class="col-md-3">
                 <div class="card" style="text-align:center;">
-                        <img class="card-img-top" src="{{ asset('hiwpro/images/jisoo.jpg')}}">
+                       
                         <div class="card-body">
-                            <h5 class="card-title">พิมลพัชร เกิดผล</h5>
-                            <h1>1</h1>
+                           {{-- {{ dd($item->seller->profile->img)}} --}}
+
+                           @if (!empty($item->seller->profile))
+                           <img class="card-img-top" src="{{ asset('storage'.$item->seller->profile->img)}}">
+                           @else
+                           <img class="card-img-top" src="">
+                           @endif
+                            {{-- <a href="/eventdetail/{{ $event->event_id }}" style="color: #df3433;">ดูเพิ่มเติม</a> --}}
+                            <h5 class="card-title">{{$item->seller->name}}</h5>
+                            <h1>{{$key+1}}</h1>
                             <p class="card-text"> 
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star-half-alt"></i></p>
+                                    @if ($item->avg_score == 0)
+                                    ยังไม่มีคะแนน
+                                    @elseif($item->avg_score > 0 && $item->avg_score < 2)
+                                    <i class="fas fa-star"></i>
+                                    @elseif($item->avg_score >= 2 && $item->avg_score < 3)
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    @elseif($item->avg_score >= 3 && $item->avg_score < 4)
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    @elseif($item->avg_score >= 4 && $item->avg_score < 5)
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    @else
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    @endif  
+                            </p>
                             <a href="#" class="btn btn-danger">ดูเพิ่มเติม</a>
                         </div>
                 </div>
         </div>
+        @endforeach
         
-        <div class="col-md-3">
-                <div class="card" style="text-align:center;">
-                        <img class="card-img-top" src="{{ asset('hiwpro/images/jisoo.jpg')}}">
-                        <div class="card-body">
-                            <h5 class="card-title">MARK KOFINITOUIN</h5>
-                            <h1>2</h1>
-                            <p class="card-text"> 
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star-half-alt"></i></p>
-                            <a href="#" class="btn btn-danger">ดูเพิ่มเติม</a>
-                        </div>
-                </div>
-        </div>
-        <div class="col-md-3">
-                <div class="card" style="text-align:center;">
-                        <img class="card-img-top" src="{{ asset('hiwpro/images/jisoo.jpg')}}">
-                        <div class="card-body">
-                            <h5 class="card-title">MARK KOFINITOUIN</h5>
-                            <h1>3</h1>
-                            <p class="card-text"> 
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star-half-alt"></i></p>
-                            <a href="#" class="btn btn-danger">ดูเพิ่มเติม</a>
-                        </div>
-                </div>
-        </div>
-        <div class="col-md-3">
-                <div class="card" style="text-align:center;">
-                        <img class="card-img-top" src="{{ asset('hiwpro/images/jisoo.jpg')}}">
-                        <div class="card-body">
-                            <h5 class="card-title">MARK KOFINITOUIN</h5>
-                            <h1>4</h1>
-                            <p class="card-text"> 
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star-half-alt"></i></p>
-                            <a href="#" class="btn btn-danger">ดูเพิ่มเติม</a>
-                        </div>
-                </div>
-        </div>
+        
+       
         
     </div>
     <div class="card col-12 mt-5">
@@ -254,14 +237,14 @@
       
             <div class="owl-carousel owl-theme">
                 
-                @foreach ($profile as $item)
+                {{-- @foreach ($profile as $item)
                     @if ($item->national_img)
                         <div class="item card-n">
                             <img src="{{ asset('/storage/'.$item->img) }}" class="img-fluid" >
                             <div class="middle"><div class="text">{{$item->tel}}</div></div>
                         </div>
                     @endif
-                @endforeach
+                @endforeach --}}
             </div>
     
     </div>

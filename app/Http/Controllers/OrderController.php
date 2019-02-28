@@ -121,6 +121,8 @@ class OrderController extends AppBaseController
                 ->withInput();
         }
         $input = $request->all();
+
+        // dd($input);
         $order = $this->orderHeaderRepository->findWhere(['order_number' => $input['order_number']])->first();
         if (empty($order)) {
             Flash::error('Order Not found.');
@@ -130,7 +132,7 @@ class OrderController extends AppBaseController
         $input["order_id"] = $order->id;
         $input["user_id"] = $order->seller_id;
         $input["customer_id"] = $user = Auth::user()->id;
-        $score = $input["rating"];
+        $input["score"] = $input["rating"];
 
         //Upload file
         $path = $request->file('img1')->store('public/upload');
@@ -143,7 +145,7 @@ class OrderController extends AppBaseController
 
         $this->orderHeaderRepository->update([
             'status' => 'ACCEPTED',
-            'score' => $score ,
+           
         ],$order->id);
 
         Flash::success('Review Seller successfully.');
