@@ -126,7 +126,10 @@ class HomeController extends Controller
             ->orderBy('avg_score', 'desc')
             ->first();
 
-        dd($reviews, $avgData, $avgData->seller->name);
+        // dd($reviews, $avgData, $avgData->seller->name);
+        return view('home.seller_detail')
+            ->with('avgData', $avgData)
+            ->with('reviews',$reviews);
 
     }
 
@@ -160,6 +163,7 @@ class HomeController extends Controller
 
         return view('home.seller_rate')
             ->with('user', $user)
+            ->with('newSeller', $newSeller)
             ->with('reviewsTopFour', $reviewsTopFour)
             ->with('reviewsTopTen', $reviewsTopTen);
         // ->with('user_id',$user_id)

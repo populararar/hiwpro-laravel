@@ -72,6 +72,7 @@ class OrderHeader extends Model
         'email',
         'seller_actual_price',
         'seller_actual_at',
+        'event_shop_id',
     ];
 
     /**

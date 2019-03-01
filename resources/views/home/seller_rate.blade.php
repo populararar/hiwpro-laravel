@@ -11,6 +11,29 @@
 .owl-theme .owl-nav [class*=owl-] {
     background: #F44336;
 }
+#wrap {
+    overflow: hidden;
+    position: relative;
+    float: left;
+}
+
+#wrap img.fake {
+    float: left;
+    visibility: hidden;
+    width: auto;
+}
+#img_wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+#img_wrap img.normal {
+    width: 50%;
+}​
+/* 
+ */
 </style>
 {{-- <div class="pink"></div> --}}
 <div class="container">
@@ -36,26 +59,46 @@
                            @else
                            <img class="card-img-top" src="">
                            @endif
-                            {{-- <a href="/eventdetail/{{ $event->event_id }}" style="color: #df3433;">ดูเพิ่มเติม</a> --}}
+                            
                             <h5 class="card-title">{{$item->seller->name}}</h5>
                             <h1>{{$key+1}}</h1>
-                            <p class="card-text"> 
+                            <p class="card-text" style="color: #df3433" > 
                                     @if ($item->avg_score == 0)
                                     ยังไม่มีคะแนน
-                                    @elseif($item->avg_score > 0 && $item->avg_score < 2)
+                                    @elseif($item->avg_score > 0 && $item->avg_score < 0.5)
+                                    <i class="fas fa-star-half-alt"></i>
+                                    @elseif($item->avg_score >= 0.5 && $item->avg_score <= 1)
                                     <i class="fas fa-star"></i>
-                                    @elseif($item->avg_score >= 2 && $item->avg_score < 3)
+                                    @elseif($item->avg_score > 1 && $item->avg_score <= 1.5)
                                     <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    @elseif($item->avg_score >= 3 && $item->avg_score < 4)
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    @elseif($item->avg_score >= 4 && $item->avg_score < 5)
+                                    <i class="fas fa-star-half-alt"></i>
+                                    @elseif($item->avg_score > 1.5 && $item->avg_score <= 2)
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
+                                    @elseif($item->avg_score > 2 && $item->avg_score <= 2.5)
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    @elseif($item->avg_score > 2.5 && $item->avg_score <= 3)
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    @elseif($item->avg_score >= 3 && $item->avg_score <= 3.5)
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    @elseif($item->avg_score >= 3.5 && $item->avg_score <= 4)
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    @elseif($item->avg_score >= 4 && $item->avg_score <= 4.5)
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
                                     @else
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
@@ -64,7 +107,7 @@
                                     <i class="fas fa-star"></i>
                                     @endif  
                             </p>
-                            <a href="#" class="btn btn-danger">ดูเพิ่มเติม</a>
+                            <a href="{!! route('home.seller_detail', ['userId' => $item->seller->id]) !!}" class="btn btn-danger">ดูเพิ่มเติม</a>
                         </div>
                 </div>
         </div>
@@ -76,148 +119,79 @@
     </div>
     <div class="card col-12 mt-5">
         <ul style="padding:5% 8% 0% 8%;" class="list-unstyled">
-                        <li class="media">
-                            <img class="mr-3 rounded-circle" src="{{ asset('hiwpro/images/jisoo2.png')}}">
-                            <div class="media-body" style="border-bottom: 2px dotted #ccc;
-                                                margin-top: 0%;
-                                                margin-bottom: 2%;
-                                                padding-bottom: 2%;">
-                                <h5 class="mt-0 mb-1">JISOO</h5>
-                                หิ้วสำเร็จ 50 ครั้ง <br>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                            </div>
-                            <div class=" float-right" style="border-radius: 50%; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
-                                <h3 style="color: #df3433"> 1</h3>
-                            </div>
-                        </li>
-                        <li class="media">
-                            <img class="mr-3 rounded-circle" src="{{ asset('hiwpro/images/bobby1.png')}}">
-                            <div class="media-body" style="border-bottom: 2px dotted #ccc;
-                                                margin-top: 0%;
-                                                margin-bottom: 2%;
-                                                padding-bottom: 2%;">
-                                <h5 class="mt-0 mb-1">BOBBYINDAEYO</h5>
+            @foreach ($reviewsTopTen as $key => $item)
+                <li class="media">
+                    @if (!empty($item->seller->profile))
+                    <div id="wrap">
+                        <div id="img_wrap">
+                            <img class="normal" src="{{ asset('storage'.$item->seller->profile->img)}}" />
+                        </div>
+                    </div>​
 
-                                หิ้วสำเร็จ 42 ครั้ง <br>
+                        <img class="mr-3 rounded-circle" width="80px" src="{{ asset('storage'.$item->seller->profile->img)}}">
+                    @else
+                        <img class="mr-3 rounded-circle" width="80px" src="{{ asset('hiwpro/images/bobby.png')}}">
+                    @endif
 
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star-half-alt"></i>
-                            </div>
-                            <div class=" float-right" style="border-radius: 50% ; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
-                                <h3 style="color: #df3433">2</h3>
-                            </div>
-                        </li>
-                        <li class="media">
-                            <img class="mr-3 rounded-circle" src="{{ asset('hiwpro/images/lisa.png')}}">
-                            <div class="media-body" style="
-                                                margin-top: 0%;
-                                                margin-bottom: 2%;
-                                                padding-bottom: 2%;">
-                                <h5 class="mt-0 mb-1">Lisa BP</h5>
-
-                                หิ้วสำเร็จ 36 ครั้ง <br>
-
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star"></i>
-                                <i style="color: #df3433" class="fas fa-star-half-alt"></i>
-                            </div>
-                            <div class=" float-right" style="border-radius: 50%; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
-                                <h3 style="color: #df3433"> 3</h3>
-                            </div>
-                        </li>
-                        <li class="media">
-                                <img class="mr-3 rounded-circle" src="{{ asset('hiwpro/images/bobby.png')}}">
-                                <div class="media-body" style="
-                                                    margin-top: 0%;
-                                                    margin-bottom: 2%;
-                                                    padding-bottom: 2%;">
-                                    <h5 class="mt-0 mb-1">Lisa BP</h5>
-    
-                                    หิ้วสำเร็จ 36 ครั้ง <br>
-    
-                                    <i style="color: #df3433" class="fas fa-star"></i>
-                                    <i style="color: #df3433" class="fas fa-star"></i>
-                                    <i style="color: #df3433" class="fas fa-star"></i>
-                                    <i style="color: #df3433" class="fas fa-star"></i>
-                                    <i style="color: #df3433" class="fas fa-star-half-alt"></i>
-                                </div>
-                                <div class=" float-right" style="border-radius: 50%; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
-                                    <h3 style="color: #df3433"> 4</h3>
-                                </div>
-                            </li>
-                            <li class="media">
-                                    <img class="mr-3 rounded-circle" src="{{ asset('hiwpro/images/bobby4.png')}}">
-                                    <div class="media-body" style="
-                                                        margin-top: 0%;
-                                                        margin-bottom: 2%;
-                                                        padding-bottom: 2%;">
-                                        <h5 class="mt-0 mb-1">Lisa BP</h5>
-        
-                                        หิ้วสำเร็จ 36 ครั้ง <br>
-        
-                                        <i style="color: #df3433" class="fas fa-star"></i>
-                                        <i style="color: #df3433" class="fas fa-star"></i>
-                                        <i style="color: #df3433" class="fas fa-star"></i>
-                                        <i style="color: #df3433" class="fas fa-star"></i>
-                                        <i style="color: #df3433" class="fas fa-star-half-alt"></i>
-                                    </div>
-                                    <div class=" float-right" style="border-radius: 50%; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
-                                        <h3 style="color: #df3433">5</h3>
-                                    </div>
-                                </li>
-                                <li class="media">
-                                        <img class="mr-3 rounded-circle" src="{{ asset('hiwpro/images/bobby3.png')}}">
-                                        <div class="media-body" style="
-                                                            margin-top: 0%;
-                                                            margin-bottom: 2%;
-                                                            padding-bottom: 2%;">
-                                            <h5 class="mt-0 mb-1">Lisa BP</h5>
-            
-                                            หิ้วสำเร็จ 36 ครั้ง <br>
-            
-                                            <i style="color: #df3433" class="fas fa-star"></i>
-                                            <i style="color: #df3433" class="fas fa-star"></i>
-                                            <i style="color: #df3433" class="fas fa-star"></i>
-                                            <i style="color: #df3433" class="fas fa-star"></i>
-                                            <i style="color: #df3433" class="fas fa-star-half-alt"></i>
-                                        </div>
-                                        <div class=" float-right" style="border-radius: 50%; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
-                                            <h3 style="color: #df3433">6</h3>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                            <img class="mr-3 rounded-circle" src="{{ asset('hiwpro/images/bobby2.png')}}">
-                                            <div class="media-body" style="
-                                                                margin-top: 0%;
-                                                                margin-bottom: 2%;
-                                                                padding-bottom: 2%;">
-                                                <h5 class="mt-0 mb-1">Lisa BP</h5>
-                
-                                                หิ้วสำเร็จ 36 ครั้ง <br>
-                
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star"></i>
-                                                <i style="color: #df3433" class="fas fa-star-half-alt"></i>
-                                            </div>
-                                            <div class=" float-right" style="border-radius: 50%; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
-                                                <h3 style="color: #df3433">7</h3>
-                                            </div>
-                                        </li>
-                       
-
-                    </ul>
-        
+                    
+                    <div class="media-body" style="border-bottom: 2px dotted #ccc;
+                                        margin-top: 0%;
+                                        margin-bottom: 2%;
+                                        padding-bottom: 2%;">
+                        <h5 class="mt-0 mb-1">{{$item->seller->name}}</h5>
+                        หิ้วสำเร็จ 50 ครั้ง <br>
+                        <p class="card-text" style="color: #df3433" > 
+                            @if ($item->avg_score == 0)
+                            ยังไม่มีคะแนน
+                            @elseif($item->avg_score > 0 && $item->avg_score < 0.5)
+                            <i class="fas fa-star-half-alt"></i>
+                            @elseif($item->avg_score >= 0.5 && $item->avg_score <= 1)
+                            <i class="fas fa-star"></i>
+                            @elseif($item->avg_score > 1 && $item->avg_score <= 1.5)
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            @elseif($item->avg_score > 1.5 && $item->avg_score <= 2)
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            @elseif($item->avg_score > 2 && $item->avg_score <= 2.5)
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            @elseif($item->avg_score > 2.5 && $item->avg_score <= 3)
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            @elseif($item->avg_score >= 3 && $item->avg_score <= 3.5)
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            @elseif($item->avg_score >= 3.5 && $item->avg_score <= 4)
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            @elseif($item->avg_score >= 4 && $item->avg_score <= 4.5)
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            @else
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            @endif  
+                    </p>
+                    </div>
+                    <div class=" float-right" style="border-radius: 50%; background-color: #fff; width: 50px; height: 50px;padding: 2%; text-align: center;">
+                        <h3 style="color: #df3433">{{$key+1}}</h3>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
     </div>
 </div>
     @php
@@ -237,14 +211,16 @@
       
             <div class="owl-carousel owl-theme">
                 
-                {{-- @foreach ($profile as $item)
-                    @if ($item->national_img)
+                @foreach ($newSeller as $item)
+                <div class="text">{{$item->user->name}}</div>
+                {{-- {{dd($item)}} --}}
+                    {{-- @if ($item->profile->national_img)
                         <div class="item card-n">
-                            <img src="{{ asset('/storage/'.$item->img) }}" class="img-fluid" >
-                            <div class="middle"><div class="text">{{$item->tel}}</div></div>
+                            <img src="{{ asset('/storage/'.$item->profile->img) }}" class="img-fluid" >
+                            <div class="middle"><div class="text">{{$item->user->name}}</div></div>
                         </div>
-                    @endif
-                @endforeach --}}
+                    @endif --}}
+                @endforeach
             </div>
     
     </div>

@@ -51,6 +51,7 @@ class OrderDetail extends Model
         'seller_actual_qty',
         'seller_actual_at',
         'seller_actual_status',
+        'event_shop_id',
     ];
 
     /**
