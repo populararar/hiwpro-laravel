@@ -56,6 +56,7 @@ class OrderHeader extends Model
         'exp_date',
         'slip_status',
         'total_price',
+        'tracking',
         'tracking_number',
         // 'seller_id',
         'customer_id',
