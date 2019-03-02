@@ -125,9 +125,13 @@ class HomeController extends Controller
             ->groupBy('user_id')
             ->orderBy('avg_score', 'desc')
             ->first();
+        
+        $profile = $this->profileRepository->findWhere(['user_id'=>$userId])->first();
+     
 
         // dd($reviews, $avgData, $avgData->seller->name);
         return view('home.seller_detail')
+            ->with('profile', $profile)
             ->with('avgData', $avgData)
             ->with('reviews',$reviews);
 

@@ -136,29 +136,51 @@ label {
                     @endif
                     {{ $seller->name }}
                     <p>คะแนนนักหิ้ว</p>
-                             @if ($seller->avg==0)
-                             ยังไม่มีคะแนน
-                             @elseif($seller->avg==1)
-                             <i class="fas fa-star"></i>
-                             @elseif($seller->avg==2)
-                             <i class="fas fa-star"></i>
-                             <i class="fas fa-star"></i>
-                             @elseif($seller->avg==3)
-                             <i class="fas fa-star"></i>
-                             <i class="fas fa-star"></i>
-                             <i class="fas fa-star"></i>
-                             @elseif($seller->avg==4)
-                             <i class="fas fa-star"></i>
-                             <i class="fas fa-star"></i>
-                             <i class="fas fa-star"></i>
-                             <i class="fas fa-star"></i>
-                             @elseif($seller->avg==5)
-                             <i class="fas fa-star"></i>
-                             <i class="fas fa-star"></i>
-                             <i class="fas fa-star"></i>
-                             <i class="fas fa-star"></i>
-                             <i class="fas fa-star"></i>
-                             @endif
+                    <p class="card-text" style="color: #df3433" > 
+                    @if ($item->avg_score == 0)
+                    ยังไม่มีคะแนน
+                    @elseif($item->avg_score > 0 && $item->avg_score < 0.5)
+                    <i class="fas fa-star-half-alt"></i>
+                    @elseif($item->avg_score >= 0.5 && $item->avg_score <= 1)
+                    <i class="fas fa-star"></i>
+                    @elseif($item->avg_score > 1 && $item->avg_score <= 1.5)
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    @elseif($item->avg_score > 1.5 && $item->avg_score <= 2)
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    @elseif($item->avg_score > 2 && $item->avg_score <= 2.5)
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    @elseif($item->avg_score > 2.5 && $item->avg_score <= 3)
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    @elseif($item->avg_score >= 3 && $item->avg_score <= 3.5)
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    @elseif($item->avg_score >= 3.5 && $item->avg_score <= 4)
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    @elseif($item->avg_score >= 4 && $item->avg_score <= 4.5)
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    @else
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    @endif 
+                    </p> 
                      </label>
         </div>
      @endforeach

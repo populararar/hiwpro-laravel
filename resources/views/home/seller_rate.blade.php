@@ -122,12 +122,6 @@
             @foreach ($reviewsTopTen as $key => $item)
                 <li class="media">
                     @if (!empty($item->seller->profile))
-                    <div id="wrap">
-                        <div id="img_wrap">
-                            <img class="normal" src="{{ asset('storage'.$item->seller->profile->img)}}" />
-                        </div>
-                    </div>​
-
                         <img class="mr-3 rounded-circle" width="80px" src="{{ asset('storage'.$item->seller->profile->img)}}">
                     @else
                         <img class="mr-3 rounded-circle" width="80px" src="{{ asset('hiwpro/images/bobby.png')}}">
@@ -138,8 +132,10 @@
                                         margin-top: 0%;
                                         margin-bottom: 2%;
                                         padding-bottom: 2%;">
-                        <h5 class="mt-0 mb-1">{{$item->seller->name}}</h5>
-                        หิ้วสำเร็จ 50 ครั้ง <br>
+                        <a href="{!! route('home.seller_detail', ['userId' => $item->seller->id]) !!}">
+                            <h5 class="mt-0 mb-1">{{$item->seller->name}}</h5>
+                        </a>
+                        หิ้วสำเร็จ {{$item->count}} ครั้ง <br>
                         <p class="card-text" style="color: #df3433" > 
                             @if ($item->avg_score == 0)
                             ยังไม่มีคะแนน

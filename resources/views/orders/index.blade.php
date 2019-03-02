@@ -117,7 +117,7 @@ $sum=0;$count=0;$count2=0;
                                             {{-- # เทาอ่อน --}}
                                             @endif
                                           
-                                            @if ($status_send == "/CREATE/") 
+                                            @if ($status == "WAITING" && $status_send == "CREATE") 
                                             <a href="{{route('orders.statusdetail',[ $order->order_number])}}"
                                                 class="font-weight-light " style="color:red;">{{$status_show}}</a>
                                             @endif
