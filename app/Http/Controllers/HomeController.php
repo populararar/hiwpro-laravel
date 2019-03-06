@@ -125,15 +125,14 @@ class HomeController extends Controller
             ->groupBy('user_id')
             ->orderBy('avg_score', 'desc')
             ->first();
-        
-        $profile = $this->profileRepository->findWhere(['user_id'=>$userId])->first();
-     
+
+        $profile = $this->profileRepository->findWhere(['user_id' => $userId])->first();
 
         // dd($reviews, $avgData, $avgData->seller->name);
         return view('home.seller_detail')
             ->with('profile', $profile)
             ->with('avgData', $avgData)
-            ->with('reviews',$reviews);
+            ->with('reviews', $reviews);
 
     }
 
@@ -163,6 +162,11 @@ class HomeController extends Controller
             ->limit(4)->get();
 
         $newSeller = $this->userRolesRepository->with('user')->findWhere(['role_id' => 2])->sortByDesc('created_at')->take(10);
+        foreach ($newSeller as $item) {
+            $item->profile = $this->profileRepository->findWhere(['user_id' => $item->user_id]);
+        }
+        // $newSellerProfile = $this->profileRepository->findWhere(['user_id' => $newSeller->user_id]);
+        // dd($newSeller->first());
         // dd($newSeller->first()->user->name, $reviewsTopTen);
 
         return view('home.seller_rate')
@@ -216,8 +220,10 @@ class HomeController extends Controller
     public function cartDetail(Request $request)
     {
         $cart = \Cart::getContent();
+
         $shopGroup = $cart->groupBy('attributes.key')->sort();
 
+        // dd($shopGroup);
         $shopGroup = $shopGroup->map(function ($item, $key) {
             // Get saller in event shop
             $eventShopId = $item->first()->attributes->event_shop_id;
@@ -309,6 +315,43 @@ class HomeController extends Controller
     {
         $eventJoineds = $this->eventJoinedRepository->with('seller')->findWhere(['event_shop_id' => $eventShopId]);
         $sellers = $eventJoineds->map(function ($eventJoin) {
+            $sellerId = $eventJoin->seller->id;
+            $reviews = $this->sellerReviewRepository->findWhere(['user_id' => $sellerId]);
+            $avg = $reviews->avg('score');
+            if (empty($avg)) {
+                $avg = 0;
+            }
+            $eventJoin->seller->avg = $avg;
+            $eventJoin->seller->tag = 'normal';
+            return $eventJoin->seller;
+        });
+        $newbie = $this->getSallerInEventShopNewbie($eventShopId);
+        foreach ($newbie as $item) {
+            $sellers->push($item);
+        }
+
+        $pro = $this->getSallerInEventShopPro($eventShopId);
+        foreach ($pro as $item) {
+            $sellers->push($item);
+        }
+
+        // dd($sellers, $pro);
+        // $normal = $sellers->filter(function($item){
+        //     return $item->tag =="normal";
+        // });
+
+        // $newbie = $sellers->filter(function($item){
+        //     return $item->tag =="newbie";
+        // });
+        // dd($newbie);
+
+        return $sellers;
+    }
+
+    private function getSallerInEventShopPro($eventShopId)
+    {
+        $eventJoineds = $this->eventJoinedRepository->with('seller')->findWhere(['event_shop_id' => $eventShopId]);
+        $sellers = $eventJoineds->map(function ($eventJoin) {
 
             $sellerId = $eventJoin->seller->id;
             $reviews = $this->sellerReviewRepository->findWhere(['user_id' => $sellerId]);
@@ -317,12 +360,44 @@ class HomeController extends Controller
                 $avg = 0;
             }
             $eventJoin->seller->avg = $avg;
+            $eventJoin->seller->tag = 'pro';
+            return $eventJoin->seller;
+        });
+
+        $sellers = $sellers->sortByDesc('avg')->take(10);
+        return $sellers;
+    }
+
+    private function getSallerInEventShopNewbie($eventShopId)
+    {
+        $newSeller = $this->userRolesRepository->with('user')->findWhere(['role_id' => 2])->sortByDesc('created_at')->take(20);
+        $newbieId = [];
+        foreach ($newSeller as $seller) {
+            array_push($newbieId, $seller->user_id);
+        }
+
+        $eventJoineds = $this->eventJoinedRepository->with('seller')->findWhere(['event_shop_id' => $eventShopId]);
+        if (count($newbieId) < 1) {
+            $eventJoineds = $eventJoineds->sortByDesc('seller_seller_id')->take(10);
+        } else {
+            $eventJoineds = $eventJoineds->whereIn('seller_seller_id', $newbieId)->take(10);
+        }
+
+        $sellers = $eventJoineds->map(function ($eventJoin) {
+
+            $sellerId = $eventJoin->seller->id;
+            $reviews = $this->sellerReviewRepository->findWhere(['user_id' => $sellerId]);
+            $avg = $reviews->avg('score');
+            if (empty($avg)) {
+                $avg = 0;
+            }
+            $eventJoin->seller->avg = $avg;
+            $eventJoin->seller->tag = 'newbie';
             return $eventJoin->seller;
         });
 
         return $sellers;
     }
-
     /**
      * Show the application dashboard.
      *

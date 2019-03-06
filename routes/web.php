@@ -95,6 +95,7 @@ Route::middleware(['login'])->group(function () {
     Route::resource('orderHeaders', 'OrderHeaderController');
 
     Route::resource('orderSellers', 'OrderSellerController');
+    Route::get('/orderSellers/product/{product}/eventShop/{eventShop}', 'OrderSellerController@showEventShopDetail')->name('orderSeller.product');
 
     Route::resource('orderDetails', 'OrderDetailController');
 

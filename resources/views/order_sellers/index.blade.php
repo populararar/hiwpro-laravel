@@ -209,26 +209,38 @@
             <main class="main">
                 <h1 style="font-family:Kanit;" >รายการที่ต้องซื้อ</h1>
                 <div class="box" style="width:100%;padding-left:30px;"> 
-                    {{-- {{dd($orderGroup)}} --}}
+                    
                     @foreach ($orderGroup as $key => $group)
-                        @php
-                            $item = $group->first();
-                            $itemQty = $group->sum('qrt');
-                        @endphp
-                        <div class="card card--split-8"style="float:left;">
-                            <div class="card__pic">
-                                <span class="card__placeholder">
-                                    <img width="150px" class="circle" style="border-radius: 10%" src="{{ asset('/storage/'.$item->product_img) }}" class="img-fluid">
-                                </span>
-                            </div>
-                            <h2 class="card__headline"></h2>
-                            <div class="card__content">
-                                <p class="card__paragraph">
-                                    <p>ชื่อสินค้า<br>{{$key}}</p>
-                                    <p>จำนวน  : {{$itemQty}}</p> 
-                                </p>
-                            </div>
-                        </div>
+                    @php
+                       $a =  collect($group)->first();
+                    @endphp
+                      {{-- {{dd($a['event_shop']->shop->name,$a['event_shop']->shop_location->location_name)}} --}}
+                <p> group #{{ $a['event_shop']->shop->name }} at {{$a['event_shop']->shop_location->location_name}}</p>
+                      <div class="row">
+                      @foreach ( $group as $item)
+                          <div class="card card--split-8"style="float:left;">
+                              <div class="card__pic">
+                                  <span class="card__placeholder">
+                                      <img width="150px" class="circle" style="border-radius: 10%"
+                                      src="{{ asset('/storage/'.$item['product']->image_product_id) }}" class="img-fluid">
+                                  </span>
+                              </div>
+                              <h2 class="card__headline"></h2>
+                              <div class="card__content">
+                                  <p class="card__paragraph">
+                                    @php
+                                        $pId =  $item['product']->product_id;
+                                        $eventShopId = $item['event_shop_id'];
+                                    @endphp
+                                  <a href="{{ route('orderSeller.product',[$pId,$eventShopId]) }}">
+                                  <p>ชื่อสินค้า<br>{{  $item['product']->name  }}</p>
+                                  </a> 
+                                      <p>จำนวน  : {{ $item['qrt'] }}</p> 
+                                  </p>
+                              </div>
+                          </div>
+                      @endforeach
+                      </div>
                     @endforeach
                 </div>
                 </main>

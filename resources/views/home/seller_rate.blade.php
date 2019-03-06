@@ -208,14 +208,20 @@
             <div class="owl-carousel owl-theme">
                 
                 @foreach ($newSeller as $item)
-                <div class="text">{{$item->user->name}}</div>
-                {{-- {{dd($item)}} --}}
-                    {{-- @if ($item->profile->national_img)
+                {{-- <div class="text">{{$item->user->name}}</div> --}}
+               
+                @foreach ($item->profile as $profile)
+                {{-- {{dd($profile)}} --}}
+                @endforeach
+                    @if ($profile->national_img)
                         <div class="item card-n">
-                            <img src="{{ asset('/storage/'.$item->profile->img) }}" class="img-fluid" >
-                            <div class="middle"><div class="text">{{$item->user->name}}</div></div>
+                            <img src="{{ asset('/storage/'.$profile->img) }}" class="img-fluid" >
+                            <a href="{!! route('home.seller_detail', ['userId' => $item->user->id]) !!}">
+                                <div class="middle"><div class="text" style="padding:0;">{{$item->user->name}}</div></div>
+                            </a>
+                            
                         </div>
-                    @endif --}}
+                    @endif
                 @endforeach
             </div>
     

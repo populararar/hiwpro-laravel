@@ -121,11 +121,31 @@ label {
                 @endif
             @endforeach
         @endif  
-             
-        @foreach ($group->sellers as $seller)  
+        {{-- {{ dd($group->sellers) }} --}}
+
+        @php
+            $sellerPro = $group->sellers->filter(function($item){
+                return $item->tag == "pro";
+            });
+
+            $sellerNormal = $group->sellers->filter(function($item){
+                return $item->tag == "normal";
+            });
+
+            $sellerNewbie = $group->sellers->filter(function($item){
+                return $item->tag == "newbie";
+            });
+        @endphp
+        {{-- {{ dd($sellerPro , $sellerNormal , $sellerNewbie)  }} --}}
+
+
+
+
+    @foreach ($sellerPro as $seller)  
          @php
          $eventShopId = $group->first()->attributes->event_shop_id;
          @endphp
+        
          <div class="col-12 mx-auto seller-card " id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
             <label class="seller " id="seller-{{ $seller->id }}"> 
                      <input type="radio" name="seller[][]" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
@@ -185,8 +205,7 @@ label {
         </div>
      @endforeach
 
-
-            
+     
 <script>
     $(document).ready(function() {
         <?php foreach ($group->sellers as $seller) { ?>

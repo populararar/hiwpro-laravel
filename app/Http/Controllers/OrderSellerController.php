@@ -10,6 +10,9 @@ use App\Models\OrderHeader;
 use App\Repositories\NotificationRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
+use App\Repositories\ProductRepository;
+use App\Repositories\EventShopRepository;
+use App\Repositories\ShopRepository;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
@@ -32,12 +35,25 @@ class OrderSellerController extends AppBaseController
     /** @var  OrderDetailRepository */
     private $orderDetailRepository;
 
-    public function __construct(OrderHeader $orderHeader, NotificationRepository $notificationRepo, OrderHeaderRepository $orderHeaderRepo, OrderDetailRepository $orderDetailRepo)
+    /** @var  ProductRepository */
+    private $productRepository;
+
+    /** @var  EventShopRepository */
+    private $eventShopRepository;
+
+    /** @var  ShopRepository */
+    private $shopRepository;
+
+
+    public function __construct(EventShopRepository $eventShopRepo, ShopRepository $shopRepository, ProductRepository $productRepo,OrderHeader $orderHeader, NotificationRepository $notificationRepo, OrderHeaderRepository $orderHeaderRepo, OrderDetailRepository $orderDetailRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->notificationRepository = $notificationRepo;
         $this->orderHeader = $orderHeader;
+        $this->productRepository = $productRepo;
+        $this->eventShopRepository = $eventShopRepo;
+        $this->shopRepository = $shopRepository;
     }
 
     /**
@@ -55,12 +71,12 @@ class OrderSellerController extends AppBaseController
         // ->Where('seller_id', $user_id)
             ->whereRaw('seller_id =? and (status = ? or status = ?)', [$user_id, 'CONFIRMED', 'COMPLETED'])
             ->orderBy('updated_at', 'desc')->get();
-            $countOrder = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'CONFIRMED')->count('id');
-            $countPrepared = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'PREPARED')->count('id');
-            $countFinish = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'COMPLETED')->count('id');
-            $countSum = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->count('id');
+        $countOrder = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'CONFIRMED')->count('id');
+        $countPrepared = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'PREPARED')->count('id');
+        $countFinish = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'COMPLETED')->count('id');
+        $countSum = \DB::table('order_header')->where('seller_id', Auth::user()->id)->count('id');
 
-        $orderGroup =  $this->getOrderList();
+        $orderGroup = $this->getOrderList();
         // dd($orderGroup);
         foreach ($orderHeaders as $orderHeader) {
             $orderHeader->order_date = $this->formatEventDate($orderHeader->order_date);
@@ -76,24 +92,89 @@ class OrderSellerController extends AppBaseController
     }
     private function getOrderList()
     {
+        $mapEventShop = [];
         $products = [];
-        $orders = $this->orderHeaderRepository->findWhere(['seller_id' => Auth::user()->id, 'status' => 'CONFIRMED']);
+        $orders = $this->orderHeaderRepository->with('orderDetails')->findWhere(['seller_id' => Auth::user()->id, 'status' => 'CONFIRMED']);
+
         foreach ($orders as $order) {
-            $detail = $order->orderDetails;
-            if (count($detail) <= 0) {
-                continue;
+            $eventShopId = $order->event_shop_id;
+            if (empty($mapEventShop[$eventShopId])) {
+                $mapEventShop[$eventShopId] = $order->orderDetails->toArray(); // [item1 , item2]
+            } else {
+                $temp = $mapEventShop[$eventShopId]; // [item1 , item2]
+                $orderDetailArray = $order->orderDetails->toArray(); // [item3 , item4]
+                $mapEventShop[$eventShopId] = array_merge($temp, $orderDetailArray);
             }
-            foreach ($detail as $key => $item) {
-                # code... product
-                $item->product_name = $item->product->name;
-                $item->product_img = $item->product->image_product_id;
-                array_push($products, $item);
+
+            // $detail = $order->orderDetails;
+
+            // if (count($detail) <= 0) {
+            //     continue;
+            // }
+            // foreach ($detail as $key => $item) {
+            //     # code... product
+            //     $item->product_name = $item->product->name;
+            //     $item->product_img = $item->product->image_product_id;
+            //     array_push($products, $item);
+            // }
+        }
+        // dd($mapEventShop);
+        foreach ($mapEventShop as $key => $group) {
+            // [ 1=>[item1 , item2], ...]
+            $mapItem = [];
+            foreach ($group as $item) { // item1 => [id,name,qty]
+                $itemId = $item['product_id'];
+                if (empty($mapItem[$itemId])) {
+                    $mapItem[$itemId] = $item; // [ itemId_1 => [id,name,qty] ]
+                } else {
+                    $olditem = $mapItem[$itemId];
+                    $qty = (int) $olditem["qrt"];
+                    $qty += (int) $item['qrt'];
+                    $olditem["qrt"] = $qty;
+                    $mapItem[$itemId] = $olditem;
+                }
             }
+            $mapEventShop[$key] = $mapItem;
         }
 
-        $grouped = collect($products)->groupBy('product_name');
-        // dd($grouped);
-        return $grouped;
+        foreach($mapEventShop as $key => $group){
+            foreach($group as $keyItem => $item) {
+                $eventShopId = $item['event_shop_id'];
+                $pid = $item['product_id'];
+                $product = $this->productRepository->findWithoutFail($pid);
+                $eventShop = $this->eventShopRepository->with(['shop','event'])->findWithoutFail($eventShopId);
+                $location = $eventShop->shop->location;
+                $eventShop->shop_location = $location;
+                $item['product'] = $product;
+                $item['event_shop'] = $eventShop;
+                $group[$keyItem] = $item;
+            }
+            $mapEventShop[$key] = $group;
+        }       
+        return $mapEventShop;
+    }
+
+
+    public function showEventShopDetail($product, $eventShop){
+
+        $orders = $this->orderHeaderRepository->with('orderDetails')
+        ->findWhere(['seller_id' => Auth::user()->id, 'status' => 'CONFIRMED', 'event_shop_id' => $eventShop]);
+
+        $orderHeaderId = [];
+        foreach($orders as $order){
+            array_push($orderHeaderId, $order->id);
+        }
+        // detail 
+        $orderDetails = $this->orderDetailRepository->findWhereIn('order_header_id', $orderHeaderId);
+        $orderDetails = $orderDetails->where('product_id', $product);
+
+        foreach($orderDetails as $detail) {
+            $orderHeader =  $this->orderHeaderRepository->with('customer')->findWithoutFail($detail->order_header_id);
+            $detail->customer = $orderHeader->customer;
+        }
+
+        // dd($orderDetails);
+        return view('order_sellers.productDetail')->with('orderDetail', $orderDetails);
     }
 
     /**
@@ -226,19 +307,18 @@ class OrderSellerController extends AppBaseController
             ], $detailId);
         }
 
-
-        if($complete ){
+        if ($complete) {
             $orderHeader = $this->orderHeaderRepository->update(['status' => 'PREPARED'], $id);
             Flash::success('Order Detail updated successfully.');
 
             $orderDetails = $this->orderDetailRepository->findWhere(['order_header_id' => $orderHeader->id]);
 
             $user = Auth::user();
-            
+
             return view('order_sellers.edit')
-            ->with('orderHeader', $orderHeader)
-            ->with('orderDetails', $orderDetails)
-            ->with('user', $user);
+                ->with('orderHeader', $orderHeader)
+                ->with('orderDetails', $orderDetails)
+                ->with('user', $user);
         }
         $orderHeader = $this->orderHeaderRepository->update(['status' => 'NOPREPARED'], $id);
         # New feature - edit total price

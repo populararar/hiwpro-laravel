@@ -223,6 +223,7 @@ class OrderController extends AppBaseController
                 'name'=> $info['name'],
                 'lastname'=> $info['lastname'],
                 'email'=> $info['email'],
+                'event_shop_id' => $eventShopId,
             ];
             $orderHeader = $this->orderHeaderRepository->create($orderHeaderData);
             foreach ($group as $item) {
@@ -235,6 +236,7 @@ class OrderController extends AppBaseController
                     'shipping_rate' => $item->attributes->shippping,
                     'order_header_id' => $orderHeader->id,
                     'seller_id' => $seller->id,
+                    'event_shop_id' => $item->attributes->event_shop_id,
                 ];
                 $this->orderDetailRepository->create($detailData);
             }
