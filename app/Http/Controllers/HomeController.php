@@ -161,7 +161,7 @@ class HomeController extends Controller
             ->orderBy('avg_score', 'desc')
             ->limit(4)->get();
 
-        $newSeller = $this->userRolesRepository->with('user')->findWhere(['role_id' => 2])->sortByDesc('created_at')->take(10);
+        $newSeller = $this->userRolesRepository->with('user')->findWhere(['role_id' => 2])->sortByDesc('created_at')->take(2);
         foreach ($newSeller as $item) {
             $item->profile = $this->profileRepository->findWhere(['user_id' => $item->user_id]);
         }
@@ -364,13 +364,13 @@ class HomeController extends Controller
             return $eventJoin->seller;
         });
 
-        $sellers = $sellers->sortByDesc('avg')->take(10);
+        $sellers = $sellers->sortByDesc('avg')->take(2);
         return $sellers;
     }
 
     private function getSallerInEventShopNewbie($eventShopId)
     {
-        $newSeller = $this->userRolesRepository->with('user')->findWhere(['role_id' => 2])->sortByDesc('created_at')->take(20);
+        $newSeller = $this->userRolesRepository->with('user')->findWhere(['role_id' => 2])->sortByDesc('created_at')->take(15);
         $newbieId = [];
         foreach ($newSeller as $seller) {
             array_push($newbieId, $seller->user_id);

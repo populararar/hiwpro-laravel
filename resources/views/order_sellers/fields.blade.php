@@ -33,15 +33,16 @@
     @php
         if($orderHeader->status == 'CONFIRMED'){
             $payment = 'ชำระเงินแล้ว';
-        }
-        if($orderHeader->status == 'PREPARED'){
+        }else if($orderHeader->status == 'PREPARED'){
             $payment = 'หิ้วแล้วรอการจัดส่ง';
-        }
-        if($orderHeader->status == 'COMPLETED'){
+        }else if($orderHeader->status == 'NOPREPARED'){
+            $payment = 'สินค้าไม่ครบตามที่สั่ง';
+        }else if($orderHeader->status == 'COMPLETED'){
             $payment = 'จัดส่งแล้ว';
-        }
-        if($orderHeader->status == 'ACCEPTED'){
+        }else if($orderHeader->status == 'ACCEPTED'){
             $payment = 'ได้รับสินค้า';
+        }else {
+            $payment = '';
         }
     @endphp
 

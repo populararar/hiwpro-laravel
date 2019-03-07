@@ -112,6 +112,7 @@ label {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/owl.carousel.min.js"></script>
         @php
         $eventShopId = $group->first()->attributes->event_shop_id;
+        
         @endphp
 
         @if(!empty($eventShopId))
@@ -140,7 +141,18 @@ label {
 
 
 
-
+    <div class="row col-12" style="margin-left:20px;">
+        <div class="col-12">
+            <h1>นักหิ้วแนะนำ</h1>
+        </div>
+            {{-- <h1>เลือกนักหิ้ว</h1>  --}}
+      
+       
+    </div>
+    <div class="line-g">
+        <div class="line-r">
+        </div>
+    </div>
     @foreach ($sellerPro as $seller)  
          @php
          $eventShopId = $group->first()->attributes->event_shop_id;
@@ -156,7 +168,7 @@ label {
                     @endif
                     {{ $seller->name }}
                     <p>คะแนนนักหิ้ว</p>
-                    <p class="card-text" style="color: #df3433" > 
+                    <p class="card-text" style="color: #DFB737" > 
                     @if ($seller->avg == 0)
                     ยังไม่มีคะแนน
                     @elseif($seller->avg > 0 && $seller->avg < 0.5)
@@ -200,11 +212,159 @@ label {
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                     @endif 
-                    </p> 
+                    </p>  
+                    (นักหิ้วมือโปร)
                      </label>
         </div>
-     @endforeach
+    @endforeach
 
+    @foreach ($sellerNewbie as $key => $seller)  
+     @php
+     $eventShopId = $group->first()->attributes->event_shop_id;
+     @endphp
+    
+    <div class="col-12 mx-auto seller-card " id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
+        <label class="seller " id="seller-{{ $seller->id }}"> 
+            <input type="radio" name="seller[][]" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
+                @if(empty($seller->profile))
+                <img class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+                @else
+                <img class="mx-auto card rounded img-fluid " src="{{ asset('storage') }}/{{ $seller->profile->img }}"> 
+                @endif
+                {{ $seller->name }}
+                <p>คะแนนนักหิ้ว</p>
+                <p class="card-text" style="color: #DFB737" > 
+                @if ($seller->avg == 0)
+                ยังไม่มีคะแนน
+                @elseif($seller->avg > 0 && $seller->avg < 0.5)
+                <i class="fas fa-star-half-alt"></i>
+                @elseif($seller->avg >= 0.5 && $seller->avg <= 1)
+                <i class="fas fa-star"></i>
+                @elseif($seller->avg > 1 && $seller->avg <= 1.5)
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                @elseif($seller->avg > 1.5 && $seller->avg <= 2)
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                @elseif($seller->avg > 2 && $seller->avg <= 2.5)
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                @elseif($seller->avg > 2.5 && $seller->avg <= 3)
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                @elseif($seller->avg >= 3 && $seller->avg <= 3.5)
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                @elseif($seller->avg >= 3.5 && $seller->avg <= 4)
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                @elseif($seller->avg >= 4 && $seller->avg <= 4.5)
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                @else
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                @endif 
+                </p> 
+                (นักหิ้วหน้าใหม่)
+        </label>
+    </div>
+    @endforeach
+
+    <div class="col-sm-12" style="float:left;">
+        <p>
+        <a class="btn btn-outline-dark" data-toggle="collapse" href="#collapseExample-{{$counter}}" role="button" aria-expanded="false" 
+        aria-controls="collapseExample">
+            เลือกดูนักหิ้วทั้งหมด
+        </a>
+        </p>
+    </div>
+   
+    <div class="collapse" id="collapseExample-{{$counter}}">
+       
+            @foreach ($sellerNormal as $seller)  
+            @php
+            $eventShopId = $group->first()->attributes->event_shop_id;
+            @endphp
+           
+           <div class="col-12 mx-auto seller-card " id="row-seller-{{ $eventShopId.'-'.$seller->id }} " onclick="addSeller({{ $eventShopId }}, {{ $seller->id }})">
+               <label class="seller " id="seller-{{ $seller->id }}"> 
+                        <input type="radio" name="seller[][]" id="seller_selected-{{ $seller->id }}" value="{{ $seller->id }}" />
+                       @if(empty($seller->profile))
+                       <img class="mx-auto card rounded img-fluid" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+                       @else
+                       <img class="mx-auto card rounded img-fluid " src="{{ asset('storage') }}/{{ $seller->profile->img }}"> 
+                       @endif
+                       {{ $seller->name }}
+                       <p>คะแนนนักหิ้ว</p>
+                       <p class="card-text" style="color: #DFB737" > 
+                       @if ($seller->avg == 0)
+                       ยังไม่มีคะแนน
+                       @elseif($seller->avg > 0 && $seller->avg < 0.5)
+                       <i class="fas fa-star-half-alt"></i>
+                       @elseif($seller->avg >= 0.5 && $seller->avg <= 1)
+                       <i class="fas fa-star"></i>
+                       @elseif($seller->avg > 1 && $seller->avg <= 1.5)
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star-half-alt"></i>
+                       @elseif($seller->avg > 1.5 && $seller->avg <= 2)
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       @elseif($seller->avg > 2 && $seller->avg <= 2.5)
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star-half-alt"></i>
+                       @elseif($seller->avg > 2.5 && $seller->avg <= 3)
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       @elseif($seller->avg >= 3 && $seller->avg <= 3.5)
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star-half-alt"></i>
+                       @elseif($seller->avg >= 3.5 && $seller->avg <= 4)
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       @elseif($seller->avg >= 4 && $seller->avg <= 4.5)
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star-half-alt"></i>
+                       @else
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       @endif 
+                       </p> 
+                   </label>
+           </div>
+           @endforeach
+       
+    </div>
+    @php
+    
+    @endphp
+
+
+  
      
 <script>
     $(document).ready(function() {

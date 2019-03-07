@@ -51,6 +51,7 @@
 body{
     font-family: 'Kanit', sans-serif;
 }
+
 </style>
 
 @foreach (Auth::user()->usersRoles as $item)

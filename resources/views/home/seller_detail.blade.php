@@ -10,13 +10,23 @@
 .details{
 	text-align: center;
 }
+.card-comment{
+	padding: 2.5%;
+	border: 1px solid #ccc;
+	margin-top: 2%; 
+}
 </style>
 
 <main>
  
 	<div class="details">
 		{{-- {{dd($avgData)}} --}}
+		@if(empty($profile->img))
+		<img class="materialboxed responsive-img" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+		@else
 		<img class="materialboxed responsive-img" width="150px" src="{{ asset('storage'.$profile->img)}}">
+		@endif
+		
 		<h3>{{$avgData->seller->name}}</h3>
 		<p>Actor / นักหิ้วมือโปร</p>
 	</div>
@@ -25,7 +35,12 @@
 				<h6>รายละเอียดงานถนัด</h6>
 			</div>
 			<div class="content">
+				@if(empty($profile->intro))
+				<img class="materialboxed responsive-img" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+				@else
 				<p>{{$profile->intro}}</p>
+				@endif
+				
 			</div>
 			<hr />
 	</div>
@@ -35,25 +50,14 @@
 			<h6>Comment</h6>
 		</div>
 		<div class="row">
-            @foreach ($reviews as $item)
-          
-        	<div class="col-sm-12 s12 m6">
-          		<div class="card">
+			@foreach ($reviews as $item)
+			
+        	<div class="card card-comment col-sm-12 s12 m6">
             		<div class="card-content white-text">
               			<span class="card-title">Post title</span>
                     <p>{{$item->comment}}</p>
             		</div>
 					<div class="card-action">
-						<a href="#">Read more...</a>
-						<div class="tags">
-							<div class="chip">
-								Story
-							</div>
-							<div class="chip">
-								Adventure
-							</div>
-						</div>
-                        <i class="material-icons card-love">favorite_border</i>
                         <p class="card-text" style="color: #df3433" > 
                             @if ($item->score == 0)
                             ยังไม่มีคะแนน
@@ -111,7 +115,7 @@
 					@endif
 					
           		</div>
-            </div> 
+             
             @endforeach
       	</div>
 		

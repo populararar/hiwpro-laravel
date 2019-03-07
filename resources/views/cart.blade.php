@@ -229,7 +229,7 @@ caption {
 
 
 @php
-$sum=0;$count=0;$count2=0;
+$sum=0;$count=0;$count2=0;$count_collapse = 0;
 @endphp
 
 <div class="container">
@@ -252,8 +252,13 @@ $sum=0;$count=0;$count2=0;
             <strong>Warning!</strong> กรุณาอ่านเงื่อนไขการใช้บริการก่อนสั่งซื้อสินค้า @include('orders.terms_cus')
         </div>
     {{-- style="margin-bottom:20px;" --}}
-  
+            @php
+                $counter = 0;
+            @endphp
             @foreach ($shopGroup as $key => $group)
+            @php
+                $counter++;
+            @endphp
             <div class="row carts d-none d-sm-block" style="padding:2%;">
             
                 <h5 style="border-left: 5px solid #df3433;padding-left:5px;">{{ $key }}</h5>
@@ -318,7 +323,7 @@ $sum=0;$count=0;$count2=0;
                         @endphp
 
             </div>
-            @endforeach
+                    @endforeach
             </div>
             <div class="row d-none d-sm-block col-lg-12 justify-content-center">
                 @if (count($group->sellers) > 0)
@@ -346,7 +351,7 @@ $sum=0;$count=0;$count2=0;
                     </div>
                     <div class="col-6">
                         <dt> {{ $product->name }} </dt> ราคา :  {{ $product->price }}
-                        <br>ค่าหิ้ว : {{ $product->attributes->fee }}
+                        <br> ค่าหิ้ว : {{ $product->attributes->fee }}
                         <br> ค่าจัดส่ง :{{ $product->attributes->shippping }}
                         <br>
 
@@ -378,12 +383,14 @@ $sum=0;$count=0;$count2=0;
 
                     @endforeach
                     {{-- <div class="col-12"><h3>เลือกนักหิ้ว</h3> </div> --}}
-                
+                   
                     <div class="col-12 d-block d-sm-none">
                         <div class="row col-12">
                             @include('saler')
                         </div>
-                        
+                    @php
+                        $count_collapse += 2;
+                    @endphp   
                     </div>
 
                 </div>

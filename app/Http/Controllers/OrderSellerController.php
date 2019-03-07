@@ -7,11 +7,12 @@ use App\Http\Requests\CreateOrderHeaderRequest;
 use App\Http\Requests\UpdateOrderHeaderRequest;
 use App\Mail\OrderShipped;
 use App\Models\OrderHeader;
+use App\Repositories\EventRepository;
+use App\Repositories\EventShopRepository;
 use App\Repositories\NotificationRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderHeaderRepository;
 use App\Repositories\ProductRepository;
-use App\Repositories\EventShopRepository;
 use App\Repositories\ShopRepository;
 use Carbon\Carbon;
 use Flash;
@@ -44,8 +45,10 @@ class OrderSellerController extends AppBaseController
     /** @var  ShopRepository */
     private $shopRepository;
 
+    /** @var  EventRepository */
+    private $eventRepository;
 
-    public function __construct(EventShopRepository $eventShopRepo, ShopRepository $shopRepository, ProductRepository $productRepo,OrderHeader $orderHeader, NotificationRepository $notificationRepo, OrderHeaderRepository $orderHeaderRepo, OrderDetailRepository $orderDetailRepo)
+    public function __construct(EventRepository $eventRepo, EventShopRepository $eventShopRepo, ShopRepository $shopRepository, ProductRepository $productRepo, OrderHeader $orderHeader, NotificationRepository $notificationRepo, OrderHeaderRepository $orderHeaderRepo, OrderDetailRepository $orderDetailRepo)
     {
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
@@ -54,6 +57,7 @@ class OrderSellerController extends AppBaseController
         $this->productRepository = $productRepo;
         $this->eventShopRepository = $eventShopRepo;
         $this->shopRepository = $shopRepository;
+        $this->eventRepository = $eventRepo;
     }
 
     /**
@@ -90,11 +94,17 @@ class OrderSellerController extends AppBaseController
             ->with('countFinish', $countFinish)
             ->with('orderHeaders', $orderHeaders);
     }
+
     private function getOrderList()
     {
         $mapEventShop = [];
         $products = [];
-        $orders = $this->orderHeaderRepository->with('orderDetails')->findWhere(['seller_id' => Auth::user()->id, 'status' => 'CONFIRMED']);
+        // $orders = $this->orderHeaderRepository->with('orderDetails')->findWhere(['seller_id' => Auth::user()->id, 'status' => 'CONFIRMED']);
+
+        $orders = $this->orderHeader->with('orderDetails')
+            ->whereRaw('seller_id = ? and  (status = \'CONFIRMED\' or status =  \'NOPREPARED\' or status = \'PREPARED\') ',
+                [Auth::user()->id]
+            )->get();
 
         foreach ($orders as $order) {
             $eventShopId = $order->event_shop_id;
@@ -106,23 +116,16 @@ class OrderSellerController extends AppBaseController
                 $mapEventShop[$eventShopId] = array_merge($temp, $orderDetailArray);
             }
 
-            // $detail = $order->orderDetails;
-
-            // if (count($detail) <= 0) {
-            //     continue;
-            // }
-            // foreach ($detail as $key => $item) {
-            //     # code... product
-            //     $item->product_name = $item->product->name;
-            //     $item->product_img = $item->product->image_product_id;
-            //     array_push($products, $item);
-            // }
         }
-        // dd($mapEventShop);
+
         foreach ($mapEventShop as $key => $group) {
             // [ 1=>[item1 , item2], ...]
             $mapItem = [];
             foreach ($group as $item) { // item1 => [id,name,qty]
+                if ($item['seller_actual_status'] == 1) {
+                    continue;
+                }
+
                 $itemId = $item['product_id'];
                 if (empty($mapItem[$itemId])) {
                     $mapItem[$itemId] = $item; // [ itemId_1 => [id,name,qty] ]
@@ -137,12 +140,12 @@ class OrderSellerController extends AppBaseController
             $mapEventShop[$key] = $mapItem;
         }
 
-        foreach($mapEventShop as $key => $group){
-            foreach($group as $keyItem => $item) {
+        foreach ($mapEventShop as $key => $group) {
+            foreach ($group as $keyItem => $item) {
                 $eventShopId = $item['event_shop_id'];
                 $pid = $item['product_id'];
                 $product = $this->productRepository->findWithoutFail($pid);
-                $eventShop = $this->eventShopRepository->with(['shop','event'])->findWithoutFail($eventShopId);
+                $eventShop = $this->eventShopRepository->with(['shop', 'event'])->findWithoutFail($eventShopId);
                 $location = $eventShop->shop->location;
                 $eventShop->shop_location = $location;
                 $item['product'] = $product;
@@ -150,31 +153,76 @@ class OrderSellerController extends AppBaseController
                 $group[$keyItem] = $item;
             }
             $mapEventShop[$key] = $group;
-        }       
+        }
         return $mapEventShop;
     }
+    public function productUpdate(Request $request)
+    {
+        $detailId = $request->input("detail_id");
+        $actualQty = $request->input("seller_actual_qty");
+        $headerId = $request->input("header_id");
 
+        $detail = $this->orderDetailRepository->findWithoutFail($detailId);
+        if ($actualQty > $detail->qrt) {
+            return back();
+        }
 
-    public function showEventShopDetail($product, $eventShop){
+        $this->orderDetailRepository->update([
+            'seller_actual_qty' => (int) $actualQty,
+            'seller_actual_at' => Carbon::now()->toDateTimeString(),
+            'seller_actual_status' => 1,
+        ], $detailId);
 
-        $orders = $this->orderHeaderRepository->with('orderDetails')
-        ->findWhere(['seller_id' => Auth::user()->id, 'status' => 'CONFIRMED', 'event_shop_id' => $eventShop]);
+        $orderHeader = $this->orderHeaderRepository->findWithoutFail($headerId);
+        $complete = true;
+        foreach ($orderHeader->orderDetails as $item) {
+            $actual = empty($item->seller_actual_qty) ? 0 : (int) $item->seller_actual_qty;
+            if ($item->qrt != $actual) {
+                $complete = false;
+            }
+        }
+
+        $status = $complete ? "PREPARED" : "NOPREPARED";
+        $orderHeader = $this->orderHeaderRepository->update(['status' => $status], $orderHeader->id);
+        $this->updateNewTotalPrice($orderHeader->id);
+
+        return redirect()->route('orderSeller.product', [$detail->product_id, $detail->event_shop_id]);
+    }
+
+    public function showEventShopDetail($product, $eventShop)
+    {
+
+        $orders = $this->orderHeader->with('orderDetails')
+            ->whereRaw('seller_id = ? and  (status = \'CONFIRMED\' or status =  \'NOPREPARED\' or status = \'PREPARED\') and event_shop_id = ?',
+                [Auth::user()->id, $eventShop]
+            )->get();
+
+        $eventShops = $this->eventShopRepository->findWithoutFail($eventShop);
+        $event = $this->eventRepository->findWithoutFail($eventShops->event_id);
+        $shop = $this->shopRepository->findWithoutFail($eventShops->shop_id);
 
         $orderHeaderId = [];
-        foreach($orders as $order){
+        foreach ($orders as $order) {
             array_push($orderHeaderId, $order->id);
         }
-        // detail 
+        // detail
         $orderDetails = $this->orderDetailRepository->findWhereIn('order_header_id', $orderHeaderId);
         $orderDetails = $orderDetails->where('product_id', $product);
 
-        foreach($orderDetails as $detail) {
-            $orderHeader =  $this->orderHeaderRepository->with('customer')->findWithoutFail($detail->order_header_id);
+        $product = $this->productRepository->findWithoutFail($product);
+        foreach ($orderDetails as $detail) {
+            $orderHeader = $this->orderHeaderRepository->with('customer')->findWithoutFail($detail->order_header_id);
             $detail->customer = $orderHeader->customer;
         }
 
         // dd($orderDetails);
-        return view('order_sellers.productDetail')->with('orderDetail', $orderDetails);
+        return view('order_sellers.showEventShopDetail')
+            ->with('shop', $shop)
+            ->with('event', $event)
+            ->with('product', $product)
+            ->with('eventShop', $eventShop)
+            // ->with('orderHeader', $orderHeader)
+            ->with('orderDetail', $orderDetails);
     }
 
     /**

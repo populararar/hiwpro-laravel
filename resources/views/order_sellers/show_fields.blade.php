@@ -40,20 +40,19 @@ h5,h1,h3{
     {!! Form::label('status', 'Status:') !!}
     @php
         if($orderHeader->status == 'CONFIRMED'){
-            $payment = 'ชำระเงินแล้ว';
-        }
-        if($orderHeader->status == 'PREPARED'){
-            $payment = 'หิ้วแล้วรอการจัดส่ง';
-        }
-        if($orderHeader->status == 'COMPLETED'){
-            $payment = 'จัดส่งแล้ว';
-        }
-        if($orderHeader->status == 'ACCEPTED'){
-            $payment = 'ได้รับสินค้า';
+            $orderStatus = 'ชำระเงินแล้ว';
+        }else if($orderHeader->status == 'PREPARED'){
+            $orderStatus = 'หิ้วแล้วรอการจัดส่ง';
+        }else if($orderHeader->status == 'COMPLETED'){
+            $orderStatus = 'จัดส่งแล้ว';
+        }else if($orderHeader->status == 'ACCEPTED'){
+            $orderStatus = 'ได้รับสินค้า';
+        } else{
+            $orderStatus = '';
         }
     @endphp
 
-    <p >{!! $payment !!}</p>
+    <p >{!! $orderStatus !!}</p>
 </div>
 
 <!-- Slip Status Field -->
@@ -62,9 +61,11 @@ h5,h1,h3{
     @php
         if($orderHeader->slip_status == 'UPLOADED'){
             $payment = 'ชำระเงินแล้ว';
-        }
-        if($orderHeader->slip_status == 'WAITING'){
+        } else if($orderHeader->slip_status == 'WAITING'){
             $payment = 'รอการชำระเงิน';
+        }
+        else{
+            $payment = '';
         }
     @endphp
     <p>{!! $payment !!}</p>

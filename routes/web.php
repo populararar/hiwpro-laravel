@@ -96,6 +96,8 @@ Route::middleware(['login'])->group(function () {
 
     Route::resource('orderSellers', 'OrderSellerController');
     Route::get('/orderSellers/product/{product}/eventShop/{eventShop}', 'OrderSellerController@showEventShopDetail')->name('orderSeller.product');
+    //orderSeller.productUpdate
+    Route::post('/orderSellers/product/update','OrderSellerController@productUpdate')->name('orderSeller.productUpdate');
 
     Route::resource('orderDetails', 'OrderDetailController');
 
