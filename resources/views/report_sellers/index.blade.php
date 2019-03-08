@@ -130,7 +130,7 @@ h4{
 
 </style>
     <section class="content-header">
-        <h1 class="pull-left">Report Sellers</h1>
+        {{-- <h1 class="pull-left">Report Sellers</h1> --}}
         {{-- <h1 class="pull-right">
            <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('reportSellers.create') !!}">Add New</a>
         </h1> --}}
@@ -147,13 +147,14 @@ h4{
 
         <div class="clearfix"></div>
         <div class="box box-primary">
+            <div class="box-body">
                 <div class="row">
                         <div class="col-sm-3">
                                 <div
                                     class="bs-callout bs-callout-info"
                                     id="callout-btn-group-tooltips">
                                     <h4>
-                                            ยอดออร์เดอร์
+                                          ออร์เดอร์ที่ยังไม่จัดส่ง
                                     </h4>
                                     <p>
                                         {{$countOrder}}
@@ -197,11 +198,12 @@ h4{
                                 </div>
                             </div>
                 </div>
-                
             </div>
+          </div>
 
-        <div class="box box-primary">
-            <div class="mx-auto" style="padding-left:30%;margin-top:5%;">
+        <div class="box box-primary" style="text-align:center;">
+          <h2> สรุปรายได้</h2>
+            <div class="mx-auto" >
                 <form method="GET" action="{{ route('reportSellers.index') }}">
                     <input type="date" name="start">
                     <input type="date" name="end">
@@ -220,34 +222,7 @@ h4{
                     {{-- @include('report_sellers.table') --}}
             </div>
         </div>
-        {{-- 555 --}}
-        <div class="box box-primary">
-        <main class="main">
-                <h1 style="font-family:Kanit;" >รายการที่ต้องซื้อ</h1>
-                <div class="container"> 
-                    @foreach ($orderGroup as $key => $group)
-                        @php
-                            $item = $group->first();
-                            $itemQty = $group->sum('qrt');
-                        @endphp
-                        <div class="card card--split-8">
-                            <div class="card__pic">
-                                <span class="card__placeholder">
-                                    <img width="150px" class="circle" style="border-radius: 10%" src="{{ asset('/storage/'.$item->product_img) }}" class="img-fluid">
-                                </span>
-                            </div>
-                            <h2 class="card__headline"><p>ชื่อสินค้า<br>{{$key}}</h2>
-                            <div class="card__content">
-                                <p class="card__paragraph">
-                                    <p>จำนวน  : {{$itemQty}}</p> 
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-               </main>
-        </div>
-        {{-- 555 --}}
+     
         <div class="text-center">
         
         </div>

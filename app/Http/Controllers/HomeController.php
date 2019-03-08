@@ -129,7 +129,7 @@ class HomeController extends Controller
         $profile = $this->profileRepository->findWhere(['user_id' => $userId])->first();
 
         foreach ($reviews as $review) {
-            $review->customer = $this->profileRepository->findWithoutFail($review->customer_id);
+            $review->customer = $this->profileRepository->findWhere(['user_id' => $review->customer_id ])->first();
             $review->user = $this->usersRepository->findWithoutFail($review->customer_id);
             // dd($review->customer , $review->user);
         }

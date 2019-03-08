@@ -50,6 +50,7 @@
       <div class="card-body">
         <p class="card-text">
           Name : {{$user_id->name}} <br>
+          Intro : {{$profile->intro}} <br>
           Tel. : {{$profile->tel}} <br>
           E-mail : {{$user_id->email}}<br>
           ชื่อธนาคาร : {{$profile->bank_name}}<br>

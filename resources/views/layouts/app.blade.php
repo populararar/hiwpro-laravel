@@ -48,7 +48,7 @@
      <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
 </head>
 <style>
-body{
+body,h1,h2,h3,h4,h5{
     font-family: 'Kanit', sans-serif;
 }
 

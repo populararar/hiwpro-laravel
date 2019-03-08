@@ -259,9 +259,15 @@ class ProfileController extends AppBaseController
         }
         // dd($user_id);
         $input['user_id'] = $user_id->id;
+        $intro = $input['intro'];
+        $bank_account = $input['bank_account'];
+        // dd($input['intro']);
         $id2 = $user_id->id;
-        $profile = $this->profileRepository->update($input, $id);
-
+        $profile = $this->profileRepository->update([
+            'intro' => $intro,
+            'bank_account' => $bank_account,
+        ], $id);
+      
         $user_update = $this->usersRepository->update($input, $id2);
 
         Flash::success('Profile updated successfully.');

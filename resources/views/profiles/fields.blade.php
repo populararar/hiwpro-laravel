@@ -58,6 +58,20 @@
             </div>
         </div>
 
+        <div class="col-md-4"><label for="exampleInputName2">แนะนำตัวเอง :</label></div>
+        <div class="col-md-6">
+            <div class="form-group has-feedback{{ $errors->has('intro') ? ' has-error' : '' }}">
+                <input type="text" name="intro" class="form-control" value="{{$profile->intro}}">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                @if ($errors->has('intro'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('intro') }}</strong>
+                </span>
+                @endif
+            </div>
+        </div>
+
         <div class="col-md-4"><label for="exampleInputName2">ชื่อบัญชี :</label></div>
         <div class="col-md-6">
             <div class="form-group has-feedback{{ $errors->has('bank_account') ? ' has-error' : '' }}">

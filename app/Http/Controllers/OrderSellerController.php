@@ -75,10 +75,24 @@ class OrderSellerController extends AppBaseController
         // ->Where('seller_id', $user_id)
             ->whereRaw('seller_id =? and (status = ? or status = ?)', [$user_id, 'CONFIRMED', 'COMPLETED'])
             ->orderBy('updated_at', 'desc')->get();
+
+
         $countOrder = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'CONFIRMED')->count('id');
         $countPrepared = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'PREPARED')->count('id');
+        $countNoPrepared = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'NOPREPARED')->count('id');
         $countFinish = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'COMPLETED')->count('id');
         $countSum = \DB::table('order_header')->where('seller_id', Auth::user()->id)->count('id');
+
+        $orderCount = $countOrder+$countPrepared+$countNoPrepared;
+
+        $countIncome = \DB::table('order_header')
+        ->where('seller_id' , Auth::user()->id)
+        ->selectRaw("SUM(seller_actual_price) AS income")->get()->first();
+
+        $countProduct = \DB::table('order_detail')
+        ->where('seller_id' , Auth::user()->id)
+        ->selectRaw("SUM(qrt) AS product")->get()->first();
+        // dd($countProduct);
 
         $orderGroup = $this->getOrderList();
         // dd($orderGroup);
@@ -87,11 +101,11 @@ class OrderSellerController extends AppBaseController
         }
 
         return view('order_sellers.index')
-            ->with('countSum', $countSum)
-            ->with('countOrder', $countOrder)
-            ->with('orderGroup', $orderGroup)
-            ->with('countPrepared', $countPrepared)
+            ->with('orderCount', $orderCount)
+            ->with('countIncome', $countIncome)
             ->with('countFinish', $countFinish)
+            ->with('countProduct', $countProduct)
+            ->with('orderGroup', $orderGroup)
             ->with('orderHeaders', $orderHeaders);
     }
 

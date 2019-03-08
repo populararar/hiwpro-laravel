@@ -172,7 +172,7 @@
                                     class="bs-callout bs-callout-info"
                                     id="callout-btn-group-tooltips">
                                     <h4>
-                                            {{$countOrder}}
+                                            {{ $orderCount }}
                                     </h4>
                                     <p>
                                             ยังไม่ส่ง
@@ -184,7 +184,7 @@
                                     class="bs-callout bs-callout-info"
                                     id="callout-btn-group-tooltips">
                                     <h4>
-                                            {{$countPrepared}} 
+                                            {{ $countFinish }}
                                     </h4>
                                     <p>
                                             ส่งแล้ว
@@ -196,7 +196,7 @@
                                     class="bs-callout bs-callout-info"
                                     id="callout-btn-group-tooltips">
                                     <h4>
-                                            {{$countFinish}}
+                                            {{ number_format($countIncome->income) }} 
                                     </h4>
                                     <p>
                                             ยอดที่หิ้วได้ทั้งหมด
@@ -208,7 +208,7 @@
                                     class="bs-callout bs-callout-info"
                                     id="callout-btn-group-tooltips">
                                     <h4>
-                                            {{$countSum}}
+                                            {{ $countProduct->product }}
                                     </h4>
                                     <p>
                                             จำนวนชิ้น

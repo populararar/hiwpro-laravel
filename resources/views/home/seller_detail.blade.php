@@ -55,7 +55,7 @@
 				<div class="row">
 					<div class="col-sm-1">
 							@if ($item->customer)
-								<img class="materialboxed responsive-img" src="{{ asset('storage'.$item->customer->img)}}">
+								<img class="materialboxed responsive-img" style="float:left;" width="80px" src="{{ asset('storage'.$item->customer->img)}}">
 							@else
 							<img class="materialboxed responsive-img" style="float:left;" width="80px" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
 							@endif
