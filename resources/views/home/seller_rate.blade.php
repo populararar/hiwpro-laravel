@@ -216,10 +216,7 @@
                     @if ($profile->national_img)
                         <div class="item card-n">
                             <img src="{{ asset('/storage/'.$profile->img) }}" class="img-fluid" >
-                            <a href="{!! route('home.seller_detail', ['userId' => $item->user->id]) !!}">
                                 <div class="middle"><div class="text" style="padding:0;">{{$item->user->name}}</div></div>
-                            </a>
-                            
                         </div>
                     @endif
                 @endforeach

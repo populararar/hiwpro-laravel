@@ -49,78 +49,78 @@
 		<div class="title">
 			<h6>Comment</h6>
 		</div>
-		<div class="row">
-			@foreach ($reviews as $item)
-			
-        	<div class="card card-comment col-sm-12 s12 m6">
-            		<div class="card-content white-text">
-              			<span class="card-title">Post title</span>
-                    <p>{{$item->comment}}</p>
-            		</div>
-					<div class="card-action">
-                        <p class="card-text" style="color: #df3433" > 
-                            @if ($item->score == 0)
-                            ยังไม่มีคะแนน
-                            @elseif($item->score > 0 && $item->score < 0.5)
-                            <i class="fas fa-star-half-alt"></i>
-                            @elseif($item->score >= 0.5 && $item->score <= 1)
-                            <i class="fas fa-star"></i>
-                            @elseif($item->score > 1 && $item->score <= 1.5)
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            @elseif($item->score > 1.5 && $item->score <= 2)
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            @elseif($item->score > 2 && $item->score <= 2.5)
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            @elseif($item->score > 2.5 && $item->score <= 3)
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            @elseif($item->score >= 3 && $item->score <= 3.5)
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            @elseif($item->score >= 3.5 && $item->score <= 4)
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            @elseif($item->score >= 4 && $item->score <= 4.5)
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            @else
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            @endif 
-						</p> 
-						{{-- {{dd($item->img2)}} --}}
 
-					
+		@foreach ($reviews as $item)
+			<div class=" card card-comment col-12">
+				<div class="row">
+					<div class="col-sm-1">
+							@if ($item->customer)
+								<img class="materialboxed responsive-img" src="{{ asset('storage'.$item->customer->img)}}">
+							@else
+							<img class="materialboxed responsive-img" style="float:left;" width="80px" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> 
+							@endif
 					</div>
+					<div class="col-sm-8">
+						<h5>{{$item->user->name}}</h5>	
+					<p>{{$item->comment}}</p>
+					<p class="card-text" style="color: #df3433" > 
+						@if ($item->score == 0)
+						ยังไม่มีคะแนน
+						@elseif($item->score > 0 && $item->score < 0.5)
+						<i class="fas fa-star-half-alt"></i>
+						@elseif($item->score >= 0.5 && $item->score <= 1)
+						<i class="fas fa-star"></i>
+						@elseif($item->score > 1 && $item->score <= 1.5)
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star-half-alt"></i>
+						@elseif($item->score > 1.5 && $item->score <= 2)
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						@elseif($item->score > 2 && $item->score <= 2.5)
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star-half-alt"></i>
+						@elseif($item->score > 2.5 && $item->score <= 3)
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						@elseif($item->score >= 3 && $item->score <= 3.5)
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star-half-alt"></i>
+						@elseif($item->score >= 3.5 && $item->score <= 4)
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						@elseif($item->score >= 4 && $item->score <= 4.5)
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star-half-alt"></i>
+						@else
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						@endif 
+					</p> 
+				</div>
+				<div class="col-sm-3">
 					@if ($item->img != null)
-						<img class="materialboxed responsive-img" width="80px" src="{{ asset('storage'.$item->img)}}">
+						<img class="materialboxed responsive-img" style="float:left;" width="80px" src="{{ asset('storage'.$item->img)}}">
 					@endif
 					@if ($item->img2 != null)
-						<img class="materialboxed responsive-img" width="80px" src="{{ asset('storage'.$item->img2)}}">
+						<img class="materialboxed responsive-img" style="float:left;" width="80px" src="{{ asset('storage'.$item->img2)}}">
 					@endif
-					
-          		</div>
-             
-            @endforeach
-      	</div>
-		
-	</div>
-
+				</div>
+				</div>
+			
+			</div>	
+@endforeach
 
 </main>
 
