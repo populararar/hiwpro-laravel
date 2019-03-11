@@ -83,7 +83,7 @@ $sum=0;$count=0;$count2=0;
                                     # เทาอ่อน
                                     $status_show ='ออร์เดอร์หมดอายุ';
                                     }
-                                    if ($status == "UPLOADED" || $order->status == "CREATE") {
+                                    if ($status == "UPLOADED" && $order->status == "CREATE") {
                                     # เหลือง
                                     $status_show ='รอการตรวจสอบ';
                                     }
@@ -92,6 +92,9 @@ $sum=0;$count=0;$count2=0;
                                     }
                                     # เขียว
                                     if($order->status == 'PREPARED'){
+                                        $status_show = 'หิ้วแล้วรอการจัดส่ง';
+                                    }
+                                    if($order->status == 'NOPREPARED'){
                                         $status_show = 'หิ้วแล้วรอการจัดส่ง';
                                     }
                                     # ฟ้า

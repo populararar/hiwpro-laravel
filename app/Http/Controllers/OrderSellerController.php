@@ -425,12 +425,12 @@ class OrderSellerController extends AppBaseController
             $actualQty = $item->seller_actual_qty;
             $fee = $item->fee;
             $ship = (int) $item->shipping_rate;
-            $value = ($price * $actualQty) + ($fee + $ship);
+            $value =  $actualQty * ($price + $fee + $ship);
             $total = $total + $value;
         }
         $this->orderHeaderRepository->update([
             'seller_actual_price' => $total,
-            'seller_actual_at' => Carbon::now()->toDateTimeString(),
+            'seller_actual_at' => Carbon::now()->setTimezone('Asia/Bangkok')->toDateTimeString(),
         ], $id);
     }
 

@@ -35,7 +35,7 @@ class ReportSellerController extends AppBaseController
 
     private $orderDetail;
 
-    public function __construct(SellerReviewRepository $sellerReviewRepo,OrderHeaderRepository $orderHeaderRepo, OrderDetail $orderDetail, Lavacharts $lava, Event $event, ReportSellerRepository $reportSellerRepo)
+    public function __construct(SellerReviewRepository $sellerReviewRepo, OrderHeaderRepository $orderHeaderRepo, OrderDetail $orderDetail, Lavacharts $lava, Event $event, ReportSellerRepository $reportSellerRepo)
     {
         $this->reportSellerRepository = $reportSellerRepo;
         $this->event = $event;
@@ -64,23 +64,14 @@ class ReportSellerController extends AppBaseController
         if (empty($end)) {
             $end = Carbon::now()->endOfMonth()->format('Y-m-d');
         }
-        $orderGroup =  $this->getOrderList();
+        $orderGroup = $this->getOrderList();
 
-        // foreach($orderGroup as $key => $group){
-        //     echo ' name : '.$key . ' ';
-        //     $item = $group->first();
-        //     $itemQty = $group->sum('qrt');
-        //     echo ' img  : '.$item->product_img . ' ';
-        //     echo ' qty  : '.$itemQty. '<br>';
-        // }    
-        // exit;
-        
-        $countSent = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'COMPLETED')->count('id');
-        $countOrder = \DB::table('order_header')->where('seller_id' , Auth::user()->id)->where('status', 'CONFIRMED')->count('id');
+        $countSent = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'COMPLETED')->count('id');
+        $countOrder = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'CONFIRMED')->count('id');
         $countIncome = \DB::table('order_header')
-        ->where('seller_id' , Auth::user()->id)
-        ->selectRaw("SUM(seller_actual_price) AS income")->get()->first();
-            // dd($countIncome);
+            ->where('seller_id', Auth::user()->id)
+            ->selectRaw("SUM(seller_actual_price) AS income")->get()->first();
+        // dd($countIncome);
 
         $this->setTotalFree($this->lava, $start, $end);
 
@@ -90,14 +81,77 @@ class ReportSellerController extends AppBaseController
             $avg = 0;
         }
 
+        $eventShopTopFive = $this->topFiveEvent($start, $end);
+        
+        $topFiveHotMonth = $this->topFiveHotMonth($start, $end);
+
+        $topFiveOrder = $this->topFiveOrder($start, $end);
+
         return view('report_sellers.index')
             ->with('avg', $avg)
+            //->with('eventShopTopFive', $eventShopTopFive)
             ->with('countIncome', $countIncome)
             ->with('countOrder', $countOrder)
             ->with('countSent', $countSent)
             ->with('lava', $this->lava)
             ->with('orderGroup', $orderGroup)
             ->with('reportSellers', $reportSellers);
+    }
+
+    private function topFiveHotMonth($start, $end)
+    {
+        $data = \DB::table('event_joined')
+        ->selectRaw(' YEAR(created_at) as year ,  MONTH(created_at) as month , COUNT(seller_seller_id) AS counted ')
+        ->where('created_at' , '>=' , $start)
+        ->where('created_at' , '<=' , $end)
+        ->groupBy('year','month')
+        ->orderBy('counted', 'desc')->take(5)->get();
+
+        /*CONCAT( YEAR(created_at),'-' , MONTH(created_at) ) AS date_time , COUNT(seller_seller_id) AS counted */
+        
+        foreach ($data as $key => $value) {
+           // $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id)
+           // $value->shopName = $eventShope->shop->name
+           // $value->xxx = $eventShope->xxx->xx
+        }
+
+        return $data;
+    }
+
+    private function topFiveEvent($start, $end)
+    {
+        $data = \DB::table('event_joined')
+        ->selectRaw(' event_shop_id , COUNT(seller_seller_id) AS counted ')
+        ->where('created_at' , '>=' , $start)
+        ->where('created_at' , '<=' , $end)
+        ->groupBy('event_shop_id')
+        ->orderBy('counted', 'desc')->take(5)->get();
+
+        foreach ($data as $key => $value) {
+           // $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id)
+           // $value->shopName = $eventShope->shop->name
+           // $value->xxx = $eventShope->xxx->xx
+        }
+
+        return $data;
+    }
+
+    private function topFiveOrder($start, $end)
+    {
+        $data = \DB::table('order_header')
+        ->selectRaw(' event_shop_id , COUNT(id) AS counted ')
+        ->where('created_at' , '>=' , $start)
+        ->where('created_at' , '<=' , $end)
+        ->groupBy('event_shop_id')
+        ->orderBy('counted', 'desc')->take(5)->get();
+
+        foreach ($data as $key => $value) {
+           // $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id)
+           // $value->shopName = $eventShope->shop->name
+           // $value->xxx = $eventShope->xxx->xx
+        }
+
+        return $data;
     }
 
     private function getOrderList()
@@ -129,13 +183,13 @@ class ReportSellerController extends AppBaseController
         // get count order
 
         $income->addStringColumn('Year-Month')
-            // ->addNumberColumn('qty')
-            // ->addNumberColumn('free')
+        // ->addNumberColumn('qty')
+        // ->addNumberColumn('free')
             ->addNumberColumn('ค่าหิ้ว(บาท)');
 
         $data = $this->getTotalFree($start, $end);
         foreach ($data as $row) {
-            $a = $row;          //,  $a->sumQty, $a->sum,
+            $a = $row; //,  $a->sumQty, $a->sum,
             $income->addRow([$a->first()->date, $a->sumPercent]);
         }
 

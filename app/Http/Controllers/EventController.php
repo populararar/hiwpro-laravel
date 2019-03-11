@@ -97,8 +97,8 @@ class EventController extends AppBaseController
         $orders = $lava->DataTable();
 
         $orders->addStringColumn('Year-Month')
-            ->addNumberColumn('fail')
-            ->addNumberColumn('success');
+            ->addNumberColumn('กำลังดำเนินการ/ออร์เดอร์')
+            ->addNumberColumn('จัดส่งแล้ว/ออร์เดอร์');
 
         $data = $this->getCountOrder();
         foreach ($data as $row) {

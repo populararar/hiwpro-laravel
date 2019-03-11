@@ -100,6 +100,59 @@ class ReportAdminController extends AppBaseController
             ->with('stats',$stats)
             ->with('reportAdmin', $reportAdmins);
     }
+
+    public function orderReport(Request $request)
+    {
+        $this->reportAdminRepository->pushCriteria(new RequestCriteria($request));
+        $reportAdmins = $this->reportAdminRepository->all();
+        $start = $request->input('start');
+        if (empty($start)) {
+            $start = Carbon::now()->format('Y-m-01');
+        }
+        $end = $request->input('end');
+        if (empty($end)) {
+            $end = Carbon::now()->endOfMonth()->format('Y-m-d');
+        }
+      
+        $countSeller = \DB::table('users_roles')->where('role_id', '2')->count('id');
+        $countUser = \DB::table('users_roles')->where('role_id', '3')->count('id');
+        $countOrder1 = \DB::table('order_header')->where('status', 'CREATE')->count('id');
+        $countOrder2 = \DB::table('order_header')->where('status', 'COMFIRMED')->count('id');
+        $countOrder3 = \DB::table('order_header')->where('status', 'COMPLETED')->count('id');
+        $countOrder4 = \DB::table('order_header')->where('status', 'ACCEPTED')->count('id');
+
+        // $income = $this->event
+        // ->selectRaw(" SUM(income) AS income")
+        // // ->whereRaw('event.startDate >= ? AND event.event_exp <= ?', [$start, $now])
+        // // ->groupBy("YEAR(startDate)")->groupBy("MONTH(startDate)")
+        // ->get();
+
+       
+
+        $this->setIncomeChart($this->lava, $start, $end);
+
+        $this->setTotalFree($this->lava, $start, $end);
+
+        $this->setOrderChart($this->lava);
+
+        $stats = [
+            'countSeller' => $countSeller,
+            'countCustomer' => $countUser,
+            'countOrder1' => $countOrder1,
+            'countOrder2' => $countOrder2,
+            'countOrder3' => $countOrder3,
+            'countOrder4' => $countOrder4,
+            // 'income' => $income,
+        ];
+
+        return view('report_admins.order_report')
+            ->with('lava', $this->lava)
+            ->with('stats',$stats)
+            ->with('reportAdmin', $reportAdmins);
+    }
+
+
+
     private function getCountOrder()
     {
 
@@ -130,8 +183,8 @@ class ReportAdminController extends AppBaseController
         $orders = $lava->DataTable();
 
         $orders->addStringColumn('Year-Month')
-            ->addNumberColumn('fail')
-            ->addNumberColumn('success');
+            ->addNumberColumn('กำลังดำเนินการ')
+            ->addNumberColumn('จัดส่งแล้ว');
 
         $data = $this->getCountOrder();
         foreach ($data as $row) {
@@ -161,7 +214,7 @@ class ReportAdminController extends AppBaseController
 
         $income->addStringColumn('Year-Month')
             ->addNumberColumn('free')
-            ->addNumberColumn('10%');
+            ->addNumberColumn('ค่าหิ้ว');
 
         $data = $this->getTotalFree($start, $end);
         foreach ($data as $row) {
@@ -195,7 +248,7 @@ class ReportAdminController extends AppBaseController
         $groups = $detail->groupBy('date');
         foreach ($groups as $item) {
             $sum = $item->sum('total_free');
-            $sumPercent = $item->sum('total_free') * 0.10; //0.90;
+            $sumPercent = $item->sum('total_free') * 0.90; 
             $item->sum = $sum;
             $item->sumPercent = $sumPercent;
         }
@@ -208,8 +261,8 @@ class ReportAdminController extends AppBaseController
         $income = $lava->DataTable();
 
         $income->addStringColumn('Year-Month')
-            ->addNumberColumn('income')
-            ->addNumberColumn('fee');
+            ->addNumberColumn('รายได้ทั้งหมด')
+            ->addNumberColumn('ค่าหิ้ว');
 
         $data = $this->getTotal($start, $end);
         // dd($data );
