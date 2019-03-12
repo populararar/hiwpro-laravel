@@ -18,9 +18,13 @@
 </style>
 @section('content')
 <section class="content-header" style="text-align:center;">
-    <a href="{!! route('reportAdmins.orderReport') !!}" class="btn btn-primary" style="width:150px; margin-left:2%;"><h4>ข้อมูลรายได้</h4></a>
-    <a href="{!! route('reportAdmins.orderReport') !!}" class="btn btn-header "><h4> 
-            ข้อมูลการสั่งซื้อ</h4></a> 
+        <ul class="menu">
+                <li><a href="{!! route('reportAdmins.index') !!}" class="active" >ข้อมูลรายได้</a></li>
+                <li><a href="{!! route('reportAdmins.orderReport') !!}">ข้อมูลการสั่งซื้อ</a></li>
+                <li><a href="{!! route('reportAdmins.orderSeller') !!}">ข้อมูลแม่ค้า</a></li>
+                <li><a href="{!! route('reportAdmins.orderSeller') !!}" >ข้อมูลลูกค้า</a></li>
+                <li class="slider"></li>
+        </ul>
 </section>
 <div class="content">
     <div class="clearfix"></div>

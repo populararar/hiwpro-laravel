@@ -7,9 +7,12 @@ use App\Http\Requests\CreateReportSellerRequest;
 use App\Http\Requests\UpdateReportSellerRequest;
 use App\Models\Event;
 use App\Models\OrderDetail;
+use App\Repositories\EventRepository;
+use App\Repositories\EventShopRepository;
 use App\Repositories\OrderHeaderRepository;
 use App\Repositories\ReportSellerRepository;
 use App\Repositories\SellerReviewRepository;
+use App\Repositories\ShopRepository;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
@@ -20,6 +23,9 @@ use Response;
 
 class ReportSellerController extends AppBaseController
 {
+    /** @var  EventShopRepository */
+    private $eventShopRepository;
+
     /** @var  SellerReviewRepository */
     private $sellerReviewRepository;
 
@@ -31,11 +37,17 @@ class ReportSellerController extends AppBaseController
     /** @var  OrderHeaderRepository */
     private $orderHeaderRepository;
 
+    /** @var  EventRepository */
+    private $eventRepository;
+
+    /** @var  ShopRepository */
+    private $shopRepository;
+
     private $lava;
 
     private $orderDetail;
 
-    public function __construct(SellerReviewRepository $sellerReviewRepo, OrderHeaderRepository $orderHeaderRepo, OrderDetail $orderDetail, Lavacharts $lava, Event $event, ReportSellerRepository $reportSellerRepo)
+    public function __construct(ShopRepository $shopRepository, EventRepository $eventRepo, EventShopRepository $eventShopRepo, SellerReviewRepository $sellerReviewRepo, OrderHeaderRepository $orderHeaderRepo, OrderDetail $orderDetail, Lavacharts $lava, Event $event, ReportSellerRepository $reportSellerRepo)
     {
         $this->reportSellerRepository = $reportSellerRepo;
         $this->event = $event;
@@ -43,6 +55,9 @@ class ReportSellerController extends AppBaseController
         $this->lava = $lava;
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->sellerReviewRepository = $sellerReviewRepo;
+        $this->eventShopRepository = $eventShopRepo;
+        $this->shopRepository = $shopRepository;
+        $this->eventRepository = $eventRepo;
     }
 
     /**
@@ -74,6 +89,8 @@ class ReportSellerController extends AppBaseController
         // dd($countIncome);
 
         $this->setTotalFree($this->lava, $start, $end);
+        $this->setTopFiveEvent($this->lava, $start, $end);
+        $this->setTopFiveOrder($this->lava, $start, $end);
 
         $reviews = $this->sellerReviewRepository->findWhere(['user_id' => Auth::user()->id]);
         $avg = $reviews->avg('score');
@@ -82,14 +99,16 @@ class ReportSellerController extends AppBaseController
         }
 
         $eventShopTopFive = $this->topFiveEvent($start, $end);
-        
+
         $topFiveHotMonth = $this->topFiveHotMonth($start, $end);
 
         $topFiveOrder = $this->topFiveOrder($start, $end);
 
         return view('report_sellers.index')
             ->with('avg', $avg)
-            //->with('eventShopTopFive', $eventShopTopFive)
+            ->with('topFiveOrder', $topFiveOrder)
+            ->with('topFiveHotMonth', $topFiveHotMonth)
+            ->with('eventShopTopFive', $eventShopTopFive)
             ->with('countIncome', $countIncome)
             ->with('countOrder', $countOrder)
             ->with('countSent', $countSent)
@@ -101,18 +120,18 @@ class ReportSellerController extends AppBaseController
     private function topFiveHotMonth($start, $end)
     {
         $data = \DB::table('event_joined')
-        ->selectRaw(' YEAR(created_at) as year ,  MONTH(created_at) as month , COUNT(seller_seller_id) AS counted ')
-        ->where('created_at' , '>=' , $start)
-        ->where('created_at' , '<=' , $end)
-        ->groupBy('year','month')
-        ->orderBy('counted', 'desc')->take(5)->get();
+            ->selectRaw(' YEAR(created_at) as year ,  MONTH(created_at) as month , COUNT(seller_seller_id) AS counted ')
+            ->where('created_at', '>=', $start)
+            ->where('created_at', '<=', $end)
+            ->groupBy('year', 'month')
+            ->orderBy('counted', 'desc')->take(5)->get();
 
         /*CONCAT( YEAR(created_at),'-' , MONTH(created_at) ) AS date_time , COUNT(seller_seller_id) AS counted */
-        
+
         foreach ($data as $key => $value) {
-           // $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id)
-           // $value->shopName = $eventShope->shop->name
-           // $value->xxx = $eventShope->xxx->xx
+            // $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id)
+            // $value->shopName = $eventShope->shop->name
+            // $value->xxx = $eventShope->xxx->xx
         }
 
         return $data;
@@ -121,16 +140,18 @@ class ReportSellerController extends AppBaseController
     private function topFiveEvent($start, $end)
     {
         $data = \DB::table('event_joined')
-        ->selectRaw(' event_shop_id , COUNT(seller_seller_id) AS counted ')
-        ->where('created_at' , '>=' , $start)
-        ->where('created_at' , '<=' , $end)
-        ->groupBy('event_shop_id')
-        ->orderBy('counted', 'desc')->take(5)->get();
+            ->selectRaw(' event_shop_id , COUNT(seller_seller_id) AS counted ')
+            ->where('created_at', '>=', $start)
+            ->where('created_at', '<=', $end)
+            ->groupBy('event_shop_id')
+            ->orderBy('counted', 'desc')->take(5)->get();
 
         foreach ($data as $key => $value) {
-           // $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id)
-           // $value->shopName = $eventShope->shop->name
-           // $value->xxx = $eventShope->xxx->xx
+            $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id);
+            $value->shopName = $this->shopRepository->findWithoutFail($eventShop->shop_id);
+            $value->eventName = $this->eventRepository->findWithoutFail($eventShop->event_id);
+            //    dd($value->eventName);
+            // $value->xxx = $eventShope->xxx->xx
         }
 
         return $data;
@@ -139,19 +160,76 @@ class ReportSellerController extends AppBaseController
     private function topFiveOrder($start, $end)
     {
         $data = \DB::table('order_header')
-        ->selectRaw(' event_shop_id , COUNT(id) AS counted ')
-        ->where('created_at' , '>=' , $start)
-        ->where('created_at' , '<=' , $end)
-        ->groupBy('event_shop_id')
-        ->orderBy('counted', 'desc')->take(5)->get();
+            ->selectRaw(' event_shop_id , COUNT(id) AS counted ')
+            ->where('created_at', '>=', $start)
+            ->where('created_at', '<=', $end)
+            ->groupBy('event_shop_id')
+            ->orderBy('counted', 'desc')->take(5)->get();
 
         foreach ($data as $key => $value) {
-           // $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id)
-           // $value->shopName = $eventShope->shop->name
-           // $value->xxx = $eventShope->xxx->xx
+            $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id);
+            // dd($value);
+            if (!empty($eventShop->shop_id)) {
+                $value->shopName = $this->shopRepository->findWithoutFail($eventShop->shop_id);
+                $value->eventName = $this->eventRepository->findWithoutFail($eventShop->event_id);
+            }
+            // $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id)
+            // $value->shopName = $eventShope->shop->name
+            // $value->xxx = $eventShope->xxx->xx
         }
 
         return $data;
+    }
+
+    private function setTopFiveEvent($lava, $start, $end)
+    {
+        $reasons = $lava->DataTable();
+
+        $reasons->addStringColumn('Reasons')
+            ->addNumberColumn('Percent');
+
+        $lava->DonutChart('IMDB', $reasons, [
+            'title' => 'อีเวนต์ที่มีคนมาร่วมหิ้วมากที่สุด',
+        ]);
+
+        // get count order
+
+        $data = $this->topFiveEvent($start, $end);
+        foreach ($data as $row) {
+            $a = $row; //,  $a->sumQty, $a->sum,
+            $reasons->addRow([$a->shopName->name, $a->counted]);
+        }
+
+    }
+
+    private function setTopFiveOrder($lava, $start, $end)
+    {
+        $order = $lava->DataTable();
+
+        $order->addDateColumn('Year-Month')
+            ->addNumberColumn('ยอดสั่งซื้อ')
+            ->setDateTimeFormat('Y');
+
+        // get count order
+        $data = $this->topFiveOrder($start, $end);
+        foreach ($data as $row) {
+            $a = $row; 
+            //dd($a);,  $a->sumQty, $a->sum,
+            $order->addRow(['2018', $a->counted]);
+        }
+        $lava->ColumnChart('order', $order, [
+            'title' => 'Company Performance',
+            'titleTextStyle' => [
+                'color' => '#eb6b2c',
+                'fontSize' => 14,
+            ],
+        ]);
+
+        // $income->addStringColumn('Year-Month')
+        // // ->addNumberColumn('qty')
+        // // ->addNumberColumn('free')
+        //     ->addNumberColumn('ค่าหิ้ว(บาท)');
+
     }
 
     private function getOrderList()
@@ -198,6 +276,7 @@ class ReportSellerController extends AppBaseController
             'titleTextStyle' => [
                 'color' => '#eb6b2c',
                 'fontSize' => 14,
+                'font-family' => 'Kanit',
             ],
         ]);
     }

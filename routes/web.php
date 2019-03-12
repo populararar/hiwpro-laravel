@@ -115,9 +115,12 @@ Route::middleware(['login'])->group(function () {
 
     Route::resource('notifications', 'NotificationController');
     Route::get('/notifications/{id}/read', 'NotificationController@read')->name('notifications.read');
+
     Route::resource('reportAdmins', 'ReportAdminController');
+
     Route::get('reportAdmins/income/report', 'ReportAdminController@index')->name('reportAdmins.index');
     Route::get('reportAdmins/order/report', 'ReportAdminController@orderReport')->name('reportAdmins.orderReport');
+    Route::get('reportAdmins/seller/report', 'ReportAdminController@sellerReport')->name('reportAdmins.orderSeller');
     
     Route::resource('reportSellers', 'ReportSellerController');
 

@@ -8,12 +8,14 @@ use App\Http\Requests\UpdateReportAdminRequest;
 use App\Models\Event;
 use App\Models\OrderDetail;
 use App\Models\OrderHeader;
-use App\Repositories\ReportAdminRepository;
+use App\Repositories\EventRepository;
+use App\Repositories\EventShopRepository;
 use App\Repositories\OrderHeaderRepository;
+use App\Repositories\ReportAdminRepository;
+use App\Repositories\ShopRepository;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Khill\Lavacharts\Lavacharts;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
@@ -26,23 +28,35 @@ class ReportAdminController extends AppBaseController
     /** @var  ReportAdminRepository */
     private $reportAdminRepository;
 
+    /** @var  ShopRepository */
+    private $shopRepository;
+
+    /** @var  EventRepository */
+    private $eventRepository;
+
+    /** @var  EventShopRepository */
+    private $eventShopRepository;
+
     private $event;
-    
+
     private $lava;
 
     private $orderDetail;
 
     private $orderHeader;
 
-    public function __construct(OrderHeaderRepository $orderHeaderRepo,OrderHeader $orderHeader, OrderDetail $orderDetail, Lavacharts $lava, ReportAdminRepository $reportAdminRepo, Event $event)
+    public function __construct(EventRepository $eventRepo, EventShopRepository $eventShopRepo, ShopRepository $shopRepository, OrderHeaderRepository $orderHeaderRepo, OrderHeader $orderHeader, OrderDetail $orderDetail, Lavacharts $lava, ReportAdminRepository $reportAdminRepo, Event $event)
     {
         $this->reportAdminRepository = $reportAdminRepo;
         $this->orderHeaderRepository = $orderHeaderRepo;
         $this->orderDetail = $orderDetail;
         $this->orderHeader = $orderHeader;
+        $this->eventShopRepository = $eventShopRepo;
+        $this->shopRepository = $shopRepository;
+        $this->eventRepository = $eventRepo;
         $this->event = $event;
         $this->lava = $lava;
-        
+
     }
 
     /**
@@ -63,7 +77,7 @@ class ReportAdminController extends AppBaseController
         if (empty($end)) {
             $end = Carbon::now()->endOfMonth()->format('Y-m-d');
         }
-      
+
         $countSeller = \DB::table('users_roles')->where('role_id', '2')->count('id');
         $countUser = \DB::table('users_roles')->where('role_id', '3')->count('id');
         $countOrder1 = \DB::table('order_header')->where('status', 'CREATE')->count('id');
@@ -77,13 +91,21 @@ class ReportAdminController extends AppBaseController
         // // ->groupBy("YEAR(startDate)")->groupBy("MONTH(startDate)")
         // ->get();
 
-       
+        $this->setTotalFree($this->lava, $start, $end);
+        $this->setTopFiveEvent($this->lava, $start, $end);
+        $this->setTopFiveOrder($this->lava, $start, $end);
 
         $this->setIncomeChart($this->lava, $start, $end);
 
         $this->setTotalFree($this->lava, $start, $end);
 
         $this->setOrderChart($this->lava);
+
+        $eventShopTopFive = $this->topFiveEvent($start, $end);
+
+        $topFiveHotMonth = $this->topFiveHotMonth($start, $end);
+
+        $topFiveOrder = $this->topFiveOrder($start, $end);
 
         $stats = [
             'countSeller' => $countSeller,
@@ -97,8 +119,155 @@ class ReportAdminController extends AppBaseController
 
         return view('report_admins.index')
             ->with('lava', $this->lava)
-            ->with('stats',$stats)
+            ->with('stats', $stats)
+            ->with('topFiveOrder', $topFiveOrder)
+            ->with('topFiveHotMonth', $topFiveHotMonth)
+            ->with('eventShopTopFive', $eventShopTopFive)
             ->with('reportAdmin', $reportAdmins);
+    }
+
+    private function topFiveHotMonth($start, $end)
+    {
+        $data = \DB::table('event_joined')
+            ->selectRaw(' YEAR(created_at) as year ,  MONTH(created_at) as month , COUNT(seller_seller_id) AS counted ')
+            ->where('created_at', '>=', $start)
+            ->where('created_at', '<=', $end)
+            ->groupBy('year', 'month')
+            ->orderBy('counted', 'desc')->take(5)->get();
+
+        /*CONCAT( YEAR(created_at),'-' , MONTH(created_at) ) AS date_time , COUNT(seller_seller_id) AS counted */
+
+        foreach ($data as $key => $value) {
+            // dd($value);
+            // year": 2019
+            // +"month": 3
+            // +"counted": 2
+            // $eventpShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id)
+            // $value->shopName = $eventShope->shop->name
+            // $value->xxx = $eventShope->xxx->xx
+        }
+
+        return $data;
+    }
+
+    private function topFiveEvent($start, $end)
+    {
+        $data = \DB::table('event_joined')
+            ->selectRaw(' event_shop_id , COUNT(seller_seller_id) AS counted ')
+            ->where('created_at', '>=', $start)
+            ->where('created_at', '<=', $end)
+            ->groupBy('event_shop_id')
+            ->orderBy('counted', 'desc')->take(5)->get();
+
+        foreach ($data as $key => $value) {
+            $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id);
+            $value->shopName = $this->shopRepository->findWithoutFail($eventShop->shop_id);
+            $value->eventName = $this->eventRepository->findWithoutFail($eventShop->event_id);
+            //    dd($value->eventName);
+            // $value->xxx = $eventShope->xxx->xx
+        }
+
+        return $data;
+    }
+
+    private function topFiveOrder($start, $end)
+    {
+        $data = \DB::table('order_header')
+            ->selectRaw(' event_shop_id , COUNT(id) AS counted ')
+            ->where('created_at', '>=', $start)
+            ->where('created_at', '<=', $end)
+            ->groupBy('event_shop_id')
+            ->orderBy('counted', 'desc')->take(5)->get();
+
+        foreach ($data as $key => $value) {
+            $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id);
+            // dd($value);
+            if (!empty($eventShop->shop_id)) {
+                $value->shopName = $this->shopRepository->findWithoutFail($eventShop->shop_id);
+                $value->eventName = $this->eventRepository->findWithoutFail($eventShop->event_id);
+            }
+            // $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id)
+            // $value->shopName = $eventShope->shop->name
+            // $value->xxx = $eventShope->xxx->xx
+        }
+
+        return $data;
+    }
+
+    private function setTopFiveEvent($lava, $start, $end)
+    {
+        $reasons = $lava->DataTable();
+
+        $reasons->addStringColumn('Reasons')
+            ->addNumberColumn('Percent');
+
+        $lava->DonutChart('IMDB', $reasons, [
+            'title' => 'อีเวนต์ที่มีคนมาร่วมหิ้วมากที่สุด',
+        ]);
+
+        // get count order
+
+        $data = $this->topFiveEvent($start, $end);
+        foreach ($data as $row) {
+            $a = $row; //,  $a->sumQty, $a->sum,
+            $reasons->addRow([$a->shopName->name, $a->counted]);
+        }
+
+    }
+
+    private function setTopFiveOrder($lava, $start, $end)
+    {
+        $order = $lava->DataTable();
+
+        $order->addDateColumn('Year-Month')
+            ->addNumberColumn('ยอดสั่งซื้อ')
+            ->setDateTimeFormat('Y');
+
+        // get count order
+        $data = $this->topFiveOrder($start, $end);
+        foreach ($data as $row) {
+            $a = $row;
+            //dd($a);,  $a->sumQty, $a->sum,
+            $order->addRow(['2018', $a->counted]);
+        }
+        $lava->ColumnChart('order', $order, [
+            'title' => 'Company Performance',
+            'titleTextStyle' => [
+                'color' => '#eb6b2c',
+                'fontSize' => 14,
+            ],
+        ]);
+
+        // $income->addStringColumn('Year-Month')
+        // // ->addNumberColumn('qty')
+        // // ->addNumberColumn('free')
+        //     ->addNumberColumn('ค่าหิ้ว(บาท)');
+
+    }
+
+    private function setTopFiveHotMonth($lava, $start, $end)
+    {
+        $finances = $lava->DataTable();
+
+
+
+        $finances->addDateColumn('Year-Month')
+            ->addNumberColumn('จำนวน')
+            ->addNumberColumn('Expenses')
+            ->setDateTimeFormat('Y')
+
+            ->addRow(['2004', 1000, 400])
+            ->addRow(['2005', 1170, 460])
+            ->addRow(['2006', 660, 1120])
+            ->addRow(['2007', 1030, 54]);
+
+        $lava->ColumnChart('Finances', $finances, [
+            'title' => 'Company Performance',
+            'titleTextStyle' => [
+                'color' => '#eb6b2c',
+                'fontSize' => 14,
+            ],
+        ]);
     }
 
     public function orderReport(Request $request)
@@ -113,7 +282,7 @@ class ReportAdminController extends AppBaseController
         if (empty($end)) {
             $end = Carbon::now()->endOfMonth()->format('Y-m-d');
         }
-      
+
         $countSeller = \DB::table('users_roles')->where('role_id', '2')->count('id');
         $countUser = \DB::table('users_roles')->where('role_id', '3')->count('id');
         $countOrder1 = \DB::table('order_header')->where('status', 'CREATE')->count('id');
@@ -121,19 +290,21 @@ class ReportAdminController extends AppBaseController
         $countOrder3 = \DB::table('order_header')->where('status', 'COMPLETED')->count('id');
         $countOrder4 = \DB::table('order_header')->where('status', 'ACCEPTED')->count('id');
 
-        // $income = $this->event
-        // ->selectRaw(" SUM(income) AS income")
-        // // ->whereRaw('event.startDate >= ? AND event.event_exp <= ?', [$start, $now])
-        // // ->groupBy("YEAR(startDate)")->groupBy("MONTH(startDate)")
-        // ->get();
-
-       
+        $this->setTotalFree($this->lava, $start, $end);
+        $this->setTopFiveEvent($this->lava, $start, $end);
+        $this->setTopFiveOrder($this->lava, $start, $end);
 
         $this->setIncomeChart($this->lava, $start, $end);
 
         $this->setTotalFree($this->lava, $start, $end);
 
         $this->setOrderChart($this->lava);
+
+        $eventShopTopFive = $this->topFiveEvent($start, $end);
+
+        $topFiveHotMonth = $this->topFiveHotMonth($start, $end);
+
+        $topFiveOrder = $this->topFiveOrder($start, $end);
 
         $stats = [
             'countSeller' => $countSeller,
@@ -147,11 +318,70 @@ class ReportAdminController extends AppBaseController
 
         return view('report_admins.order_report')
             ->with('lava', $this->lava)
-            ->with('stats',$stats)
+            ->with('stats', $stats)
+            ->with('topFiveOrder', $topFiveOrder)
+            ->with('topFiveHotMonth', $topFiveHotMonth)
+            ->with('eventShopTopFive', $eventShopTopFive)
             ->with('reportAdmin', $reportAdmins);
     }
 
+    /**
+     * Display a listing of the ReportAdmin.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sellerReport(Request $request)
+    {
+        $this->reportAdminRepository->pushCriteria(new RequestCriteria($request));
+        $reportAdmins = $this->reportAdminRepository->all();
+        $start = $request->input('start');
+        if (empty($start)) {
+            $start = Carbon::now()->format('Y-m-01');
+        }
+        $end = $request->input('end');
+        if (empty($end)) {
+            $end = Carbon::now()->endOfMonth()->format('Y-m-d');
+        }
 
+        $countSeller = \DB::table('users_roles')->where('role_id', '2')->count('id');
+        $countUser = \DB::table('users_roles')->where('role_id', '3')->count('id');
+        $countOrder1 = \DB::table('order_header')->where('status', 'CREATE')->count('id');
+        $countOrder2 = \DB::table('order_header')->where('status', 'COMFIRMED')->count('id');
+        $countOrder3 = \DB::table('order_header')->where('status', 'COMPLETED')->count('id');
+        $countOrder4 = \DB::table('order_header')->where('status', 'ACCEPTED')->count('id');
+
+        $this->setTotalFree($this->lava, $start, $end);
+        $this->setTopFiveEvent($this->lava, $start, $end);
+        $this->setTopFiveOrder($this->lava, $start, $end);
+        $this->setIncomeChart($this->lava, $start, $end);
+        $this->setTotalFree($this->lava, $start, $end);
+        $this->setTopFiveHotMonth($this->lava, $start, $end);
+        
+        $eventShopTopFive = $this->topFiveEvent($start, $end);
+
+        $topFiveHotMonth = $this->topFiveHotMonth($start, $end);
+
+        $topFiveOrder = $this->topFiveOrder($start, $end);
+
+        $stats = [
+            'countSeller' => $countSeller,
+            'countCustomer' => $countUser,
+            'countOrder1' => $countOrder1,
+            'countOrder2' => $countOrder2,
+            'countOrder3' => $countOrder3,
+            'countOrder4' => $countOrder4,
+            // 'income' => $income,
+        ];
+
+        return view('report_admins.report_seller')
+            ->with('lava', $this->lava)
+            ->with('stats', $stats)
+            ->with('topFiveOrder', $topFiveOrder)
+            ->with('topFiveHotMonth', $topFiveHotMonth)
+            ->with('eventShopTopFive', $eventShopTopFive)
+            ->with('reportAdmin', $reportAdmins);
+    }
 
     private function getCountOrder()
     {
@@ -193,7 +423,7 @@ class ReportAdminController extends AppBaseController
             $countSuccess = $arr["countSuccess"];
 
             $yearMouth = sprintf("%d-%02d", $arr["YEAR(created_at)"], $arr["MONTH(created_at)"]);
-            
+
             $orders->addRow([$yearMouth, $countFail, $countSuccess]);
         }
 
@@ -206,7 +436,6 @@ class ReportAdminController extends AppBaseController
         ]);
 
     }
-
 
     private function setTotalFree($lava, $start, $end)
     {
@@ -248,7 +477,7 @@ class ReportAdminController extends AppBaseController
         $groups = $detail->groupBy('date');
         foreach ($groups as $item) {
             $sum = $item->sum('total_free');
-            $sumPercent = $item->sum('total_free') * 0.90; 
+            $sumPercent = $item->sum('total_free') * 0.90;
             $item->sum = $sum;
             $item->sumPercent = $sumPercent;
         }
@@ -305,8 +534,8 @@ class ReportAdminController extends AppBaseController
                 ->get();
             $total_fee = 0;
             foreach ($detail as $d) {
-                $total= (int) $d->fee * (int) $d->qrt;
-                $total_fee =   $total_fee + $total;
+                $total = (int) $d->fee * (int) $d->qrt;
+                $total_fee = $total_fee + $total;
             }
 
             // if (empty($detail)) {
@@ -314,7 +543,7 @@ class ReportAdminController extends AppBaseController
             //     $row->income = (int) $row->income;
             //     $row->date = (string) $row['YEAR(startDate)'] . '-' . (string) $row['MONTH(startDate)'];
             // } else {
-            $row->fee = (int)  $total_fee;
+            $row->fee = (int) $total_fee;
             $row->income = (int) $row->income;
             $row->date = (string) $row['YEAR(startDate)'] . '-' . (string) $row['MONTH(startDate)'];
             // }
