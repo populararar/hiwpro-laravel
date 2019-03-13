@@ -748,7 +748,7 @@ class HomeController extends Controller
             }
 
             if ($user->usersRoles->first()->role->name == 'ADMIN') {
-                return redirect()->route('dashboards.index');
+                return redirect()->route('reportAdmins.index');
             }
 
             if ($user->usersRoles->first()->role->name == 'SELLER') {
