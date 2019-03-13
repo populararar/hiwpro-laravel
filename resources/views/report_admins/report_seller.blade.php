@@ -309,7 +309,7 @@
           
           
                   <div class="box box-primary" style="text-align:center;">
-                      <h2>TOP 5 อีเวนต์ที่มีคนมาสั่งซื้อสินค้ามากที่สุด</h2>
+                      <h2>TOP 5 ช่วงที่คนมารับหิ้วมากที่สุด</h2>
                         <div class="mx-auto" >
                             <form method="GET" action="{{ route('reportAdmins.orderSeller') }}">
                                 <input type="date" name="start">

@@ -1,36 +1,42 @@
 @extends('layouts.hiwpro')
 
 @section('content')
+<style>
+.cardp{
+    width: -10% !important;
+    /* background: #fff; */
+    margin: 1% 1%;
+    padding:0%;
+    cursor: pointer;  
+    overflow: hidden !important;
+}
+</style>
 {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
      --}}
 <div>
         <style></style>
-
-               
-                
-
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                              <div class="carousel-item active">
-                                <img src="{{ asset('hiwpro/images/branner2.jpg')}}" class="d-block w-100" alt="...">
-                              </div>
-                              <div class="carousel-item">
-                                <img src="{{ asset('hiwpro/images/branner04.gif')}}" class="d-block w-100" alt="...">
-                              </div>
-                              <div class="carousel-item">
-                                <img src="{{ asset('hiwpro/images/branner4.jpg')}}" class="d-block w-100" alt="...">
-                              </div>
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                              <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                              <span class="sr-only">Next</span>
-                            </a>
-                    </div>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                <img src="{{ asset('hiwpro/images/branner2.jpg')}}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="{{ asset('hiwpro/images/branner04.gif')}}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="{{ asset('hiwpro/images/branner4.jpg')}}" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+    </div>
                     <!-- end Slide header -->
                <div class="container" >  
                     <div class="wrapper">
@@ -99,57 +105,62 @@
                             </div>
                         </div>
                 
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators">
-                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 col-sm-12">
-                                            <img class="card-img-top  card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_05.png')}}">
-                                        </div>
-                                        <div class="col-lg-3 col-md-4  d-none d-sm-none d-md-block">
-                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_06.jpg')}}">
-                                        </div>
-                                        <div class="col-lg-3 col-md-4 d-none d-sm-none d-md-block">
-                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}">
-                                        </div>
-                                        <div class="col-lg-3 d-none d-md-none d-lg-block">
-                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_14.png')}}">
-                                        </div>
+                        <div class="owl-carousel owl-theme">
+                            @foreach ($eventRecomment as $eventItem)
+                                
+                                @foreach ($eventItem->recomment as $recomment)
+                                     <div class="item card-n">
+                                        {{-- {{dd($recomment->event_shop_id)}} --}}
+                                            {{-- $recomment->product->image_product_id --}}
+                                    <a href="{{ route('event.detail.product', ['id' => $recomment->product->product_id, 'event_shop_id' => $recomment->event_shop_id]) }}" 
+                                        style="color: #df3433;font-family:'Kanit' font-weight:light;"> 
+                                        <img src="{{ asset('/storage/'.$recomment->product->image_product_id) }}" class="img-fluid" >
+                                        <div class="middle"><div class="text">{{$recomment->product->name}}</div></div>
+                                    </a>
                                     </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 col-sm-12">
-                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_08.png')}}">
-                                        </div>
-                                        <div class="col-lg-3 col-md-4  d-none d-sm-none d-md-block">
-                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_09.jpg')}}">
-                                        </div>
-                                        <div class="col-lg-3 col-md-4 d-none d-sm-none d-md-block">
-                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_11.png')}}">
-                                        </div>
-                                        <div class="col-lg-3 d-none d-md-none d-lg-block">
-                                            <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_13.png')}}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
+                                    {{-- <div class="col-3 cardp">
+                                            <img class='card-img-top' src="{{ asset('/storage/'.$recomment->product->image_product_id) }}">
+                                           
+                                            <div class="card-in" >
+                                                <p> {{  $recomment->product->name }} </p>
+                                                <span>
+                                                    <font color="red">{{ number_format($recomment->product->price)  }} บาท</font>
+                                                    <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{number_format($recomment->product->actual_price)}} บาท</font>
+                                                </span>
+                                            </div> 
+                                        </a> 
+                                            <div class="box-white d-none d-sm-none d-md-block">
+                                                <form action="{{ route('cart.add') }}" method="POST">
+                                                        {!! csrf_field() !!}
+                                                    <input type="hidden" name="event_shop_id" value="{{  $recomment->event_shop_id }}">
+                                                    <input type="hidden" name="product_id" value="{{  $recomment->product->product_id }}">
+                                                    <input type="hidden" name="price" value="{{  $recomment->product->price  }}">
+                                                    <input type="hidden" name="fee" value="{{  $recomment->product->fee  }}">
+                                                    <input type="hidden" name="shippping" value="{{  $recomment->product->shipping_price  }}">                                  
+                                                    <button type="button" class="box-l btn btn-outline-danger"><i class="fas fa-heart"></i></button>
+                                                    <span style="margin-left:10%;">
+                                                        จำนวน
+                                                    </span>
+                                                    
+                                                    <input type="number" class="count" name="quantity" value="1" style="width:15%; border:1px solid white;text-align:center;">
+                                                    <button type="submit" class="box-r btn btn-danger"><i class="fas fa-cart-arrow-down"></i></button>
+                                                </form>          
+                                            </div>
+                                        </div>  --}}
+
+
+
+                               @endforeach
+                            @endforeach
                         </div>
-                
                     </div><!-- weapper pink 4-->
+
+
+
+                    
+                    
+
+
                 
                     <div class="weapper" style="background-color: #c21e1e; padding:3% 5%; ">
                 

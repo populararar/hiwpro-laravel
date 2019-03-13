@@ -83,6 +83,18 @@ class HomeController extends Controller
         $this->sellerReviewRepository = $sellerReviewRepo;
     }
 
+    private function recommentProduct()
+    {
+        $now = Carbon::now()->toDateTimeString();
+        $events = $this->eventRepository->findWhere([['event_exp', '>', $now]]);
+        // $recommentProduct = [];
+        foreach ($events as $item) {
+            $item->recomment = $this->producteventRepository->findWhere(['recomment' => 1]);
+        }
+        return $events;
+
+    }
+
     public function searchEvent(Request $request)
     {
         $now = Carbon::now()->setTimezone('Asia/Bangkok')->toDateTimeString();
@@ -129,7 +141,7 @@ class HomeController extends Controller
         $profile = $this->profileRepository->findWhere(['user_id' => $userId])->first();
 
         foreach ($reviews as $review) {
-            $review->customer = $this->profileRepository->findWhere(['user_id' => $review->customer_id ])->first();
+            $review->customer = $this->profileRepository->findWhere(['user_id' => $review->customer_id])->first();
             $review->user = $this->usersRepository->findWithoutFail($review->customer_id);
             // dd($review->customer , $review->user);
         }
@@ -563,7 +575,10 @@ class HomeController extends Controller
             }
         }
 
+        $eventRecomment = $this->recommentProduct();
+
         return view('home')
+            ->with('eventRecomment', $eventRecomment)
             ->with('profile', $profile)
             ->with('events', $events)
             ->with('event_now', $event_now);
@@ -573,6 +588,8 @@ class HomeController extends Controller
     {
         return Carbon::parse($dateTime)->format('d M Y');
     }
+
+  
 
     /**
      * Show the application dashboard.

@@ -293,17 +293,18 @@
         
         <div class="col-sm-12">
                 @foreach ($topFiveOrder as $key => $eventShop)
-                @php
-                $key++;
-                @endphp
+               
                 {{-- {{dd($eventShop->counted)}} --}}
                 {{$key}}
-
+                  @php
+                  $key++;
+                  @endphp
                 @if (!empty($eventShop->shopName))
                 <br>
-                @if ($key%2 != 0)
-                <div class="blog-card">
-                <div class="meta">
+                @if ($key%2 != 1) 
+                  
+                  <div class="blog-card">
+                  <div class="meta">
                         <div class="photo" style="background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-1.jpg)">
                         <img width="300px"
                         src="{{ asset('/storage/'.$eventShop->eventName->imgPath) }}" class="img-fluid">
@@ -313,8 +314,8 @@
                         <li class="date">{{$eventShop->eventName->event_exp}}</li>
                 
                         </ul>
-                </div>
-                <div class="description">
+                  </div>
+                  <div class="description">
                         <h1>{{$eventShop->eventName->eventName}}</h1>
                         <h2>{{$eventShop->shopName->location->location_name}}</h2>
                         <p>{{$eventShop->shopName->detail}}</p>
@@ -323,9 +324,9 @@
                         <p class="read-more">
                         <a href="#">count: {{$eventShop->counted}}</a>
                         </p>
-                </div>
-                </div>
-                @else
+                  </div>
+                  </div>
+                @elseif($key%2 != 0)
                 <div class="blog-card alt">
                 <div class="meta">
                         <div class="photo" style="background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-2.jpg)">
