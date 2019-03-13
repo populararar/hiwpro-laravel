@@ -24,7 +24,11 @@
             <td>{!! $orderHeader->total_price!!} บาท</td>
             <td>{!! $orderHeader->seller_actual_price!!} บาท</td>
             <td>{!! ($orderHeader->total_price) - ($orderHeader->seller_actual_price) !!} บาท</td>
-            <td class="btn btn-primary"> ส่งคืน </td>
+            <td>
+                <a class="btn btn-primary" 
+                href="{{ route('returnPayment.uploadFile', ['id' => $orderHeader->payment_id]) }}" 
+                > ส่งคืน </a>
+            </td>
             <td> {!! $orderHeader->customer->name !!}</td>
             <td>{{$orderHeader->customer->profile->bank_account}}
                 {{$orderHeader->customer->profile->bank_num}}

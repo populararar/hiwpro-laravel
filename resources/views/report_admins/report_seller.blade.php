@@ -322,13 +322,13 @@
                         <div class="col-sm-12">
                             @foreach ($topFiveHotMonth as $eventShop)
 
-                            <br>{{$eventShop->year}}
+                           {{-- <br>{{$eventShop->year}}
                             {{$eventShop->month}} 
                             {{$eventShop->counted}}<br>
-                            {{-- {{dd($eventShop) }} --}}
+                             {{dd($eventShop) }} --}}
                             @endforeach
                             <div id="perf_div"></div>
-                                {!! $lava->render('ColumnChart', 'Finances', 'perf_div') !!}
+                                {!! $lava->render('ColumnChart', 'TopFiveHotMonth', 'perf_div') !!}
                         </div>
                        
                            

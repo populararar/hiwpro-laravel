@@ -124,8 +124,14 @@ Route::middleware(['login'])->group(function () {
     
     Route::resource('reportSellers', 'ReportSellerController');
 
-    Route::resource('returnPayment', 'ReturnPaymentController');
-    Route::get('/returnPayment/admin', 'ReturnPaymentController@index')->name('return_patment.index');
+    // Route::resource('returnPayment', 'ReturnPaymentController');
+
+    Route::get('/returnPayment/admin', 'ReturnPaymentController@index')->name('returnPayment.index');
+
+    Route::get('/returnPayment/{id}/admin', 'ReturnPaymentController@uploadFile')->name('returnPayment.uploadFile');
+    
+    Route::post('/returnPayment/{id}/upload', 'ReturnPaymentController@update')->name('returnPayment.update');
+
 });
 
 Route::get('/mail', 'HomeController@mail');

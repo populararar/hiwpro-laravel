@@ -147,6 +147,8 @@ class ReportAdminController extends AppBaseController
             // $value->xxx = $eventShope->xxx->xx
         }
 
+        // dd($data);
+
         return $data;
     }
 
@@ -247,22 +249,23 @@ class ReportAdminController extends AppBaseController
 
     private function setTopFiveHotMonth($lava, $start, $end)
     {
-        $finances = $lava->DataTable();
+        $orders = $lava->DataTable();
+        $data = $this->topFiveHotMonth( $start, $end);
+        $orders->addDateColumn('Year-Month')
+            ->addNumberColumn('จำนวน');
 
+        foreach ($data as $row) {
+            $year =  $row->year;
+            $month =  $row->month;
+            $counted = $row->counted;
 
+            $yearMouth = sprintf("%d-%02d", $year,  $month );
 
-        $finances->addDateColumn('Year-Month')
-            ->addNumberColumn('จำนวน')
-            ->addNumberColumn('Expenses')
-            ->setDateTimeFormat('Y')
-
-            ->addRow(['2004', 1000, 400])
-            ->addRow(['2005', 1170, 460])
-            ->addRow(['2006', 660, 1120])
-            ->addRow(['2007', 1030, 54]);
-
-        $lava->ColumnChart('Finances', $finances, [
-            'title' => 'Company Performance',
+            $orders->addRow([$yearMouth, $counted ]);
+        }
+    
+        $lava->ColumnChart('TopFiveHotMonth', $orders, [
+            'title' => 'Top Five Hot Month',
             'titleTextStyle' => [
                 'color' => '#eb6b2c',
                 'fontSize' => 14,
@@ -302,7 +305,7 @@ class ReportAdminController extends AppBaseController
 
         $eventShopTopFive = $this->topFiveEvent($start, $end);
 
-        $topFiveHotMonth = $this->topFiveHotMonth($start, $end);
+       $topFiveHotMonth = $this->topFiveHotMonth($start, $end);
 
         $topFiveOrder = $this->topFiveOrder($start, $end);
 

@@ -47,7 +47,8 @@ class Payment extends Model
         'send_time',
         'order_id',
         'status',
-        'name'
+        'name',
+        'img_return'
     ];
 
     /**

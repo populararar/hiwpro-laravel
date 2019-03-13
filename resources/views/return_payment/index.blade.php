@@ -2,7 +2,7 @@
 
 @section('content')
 <section class="content-header">
-    <h1 class="pull-left">สรุปคืนเงินแม่ค้า</h1>
+    <h1 class="pull-left">สรุปคืนเงินลูกค้า</h1>
     <h1 class="pull-right">
        
     </h1>
