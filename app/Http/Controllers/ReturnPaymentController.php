@@ -48,8 +48,7 @@ class ReturnPaymentController extends Controller
 
         $orderHeaders = $this->orderHeader
         // ->Where('seller_id', $user_id)
-            ->whereRaw('total_price != seller_actual_price and 
-             (status = ? or status = ? or status = ? or status = ?)', ['CONFIRMED','COMPLETED','NOPREPARE','ACCEPTED'])
+            ->whereRaw('total_price != seller_actual_price and (status = ? or status = ? or status = ? or status = ?)', ['CONFIRMED','COMPLETED','NOPREPARE','ACCEPTED'])
             ->orderBy('updated_at', 'desc')->get();
 
         foreach ($orderHeaders as $orderHeader) {
