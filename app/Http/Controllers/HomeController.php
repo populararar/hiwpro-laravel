@@ -460,8 +460,11 @@ class HomeController extends Controller
         $productEvents = $this->producteventRepository->findWhereIn('event_shop_id', $eventShopIds);
 
         // dd($productEvents);
-
-        return view('eventdetail')->with('event', $event)->with('productEvents', $productEvents);
+        $eventRecomment = $this->recommentProduct();
+        return view('eventdetail')
+        ->with('eventRecomment', $eventRecomment)
+        ->with('event', $event)
+        ->with('productEvents', $productEvents);
     }
 
     /**

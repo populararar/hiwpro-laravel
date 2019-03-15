@@ -107,7 +107,7 @@ class OrderSellerController extends AppBaseController
             ->with('orderGroup', $orderGroup)
             ->with('orderHeaders', $orderHeaders);
     }
-
+    
     public function downloadPdf(Request $request)
     {
         // $user_id = Auth::user()->id;

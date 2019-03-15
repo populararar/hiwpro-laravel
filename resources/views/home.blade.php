@@ -118,38 +118,6 @@
                                         <div class="middle"><div class="text">{{$recomment->product->name}}</div></div>
                                     </a>
                                     </div>
-                                    {{-- <div class="col-3 cardp">
-                                            <img class='card-img-top' src="{{ asset('/storage/'.$recomment->product->image_product_id) }}">
-                                           
-                                            <div class="card-in" >
-                                                <p> {{  $recomment->product->name }} </p>
-                                                <span>
-                                                    <font color="red">{{ number_format($recomment->product->price)  }} บาท</font>
-                                                    <font color="gray"style='font-size:0.8em; text-decoration: line-through; margin:0%;'>{{number_format($recomment->product->actual_price)}} บาท</font>
-                                                </span>
-                                            </div> 
-                                        </a> 
-                                            <div class="box-white d-none d-sm-none d-md-block">
-                                                <form action="{{ route('cart.add') }}" method="POST">
-                                                        {!! csrf_field() !!}
-                                                    <input type="hidden" name="event_shop_id" value="{{  $recomment->event_shop_id }}">
-                                                    <input type="hidden" name="product_id" value="{{  $recomment->product->product_id }}">
-                                                    <input type="hidden" name="price" value="{{  $recomment->product->price  }}">
-                                                    <input type="hidden" name="fee" value="{{  $recomment->product->fee  }}">
-                                                    <input type="hidden" name="shippping" value="{{  $recomment->product->shipping_price  }}">                                  
-                                                    <button type="button" class="box-l btn btn-outline-danger"><i class="fas fa-heart"></i></button>
-                                                    <span style="margin-left:10%;">
-                                                        จำนวน
-                                                    </span>
-                                                    
-                                                    <input type="number" class="count" name="quantity" value="1" style="width:15%; border:1px solid white;text-align:center;">
-                                                    <button type="submit" class="box-r btn btn-danger"><i class="fas fa-cart-arrow-down"></i></button>
-                                                </form>          
-                                            </div>
-                                        </div>  --}}
-
-
-
                                @endforeach
                             @endforeach
                         </div>

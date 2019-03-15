@@ -192,13 +192,13 @@ class EventJoinedController extends AppBaseController
 
         $eventShop_ids = $request->input("shop_id");
         $last_dates = $request->input("last_date");
-
+        
         foreach ($eventShop_ids as $key => $eventShop_id) {
             $last_date = $last_dates[$key];
             $this->eventJoinedRepository->create([
                 'seller_seller_id' => $user->id,
                 'event_shop_id' => $eventShop_id,
-                'last_date_at' => $last_date.' '.'18:00:00',
+                'last_date_at' => $last_date.' 18:00:00',
             ]);
         }
 

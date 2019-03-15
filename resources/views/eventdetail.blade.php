@@ -193,59 +193,70 @@ p.card-in{
                 </div>
             </div>
     
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 col-sm-12">
-                                <img class="card-img-top  card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_14.png')}}">
-                            </div>
-                            <div class="col-lg-3 col-md-4  d-none d-sm-none d-md-block">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_06.jpg')}}">
-                            </div>
-                            <div class="col-lg-3 col-md-4 d-none d-sm-none d-md-block">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/S_07.png')}}">
-                            </div>
-                            <div class="col-lg-3 d-none d-md-none d-lg-block">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_05.png')}}">
-                            </div>
+            <div class="owl-carousel owl-theme">
+                @foreach ($eventRecomment as $eventItem)
+                    
+                    @foreach ($eventItem->recomment as $recomment)
+                         <div class="item card-n">
+                            {{-- {{dd($recomment->event_shop_id)}} --}}
+                                {{-- $recomment->product->image_product_id --}}
+                        <a href="{{ route('event.detail.product', ['id' => $recomment->product->product_id, 'event_shop_id' => $recomment->event_shop_id]) }}" 
+                            style="color: #df3433;font-family:'Kanit' font-weight:light;"> 
+                            <img src="{{ asset('/storage/'.$recomment->product->image_product_id) }}" class="img-fluid" >
+                            <div class="middle"><div class="text">{{$recomment->product->name}}</div></div>
+                        </a>
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 col-sm-12">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_08.png')}}">
-                            </div>
-                            <div class="col-lg-3 col-md-4  d-none d-sm-none d-md-block">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_09.jpg')}}">
-                            </div>
-                            <div class="col-lg-3 col-md-4 d-none d-sm-none d-md-block">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_11.png')}}">
-                            </div>
-                            <div class="col-lg-3 d-none d-md-none d-lg-block">
-                                <img class="card-img-top card-h" style="border-radius: 2%;" src="{{ asset('hiwpro/images/s_13.png')}}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                   @endforeach
+                @endforeach
             </div>
     
         </div><!-- weapper pink 4-->
     
 </div>
 {{-- container --}}
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                    
+                    <!-- Include all compiled plugins (below), or include individual files as needed -->
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/owl.carousel.min.js"></script>
+                   
+                   
+                    <script>
+                           
+                
+                           $('.owl-carousel').owlCarousel({
+                                loop:true,
+                                margin:10,
+                                nav:true,
+                                responsive:{
+                                    0:{
+                                        items:1
+                                    },
+                                    600:{
+                                        items:3
+                                    },
+                                    1000:{
+                                        items:5
+                                    }
+                                }
+                            })
+                       $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+                            var href = $(e.target).attr('href');
+                            var $curr = $(".process-model  a[href='" + href + "']").parent();
+
+                            $('.process-model li').removeClass();
+
+                            $curr.addClass("active");
+                            $curr.prevAll().addClass("visited");
+                        });
+           
+ 
+
+        
+        </script>
 
 @endsection
