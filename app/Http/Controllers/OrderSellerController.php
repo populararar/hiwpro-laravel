@@ -121,12 +121,12 @@ class OrderSellerController extends AppBaseController
 
         $orderGroup = $this->getOrderList();
 
-        // return view('order_sellers.download')->with('orderGroup', $orderGroup);
-        $pdf = PDF::loadView('order_sellers.download', ["orderGroup" => $orderGroup]);
+        return view('order_sellers.download')->with('orderGroup', $orderGroup);
+        // $pdf = PDF::loadView('order_sellers.download', ["orderGroup" => $orderGroup]);
         // dd($pdf);
         //dd();
         // return $pdf->save(storage_path('app/public/upload/orderlist.pdf'));
-        return $pdf->stream();
+        // return $pdf->stream();
 
     }
 

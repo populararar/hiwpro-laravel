@@ -309,23 +309,37 @@
                                 value="{{ $item->seller_actual_qty }}"
                             />
                         </div>
-                        @else
+                        {{-- {{dd($item->seller_actual_status)}} --}}
+                        @elseif($item->seller_actual_status == null)
                         <div class="form-group">
                             <label for="required_amount">Actual Qty</label>
                             <input
                                 type="number"
                                 class="form-control"
                                 value="{{  $item->seller_actual_qty }}"
-                                disabled
                             />
                         </div>
+                        @else
+                        <div class="form-group">
+                          <label for="required_amount">Actual Qty</label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              value="{{  $item->seller_actual_qty }}"
+                              disabled
+                          />
                         @endif
 
                         <div class="form-group">
                             @php
                                 $disable = $orderDetail->first()->seller_actual_status != 0 ? true : false
                             @endphp
+                            @if ($item->seller_actual_status == 0)
+                                 {!! Form::submit('Save', ['form' => 'form-'.$key,'class' => 'btn btn-primary']) !!} 
+                            @else
                             {!! Form::submit('Save', ['form' => 'form-'.$key,'class' => 'btn btn-primary' , 'disabled'=> $disable]) !!} 
+                            @endif
+                            
                         </div>
     
                     </div>

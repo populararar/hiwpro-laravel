@@ -22,7 +22,7 @@
         }
 
         body {
-            font-family: 'dejavusans';
+            font-family: 'Kanit';
         }
 
     </style>
@@ -43,10 +43,9 @@
         <br>สถานที่ : </b>{{$a['event_shop']->shop_location->location_name}}</p>
     <div class="row">
         @foreach ( $group as $item)
-        {{--      
+            
                   <img width="150px" class="circle" style="border-radius: 10%"
-                  src="{{ asset('/storage/'.$item['product']->image_product_id) }}" class="img-fluid"> --}}
-
+                  src="{{ asset('/storage/'.$item['product']->image_product_id) }}" class="img-fluid">
         @php
         $pId = $item['product']->product_id;
         $eventShopId = $item['event_shop_id'];
@@ -61,11 +60,11 @@
     </div>
     @endforeach
 
-    <!-- <script>
+    <script>
         $(document).ready(function () {
             window.print();
         })
-    </script> -->
+    </script> 
 
 </body>
 
