@@ -15,29 +15,41 @@
     </thead>
     <tbody>
    @foreach ($orderHeaders as $key => $orderHeader)
-       
-   @endforeach
+  @php
+      $key++;
+  @endphp
         <tr>
             {{-- {{ dd( $product->shop) }} --}}
-            <td>{!! $key++ !!}</td>
+            <td>{!! $key !!}</td>
             <td>{!! $orderHeader->order_number!!}</td>
             <td>{!! $orderHeader->total_price!!} บาท</td>
             <td>{!! $orderHeader->seller_actual_price!!} บาท</td>
             <td>{!! ($orderHeader->total_price) - ($orderHeader->seller_actual_price) !!} บาท</td>
             <td>
+                @if ($orderHeader->status == 'RETURNED')
+                   ส่งแล้ว 
+                @else
                 <a class="btn btn-primary" 
                 href="{{ route('returnPayment.uploadFile', ['id' => $orderHeader->payment_id]) }}" 
                 > ส่งคืน </a>
+                @endif
+                
             </td>
             <td> {!! $orderHeader->customer->name !!}</td>
             {{-- {{dd($orderHeader->payments)}} --}}
-            <td>{{$orderHeader->customer->profile->bank_account}}
-                {{$orderHeader->customer->profile->bank_num}}
+            <td>{{$orderHeader->customer->profile->bank_account}}<br>
+                {{$orderHeader->customer->profile->bank_num}}<br>
                 {{$orderHeader->customer->profile->bank_name}}
             </td>
     
-            <td><img class="materialboxed responsive-img" width="50px" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"></td>
-            <td>{!! $orderHeader->status!!}
+            <td>
+                @if ($orderHeader->customer->name)
+                    
+                @else
+                    <img class="materialboxed responsive-img" width="50px" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"></td>
+                @endif
+                
+            <td>{!! $orderHeader->status !!}
                 {{-- {!! Form::open(['route' => ['products.destroy', $product->product_id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{!! route('products.show', ['product' => $product->product_id , 'shop_id' => $shop_id ]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-folder-open"></i></a>
@@ -47,6 +59,7 @@
                 {!! Form::close() !!} --}}
             </td>
         </tr>
-
+     
+   @endforeach
     </tbody>
 </table>

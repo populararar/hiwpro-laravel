@@ -17,6 +17,7 @@
         <div class="box-body">
             อัปโหลดหลักฐานการคืนเงิน
             <br>
+            <br>
             <form method="POST" action="{{ route('returnPayment.update', [ $payment->id]) }}" 
                 enctype="multipart/form-data">
                     {!! csrf_field() !!} 
@@ -26,7 +27,7 @@
                 {!! Form::file('imgPathUpdate') !!}
             </div>
 
-            <button type="submit" class="btn btn-outline-danger">อัปโหลด</button>
+            <button type="submit" class="btn btn-danger">อัปโหลด</button>
             <div class="clearfix"></div>
             </form>
         </div>

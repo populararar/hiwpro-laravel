@@ -44,19 +44,23 @@ class ReturnPaymentController extends Controller
      */
     public function index(Request $request)
     {
+        // ->whereRaw('total_price != seller_actual_price and (status = ? or status = ? or status = ? or status = ?)', ['CONFIRMED','COMPLETED','NOPREPARE','ACCEPTED'])
         // $orderHeaders = $this->orderHeaderRepository->findWhere(['status'=>'NOPREPARED']);
 
         $orderHeaders = $this->orderHeader
         // ->Where('seller_id', $user_id)
-            ->whereRaw('total_price != seller_actual_price and (status = ? or status = ? or status = ? or status = ?)', ['CONFIRMED','COMPLETED','NOPREPARE','ACCEPTED'])
+            ->whereRaw('total_price != seller_actual_price')
             ->orderBy('updated_at', 'desc')->get();
 
+        // $orderHeaders = $this->orderHeaderRepository->findWhereIn('id' , $orderHeaders->id);
+        
         foreach ($orderHeaders as $orderHeader) {
             $users = $this->usersRepository->findWhere(['id' => $orderHeader->customer_id]);
             $orderHeader->payment = $this->paymentRepository->findWithoutFail($orderHeader->payment_id);
         }
+        // dd($orderHeaders);
         // dd( $users);
-
+        
         return view('return_payment.index')
             ->with('orderHeaders', $orderHeaders)
             ->with('users', $users);
@@ -121,7 +125,7 @@ class ReturnPaymentController extends Controller
         if ($newPath != '') {
             $newPath = str_replace("public", "", $newPath);
         }
-
+        
         $payment = $this->paymentRepository->update([
             'img_return' => $newPath,
         ], $id);
@@ -134,8 +138,8 @@ class ReturnPaymentController extends Controller
             return redirect(route('returnPayment.index'));
         }
     
-        $this->orderHeaderRepository->update(['status' => 'RETURNED'], $order->id);
-
+        $orderHeader = $this->orderHeaderRepository->update(['status' => 'RETURNED'], $order->id);
+// dd($orderHeader);
         Flash::success('Payment updated successfully.');
 
         return redirect(route('returnPayment.index'));
