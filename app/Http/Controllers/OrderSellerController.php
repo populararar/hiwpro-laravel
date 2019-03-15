@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-use PDF;
 
 class OrderSellerController extends AppBaseController
 {
