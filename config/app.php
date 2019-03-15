@@ -181,6 +181,9 @@ return [
 
         Darryldecode\Cart\CartServiceProvider::class,
         Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+
+        Barryvdh\DomPDF\ServiceProvider::class,
+        // niklasravnsborg\LaravelPdf\PdfServiceProvider::class
     ],
 
     /*
@@ -236,6 +239,9 @@ return [
 
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
+
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class
     ],
 
 ];

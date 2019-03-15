@@ -222,8 +222,12 @@
         <div class="box box-primary">
             <main class="main">
                 <h1 style="font-family:Kanit;" >รายการที่ต้องซื้อ</h1>
-                <div class="box" style="width:100%;padding-left:30px;"> 
-                    
+                <div class="form-group" >
+                  {{-- <a class="btn" target="_blank" href="{{ route('pdf.index', [$auth->id, $year]) }}"> --}}
+                  <a class="btn" target="_blank" href="{{ route('orderSeller.download') }}"> 
+                  <h5 style="font-family: 'Kanit', sans-serif;">ดาวน์โหลดรายการที่ต้องซื้อ</h5></a>
+              </div>
+                <div class="box" style="width:100%;padding-left:30px;">
                     @foreach ($orderGroup as $key => $group)
                     @php
                        $a =  collect($group)->first();

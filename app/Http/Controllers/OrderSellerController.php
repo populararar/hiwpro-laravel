@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use PDF;
 
 class OrderSellerController extends AppBaseController
 {
@@ -76,22 +77,21 @@ class OrderSellerController extends AppBaseController
             ->whereRaw('seller_id =? and (status = ? or status = ?)', [$user_id, 'CONFIRMED', 'COMPLETED'])
             ->orderBy('updated_at', 'desc')->get();
 
-
         $countOrder = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'CONFIRMED')->count('id');
         $countPrepared = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'PREPARED')->count('id');
         $countNoPrepared = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'NOPREPARED')->count('id');
         $countFinish = \DB::table('order_header')->where('seller_id', Auth::user()->id)->where('status', 'COMPLETED')->count('id');
         $countSum = \DB::table('order_header')->where('seller_id', Auth::user()->id)->count('id');
 
-        $orderCount = $countOrder+$countPrepared+$countNoPrepared;
+        $orderCount = $countOrder + $countPrepared + $countNoPrepared;
 
         $countIncome = \DB::table('order_header')
-        ->where('seller_id' , Auth::user()->id)
-        ->selectRaw("SUM(seller_actual_price) AS income")->get()->first();
+            ->where('seller_id', Auth::user()->id)
+            ->selectRaw("SUM(seller_actual_price) AS income")->get()->first();
 
         $countProduct = \DB::table('order_detail')
-        ->where('seller_id' , Auth::user()->id)
-        ->selectRaw("SUM(qrt) AS product")->get()->first();
+            ->where('seller_id', Auth::user()->id)
+            ->selectRaw("SUM(qrt) AS product")->get()->first();
         // dd($countProduct);
 
         $orderGroup = $this->getOrderList();
@@ -107,6 +107,27 @@ class OrderSellerController extends AppBaseController
             ->with('countProduct', $countProduct)
             ->with('orderGroup', $orderGroup)
             ->with('orderHeaders', $orderHeaders);
+    }
+
+    public function downloadPdf(Request $request)
+    {
+        // $user_id = Auth::user()->id;
+        // // dd($user_id);
+        // $this->orderHeaderRepository->pushCriteria(new RequestCriteria($request));
+        // $orderHeaders = $this->orderHeader
+        // // ->Where('seller_id', $user_id)
+        //     ->whereRaw('seller_id =? and (status = ? or status = ?)', [$user_id, 'CONFIRMED', 'COMPLETED'])
+        //     ->orderBy('updated_at', 'desc')->get();
+
+        $orderGroup = $this->getOrderList();
+
+        // return view('order_sellers.download')->with('orderGroup', $orderGroup);
+        $pdf = PDF::loadView('order_sellers.download', ["orderGroup" => $orderGroup]);
+        // dd($pdf);
+        //dd();
+        // return $pdf->save(storage_path('app/public/upload/orderlist.pdf'));
+        return $pdf->stream();
+
     }
 
     private function getOrderList()
@@ -426,7 +447,7 @@ class OrderSellerController extends AppBaseController
             $actualQty = $item->seller_actual_qty;
             $fee = $item->fee;
             $ship = (int) $item->shipping_rate;
-            $value =  $actualQty * ($price + $fee + $ship);
+            $value = $actualQty * ($price + $fee + $ship);
             $total = $total + $value;
         }
         $this->orderHeaderRepository->update([

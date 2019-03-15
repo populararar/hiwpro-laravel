@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
 use Khill\Lavacharts\Lavacharts;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Carbon\CarbonInterval;
+use DateInterval;
 
 class ReportAdminController extends AppBaseController
 {
@@ -71,8 +73,9 @@ class ReportAdminController extends AppBaseController
         $reportAdmins = $this->reportAdminRepository->all();
         $start = $request->input('start');
         if (empty($start)) {
-            $start = Carbon::now()->format('Y-m-01');
+            $start = Carbon::now()->sub(CarbonInterval::months(3))->format('Y-m-01');
         }
+
         $end = $request->input('end');
         if (empty($end)) {
             $end = Carbon::now()->endOfMonth()->format('Y-m-d');
@@ -159,7 +162,7 @@ class ReportAdminController extends AppBaseController
             ->where('created_at', '>=', $start)
             ->where('created_at', '<=', $end)
             ->groupBy('event_shop_id')
-            ->orderBy('counted', 'desc')->take(5)->get();
+            ->orderBy('counted', 'desc')->take(10)->get();
 
         foreach ($data as $key => $value) {
             $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id);
@@ -179,7 +182,7 @@ class ReportAdminController extends AppBaseController
             ->where('created_at', '>=', $start)
             ->where('created_at', '<=', $end)
             ->groupBy('event_shop_id')
-            ->orderBy('counted', 'desc')->take(5)->get();
+            ->orderBy('counted', 'desc')->take(10)->get();
 
         foreach ($data as $key => $value) {
             $eventShop = $this->eventShopRepository->findWithoutFail($value->event_shop_id);

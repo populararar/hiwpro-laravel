@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Auth;
 use Khill\Lavacharts\Lavacharts;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Carbon\CarbonInterval;
+use DateInterval;
 
 class ReportSellerController extends AppBaseController
 {
@@ -73,7 +75,7 @@ class ReportSellerController extends AppBaseController
 
         $start = $request->input('start');
         if (empty($start)) {
-            $start = Carbon::now()->format('Y-m-01');
+            $start = Carbon::now()->sub(CarbonInterval::months(3))->format('Y-m-01');
         }
         $end = $request->input('end');
         if (empty($end)) {

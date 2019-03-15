@@ -30,7 +30,7 @@
                 > ส่งคืน </a>
             </td>
             <td> {!! $orderHeader->customer->name !!}</td>
-            {{dd($orderHeader->payments)}}
+            {{-- {{dd($orderHeader->payments)}} --}}
             <td>{{$orderHeader->customer->profile->bank_account}}
                 {{$orderHeader->customer->profile->bank_num}}
                 {{$orderHeader->customer->profile->bank_name}}

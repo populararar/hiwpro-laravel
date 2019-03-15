@@ -48,6 +48,7 @@ Route::get('/cart/eventShop/{eventShopId}/seller/{seller_id}', 'HomeController@a
 
 Route::get('/seller/review', 'HomeController@sellerReview')->name('home.seller_rate');
 Route::get('/seller/review/{id}', 'HomeController@sellerReviewDetail')->name('home.seller_detail');
+
 // Route::get('/cart/product/{id}/remove', 'HomeController@cartRemove')->name('cart.remove');
 
 Route::middleware(['login'])->group(function () {
@@ -98,6 +99,7 @@ Route::middleware(['login'])->group(function () {
     Route::get('/orderSellers/product/{product}/eventShop/{eventShop}', 'OrderSellerController@showEventShopDetail')->name('orderSeller.product');
     //orderSeller.productUpdate
     Route::post('/orderSellers/product/update','OrderSellerController@productUpdate')->name('orderSeller.productUpdate');
+    Route::get('/orderSellers/product/download','OrderSellerController@downloadPdf')->name('orderSeller.download');
 
     Route::resource('orderDetails', 'OrderDetailController');
 

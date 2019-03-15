@@ -147,7 +147,7 @@ class OrderHeader extends Model
      **/
     public function payments()
     {
-        return $this->hasMany(\App\Models\Payment::class);
+        return $this->hasMany(\App\Models\Payment::class, 'order_id');
     }
 
 }

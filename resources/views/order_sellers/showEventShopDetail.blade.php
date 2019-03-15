@@ -270,15 +270,17 @@
                             name="header_id"
                             value="{{ $item->order_header_id }}"
                         />
-                        <a href="{!! route('orderSellers.show', [$item->order_header_id]) !!}" >
+                        <a href="{!! route('orderSellers.show', [$item->order_header_id]) !!}"
+                            style="color:#cf2132;
+                                  font-size:1.3em;" >
                                 {{ $item->orderHeader->order_number}}</a>
-                        
+                                <br>
                         <div class="form-group">
-                            <label for="product_name">{{ $item->customer->name }}</label>
+                            <label for="product_name"><b>คุณ : </b>{{ $item->customer->name }}</label>
                         </div>
-    
+    <br>
                         <div class="form-group">
-                            <label for="product_name">Product Name</label>
+                            <label for="product_name"></label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -328,6 +330,10 @@
     
                     </div>
                 </form>
+                <div class="line-g">
+                    <div class="line-r">
+                    </div>
+                </div>
                     @endforeach
                     <!-- Submit Field -->
             </div>
