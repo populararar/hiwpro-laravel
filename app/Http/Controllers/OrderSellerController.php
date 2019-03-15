@@ -160,6 +160,7 @@ class OrderSellerController extends AppBaseController
                 $pid = $item['product_id'];
                 $product = $this->productRepository->findWithoutFail($pid);
                 $eventShop = $this->eventShopRepository->with(['shop', 'event'])->findWithoutFail($eventShopId);
+                // dd( $item);
                 $location = $eventShop->shop->location;
                 $eventShop->shop_location = $location;
                 $item['product'] = $product;

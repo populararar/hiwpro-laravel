@@ -53,6 +53,7 @@ class ReturnPaymentController extends Controller
 
         foreach ($orderHeaders as $orderHeader) {
             $users = $this->usersRepository->findWhere(['id' => $orderHeader->customer_id]);
+            $orderHeader->payment = $this->paymentRepository->findWithoutFail($orderHeader->payment_id);
         }
         // dd( $users);
 
