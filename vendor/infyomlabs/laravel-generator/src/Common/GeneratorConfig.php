@@ -66,6 +66,7 @@ class GeneratorConfig
         'jsonFromGUI',
         'tableName',
         'fromTable',
+        'ignoreFields',
         'save',
         'primary',
         'prefix',
@@ -74,6 +75,7 @@ class GeneratorConfig
         'datatables',
         'views',
         'relations',
+        'plural',
     ];
 
     public $tableName;
@@ -172,7 +174,7 @@ class GeneratorConfig
             app_path('Http/Requests/API/')
         ).$prefix;
 
-        $this->pathApiRoutes = config('infyom.laravel_generator.path.api_routes', app_path('Http/api_routes.php'));
+        $this->pathApiRoutes = config('infyom.laravel_generator.path.api_routes', base_path('routes/api.php'));
 
         $this->pathApiTests = config('infyom.laravel_generator.path.api_test', base_path('tests/'));
 
@@ -185,7 +187,7 @@ class GeneratorConfig
 
         $this->pathRequest = config('infyom.laravel_generator.path.request', app_path('Http/Requests/')).$prefix;
 
-        $this->pathRoutes = config('infyom.laravel_generator.path.routes', app_path('Http/routes.php'));
+        $this->pathRoutes = config('infyom.laravel_generator.path.routes', base_path('routes/web.php'));
 
         $this->pathViews = config(
             'infyom.laravel_generator.path.views',
@@ -289,7 +291,11 @@ class GeneratorConfig
 
     public function prepareModelNames()
     {
-        $this->mPlural = Str::plural($this->mName);
+        if ($this->getOption('plural')) {
+            $this->mPlural = $this->getOption('plural');
+        } else {
+            $this->mPlural = Str::plural($this->mName);
+        }
         $this->mCamel = Str::camel($this->mName);
         $this->mCamelPlural = Str::camel($this->mPlural);
         $this->mSnake = Str::snake($this->mName);
