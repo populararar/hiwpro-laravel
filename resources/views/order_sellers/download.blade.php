@@ -13,7 +13,6 @@
 
   </head>
   <body>
-    <h1>Hello, world!</h1>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -53,7 +52,13 @@
 </head>
 
 <body>
-
+   <br>
+    <br>
+    <br>
+    <br>
+<h5 style="text-align:center;">รายการสินค้า</h5>
+<br>
+<br>
     @foreach ($orderGroup as $key => $group)
     @php
     $a = collect($group)->first();
@@ -62,19 +67,20 @@
         <div class="line-r">
         </div>
     </div> --}}
-
-    <div class="row">
-        @foreach ( $group as $item) 
+ @foreach ( $group as $item) 
+    <div class="row" style="margin-bottom:2.5%;">
+        
         @php
         $pId = $item['product']->product_id;
         $eventShopId = $item['event_shop_id'];
         @endphp
 
-        <div class="col-lg-2" style="float:left; background-color:#cccccc;">
-        <img width="100px" src="{{ asset('/storage/'.$item['product']->image_product_id) }}" class="img-fluid">
+        <div class="col-md-4" style="float:left; ">
+        <img width="150px" style="float:right;"
+         src="{{ asset('/storage/'.$item['product']->image_product_id) }}" class="pull-right img-fluid">
         </div>
 
-        <div class="col-lg-10" style="float:left; background-color:#888522;">
+        <div class="col-md-8" style="float:left; ">
             <b> ชื่ออีเว้นต์ : </b>{{ $a['event_shop']->shop->name }}<b>
             <br>สถานที่ : </b>{{$a['event_shop']->shop_location->location_name}}</p>
             <p>ชื่อสินค้า : {{  $item['product']->name  }}</p>
