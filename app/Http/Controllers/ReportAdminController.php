@@ -87,6 +87,8 @@ class ReportAdminController extends AppBaseController
         $countOrder2 = \DB::table('order_header')->where('status', 'COMFIRMED')->count('id');
         $countOrder3 = \DB::table('order_header')->where('status', 'COMPLETED')->count('id');
         $countOrder4 = \DB::table('order_header')->where('status', 'ACCEPTED')->count('id');
+        $countIncome = \DB::table('order_header')->where('status', 'ACCEPTED')->selectRaw("SUM(total_price) AS income")->get()->first();
+
 
         // $income = $this->event
         // ->selectRaw(" SUM(income) AS income")
@@ -117,12 +119,14 @@ class ReportAdminController extends AppBaseController
             'countOrder2' => $countOrder2,
             'countOrder3' => $countOrder3,
             'countOrder4' => $countOrder4,
+            'countIncome' => $countIncome,
             // 'income' => $income,
         ];
 
         return view('report_admins.index')
             ->with('lava', $this->lava)
             ->with('stats', $stats)
+            ->with('countIncome', $countIncome)
             ->with('topFiveOrder', $topFiveOrder)
             ->with('topFiveHotMonth', $topFiveHotMonth)
             ->with('eventShopTopFive', $eventShopTopFive)
@@ -356,7 +360,9 @@ class ReportAdminController extends AppBaseController
         $countOrder2 = \DB::table('order_header')->where('status', 'COMFIRMED')->count('id');
         $countOrder3 = \DB::table('order_header')->where('status', 'COMPLETED')->count('id');
         $countOrder4 = \DB::table('order_header')->where('status', 'ACCEPTED')->count('id');
-
+        $countIncome = \DB::table('order_header')->where('status', 'ACCEPTED')->selectRaw("SUM(seller_actual_price) AS income")->get()->first();
+// dd($countIncome);
+        // dd($countIncome);
         $this->setTotalFree($this->lava, $start, $end);
         $this->setTopFiveEvent($this->lava, $start, $end);
         $this->setTopFiveOrder($this->lava, $start, $end);
@@ -377,12 +383,14 @@ class ReportAdminController extends AppBaseController
             'countOrder2' => $countOrder2,
             'countOrder3' => $countOrder3,
             'countOrder4' => $countOrder4,
+            'countIncome' => $countIncome,
             // 'income' => $income,
         ];
 
         return view('report_admins.report_seller')
             ->with('lava', $this->lava)
             ->with('stats', $stats)
+            ->with('countIncome',$countIncome)
             ->with('topFiveOrder', $topFiveOrder)
             ->with('topFiveHotMonth', $topFiveHotMonth)
             ->with('eventShopTopFive', $eventShopTopFive)
@@ -483,7 +491,7 @@ class ReportAdminController extends AppBaseController
         $groups = $detail->groupBy('date');
         foreach ($groups as $item) {
             $sum = $item->sum('total_free');
-            $sumPercent = $item->sum('total_free') * 0.90;
+            $sumPercent = $item->sum('total_free') * 0.90; //0.10
             $item->sum = $sum;
             $item->sumPercent = $sumPercent;
         }

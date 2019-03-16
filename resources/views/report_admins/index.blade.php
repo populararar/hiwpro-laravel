@@ -73,7 +73,9 @@
                                         class="bs-callout bs-callout-info"
                                         id="callout-btn-group-tooltips">
                                         <h4>
-                                                {{ $stats['countOrder4'] }}
+                                            {{-- {{dd($countIncome)}} --}}
+                                            {{$countIncome->income}}
+                                                {{-- {{ (int)$stats['countIncome'] }} --}}
                                         </h4>
                                         <p>
                                                 รายได้ทั้งหมด

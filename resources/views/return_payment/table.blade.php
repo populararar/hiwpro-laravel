@@ -25,9 +25,9 @@
         <tr>
         <th style="width:5%;">No.</th>
         <th style="width:10%;">Order No.</th>
-        <th style="width:10%;">รายรับ</th>
-        <th style="width:10%;">ส่งคืน</th>
-        <th style="width:10%;">เงินที่เหลือ</th>
+        <th style="width:10%;">ยอดโอน</th>
+        <th style="width:10%;">ยอดซื้อ</th>
+        <th style="width:10%;">ส่งคืนลูกค้า</th>
         <th style="width:10%;">ส่งเงินคืน</th>
         <th style="width:10%;">ชื่อลูกค้า</th>
         <th style="width:15%;">เลขบัญชี</th>
@@ -71,16 +71,19 @@
     if($orderHeader->status == 'ACCEPTED'){
         $status = 'ได้รับสินค้า';
     }
+    if($orderHeader->status == 'RETURNED'){
+        $status = 'ส่งคืนเรียบร้อย';
+    }
       $key++;
   @endphp
         <tr>
             {{-- {{ dd( $product->shop) }} --}}
-            <td>{!! $key !!}</td>
-            <td>{!! $orderHeader->order_number!!}</td>
-            <td>{!! $orderHeader->total_price!!} บาท</td>
-            <td>{!! $orderHeader->seller_actual_price!!} บาท</td>
-            <td>{!! ($orderHeader->total_price) - ($orderHeader->seller_actual_price) !!} บาท</td>
-            <td>
+            <td style ="width:5%;">{!! $key !!}</td>
+            <td style ="width:3%;">{!! $orderHeader->order_number!!}</td>
+            <td style ="width:3%;">{!! $orderHeader->total_price!!} บาท</td>
+            <td style ="width:5%;">{!! $orderHeader->seller_actual_price!!} บาท</td>
+            <td style ="width:5%;">{!! ($orderHeader->total_price) - ($orderHeader->seller_actual_price) !!} บาท</td>
+            <td style ="width:5%;">
                 @if ($orderHeader->status == 'RETURNED')
                    ส่งแล้ว 
                 @else
@@ -90,7 +93,7 @@
                 @endif
                 
             </td>
-            <td> {!! $orderHeader->customer->name !!}</td>
+            <td style ="width:5%;"> {!! $orderHeader->customer->name !!}</td>
             {{-- {{dd($orderHeader->payments)}} --}}
             <td>{{$orderHeader->customer->profile->bank_account}}<br>
                 {{$orderHeader->customer->profile->bank_num}}<br>

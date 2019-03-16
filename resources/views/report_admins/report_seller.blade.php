@@ -253,8 +253,10 @@
                                     <div
                                         class="bs-callout bs-callout-info"
                                         id="callout-btn-group-tooltips">
-                                        <h4>
-                                                {{ $stats['countOrder4'] }}
+                                        <h4>  
+                                          {{ $stats['countOrder4'] }}
+                                          {{-- {{dd($countIncome)}} --}}
+                                          
                                         </h4>
                                         <p>
                                                 ได้รับสินค้า
@@ -266,7 +268,7 @@
                                         class="bs-callout bs-callout-info"
                                         id="callout-btn-group-tooltips">
                                         <h4>
-                                                {{ $stats['countOrder4'] }}
+                                            {{$countIncome->income}}
                                         </h4>
                                         <p>
                                                 รายได้ทั้งหมด
