@@ -1,4 +1,26 @@
-<table class="table table-responsive" id="products-table">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap.min.css">
+
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
+<style>
+.zoom {
+
+  transition: transform .2s;
+
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  -ms-transform: scale(3); /* IE 9 */
+  -webkit-transform: scale(3); /* Safari 3-8 */
+  transform: scale(3); 
+}
+</style>
+@php
+    $status = "";
+   
+@endphp
+<table class="table table-responsive" id="return-table">
     <thead>
         <tr>
         <th style="width:5%;">No.</th>
@@ -16,6 +38,39 @@
     <tbody>
    @foreach ($orderHeaders as $key => $orderHeader)
   @php
+   if ($orderHeader->status == "WAITING") {
+        # code...
+        $status ='รอการชำระเงิน';
+    }
+    //แดง
+    if ($orderHeader->status == "UPLOADED") {
+        # code...
+        $status ='รอการตรวจสอบ';
+    }
+    //เหลือง
+    if ($orderHeader->status_send == "CLOSE") {
+        # code...
+        $status ='ออร์เดอร์หมดอายุ';
+    }
+    //เทาอ่อน
+    if($orderHeader->status == 'CONFIRMED'){
+        $status = 'ชำระเงินแล้ว';
+    }
+    //เขียว
+    if($orderHeader->status == 'PREPARED'){
+        $status = 'หิ้วแล้วรอการจัดส่ง';
+    }
+    if($orderHeader->status == 'NOPREPARED'){
+        $status = 'หิ้วแล้วรอการจัดส่ง';
+    }
+    //ฟ้า
+    if($orderHeader->status == 'COMPLETED'){
+        $status = 'จัดส่งแล้ว';
+    }
+    //ฟ้า
+    if($orderHeader->status == 'ACCEPTED'){
+        $status = 'ได้รับสินค้า';
+    }
       $key++;
   @endphp
         <tr>
@@ -43,13 +98,15 @@
             </td>
     
             <td>
-                @if ($orderHeader->customer->name)
-                    
+                {{-- {{dd($orderHeader->payment->img_return)}} --}}
+                @if ($orderHeader->payment->img_return)
+                <img class="materialboxed responsive-img zoom" width="50px" src="{{ asset('storage'.$orderHeader->payment->img_return)}}">
                 @else
-                    <img class="materialboxed responsive-img" width="50px" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"></td>
+                -
+                {{-- <img class="materialboxed responsive-img zoom" width="50px" src="https://sv1.picz.in.th/images/2019/02/11/TlwilW.png"> --}}
                 @endif
                 
-            <td>{!! $orderHeader->status !!}
+            <td>{!! $status !!}
                 {{-- {!! Form::open(['route' => ['products.destroy', $product->product_id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{!! route('products.show', ['product' => $product->product_id , 'shop_id' => $shop_id ]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-folder-open"></i></a>
@@ -63,3 +120,11 @@
    @endforeach
     </tbody>
 </table>
+
+@section('scripts')
+    <script>
+    $(document).ready( function () {
+    $('#return-table').DataTable();
+} );
+    </script>
+@endsection

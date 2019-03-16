@@ -51,12 +51,13 @@ class ReturnPaymentController extends Controller
         // ->Where('seller_id', $user_id)
             ->whereRaw('total_price != seller_actual_price')
             ->orderBy('updated_at', 'desc')->get();
-
+        $orderHeaders = $orderHeaders->sortByDesc('created_at');
         // $orderHeaders = $this->orderHeaderRepository->findWhereIn('id' , $orderHeaders->id);
         
         foreach ($orderHeaders as $orderHeader) {
             $users = $this->usersRepository->findWhere(['id' => $orderHeader->customer_id]);
             $orderHeader->payment = $this->paymentRepository->findWithoutFail($orderHeader->payment_id);
+           
         }
         // dd($orderHeaders);
         // dd( $users);
@@ -90,9 +91,10 @@ class ReturnPaymentController extends Controller
 
     public function uploadFile($id)
     {
-        $orderHeader = $this->orderHeaderRepository->findWithoutFail($id);
-        //   dd($orderHeader);
-        $payment = $this->paymentRepository->findWithoutFail($orderHeader->payment_id);
+        $orderHeader = $this->orderHeaderRepository->findWhere(['payment_id'=> $id])->first();
+        //   dd($orderHeader->payment_id);
+        // ->findWhere(['id' => $orderHeader->payment_id]);
+        $payment = $this->paymentRepository->findWhere(['id'=> $orderHeader->payment_id])->first();
 
         return view('return_payment.upload')
             ->with('orderHeader', $orderHeader)
@@ -109,7 +111,7 @@ class ReturnPaymentController extends Controller
      */
     public function update($id, Request $request)
     {
-        $payment = $this->paymentRepository->findWithoutFail($id);
+        $payment = $this->paymentRepository->findWhere(['id'=> $id])->first();
 
         if (empty($payment)) {
             Flash::error('payment not found');
@@ -130,7 +132,7 @@ class ReturnPaymentController extends Controller
             'img_return' => $newPath,
         ], $id);
 
-        $order = $this->orderHeaderRepository->findWithoutFail($payment->order_id);
+        $order = $this->orderHeaderRepository->findWhere(['payment_id'=> $id])->first();
 
         if (empty($order)) {
             Flash::error('payment not found');
