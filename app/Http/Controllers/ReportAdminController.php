@@ -140,7 +140,7 @@ class ReportAdminController extends AppBaseController
             ->where('created_at', '>=', $start)
             ->where('created_at', '<=', $end)
             ->groupBy('year', 'month')
-            ->orderBy('counted', 'desc')->take(5)->get();
+            ->orderBy('counted', 'desc')->take(10)->get();
 
         /*CONCAT( YEAR(created_at),'-' , MONTH(created_at) ) AS date_time , COUNT(seller_seller_id) AS counted */
 

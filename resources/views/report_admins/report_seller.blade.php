@@ -282,7 +282,7 @@
             <div class="clearfix"></div>
 
             <div class="box box-primary" style="text-align:center;">
-                    <h2> TOP 5 อีเวนต์ที่คนมาหิ้วด้วยมากที่สุด</h2>
+                    <h2> TOP 10 อีเวนต์ที่คนมาหิ้วด้วยมากที่สุด</h2>
                       <div class="mx-auto" >
                           <form method="GET" action="{{ route('reportSellers.index') }}">
                               <input type="date" name="start">
@@ -311,7 +311,7 @@
           
           
                   <div class="box box-primary" style="text-align:center;">
-                      <h2>TOP 5 ช่วงที่คนมารับหิ้วมากที่สุด</h2>
+                      <h2>TOP 10 ช่วงที่คนมารับหิ้วมากที่สุด</h2>
                         <div class="mx-auto" >
                             <form method="GET" action="{{ route('reportAdmins.orderSeller') }}">
                                 <input type="date" name="start">

@@ -281,7 +281,7 @@
             <div class="clearfix"></div>
 
         <div class="box box-primary" style="text-align:center;">
-        <h2>TOP 5 อีเวนต์ที่มีคนมาสั่งซื้อสินค้ามากที่สุด</h2>
+        <h2>TOP 10 อีเวนต์ที่มีคนมาสั่งซื้อสินค้ามากที่สุด</h2>
         <div class="mx-auto" >
                 <form method="GET" action="{{ route('reportAdmins.orderReport') }}">
                 <input type="date" name="start">
