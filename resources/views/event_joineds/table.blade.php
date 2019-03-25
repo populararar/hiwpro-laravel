@@ -1,4 +1,4 @@
-<table class="table table-responsive" id="events-table">
+<table class="table table-responsive" id="eventJoint-table">
     <thead>
         <tr> 
             <th></th>
@@ -34,7 +34,7 @@
 @section('scripts')
     <script>
     $(document).ready( function () {
-    $('#events-table').DataTable();
+    $('#eventJoint-table').DataTable();
 } );
     </script>
 @endsection

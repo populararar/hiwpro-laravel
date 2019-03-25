@@ -26,3 +26,12 @@
     @endforeach
     </tbody>
 </table>
+
+
+@section('scripts')
+    <script>
+    $(document).ready( function () {
+    $('#locations-table').DataTable();
+} );
+    </script>
+@endsection

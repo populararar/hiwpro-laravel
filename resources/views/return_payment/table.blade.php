@@ -2,6 +2,7 @@
 
 <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
+
 <style>
 .zoom {
 
@@ -11,16 +12,16 @@
 }
 
 .zoom:hover {
-  -ms-transform: scale(3); /* IE 9 */
-  -webkit-transform: scale(3); /* Safari 3-8 */
-  transform: scale(3); 
+  -ms-transform: scale(5); /* IE 9 */
+  -webkit-transform: scale(5); /* Safari 3-8 */
+  transform: scale(5); 
 }
 </style>
 @php
     $status = "";
    
 @endphp
-<table class="table table-responsive" id="return-table">
+<table class="table table-responsive" id="returnPayment-table">
     <thead>
         <tr>
         <th style="width:5%;">No.</th>
@@ -127,7 +128,7 @@
 @section('scripts')
     <script>
     $(document).ready( function () {
-    $('#return-table').DataTable();
+    $('#returnPayment-table').DataTable();
 } );
     </script>
 @endsection

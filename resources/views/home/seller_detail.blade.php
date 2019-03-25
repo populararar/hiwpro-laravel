@@ -42,7 +42,8 @@
 				@endif
 				
 			</div>
-			<hr />
+			{{-- จำนวนครั้งที่ไม่สำเร็จ :  {{$countReturn}} --}}
+			<hr/>
 	</div>
 
 	<div class="container posts">

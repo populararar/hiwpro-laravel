@@ -25,3 +25,12 @@
     @endforeach
     </tbody>
 </table>
+
+
+@section('scripts')
+    <script>
+    $(document).ready( function () {
+    $('#categories-table').DataTable();
+} );
+    </script>
+@endsection

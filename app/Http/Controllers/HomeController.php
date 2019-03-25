@@ -145,9 +145,12 @@ class HomeController extends Controller
             $review->user = $this->usersRepository->findWithoutFail($review->customer_id);
             // dd($review->customer , $review->user);
         }
+
+        $countReturn = \DB::table('order_header')->where('seller_id', $userId)->where('status', 'RETURNED')->count('id');
         // dd($reviews, $avgData, $avgData->seller->name);
         return view('home.seller_detail')
             ->with('profile', $profile)
+            ->with('countReturn', $countReturn)
             ->with('avgData', $avgData)
             ->with('reviews', $reviews);
 
